@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class CommentsDTO {
     private int cmtCode;
     private int postCode;
-    private String cmtDetail;
+    private String cmtText;
     private LocalDateTime cmtWriDate;
     private int memberCode;
     private Integer parentsCode;

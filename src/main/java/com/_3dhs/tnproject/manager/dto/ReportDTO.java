@@ -12,11 +12,11 @@ import java.time.LocalDateTime;
 public class ReportDTO {
     private int reportCode;
     private int rCategoryCode;
-    private String reportDetail;
+    private String reportText;
     private LocalDateTime reportDate;
     private String reportStatus; //TODO : enum 사용할지 작업자 재량
     private LocalDateTime processingDate;
-    private String processingDetail;
+    private String processingText;
     private int subMemberCode;
     private int managerCode;
     private int reporterCode;

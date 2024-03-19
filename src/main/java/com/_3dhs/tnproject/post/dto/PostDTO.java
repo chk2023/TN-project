@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class PostDTO {
     private int postCode;
     private String PostTitle;
-    private String PostDetail;
+    private String PostText;
     private PostState postState;
     private  int postPrice;
     private LocalDateTime postWriDate;
