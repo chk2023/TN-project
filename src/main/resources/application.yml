@@ -1,1 +1,25 @@
-spring.application.name=TN-project
+# DB config
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost/tissuenetworkdb
+    username: ohgiraffers
+    password: ohgiraffers
+
+    # file upload config
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+      location: C:/lecture/10_spring/4_spring-comprehensive/chap01-comprehensive
+
+# Mybatis config
+mybatis:
+  mapper-locations: mappers/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+# image upload dir
+image:
+
+  image-dir: src/main/resources/upload/
