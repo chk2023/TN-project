@@ -16,4 +16,8 @@ public class TestController {
         attributes.addFlashAttribute("message", messageSourceAccessor.getMessage("error.global"));
         return "/error/global";
     }
+    @GetMapping("/layout/layout0-4")
+    public void layoutTest() {
+
+    }
 }
