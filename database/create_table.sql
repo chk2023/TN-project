@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `tbl_comments`
     `parents_code`    INT COMMENT '부모댓글번호',
     `cmt_mod_date`    DATETIME COMMENT '댓글수정시간',
     `cmt_dele_date`    DATETIME COMMENT '댓글삭제시간',
-    `cmt_is_deleted`    BOOLEAN NOT NULL COMMENT '삭제여부',
+    `cmt_is_deleted`    BOOLEAN NOT NULL DEFAULT false COMMENT '삭제여부',
     PRIMARY KEY ( `cmt_code` )
 ) COMMENT = '댓글';
 
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `tbl_like_list`
 (
     `post_code`    INT NOT NULL COMMENT '글번호',
     `member_code`    INT NOT NULL COMMENT '회원번호',
-    `is_private`    BOOLEAN NOT NULL COMMENT '비공개여부',
+    `is_private`    BOOLEAN NOT NULL DEFAULT false COMMENT '비공개여부',
     PRIMARY KEY ( `member_code`,`post_code` )
 ) COMMENT = '좋아요한목록';
 
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `tbl_member`
     `member_age`    INT COMMENT '회원나이',
     `member_birth`    DATETIME COMMENT '회원생일',
     `member_subdate`    DATETIME NOT NULL COMMENT '회원가입일',
-    `member_status`    VARCHAR(2) NOT NULL COMMENT '회원상태',
+    `member_status`    VARCHAR(10) NOT NULL COMMENT '회원상태',
     `have_tissue`    INT NOT NULL COMMENT '보유티슈',
     `member_authority`    VARCHAR(10) NOT NULL COMMENT '회원권한',
     `dormant_trans_date`    DATETIME COMMENT '휴면전환일',
@@ -187,8 +187,8 @@ CREATE TABLE IF NOT EXISTS `tbl_tag`
 
 CREATE TABLE IF NOT EXISTS `tbl_tissue`
 (
-    `order_code`    INT NOT NULL COMMENT '주문번호',
-    `order_class`    VARCHAR(2) NOT NULL COMMENT '상품구분',
+    `order_code`    INT NOT NULL AUTO_INCREMENT COMMENT '주문번호',
+    `order_class`    VARCHAR(10) NOT NULL COMMENT '상품구분',
     `order_date`    DATETIME NOT NULL COMMENT '일자',
     `tissue_price`    INT NOT NULL COMMENT '금액',
     `member_code`    INT NOT NULL COMMENT '회원번호',
