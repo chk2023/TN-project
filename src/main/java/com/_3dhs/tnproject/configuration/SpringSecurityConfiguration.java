@@ -30,6 +30,8 @@ public class SpringSecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 /* 요청에 대한 권한 체크 */
                 .authorizeHttpRequests(auth -> {
+
+
                     /* 위에 서술 된 패턴 외의 요청은 인증 되지 않은 사용자도 요청 허가 */
                     auth.anyRequest().permitAll();
                 })
