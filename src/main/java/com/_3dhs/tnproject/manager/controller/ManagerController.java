@@ -10,4 +10,13 @@ import org.springframework.stereotype.Controller;
 public class ManagerController {
     private final ReportService reportService;
     private final MemberService memberService;
+
+
+    public ManagerController(MemberService memberService, ReportService reportService) {
+        this.memberService = memberService;
+        this.reportService = reportService;
+    }
+    public void checkMagMenu () {
+
+    }
 }

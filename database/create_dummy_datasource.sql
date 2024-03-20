@@ -62,7 +62,7 @@ values ('테스트글제목1',
         '테스트용 포스트입니다. 이 글은 영국에서부터 시작되서 100년동안 어쩌구 저쩌구',
         'PUBLIC', 0, '2024-03-19 00:00:00', 2024, 1, false);
 
-INSERT INTO `tbl_post-tag`(post_code, tag_code)
+INSERT INTO tbl_pos_tag (post_code, tag_code)
 VALUES (1, 1),
        (1, 2),
        (1, 3),

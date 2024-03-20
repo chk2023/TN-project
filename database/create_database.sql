@@ -1,2 +1,4 @@
 CREATE DATABASE tissuenetworkdb;
-GRANT ALL PRIVILEGES ON comprehensive.* TO 'ohgiraffers'@'%';
+GRANT ALL PRIVILEGES ON tissuenetworkdb.* TO 'ohgiraffers'@'%';
+
+
