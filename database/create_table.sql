@@ -135,11 +135,11 @@ CREATE TABLE IF NOT EXISTS `tbl_post_tag`
 CREATE TABLE IF NOT EXISTS `tbl_profile`
 (
     `member_code`    INT NOT NULL COMMENT '회원번호',
-    `profile_code`    INT NOT NULL COMMENT '프로필번호',
-    `profile_photo_path`    VARCHAR(50) DEFAULT 'default_photoPath' NOT NULL COMMENT '프로필사진',
+    `profile_code`    INT NOT NULL AUTO_INCREMENT COMMENT  '프로필번호',
+    `profile_photo_path`    VARCHAR(50) DEFAULT '/image/icon_default_photo.png' NOT NULL COMMENT '프로필사진',
     `profile_nickname`    VARCHAR(20) NOT NULL COMMENT '프로필닉네임',
     `profile_statmsg`    VARCHAR(50) COMMENT '프로필상태메세지',
-    `profile_bg_path`    VARCHAR(50) DEFAULT 'default_bg_path' NOT NULL COMMENT '블로그배경사진',
+    `profile_bg_path`    VARCHAR(50) DEFAULT '/image/icon_default_profile.png' NOT NULL COMMENT '블로그배경사진',
     PRIMARY KEY ( `profile_code`,`member_code` )
 ) COMMENT = '프로필';
 
