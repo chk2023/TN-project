@@ -4,5 +4,12 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com._3dhs.tnproject.member.dao.MemberMapper">
+<resultMap id="profileMap" type="com._3dhs.tnproject.member.dto.ProfileDTO">
+    <id property="memberCode" column="member_code"/>
+</resultMap>
+<resultMap id="memberMap" type="com._3dhs.tnproject.member.dto.MemberDTO">
+    <id property="memberCode" column="member_code"/>
+    <association property="profile" resultMap="profileMap"/>
+</resultMap>
 
 </mapper>

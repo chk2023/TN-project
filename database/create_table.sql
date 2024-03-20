@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `tbl_profile`
     `profile_nickname`    VARCHAR(20) NOT NULL COMMENT '프로필닉네임',
     `profile_statmsg`    VARCHAR(50) COMMENT '프로필상태메세지',
     `profile_bg_path`    VARCHAR(50) DEFAULT 'default_bg_path' NOT NULL COMMENT '블로그배경사진',
-    PRIMARY KEY ( `profile_code`,`member_code`,`profile_photo_path` )
+    PRIMARY KEY ( `profile_code`,`member_code` )
 ) COMMENT = '프로필';
 
 # ALTER TABLE `tbl_profile`

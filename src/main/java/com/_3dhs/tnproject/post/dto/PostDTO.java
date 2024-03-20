@@ -1,5 +1,6 @@
 package com._3dhs.tnproject.post.dto;
 
+import com._3dhs.tnproject.member.dto.ProfileDTO;
 import com._3dhs.tnproject.post.model.PostState;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,5 +24,6 @@ public class PostDTO {
     private LocalDateTime postDeleDate;
     private boolean isDeleted;
     private int folderCode;
+    private ProfileDTO profile;
 
 }
