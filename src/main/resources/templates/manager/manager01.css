@@ -2,8 +2,15 @@
 
 html {
     background-color: #F1E3C8;
-    display : inline-block;
 }
+
+.container {
+    display: flex;
+}
+
+
+
+
 .blog-folder {
     width : 350px;
     height : 477px;
@@ -12,16 +19,62 @@ html {
     text-align: center;
     background-color: white;
 
+
+
 }
-ul {
-    border-bottom: 1px #E1E1E1 solid ;
-}
+
+
+
+
+
 
 .timeLine {
     width : 600px;
     height : 1080px;
     background-color: white;
+    margin-left : auto ;
+    margin-right : auto ;
 
 
+
+}
+
+.timeLine > header {
+    background-color: #448AC6;
+    width : 600px ;
+    height : 262px;
+    color : white;
+    text-align : center;
+}
+
+#pos-nav {
+    background-color: lightskyblue;
+    height : 45px ;
+    text-align : center;
+
+
+
+
+}
+
+.sideBar {
+    background-color: yellowgreen;
+    width : 350px;
+    height : 840px;
+}
+
+#profile {
+    width : 350px;
+    height : 197px;
+    background-color: white;
+
+}
+
+#nav-menu {
+    width : 350px;
+    height : 613px;
+    background-color: lightskyblue;
+    margin-top : 30px ;
+    text-align : center;
 
 }
