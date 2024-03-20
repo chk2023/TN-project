@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `tbl_post`
 ) COMMENT = '글';
 
 
-CREATE TABLE IF NOT EXISTS `tbl_post-tag`
+CREATE TABLE IF NOT EXISTS `tbl_post_tag`
 (
     `post_code`    INT NOT NULL COMMENT '글번호',
     `tag_code`    INT NOT NULL COMMENT '태그번호',
