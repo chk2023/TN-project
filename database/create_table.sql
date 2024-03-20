@@ -116,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `tbl_post`
     `post_mod_date`    DATETIME COMMENT '글수정시간',
     `post_dele_date`    DATETIME COMMENT '글삭제시간',
     `post_is_deleted`    BOOLEAN NOT NULL COMMENT '삭제여부',
-    `folder_code`    INT NOT NULL COMMENT '폴더번호',
+    `folder_code`    INT NOT NULL DEFAULT 1 COMMENT '폴더번호',
     PRIMARY KEY ( `post_code` )
 ) COMMENT = '글';
 
