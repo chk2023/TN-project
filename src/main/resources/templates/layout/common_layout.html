@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/common.css">
+</head>
+<body>
+<main>
+    폼:input<br>
+    <input type="text" placeholder="내용을 입력하세요."/><br>
+    폼:select<br>
+    <select name="">
+        <option value="">내용1</option>
+        <option value="">내용2</option>
+        <option value="">내용3</option>
+        <option value="">내용4</option>
+    </select><br>
+    폼:input:radio<br>
+    <label><input type="radio" name="radio"/>라디오1</label>
+    <label><input type="radio" name="radio"/>라디오2</label><br>
+    폼:input:checkbox<br>
+    <label><input type="checkbox" name="check"/>체크박스1</label>
+    <label><input type="checkbox" name="check"/>체크박스2</label><br>
+    폼:button<br>
+    <button class="btn gray">버튼1</button>
+    <button class="btn border">버튼2</button>
+    <button class="btn skyblue">버튼3</button>
+    <button class="btn">버튼4</button><br>
+    테이블<br>
+    <table>
+        <thead>
+            <tr>
+                <th>colum1</th>
+                <th>colum2</th>
+                <th>colum3</th>
+                <th>colum4</th>
+                <th>colum5</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>text1</td>
+                <td>text2</td>
+                <td>text3</td>
+                <td>text4</td>
+                <td>text5</td>
+            </tr>
+        </tbody>
+    </table>
+    페이징<br>
+    <div id="paging" class="paging">
+        <!-- 맨 앞으로 이동 -->
+        <button><img src="/image/icon_front.png" alt="맨 앞으로 이동 버튼"></button>
+        <!-- 이전 페이지로 이동 -->
+        <button disabled="disabled"><img src="/image/icon_prev.png" alt="이전 목록으로 이동 버튼"></button>
+
+        <!-- 숫자 버튼 -->
+        <button disabled="disabled">1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>4</button>
+        <button>5</button>
+
+        <!-- 다음 페이지로 이동 -->
+        <button><img src="/image/icon_next.png" alt="다음 목록으로 이동 버튼"></button>
+        <!-- 맨 끝으로 이동 -->
+        <button><img src="/image/icon_back.png" alt="맨 뒤로 이동 버튼"></button>
+    </div>
+    <ul class="tabMenu">
+        <li class="active">
+            <button>메뉴1</button>
+        </li>
+        <li>
+            <button>메뉴2</button>
+        </li>
+        <li>
+            <button>메뉴3</button>
+        </li>
+        <li class="viewBtn">
+            <button><img src="/image/btn_view_type.png" alt="보기 타입 버튼"></button>
+        </li>
+    </ul>
+    <ul class="blogList">
+        <li>
+            <div class="list_head">
+                <img src="/image/icon_default_profile.png" alt="프로필 사진">
+                <div>
+                    <strong>조한결</strong>
+                    <span>2월12일</span>
+                    <span>오늘도 나는 눈물을 흘린다 또르륵</span>
+                </div>
+                <button><img src="/dummyIcons/dummyOption.png" alt="옵션버튼"></button>
+            </div>
+            <div class="list_body">
+                <div class="text">
+                    <strong>글제목</strong>
+                    <p>
+                        본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
+                        본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
+                        본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
+                        본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
+                        본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
+                    </p>
+                </div>
+                <div class="container">
+                    <button>
+                        <img src="/dummyIcons/dummyCommentsIcon.png" alt="댓글아이콘">
+                        <span>300+</span>
+                    </button>
+                    <button>
+                        <img src="/dummyIcons/dummyLikeIcon.png" alt="좋아요아이콘">
+                        <span>200k</span>
+                    </button>
+                </div>
+            </div>
+        </li>
+    </ul>
+
+</main>
+
+</body>
+</html>
