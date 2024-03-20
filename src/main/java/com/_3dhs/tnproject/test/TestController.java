@@ -16,10 +16,16 @@ public class TestController {
         attributes.addFlashAttribute("message", messageSourceAccessor.getMessage("error.global"));
         return "/error/global";
     }
-    @GetMapping("/layout/layout0-4")
-    public void layoutTest() {
+
+    @GetMapping("/layout/02_layout")
+    public void goto02_layout() {
 
     }
-
-
+    @GetMapping("/layout/04_layout")
+    public void goto04_layout() {
+    }
+    @GetMapping(value = {"/","/main"})
+    public String gotoTestHubPage() {
+        return "/common/testhub";
+    }
 }
