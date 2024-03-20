@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+html {
+    background-color: #F1E3C8;
+    display : inline-block;
+}
+.blog-folder {
+    width : 350px;
+    height : 477px;
+    border-radius : 19px;
+    list-style: none;
+    text-align: center;
+    background-color: white;
+
+}
+ul {
+    border-bottom: 1px #E1E1E1 solid ;
+}
+
+.timeLine {
+    width : 600px;
+    height : 1080px;
+    background-color: white;
+
+
+
+}
