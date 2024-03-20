@@ -17,12 +17,22 @@ public class TestController {
         return "/error/global";
     }
 
+    @GetMapping("/layout/01_layout")
+    public void goto01_layout() {
+    }
     @GetMapping("/layout/02_layout")
     public void goto02_layout() {
 
     }
+    @GetMapping("/layout/03_layout")
+    public void goto03_layout() {
+    }
     @GetMapping("/layout/04_layout")
     public void goto04_layout() {
+
+    }
+    @GetMapping("/layout/05_layout")
+    public void goto05_layout() {
     }
     @GetMapping(value = {"/","/main"})
     public String gotoTestHubPage() {
