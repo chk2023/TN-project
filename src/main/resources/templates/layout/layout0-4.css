@@ -23,12 +23,14 @@ body {
     display: inline-block;
 }
 .btns button {
-
     width: 176.67px;
     height: 45px;
+    background-color: white;
+    border: none;
 }
 .btns #etc {
     width: 70px;
+    background-color: burlywood;
 }
 
 .contents {
@@ -37,6 +39,10 @@ body {
 .head{
     width: 600px;
     height: 87px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: white;
 }
 .head img{
     width: 40px;
@@ -53,6 +59,7 @@ body {
     width: 45px;
     height: 19px;
 }
+
 .container span:nth-child(3) {
     width: 74px;
     height: 18px;
@@ -61,17 +68,89 @@ body {
     height: 18px;
 }
 
+ .container {
+     flex: 1;
+ }
+
+.status {
+    margin-left: 5px;
+}
+
+.profile{
+    padding-left: 15px;
+}
+
+.body{
+    background-color: white;
+}
+
+.content-thumbnail-wrapper {
+    display: flex;
+    margin-top: 10px;
+}
+
+.content {
+    flex: 3; /* 본문이 썸네일보다 더 많은 공간을 차지하도록 설정 */
+    margin-left: 60px;
+    width: 300px;
+}
+.content p{
+    text-align: left;
+}
+
+.thumbnail {
+    flex: 1; /* 썸네일이 본문보다 더 적은 공간을 차지하도록 설정 */
+    margin-left: 10px; /* 썸네일과 본문 사이 여백 */
+    margin-right: 10px;
+}
+
+.likes-comment-wrapper{
+    margin-top: 10px;
+    display: flex;
+}
+
+.likes-comment-wrapper > div {
+    margin-right: 10px; /* 아이콘과 숫자 사이의 간격을 조정합니다. */
+    margin-left: 60px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
 /*더미아이콘설정*/
-.dummyIcon{
-    background-color: black;
-}
-.big{
-    width: 40px;
-    height: 40px;
-}
 .small{
     width: 25px;
     height: 25px;
 }
+
+.title {
+    width: 120px;
+    padding-left: 60px; /* 내부 여백 설정 */
+    box-sizing: border-box; /* 내부 여백을 포함한 전체 크기 설정 */
+    display: flex;
+    align-items: center;
+}
+
+/* 옵션 버튼 */
+.button{
+    position: absolute;
+    top: 30px;
+    right: 30px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

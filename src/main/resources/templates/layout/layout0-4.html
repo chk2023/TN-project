@@ -4,41 +4,70 @@
     <meta charset="UTF-8">
     <title>layout0-4</title>
     <link rel="stylesheet" href="layout0-4.css">
+    <script src="https://kit.fontawesome.com/083976e11f.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <ul class="btns">
-    <li><button>고정글</button></li>
-    <li><button>최신순</button></li>
-    <li><button>♡</button></li>
-    <li><button id="etc">etc</button></li>
+    <li>
+        <button>고정글</button>
+    </li>
+    <li>
+        <button>최신순</button>
+    </li>
+    <li>
+        <button>♡</button>
+    </li>
+    <li>
+        <button id="etc">etc</button>
+    </li>
 </ul>
 <ul class="contents">
     <li>
         <div class="head">
+            <div class="profile">
+                <i class="fa-solid fa-user fa-2xl" style="color: #74C0FC;"></i>
+            </div>
             <div class="container">
                 <!--<img src="" alt="프로필사진">-->
-                <div class="dummyIcon big"></div>
-                <strong>닉네임</strong>
-                <span>생일</span>
-                <span>상태메세지</span>
+                <div>
+                    <div>
+                        <strong>조형기</strong>
+                        <span>2월 20일</span>
+                    </div>
+                    <span class="status">java spring</span>
+                </div>
             </div>
-            <button><img src="" alt="옵션버튼"></button>
+            <div class="button">
+                <i class="fa-solid fa-ellipsis-vertical fa-xl"></i>
+            </div>
         </div>
         <div class="body">
-            <strong>글제목</strong>
-            <p>본문</p>
-            <div>
-                <!--<img src="" alt="댓글아이콘">-->
-                <div class="dummyIcon small"></div>
-                <span>댓글숫자</span>
+            <div class="title">
+                <strong>글제목</strong>
             </div>
-            <div>
-                <!--<img src="" alt="좋아요아이콘">-->
-                <div class="dummyIcon small"></div>
-                <span>좋아요숫자</span>
+            <div class="content-thumbnail-wrapper">
+                <div class="content">
+                    <p class>본문본문본문본문본문본문본문본문본문본문본문본문본문
+                        본문본문본문본문본문본문본문본문본문본문본문본문본문
+                        본문본문본문본문본문본문본문본문본문본문본문본문본문</p>
+                </div>
+                <div class="thumbnail">
+                <!--<img src="thumbnail" alt="썸네일"/>-->
+                    <i class="fa-solid fa-image fa-5x"></i>
+                </div>
             </div>
+            <div class="likes-comment-wrapper">
+                <div>
+                    <i class="fa-regular fa-heart"></i> 1000
+                </div>
+                <div>
+                    <i class="fa-solid fa-message" style="color: #74C0FC;"></i> 10
+                </div>
+            </div>
+
         </div>
     </li>
 </ul>
+
 </body>
 </html>
