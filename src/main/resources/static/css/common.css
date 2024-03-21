@@ -94,6 +94,10 @@ update : 2024-03-20
     -webkit-appearance: none; /*SafariandChrome*/
 }
 
+*:hover {
+    transition: ease .5s;
+}
+
 *:after,
 *:before {
     position: absolute;
@@ -149,6 +153,155 @@ select:focus {
 }
 
 
+/*------------------------------------------
+    2.0     Layout
+ ------------------------------------------*/
+
+
+.wrap {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    padding: 0 calc((100% - 1360px) / 2);
+    overflow: hidden auto;
+}
+
+.wrap:not(:has(aside)) > main {
+    margin-left: 380px;
+}
+
+
+/* 24.03.20 추가 input radio check select */
+
+label {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 30px;
+    color: #404040;
+}
+
+label:last-of-type {
+    margin-right: 0;
+}
+
+input:not(input[type="radio"],
+        input[type="checkbox"]),
+select,
+textarea {
+    display: flex;
+    align-items: center;
+    border: 1px solid #E1E1E1;
+    padding: 0 20px;
+    border-radius: 5px;
+}
+
+input {
+    height: 45px;
+    color: #595959;
+}
+
+input::placeholder {
+    color: #A8A8A8;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    display: inline-block;
+    border: 1px solid #779289;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-right: 10px;
+}
+
+[type="radio"] {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+}
+
+[type="radio"]:checked {
+    background-image: url(../image/icon_radio_active.png);
+}
+
+input[type="checkbox"] {
+    width: 21px;
+    height: 21px;
+    border-width: 2px;
+    border-radius: 3px;
+}
+
+input[type="checkbox"]:checked {
+    background-image: url(../image/icon_check_active.png);
+}
+
+select {
+    min-width: 160px;
+    height: 30px;
+    padding: 0 30px 0 10px;
+    background-image: url(../image/icon_select_arrow.png);
+    background-position: calc(100% - 10px) center;
+}
+
+option {
+    font-size: 14px;
+}
+
+
+/* 24.03.20 추가 button */
+.btn.border {
+    background-color: #FFF;
+    border: 1px solid #448AC6;
+    color: #448AC6;
+}
+
+.btn.skyblue {
+    background-color: #85BFE2;
+}
+
+.paging button {
+    color: #317AA9;
+    margin: 0 5px;
+}
+
+.paging button:first-child,
+.paging button:last-child {
+    margin: 0;
+}
+
+/* 24.03.20 테이블*/
+table {
+    width: 560px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    color: #85BFE2;
+    font-size: medium;
+    text-align: center;
+    margin: auto;
+}
+
+th,
+td {
+    vertical-align: middle;
+}
+
+th {
+    height: 40px;
+    font-size: 15px;
+    border-bottom: 1px #E1E1E1 solid;
+    color: #448AC6;
+}
+
+td {
+    height: 35px;
+    font-size: 14px;
+    color: #85BFE2;
+    margin: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-bottom: 1px #F2F2F2 solid;
+}
+
+
 /* button */
 a.btn, button.btn {
     color: #FFFFFF;
@@ -177,6 +330,7 @@ a.btn.gray, button.btn.gray {
     box-shadow: 0 0 5px;
     border-radius: 5px;
     padding: 0 30px;
+    z-index: 1;
 }
 
 .optionBox.active {
@@ -195,12 +349,24 @@ a.btn.gray, button.btn.gray {
     margin: 0;
 }
 
+.optionBox li:hover * {
+    color: #779289;
+}
+
+/*optionBtn*/
+.optionBtn:not(.blogList .optionBtn) {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
 /* tabMenu */
 .tabMenu {
     display: flex;
 }
 
 .tabMenu li {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -209,7 +375,6 @@ a.btn.gray, button.btn.gray {
 
 .tabMenu li.active {
     background-color: #5C95C2;
-    border-bottom: 2px solid #448AC6;
 }
 
 .tabMenu li.active * {
@@ -220,14 +385,29 @@ a.btn.gray, button.btn.gray {
     flex-grow: 1;
 }
 
+/*.tabMenu li:hover  {*/
+/*    border-bottom: 2px solid #448AC6;*/
+/*}*/
+.tabMenu li:after {
+    position: absolute;
+    bottom: 0;
+    content: "";
+    width: 0;
+    height: 2px;
+    background-color: #317AA9;
+}
+
+.tabMenu li:hover:after {
+    width: 100%;
+    transition: ease .3s;
+}
+
 .viewBtn {
     width: 70px;
     background-color: #E8D1A5;
 }
 
-/*------------------------------------------
-    2.0     Layout
- ------------------------------------------*/
+
 /* 2.1 header */
 header {
     order: 1;
@@ -252,7 +432,7 @@ header, aside {
     padding: 0 20px;
     background-color: #FFFFFF;
     border-bottom: 1px solid #E1E1E1;
-    z-index: 1;
+    z-index: 2;
 }
 
 .title input,
@@ -273,9 +453,10 @@ header, aside {
     background-color: transparent;
 }
 
-.title input,
+.title .search_input,
 .title .closeBtn {
     display: none;
+    border: none;
 }
 
 /* 2.3 title.search */
@@ -314,11 +495,6 @@ header, aside {
     margin-bottom: 30px;
 }
 
-.optionBtn {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-}
 
 .profileStatus {
     display: flex;
@@ -478,135 +654,132 @@ main {
 }
 
 
-/* 24.03.20 추가 input radio check select */
-
-label {
-    display: inline-flex;
-    align-items: center;
-    margin-right: 30px;
-    color: #404040;
+/* 24.03.21 추가 레이아웃 조회 */
+.blogList li:not(.optionBox li) {
+    border-bottom: 1px solid #E1E1E1;
 }
 
-label:last-of-type {
-    margin-right: 0;
-}
-
-input:not(input[type="radio"],
-        input[type="checkbox"]),
-select,
-textarea {
+.blogList li > * {
     display: flex;
+}
+
+.list_head {
+    position: relative;
+    height: 80px;
     align-items: center;
-    border: 1px solid #E1E1E1;
-    padding: 0 20px;
+    padding: 0 40px 0 20px;
+}
+
+.list_head .prof_photo {
+    width: 40px;
+    height: 40px;
     border-radius: 5px;
 }
 
-input {
-    height: 45px;
-    color: #595959;
+.list_head > div:not(.prof_photo) {
+    width: calc(100% - 43px);
+    display: flex;
+    flex-direction: column;
+    padding: 20px 10px;
 }
 
-input::placeholder {
-    color: #A8A8A8;
-}
-
-input[type="radio"],
-input[type="checkbox"] {
-    display: inline-block;
-    border: 1px solid #779289;
-    background-position: center;
-    background-repeat: no-repeat;
+.list_head strong {
+    color: #000;
     margin-right: 10px;
 }
 
-[type="radio"] {
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
+
+
+
+.list_body {
+    position: relative;
+    display: flex;
+    padding: 20px 65px 30px;
+}
+.list_body:not(.snsList .list_body) > div:not(.thumbnailPhoto) {
+    width: 340px;
 }
 
-[type="radio"]:checked {
-    background-image: url(../image/icon_radio_active.png);
+.list_body .contentTit {
+    color: #404040;
+    margin-bottom: 20px;
 }
-
-input[type="checkbox"] {
-    width: 21px;
-    height: 21px;
-    border-width: 2px;
-    border-radius: 3px;
+.list_body .contentsTxt { /* 블로그는 3줄 고정인데 반해 SnS는 몇줄로 갈것인지 fixed로 가야할듯 */.snsList .list_body .contentsTxt {}
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
-
-input[type="checkbox"]:checked {
-    background-image: url(../image/icon_check_active.png);
-}
-
-select {
-    min-width: 160px;
-    height: 30px;
-    padding: 0 30px 0 10px;
-    background-image: url(../image/icon_select_arrow.png);
-    background-position: calc(100% - 10px) center;
-}
-
-option {
-    font-size: 14px;
+.list_head .status_msg,
+.list_body .contentTit {
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 
-/* 24.03.20 추가 button */
-.btn.border {
-    background-color: #FFF;
-    border: 1px solid #448AC6;
-    color: #448AC6;
+.list_body:not(.snsList .list_body) .thumbnailPhoto {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    margin-left: 30px;
 }
-
-.btn.skyblue {
-    background-color: #85BFE2;
-}
-
-.paging button {
-    color: #317AA9;
-    margin: 0 5px;
-}
-
-.paging button:first-child,
-.paging button:last-child {
-    margin: 0;
-}
-
-/* 24.03.20 테이블*/
-table {
-    width: 560px;
-    border-collapse: collapse;
-    border-spacing: 0;
-    color: #85BFE2;
-    font-size: medium;
-    text-align: center;
-    margin: auto;
-}
-
-th,
-td {
+.list_body .thumbnailPhoto img {
+    min-height: 100%;
+    min-width: 100%;
     vertical-align: middle;
 }
 
-th {
-    height: 40px;
-    font-size: 15px;
-    border-bottom: 1px #E1E1E1 solid;
-    color: #448AC6;
+.list_body .showViewsComments {
+    display: flex;
+    width: 100%;
+}
+.list_body .showViewsComments > * {
+    display: inline-flex;
+    align-items: center;
+}
+.list_body:not(.snsList .list_body) .showViewsComments button {
+    margin-right: 30px;
+}
+.list_body:not(.snsList .list_body) .showViewsComments img {
+    margin-right: 10px;
 }
 
-td {
-    height: 35px;
-    font-size: 14px;
-    color: #85BFE2;
-    margin: auto;
-    padding-left: 20px;
-    padding-right: 20px;
-    border-bottom: 1px #F2F2F2 solid;
+
+.list_body .showViewsComments {
+    margin-top: 20px;
+}
+.snsList .list_body {
+    flex-direction: column;
+    padding: 20px 65px 100px;
+}
+.snsList .list_body .thumbnailPhoto {
+    margin-top: 20px;
 }
 
 
+
+
+
+
+
+
+
+
+
+.snsList .list_body .showViewsComments {
+    position: absolute;
+    bottom: 20px;
+    padding: 0 95px;
+    left: 0;
+    justify-content: space-between;
+}
+
+.snsList .list_body .showViewsComments img {
+    display: block;
+    margin: 0 auto 5px auto;
+}
 
