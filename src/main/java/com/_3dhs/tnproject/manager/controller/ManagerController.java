@@ -39,6 +39,10 @@ public class ManagerController {
 
     }
 
+    @GetMapping ("/manager/decList")
+    public void viewDecList() {
+
+    }
 
 
 
