@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>form</title>
+    <link rel="stylesheet" href="/css/layout02_form.css"/>
+</head>
+<body>
+    <div class="background-div">
+        <div class="content-div">
+
+<!--            <div class="top-wrapper">-->
+<!--                <button class="top btn"><<</button>-->
+<!--                <div class="top text">로그인</div>-->
+<!--            </div>-->
+
+            <div class="login-wrapper">
+                <form>
+                    <div class="id-wrapper">
+                        <label class="id-label">아이디</label>
+                        <input type="text" class="id-form"/>
+                    </div>
+                    <div class="pw-wrapper">
+                        <label class="pw-label">비밀번호</label>
+                        <input type="password" class="pw-form"/>
+                    </div>
+                    <div class="btn-wrapper">
+                        <a href="02_layout.html">아이디/비밀번호를 잊어버리셨나요?</a>
+                        <button class="sbtn btn1 join-btn">회원가입</button>
+                        <button class="sbtn btn4 login-btn">로그인</button>
+                    </div>
+                </form>
+            </div>
+
+
+            <span>
+            <div class="dropdown-wrapper">
+<!--                <button class="dropdown-btn dafault">-->
+<!--                    <span class="dropdown-btn-text">경고</span>-->
+<!--                    <span class="dropdown-arrow">-->
+<!--                        &lt;!&ndash; 참조 코드 &ndash;&gt;-->
+<!--&lt;!&ndash;                        <svg xmlns="http://www.w3.org/2000/svg"&ndash;&gt;-->
+<!--&lt;!&ndash;                             viewBox="0 0 16 16">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013&ndash;&gt;-->
+<!--&lt;!&ndash;                            2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796&ndash;&gt;-->
+<!--&lt;!&ndash;                            5.48a1 1 0 0 1-1.506 0z" />&ndash;&gt;-->
+<!--&lt;!&ndash;                        </svg>&ndash;&gt;-->
+<!--                        &lt;!&ndash; ================== &ndash;&gt;-->
+<!--                    </span>-->
+<!--                </button>-->
+<!--                <div class="dropdown-list-wrapper">-->
+<!--                    <div class="dropdown-list">-->
+<!--                        <ul class="dropdown-list-text"></ul>-->
+<!--                    </div>-->
+<!--                </div>-->
+                <select id="options" name="options">
+                    <option value="경고">경고</option>
+                    <option value="정지">정지</option>
+                    <option value="반려">반려</option>
+                </select>
+            </div>
+
+
+            <div class="search-wrapper">
+                <input class="search-bar" placeholder="검색어를 입력하세요"></input>
+                <button class="search-btn"></button>
+            </div>
+
+            </span>
+
+            <div class="radiobtn-wrapper">
+
+                <span class="radiobtn">
+                    <input id="option1" type="radio" name="option" value="공개" checked/>
+                    <label for="option1">공개</label>
+                </span>
+
+                <span class="radiobtn">
+                    <input id="option2" type="radio" name="option" value="비공개"/>
+                    <label for="option2">비공개</label>
+                </span>
+
+            </div>
+
+            <span class="checkbox_wrapper">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="check1" value="체크1" />
+                    <span>체크1</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="check2" value="체크2" />
+                    <span>체크2</span>
+                </label>
+            </span>
+
+
+
+            <div class="btn-align">
+                <button class="sbtn btn1">버튼</button>
+                <button class="sbtn btn2">버튼</button>
+                <button class="mbtn btn3">버튼</button>
+                <button class="lbtn btn4">버튼</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
