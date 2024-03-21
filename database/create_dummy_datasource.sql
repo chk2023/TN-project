@@ -1,8 +1,8 @@
 INSERT INTO tissuenetworkdb.tbl_member
 (member_id, member_pwd, member_gender, member_age, member_birth, member_subdate, member_status, have_tissue,
  member_authority)
-VALUES ('admin@gmail.com', 'admin', 'MALE', 20, '2012-12-12 00:00:00', '2024-03-19 00:00:00', 'A', 1000000, 'ADMIN'),
-       ('user01@gmail.com', 'pass01', 'FEMALE', 18, '2021-01-01 00:00:00', '2024-03-19 00:00:00', 'A', 0, 'ADMIN');
+VALUES ('admin@gmail.com', 'admin', 'MALE', 20, '2012-12-12 00:00:00', '2024-03-19 00:00:00', 'ACTIVE', 1000000, 'ADMIN'),
+       ('user01@gmail.com', 'pass01', 'FEMALE', 18, '2021-01-01 00:00:00', '2024-03-19 00:00:00', 'ACTIVE', 0, 'ADMIN');
 
 
 INSERT INTO tbl_tag(tag_name)
