@@ -38,4 +38,15 @@ public class TestController {
     public String gotoTestHubPage() {
         return "/common/testhub";
     }
+
+
+    /* 결제 */
+    @GetMapping("/member/purchase/purchase")
+    public void gotoPurchase() {}
+
+    @GetMapping("/member/purchase/purchase_success")
+    public void purchaseSuccess() {}
+
+    @GetMapping("/member/purchase/purchase_fail")
+    public void purchaseFail() {}
 }
