@@ -41,13 +41,8 @@
             tbl_member (member_id, member_pwd, member_gender, member_age, member_birth, member_subdate, member_status,
                       have_tissue, member_authority)
         VALUES
-            (#{memberId }, #{memberPwd }, #{memberGender }, #{memberAge }, #{memberBirth }, now(),
+            (#{ memberId }, #{ memberPwd }, #{ memberGender }, #{ memberAge }, #{ memberBirth }, now(),
             'ACTIVE', 0, 'COMMON')
     </insert>
 
-    <select id="test">
-        SELECT
-            *
-        FROM tbl_member
-    </select>
 </mapper>
