@@ -1,0 +1,15 @@
+DROP TABLE tissuenetworkdb.tbl_attachment;
+DROP TABLE tissuenetworkdb.tbl_block;
+DROP TABLE tissuenetworkdb.tbl_comments;
+DROP TABLE tissuenetworkdb.tbl_folder;
+DROP TABLE tissuenetworkdb.tbl_interest;
+DROP TABLE tissuenetworkdb.tbl_like_list;
+DROP TABLE tissuenetworkdb.tbl_manager;
+DROP TABLE tissuenetworkdb.tbl_member;
+DROP TABLE tissuenetworkdb.tbl_post;
+DROP TABLE tissuenetworkdb.tbl_post_tag;
+DROP TABLE tissuenetworkdb.tbl_profile;
+DROP TABLE tissuenetworkdb.tbl_r_category;
+DROP TABLE tissuenetworkdb.tbl_report;
+DROP TABLE tissuenetworkdb.tbl_tag;
+DROP TABLE tissuenetworkdb.tbl_tissue;
