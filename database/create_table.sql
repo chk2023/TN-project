@@ -127,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `tbl_post`
     `post_price`    INT NOT NULL COMMENT '글설정티슈',
     `post_wri_date`    DATETIME NOT NULL COMMENT '글작성시간',
     `post_view`    INT NOT NULL COMMENT '글조회수',
-    `p_member_code`    INT NOT NULL COMMENT '글작성자번호',
+    `po_member_code`    INT NOT NULL COMMENT '글작성자번호',
     `post_mod_date`    DATETIME COMMENT '글수정시간',
     `post_dele_date`    DATETIME COMMENT '글삭제시간',
     `post_is_deleted`    BOOLEAN DEFAULT false NOT NULL COMMENT '삭제여부',
@@ -152,7 +152,7 @@ CREATE UNIQUE INDEX `tbl_post-tag_PK` ON `tbl_post_tag`
 
 CREATE TABLE IF NOT EXISTS `tbl_profile`
 (
-    `p_member_code`    INT NOT NULL COMMENT '회원번호',
+    `pr_member_code`    INT NOT NULL COMMENT '회원번호',
     `profile_code`    INT NOT NULL AUTO_INCREMENT COMMENT '프로필번호',
     `profile_nickname`    VARCHAR(20) NOT NULL COMMENT '프로필닉네임',
     `profile_statmsg`    VARCHAR(50) COMMENT '프로필상태메세지',
@@ -160,11 +160,11 @@ CREATE TABLE IF NOT EXISTS `tbl_profile`
         COMMENT '프로필사진',
     `profile_bg_path`    VARCHAR(50) DEFAULT '/image/icon_default_photo.png' NOT NULL
         COMMENT '블로그배경사진',
-    PRIMARY KEY ( `profile_code`,`p_member_code` )
+    PRIMARY KEY ( `profile_code`,`pr_member_code` )
 ) COMMENT = '프로필';
 
 CREATE UNIQUE INDEX `tbl_profile_PK` ON `tbl_profile`
-    ( `profile_code`,`p_member_code` );
+    ( `profile_code`,`pr_member_code` );
 
 
 CREATE TABLE IF NOT EXISTS `tbl_r_category`
@@ -216,7 +216,7 @@ CREATE UNIQUE INDEX `tbl_tag_PK` ON `tbl_tag`
 
 CREATE TABLE IF NOT EXISTS `tbl_tissue`
 (
-    `order_code`    INT NOT NULL COMMENT '주문번호',
+    `order_code`    INT NOT NULL AUTO_INCREMENT COMMENT '주문번호',
     `order_class`    VARCHAR(10) NOT NULL COMMENT '상품구분',
     `order_date`    DATETIME NOT NULL COMMENT '일자',
     `tissue_price`    INT NOT NULL COMMENT '금액',
