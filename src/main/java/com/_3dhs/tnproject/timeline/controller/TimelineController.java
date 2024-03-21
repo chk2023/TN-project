@@ -18,12 +18,12 @@ public class TimelineController {
     private final PostService service;
 
     @GetMapping("/trendlist")
-    public void findTrendList(Model model) {
+    public String findTrendList(Model model) {
         List<PostDTO> trendList = service.findListWithLike();
-        //TODO VIEW 완성 안됨
+        trendList.sort((a,b)-> b.getLikeCount()-a.getLikeCount());
+
 
         model.addAttribute("trendList", trendList);
-
-
+        return "timeline/trendlist";
     }
 }

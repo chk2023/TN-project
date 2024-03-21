@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>TN - 인기글 조회</title>
@@ -9,6 +9,21 @@
 <button onclick="location.href='/timeline/latestList'">최신글 조회로</button>
 <button onclick="location.href='/timeline/recommendedlist'">추천글 조회로</button>
 <hr>
-
+<div th:each="trend : ${trendList}">
+    <table>
+        <tr>
+            <th>글 제목</th>
+            <th>글 본문</th>
+            <th>댓글 수</th>
+            <th>좋아요 수</th>
+        </tr>
+        <tr>
+            <td th:text="${trend.postTitle}"></td>
+            <td th:text="${trend.postText}"></td>
+            <td th:text="${trend.cmtCount}"></td>
+            <td th:text="${trend.likeCount}"></td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>
