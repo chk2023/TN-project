@@ -82,4 +82,11 @@
         FROM tbl_like_list
         WHERE post_code = #{postCode}
     </select>
+    <select id="findAttListByPostCode">
+        SELECT
+            *
+        FROM tbl_attachment
+        WHERE post_code = #{postCode}
+    </select>
+
 </mapper>
