@@ -28,4 +28,5 @@ public class PostDTO {
     private ProfileDTO profile;
     private int likeCount;
     private int cmtCount;
+    private List<TagDTO> tags;
 }

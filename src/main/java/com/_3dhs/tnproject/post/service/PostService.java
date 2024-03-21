@@ -20,8 +20,8 @@ public class PostService {
     public List<PostDTO> findListWithLike() {
         List<PostDTO> postList = postMapper.findListWithLike();
         for (int i = 0; i < postList.size(); i++) {
-            postList.get(i).setLikeCount(postMapper.findLikeCountByCode(postList.get(i).getPostCode()));
-            postList.get(i).setCmtCount(commentsMapper.findCmtCountByCode(postList.get(i).getPostCode()));
+            postList.get(i).setLikeCount(postMapper.findLikeCountByPostCode(postList.get(i).getPostCode()));
+            postList.get(i).setCmtCount(commentsMapper.findCmtCountByPostCode(postList.get(i).getPostCode()));
         }
         return postList;
     }

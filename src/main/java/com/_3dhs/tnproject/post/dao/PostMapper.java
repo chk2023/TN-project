@@ -13,5 +13,5 @@ public interface PostMapper {
 
     List<LikeListDTO> findLikeListByCode(int postCode);
 
-    int findLikeCountByCode(int postCode);
+    int findLikeCountByPostCode(int postCode);
 }
