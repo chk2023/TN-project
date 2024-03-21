@@ -1,6 +1,7 @@
 package com._3dhs.tnproject.member.dto;
 
 import com._3dhs.tnproject.member.model.Authority;
+import com._3dhs.tnproject.member.model.MemberGender;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,7 +18,7 @@ public class MemberDTO implements UserDetails {
     private int memberCode;
     private String memberId;
     private String memberPwd;
-    private String memberGender;
+    private MemberGender memberGender;
     private int memberAge;
     private LocalDateTime memberBirth;
     private LocalDateTime memberSubDate;
