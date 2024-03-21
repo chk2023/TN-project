@@ -23,6 +23,10 @@ public class TimelineController {
         List<PostDTO> trendList = service.findTrendList();
         trendList.forEach(content -> log.info("DTO : {}",content));
 
+
+
+
+
         model.addAttribute("trendList", trendList);
 
 
