@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/css/purchase.css">
+    <link rel="stylesheet" href="static/css/purchase.css">
     <title>purchase</title>
 
-    /* springboot 버전 추가 */
+    <!-- springboot 버전 추가 -->
     <script src="https://js.tosspayments.com/v1"></script>
 </head>
 <body>
@@ -35,7 +35,7 @@
 <section class="section">
     <div class="container">
         <button class="button is-link" onclick="pay('카드',jsons.card);">일반결제창</button>
-        <button class="button is-link" onclick="pay('가상계좌',jsons.vaccount);">가상계좌</button>
+<!--        <button class="button is-link" onclick="pay('가상계좌',jsons.vaccount);">가상계좌</button>-->
         <button class="button is-link" onclick="pay('계좌이체',jsons.transfer);">계좌이체</button>
         <button class="button is-link" onclick="pay('휴대폰',jsons.phone);">휴대폰</button>
         <button class="button is-link" onclick="pay('문화상품권',jsons.certificate);">문화상품권</button>
@@ -46,7 +46,7 @@
 </body>
 
 <script>
-    let amount = 50000;
+    let amount = 100;
 
     let tossPayments = TossPayments("test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq");
 
@@ -62,8 +62,10 @@
     }
 
     let path = "/";
-    let successUrl = window.location.origin + path + "success";
-    let failUrl = window.location.origin + path + "fail";
+    let successUrl = window.location.origin + path + "purchase_success";
+    let failUrl = window.location.origin + path + "purchase_fail";
+    // let successUrl = window.location.href = "purchase_success";
+    // let failUrl = window.location.href = "purchase_fail";
     let callbackUrl = window.location.origin + path + "va_callback";
     let orderId = new Date().getTime();
 

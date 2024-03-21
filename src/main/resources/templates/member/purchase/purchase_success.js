@@ -1,4 +1,4 @@
-import './style.css';
+import '../../../static/css/purchase.css';
 const urlParams = new URLSearchParams(window.location.search);
 const paymentKey = urlParams.get("paymentKey");
 const orderId = urlParams.get("orderId");

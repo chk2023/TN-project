@@ -1,4 +1,4 @@
-import './style.css';
+import '../../../static/css/purchase.css';
 const urlParams = new URLSearchParams(window.location.search);
 const errorCode = urlParams.get("code");
 const errorMessage = urlParams.get("message");

@@ -45,8 +45,12 @@ public class TestController {
     public void gotoPurchase() {}
 
     @GetMapping("/member/purchase/purchase_success")
-    public void purchaseSuccess() {}
+    public String purchaseSuccess() {
+     return "member/purchase/purchase_success";
+    }
 
     @GetMapping("/member/purchase/purchase_fail")
-    public void purchaseFail() {}
+    public String purchaseFail() {
+     return "member/purchase/purchase_fail";
+    }
 }
