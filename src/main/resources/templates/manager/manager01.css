@@ -8,22 +8,39 @@ html {
     display: flex;
 }
 
-
-
-
 .blog-folder {
-    width : 350px;
-    height : 477px;
-    border-radius : 19px;
-    list-style: none;
+    width: 350px;
+    height: 477px;
+    border-radius: 19px;
+    list-style : none;
     text-align: center;
     background-color: white;
+}
 
+#folder-head {
+    font-size : 1.25rem;
+    text-align : left;
+    margin-left : 55px;
+}
 
+#folder-name {
+    margin-top : 15px;
+    margin-bottom : 15px;
+    padding-left : 40px;
+    border-bottom : 1px #F1E3C8 solid;
+    text-align: left ;
 
 }
 
+button {
+    margin-left : 20px;
 
+}
+
+ul {
+    list-style : none;
+    text-align: left;
+}
 
 
 
@@ -34,9 +51,6 @@ html {
     background-color: white;
     margin-left : auto ;
     margin-right : auto ;
-
-
-
 }
 
 .timeLine > header {
@@ -47,14 +61,97 @@ html {
     text-align : center;
 }
 
-#pos-nav {
+#post-btn {
     background-color: lightskyblue;
     height : 45px ;
     text-align : center;
+    list-style: none;
+    margin : auto;
+    display : flex;
+}
 
+.tml-post1{
+    width : 600px;
+    height : 258px;
+    background-color: darkgray;
 
+}
 
+#tml-header1 {
+    width : 600px;
+    height : 108px;
+    background-color: white;
+}
 
+.tml-content1{
+    width : 600px;
+    height : 150px;
+    display : flex;
+
+}
+
+ p {
+    width : 340px;
+    height : 63px;
+    margin-left : 65px;
+    margin-right : 80px;
+}
+
+#tml-ss1 {
+    width : 91px;
+    height : 91px;
+    background-color: white;
+}
+
+.tml-post2{
+    width : 600px;
+    height : 258px;
+    background-color: darkgray;
+
+}
+
+#tml-header2 {
+    width : 600px;
+    height : 108px;
+    background-color: white;
+}
+
+.tml-content2{
+    width : 600px;
+    height : 150px;
+    display : flex;
+}
+
+#tml-ss2 {
+    width : 91px;
+    height : 91px;
+    background-color: white;
+}
+
+.tml-post3{
+    width : 600px;
+    height : 258px;
+    background-color: darkgray;
+
+}
+
+#tml-header3 {
+    width : 600px;
+    height : 108px;
+    background-color: white;
+}
+
+.tml-content3{
+    width : 600px;
+    height : 150px;
+    display : flex;
+
+}
+
+#tml-ss3 {
+    width : 91px;
+    height : 91px;
+    background-color: white;
 }
 
 .sideBar {
@@ -66,8 +163,38 @@ html {
 #profile {
     width : 350px;
     height : 197px;
-    background-color: white;
+    border-radius : 19px;
+    background-color: darkgray;
+}
+/*flex-wrap: wrap;*/
+/*flex-direction : colum;*/
+/*위에서 아래로*/
 
+#profile-header {
+    display : flex;
+    flex-wrap : wrap;
+}
+
+#photo {
+    margin-left : 35px;
+    margin-right: 30px;
+    width : 85px;
+    height: 90px;
+    border : 1px black solid;
+}
+
+#nickname  {
+    border : 1px black solid;
+}
+
+#statement {
+    border : 1px black solid ;
+}
+
+#profile-footer {
+    margin-top : 24.5px;
+    margin-left : 35px;
+    margin-bottom : 33px;
 }
 
 #nav-menu {
@@ -76,5 +203,6 @@ html {
     background-color: lightskyblue;
     margin-top : 30px ;
     text-align : center;
+    font-size : 1.25rem;
 
 }

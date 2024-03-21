@@ -12,10 +12,17 @@
     <!--button onclick="location.href='/layout/layout0-3'">레이아웃0-3</button-->
 </head>
 <body>
+
 <div class="container">
     <div class="blog-folder">
-        <button> 설정</button>
-        <ul> 전체 폴더 보기
+        <div id="folder-head">
+            <span id="folder-int"> 폴더 </span>
+            <button> 설정</button>
+        </div>
+
+        <div id="folder-name"> 전체 목록 (56)</div>
+
+        <ul>
             <li> 폴더 1</li>
             <li> 폴더 2</li>
             <li> 폴더 3</li>
@@ -32,27 +39,93 @@
 
     <div class="timeLine">
         <header> 메인페이지 이미지쓰</header>
-        <div id="pos-nav">
-            인기글
-            최신글
-            추천글
-            삼선
+        <ul id="post-btn">
+            <li>인기글</li>
+            <li>최신글</li>
+            <li>추천글</li>
+            <li>삼선</li>
+        </ul>
+
+        <div class="tml-post1">
+            <div id="tml-header1">
+
+                <span>프사</span>
+                <span>닉네임</span>
+                <span>상메</span>
+                <span>글 작성일</span>
+                <span> 글제목 </span>
+                <span>설정 </span>
+            </div>
+
+            <div class="tml-content1">
+                <p>
+                    어제 먹은 오트유가 이렇게 까지 썩어있을 줄이야 내가 알바였냐고 완전 방구대장 뿡뿡이 수준으로 만들어버리더니 오늘은 잠잠한거 보니 확실히 오트유가 문제였구나
+                </p>
+                <div id="tml-ss1">
+                    이 미 지 쓰이 미 지 쓰이 미 지 쓰이 미 지 쓰이 미 지 쓰
+                </div>
+            </div>
+        </div>
+
+
+        <div class="tml-post2">
+            <div id="tml-header2">
+                <span>프사</span>
+                <span>닉네임</span>
+                <span>상메</span>
+                <span>글 작성일</span>
+                <span> 글제목 </span>
+                <span>설정 </span>
+            </div>
+
+            <div class="tml-content2">
+                <p>
+                    어제 먹은 오트유가 이렇게 까지 썩어있을 줄이야 내가 알바였냐고 완전 방구대장 뿡뿡이 수준으로 만들어버리더니 오늘은 잠잠한거 보니 확실히 오트유가 문제였구나
+                </p>
+                <div id="tml-ss2">
+                    이 미 지 쓰이 미 지 쓰이 미 지 쓰이 미 지 쓰이 미 지 쓰
+                </div>
+            </div>
+        </div>
+
+        <div class="tml-post3">
+            <div id="tml-header3">
+                <span>프사</span>
+                <span>닉네임</span>
+                <span>상메</span>
+                <span>글 작성일</span>
+                <span> 글제목 </span>
+                <span>설정 </span>
+            </div>
+
+            <div class="tml-content3">
+                <p>
+                    어제 먹은 오트유가 이렇게 까지 썩어있을 줄이야 내가 알바였냐고 완전 방구대장 뿡뿡이 수준으로 만들어버리더니 오늘은 잠잠한거 보니 확실히 오트유가 문제였구나
+                </p>
+                <div id="tml-ss3">
+                    이 미 지 쓰이 미 지 쓰이 미 지 쓰이 미 지 쓰이 미 지 쓰
+                </div>
+            </div>
         </div>
     </div>
 
-
-
     <div class="sideBar">
         <div id="profile">
-            <span>프로필사진1 </span>
-            <span>닉네임 </span>
-            <br>
-            <div id="tissue">티슈 500개</div>
-            <span>내블로그 버튼 </span>
-
-
+            <div id="profile-header">
+                <div id="photo"> 프로필사진1 </div>
+                <div id="nickname"> 닉네임 </div>
+                <p id="statement"> 상태메시지 </p>
+            </div>
+            <!-- 상태 메시지가 닉네임 하단으로 들어가야 하는데 도대체 오또케 해야 하는걸까...
+            위치 정렬을 어떻게 해주면 좋은걸까... -->
+            <div id="profile-footer">
+                <span id="pro-tissue">티슈 500개</span>
+                <span>내블로그 버튼 </span>
+            </div>
         </div>
+
         <div id="nav-menu">
+            <br>
             <div id="home">홈</div>
             <div id="member-info">회원정보</div>
             <div id="payment">결제관리</div>
@@ -60,11 +133,19 @@
             <div id="R-cate1">관리기록 조회</div>
             <div id="R-cate2">신고기록 조회</div>
             <div id="search-mem">신고기록 조회</div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
             로그아웃
         </div>
 
     </div>
+
+
 </div>
+
 
 
 
