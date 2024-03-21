@@ -4,5 +4,9 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com._3dhs.tnproject.comments.dao.CommentsMapper">
-
+    <select id="findCmtCountByCode">
+        SELECT
+            COUNT(*)
+        FROM
+    </select>
 </mapper>

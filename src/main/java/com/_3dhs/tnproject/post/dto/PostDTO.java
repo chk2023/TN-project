@@ -26,6 +26,6 @@ public class PostDTO {
     private boolean isDeleted;
     private int folderCode;
     private ProfileDTO profile;
-    private List<LikeListDTO> likeLists;
     private int likeCount;
+    private int cmtCount;
 }

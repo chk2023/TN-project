@@ -53,18 +53,26 @@
         FROM tbl_post po
                  JOIN
              tbl_profile pr ON (po.po_member_code = pr.pr_member_code)
-                 LEFT JOIN
+                 INNER JOIN
              tbl_like_list li ON (li.post_code = po.post_code)
         WHERE po.post_status = 'PUBLIC'
           AND po.post_is_deleted = false
         ORDER BY po.post_code
     </select>
 
-    <select id="findLikeListsByCode" parameterType="int" resultMap="likeListMap">
+    <select id="findLikeListByCode" parameterType="int" resultMap="likeListMap">
         SELECT
-            *
+            post_code,
+            l_member_code,
+            is_private
         FROM
             tbl_like_list
-        WHERE post_code = ${postCode}
+        WHERE post_code = #{postCode}
+    </select>
+    <select id="findLikeCountByCode" parameterType="int">
+        SELECT
+            COUNT(*)
+        FROM tbl_like_list
+        WHERE post_code = #{postCode}
     </select>
 </mapper>

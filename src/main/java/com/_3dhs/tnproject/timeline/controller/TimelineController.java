@@ -1,8 +1,6 @@
 package com._3dhs.tnproject.timeline.controller;
-
 import com._3dhs.tnproject.post.dto.PostDTO;
 import com._3dhs.tnproject.post.service.PostService;
-import com._3dhs.tnproject.timeline.service.TimelineService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -22,11 +20,7 @@ public class TimelineController {
     @GetMapping("/trendlist")
     public void findTrendList(Model model) {
         List<PostDTO> trendList = service.findListWithLike();
-
-
-
-
-
+        //TODO VIEW 완성 안됨
 
         model.addAttribute("trendList", trendList);
 

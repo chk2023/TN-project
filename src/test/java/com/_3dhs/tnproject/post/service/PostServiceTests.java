@@ -16,27 +16,22 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class PostServiceTests {
     @Autowired
-    private PostMapper mapper;
+    private PostService postService;
 
     @Test
     void 의존성_주입_테스트() {
-        assertNotNull(mapper);
+        assertNotNull(postService);
     }
 
     @Test
     void 인기글리스트_조회테스트() {
-        List<PostDTO> lists = mapper.findListWithLike();
-        List<LikeListDTO> likeListDTOS = new ArrayList<>();
-//        lists.forEach(System.out::println);
-        for (PostDTO list : lists) {
-            if (list.getPostCode() == 4) {
-                likeListDTOS = list.getLikeLists();
-            }
+        List<PostDTO> postDTOList = postService.findListWithLike();
+        for (int i = 0; i < postDTOList.size(); i++) {
+            System.out.println("======="+postDTOList.get(i).getPostCode()+"=======");
+            System.out.println("likeCount");
+            System.out.println(postDTOList.get(i).getLikeCount());
         }
-        System.out.println("========테스트로그==============");
-        System.out.println(likeListDTOS.size());
-        likeListDTOS.forEach(System.out::println);
-        assertNotNull(lists);
+        assertNotNull(postDTOList);
     }
 
 
