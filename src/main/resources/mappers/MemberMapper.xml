@@ -8,10 +8,10 @@
 <!--<resultMap id="profileMap" type="com._3dhs.tnproject.member.dto.ProfileDTO">-->
 <!--    <id property="memberCode" column="member_code"/>-->
 <!--</resultMap>-->
-<!--<resultMap id="memberMap" type="com._3dhs.tnproject.member.dto.MemberDTO">-->
-<!--    <id property="memberCode" column="member_code"/>-->
-<!--    <association property="profile" resultMap="profileMap"/>-->
-<!--</resultMap>-->
+<resultMap id="memberMap" type="com._3dhs.tnproject.member.dto.MemberDTO">
+    <id property="memberCode" column="member_code"/>
+    <association property="profile" resultMap="profileMap"/>
+</resultMap>
 
     <select id="findByMemberId" resultType="com._3dhs.tnproject.member.dto.MemberDTO">
         SELECT
@@ -38,7 +38,7 @@
     
     <insert id="insertMember">
         INSERT INTO
-            tbl_menu (member_id, member_pwd, member_gender, member_age, member_birth, member_subdate, member_status,
+            tbl_member (member_id, member_pwd, member_gender, member_age, member_birth, member_subdate, member_status,
                       have_tissue, member_authority)
         VALUES
             (#{memberId }, #{memberPwd }, #{memberGender }, #{memberAge }, #{memberBirth }, now(),
