@@ -10,8 +10,8 @@ import lombok.ToString;
 public class ProfileDTO {
     private int memberCode;
     private int profileCode;
-    private String profilePhotoPath;
     private String profileNickname;
     private String profileStatmsg;
+    private String profileImgPath;
     private String profileBgPath;
 }

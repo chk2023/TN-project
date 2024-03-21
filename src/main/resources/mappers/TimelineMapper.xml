@@ -5,16 +5,16 @@
 
 <mapper namespace="com._3dhs.tnproject.timeline.dao.TimelineMapper">
     <resultMap id="profileMap" type="com._3dhs.tnproject.member.dto.ProfileDTO">
-        <id property="memberCode" column="member_code"/>
+        <id property="memberCode" column="pr_member_code"/>
         <result property="profileCode" column="profile_code"/>
         <result property="profileNickname" column="profile_nickname"/>
         <result property="profileStatmsg" column="profile_statmsg"/>
         <result property="profileBgPath" column="profile_bg_path"/>
-        <result property="profilePhotoPath" column="profile_photo_path"/>
+        <result property="profileImgPath" column="profile_img_path"/>
     </resultMap>
     <resultMap id="likeListMap" type="com._3dhs.tnproject.post.dto.LikeListDTO">
         <id property="postCode" column="post_code"/>
-        <result property="memberCode" column="member_code"/>
+        <result property="memberCode" column="l_member_code"/>
         <result property="isPrivate" column="is_private"/>
     </resultMap>
     <resultMap id="postMap" type="com._3dhs.tnproject.post.dto.PostDTO">
@@ -25,7 +25,7 @@
         <result property="postPrice" column="post_price"/>
         <result property="postWriDate" column="post_wri_date"/>
         <result property="postView" column="post_view"/>
-        <result property="memberCode" column="member_code"/>
+        <result property="memberCode" column="po_member_code"/>
         <result property="postModDate" column="post_mod_date"/>
         <result property="postDeleDate" column="post_dele_date"/>
         <result property="isDeleted" column="is_deleted"/>
@@ -43,20 +43,21 @@
                po.post_price,
                po.post_wri_date,
                po.post_view,
-               po.member_code,
+               po.po_member_code,
                po.post_mod_date,
                po.folder_code,
+               pr.pr_member_code,
                pr.profile_code,
                pr.profile_nickname,
                pr.profile_statmsg,
-               pr.profile_photo_path,
+               pr.profile_img_path,
                pr.profile_bg_path,
-                li.member_code,
-                li.post_code,
-                li.is_private
+               li.l_member_code,
+               li.post_code,
+               li.is_private
         FROM tissuenetworkdb.tbl_post po
                  JOIN
-             tissuenetworkdb.tbl_profile pr ON (po.member_code = pr.member_code)
+             tissuenetworkdb.tbl_profile pr ON (po.po_member_code = pr.pr_member_code)
                  JOIN
              tissuenetworkdb.tbl_like_list li ON (li.post_code = po.post_code)
         WHERE po.post_status = 'PUBLIC'

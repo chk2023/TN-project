@@ -151,6 +151,7 @@ VALUES ('BUY', '2024-03-19 00:00:00', 1000000, 1, 0);
 INSERT INTO tbl_comments(post_code, cmt_text, cmt_wri_date, member_code, parents_code)
 VALUES (10,'놀라운 글! 이것은 내개 매우 유용한.','2024-03-19 00:00:00',2,null);
 
-INSERT INTO tbl_profile(member_code, profile_nickname,profile_statmsg)
-VALUES (1,'힘샌관리자','새나라의 성실한 관리자'),
-       (2,'프로글쓴이','밥똥블로그 중...')
+INSERT INTO tbl_profile(pr_member_code, profile_nickname, profile_statmsg)
+VALUES (1, '힘샌관리자', '새나라의 성실한 관리자'),
+       (2, '프로글쓴이', '밥똥블로그 중...');
+
