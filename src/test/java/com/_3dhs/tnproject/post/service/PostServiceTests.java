@@ -30,8 +30,6 @@ public class PostServiceTests {
             System.out.println("======="+postDTOList.get(i).getPostCode()+"=======");
             System.out.println("likeCount");
             System.out.println(postDTOList.get(i).getLikeCount());
-            System.out.println("likeCount");
-            System.out.println(postDTOList.get(i).getProfile().getMemberBirth());
         }
         assertNotNull(postDTOList);
     }
