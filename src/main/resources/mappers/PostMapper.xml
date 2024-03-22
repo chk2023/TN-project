@@ -39,7 +39,7 @@
         <result property="isDeleted" column="is_deleted"/>
         <result property="folderCode" column="folder_code"/>
         <result property="profile.profileCode" column="profile_code"/>
-        <result property="profile.profileNickname" column="porfile_nickname"/>
+        <result property="profile.profileNickname" column="profile_nickname"/>
         <result property="profile.profileStatmsg" column="profile_statmsg"/>
         <result property="profile.profileImgPath" column="profile_img_path"/>
     </resultMap>

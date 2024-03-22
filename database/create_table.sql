@@ -99,8 +99,8 @@ CREATE TABLE IF NOT EXISTS `tbl_member`
 (
     `member_code`        INT         NOT NULL AUTO_INCREMENT
         COMMENT '회원번호',
-    `member_id`          VARCHAR(20) NOT NULL COMMENT '회원ID',
-    `member_pwd`         VARCHAR(20) NOT NULL COMMENT '회원PWD',
+    `member_id`          VARCHAR(50) NOT NULL COMMENT '회원ID',
+    `member_pwd`         VARCHAR(255) NOT NULL COMMENT '회원PWD',
     `member_gender`      VARCHAR(10) DEFAULT 'M' COMMENT '회원성별',
     `member_age`         INT COMMENT '회원나이',
     `member_birth`       DATETIME COMMENT '회원생일',

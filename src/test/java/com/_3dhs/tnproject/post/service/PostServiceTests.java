@@ -30,6 +30,9 @@ public class PostServiceTests {
             System.out.println("======="+postDTOList.get(i).getPostCode()+"=======");
             System.out.println("likeCount");
             System.out.println(postDTOList.get(i).getLikeCount());
+            postDTOList.get(i).getAttachmentList().forEach(System.out::println);
+            System.out.println(postDTOList.get(i).getAttachmentPath(0));
+            System.out.println("닉네임 : " + postDTOList.get(i).getProfile().getProfileNickname());
         }
         assertNotNull(postDTOList);
     }

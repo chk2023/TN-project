@@ -30,4 +30,14 @@ public class PostDTO {
     private int cmtCount;
 //    private List<TagDTO> tagList;
     private List<AttachmentDTO> attachmentList;
+
+
+    public String getAttachmentPath(int index) {
+        String path = "";
+        if (attachmentList.size() > index) {
+            path = attachmentList.get(index).getFilePath();
+            path += "/" + attachmentList.get(index).getSafeName();
+        } else path = "/image/icon_default_photo.png";
+        return path;
+    }
 }

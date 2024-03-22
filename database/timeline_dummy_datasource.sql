@@ -52,6 +52,6 @@ VALUES (2, 5),
 # 첨부파일 테스트를 위해 추가
 INSERT INTO tbl_attachment(origin_name, safe_name, file_path, post_code)
 VALUES ('cat.jpg','cat.jpg','/userUploadFiles',4),
- ('dog.jpg','dog.jpg','/userUploadFiles',4),
- ('tiger.jpg','tiger.jpg','/userUploadFiles',4),
- ('tree.jpg','tree.jpg','/userUploadFiles',4);
+ ('dog.jpg','dog.jpg','/userUploadFiles',7),
+ ('tiger.jpg','tiger.jpg','/userUploadFiles',8),
+ ('tree.jpg','tree.jpg','/userUploadFiles',5);
