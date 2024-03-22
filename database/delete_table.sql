@@ -13,3 +13,4 @@ DROP TABLE tissuenetworkdb.tbl_r_category;
 DROP TABLE tissuenetworkdb.tbl_report;
 DROP TABLE tissuenetworkdb.tbl_tag;
 DROP TABLE tissuenetworkdb.tbl_tissue;
+DROP VIEW tissuenetworkdb.post_view;
