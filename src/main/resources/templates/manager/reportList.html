@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DecList 신고 목록 조회</title>
+    <link href="reportList.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div id="title"> 신고목록 </div>
+    <div id="reportCate"> 신고 유형</div>
+        <ul>
+            <li> 댓글 </li>
+            <li> 포스팅 </li>
+        </ul>
+    <div>신고 내역</div>
+    <h3> 해당 유저는 너무 잦은 비방글을 올림미다~~~</h3>
+    <table id="reportList" style="text-align:center">
+        <tr>
+            <th> 신고 번호 </th>
+            <th> 신고 구분 </th>
+            <th> 신고 내용 </th>
+            <th> 유저 ID </th>
+            <th> 신고 날짜 </th>
+        </tr>
+<!--        <tr th:each="board : ${ boardList }" th:onclick="|location.href='/board/detail?boardNo=${board.boardNo}'|">-->
+<!--            <td th:text="${ board.boardNo }"></td>-->
+<!--            <td th:text="${ board.category.categoryName}"></td>-->
+<!--            <td th:text="${ board.boardTitle}"></td>-->
+<!--            <td th:text="${ board.writer.nickname}"></td>-->
+<!--            <td th:text="${ board.boardCount}"></td>-->
+<!--            <td th:text="${ board.createDate}"></td>-->
+
+<!--        </tr>-->
+<!--    </table>-->
+    <div id="pageView">1 | 2 | 3 | ... | 10 </div>
+    <div id="search"> 검색바 </div>
+
+</div>
+
+</body>
+</html>

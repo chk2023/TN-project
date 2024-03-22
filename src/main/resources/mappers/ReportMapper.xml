@@ -5,4 +5,25 @@
 
 <mapper namespace="com._3dhs.tnproject.manager.dao.ReportMapper">
 
+    <select id="viewAllReport" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">
+        SELECT
+            r_category_code,
+            report_text,
+            report_date,
+            report_status,
+            processing_date,
+            processing_text,
+            sub_member_code,
+            manager_code,
+            reporter_code,
+            report_content,
+            post_code,
+            cmt_code
+        FROM
+            tbl_report
+        ORDER BY
+            r_category_code
+    </select>
+
+
 </mapper>
