@@ -1,4 +1,4 @@
-import '../../../static/css/purchase.css';
+import '../../static/css/purchase.css';
 import { loadPaymentWidget, ANONYMOUS } from "@tosspayments/payment-widget-sdk";
 
 const main = async () => {

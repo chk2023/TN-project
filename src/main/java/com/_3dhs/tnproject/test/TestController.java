@@ -41,16 +41,10 @@ public class TestController {
 
 
     /* 결제 */
-    @GetMapping("/member/purchase/purchase")
+    @GetMapping("/purchase/purchase")
     public void gotoPurchase() {}
 
-    @GetMapping("/member/purchase/purchase_success")
-    public String purchaseSuccess() {
-     return "member/purchase/purchase_success";
-    }
+    @GetMapping("/purchase/purchase_test")
+    public void gotoPurchaseTest() {}
 
-    @GetMapping("/member/purchase/purchase_fail")
-    public String purchaseFail() {
-     return "member/purchase/purchase_fail";
-    }
 }

@@ -1,4 +1,4 @@
-package com._3dhs.tnproject.member.controller;
+package com._3dhs.tnproject.tissue.controller;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -21,8 +21,8 @@ import java.util.Base64;
 @RequestMapping(value="/")
 public class PurchaseController {
 
-    @GetMapping(value = "success")
-    public String paymentResult(
+    @GetMapping(value = "/purchase_success")
+    public String paymentSuccess(
             Model model,
             @RequestParam(value = "orderId") String orderId,
             @RequestParam(value = "amount") Integer amount,
@@ -80,11 +80,11 @@ public class PurchaseController {
             model.addAttribute("message", jsonObject.get("message").getAsString());
         }
 
-        return "success";
+        return "purchase_success";
     }
 
-    @GetMapping(value = "fail")
-    public String paymentResult(
+    @GetMapping(value = "/purchase_fail")
+    public String paymentFail(
             Model model,
             @RequestParam(value = "message") String message,
             @RequestParam(value = "code") Integer code
@@ -93,6 +93,6 @@ public class PurchaseController {
         model.addAttribute("code", code);
         model.addAttribute("message", message);
 
-        return "fail";
+        return "purchase_fail";
     }
 }

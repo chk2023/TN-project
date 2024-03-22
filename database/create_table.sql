@@ -220,6 +220,8 @@ CREATE TABLE IF NOT EXISTS `tbl_tissue`
     `order_class`    VARCHAR(10) NOT NULL COMMENT '상품구분',
     `order_date`    DATETIME NOT NULL COMMENT '일자',
     `tissue_price`    INT NOT NULL COMMENT '금액',
+    `payment_key`    VARCHAR(50) COMMENT '결제키',
+    `order_id`    VARCHAR(50) COMMENT '결제코드',
     `t_member_code`    INT NOT NULL COMMENT '회원번호',
     `post_code`    INT COMMENT '글번호',
     PRIMARY KEY ( `order_code` )
