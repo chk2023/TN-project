@@ -8,4 +8,6 @@ public interface MemberMapper {
     MemberDTO findByMemberId(String memberId);
 
     int insertMember(MemberDTO member);
+
+    String selectMemberById(String memberId);
 }

@@ -20,5 +20,8 @@ import java.net.Authenticator;
 @Slf4j
 @Controller
 public class MainController {
-
+    @GetMapping({"/main", "/"})
+    public String mainP() {
+        return "redirect:/member/login";
+    }
 }
