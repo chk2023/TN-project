@@ -21,5 +21,4 @@ mybatis:
 
 # image upload dir
 image:
-
   image-dir: src/main/resources/upload/
