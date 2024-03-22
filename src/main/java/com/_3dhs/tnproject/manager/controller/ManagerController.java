@@ -42,13 +42,14 @@ public class ManagerController {
 
     }
 
-    @GetMapping("/manager/reportList")
+    @GetMapping("/reportList")
     public String viewAllReportList(Model model) {
 
         List<ReportDTO> reportList = reportService.viewAllReport();
         model.addAttribute("reportList", reportList);
-        System.out.println("테스트 잘 불러와졋어?? : " + reportList);
+        System.out.println("신고 목록 : " + reportList);
         return "/manager/board/reportList";
+
 
 
     }
