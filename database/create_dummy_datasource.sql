@@ -1,8 +1,8 @@
 INSERT INTO tissuenetworkdb.tbl_member
 (member_id, member_pwd, member_gender, member_age, member_birth, member_subdate, member_status, have_tissue,
  member_authority)
-VALUES ('admin@gmail.com', 'admin', 'MALE', 20, '2012-12-12 00:00:00', '2024-03-19 00:00:00', 'A', 1000000, 'ADMIN'),
-       ('user01@gmail.com', 'pass01', 'FEMALE', 18, '2021-01-01 00:00:00', '2024-03-19 00:00:00', 'A', 0, 'ADMIN');
+VALUES ('admin@gmail.com', 'admin', 'MALE', 20, '2012-12-12 00:00:00', '2024-03-19 00:00:00', 'ACTIVE', 1000000, 'ADMIN'),
+       ('user01@gmail.com', 'pass01', 'FEMALE', 18, '2021-01-01 00:00:00', '2024-03-19 00:00:00', 'ACTIVE', 0, 'ADMIN');
 
 
 INSERT INTO tbl_tag(tag_name)
@@ -30,7 +30,7 @@ INSERT INTO tbl_folder(folder_name, folder_sequence)
 VALUES ('기본값폴더', 0);
 
 INSERT INTO tbl_post
-(post_title, post_text, post_status, post_price, post_wri_date, post_view, p_member_code)
+(post_title, post_text, post_status, post_price, post_wri_date, post_view, po_member_code)
 values ('테스트글제목1',
         '테스트용 포스트입니다. 이 글은 영국에서부터 시작되서 100년동안 어쩌구 저쩌구',
         'PUBLIC', 500, '2024-03-19 00:00:00', 20000, 1),
@@ -63,7 +63,7 @@ values ('테스트글제목1',
         'PUBLIC', 0, '2024-03-19 00:00:00', 2024, 1);
 # 비밀글 추가
 INSERT INTO tbl_post
-(post_title, post_text, post_status, post_price, post_wri_date, post_view, p_member_code)
+(post_title, post_text, post_status, post_price, post_wri_date, post_view, po_member_code)
 values ('테스트글제목11',
         '테스트용 포스트입니다. 이 글은 영국에서부터 시작되서 100년동안 어쩌구 저쩌구',
         'PRIVATE', 500, '2024-03-19 00:00:00', 20000, 1),
@@ -96,7 +96,7 @@ values ('테스트글제목11',
         'PRIVATE', 0, '2024-03-19 00:00:00', 2024, 1);
 #임시저장
 INSERT INTO tbl_post
-(post_title, post_text, post_status, post_price, post_wri_date, post_view, p_member_code)
+(post_title, post_text, post_status, post_price, post_wri_date, post_view, po_member_code)
 values ('테스트글제목21',
         '테스트용 포스트입니다. 이 글은 영국에서부터 시작되서 100년동안 어쩌구 저쩌구',
         'DRAFT', 500, '2024-03-19 00:00:00', 20000, 1),
