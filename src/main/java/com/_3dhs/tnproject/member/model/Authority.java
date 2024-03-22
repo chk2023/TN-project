@@ -1,5 +1,5 @@
 package com._3dhs.tnproject.member.model;
 
 public enum Authority {
-ADMIN, STANDARD
+ADMIN, COMMON
 }

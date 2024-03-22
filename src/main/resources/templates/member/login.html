@@ -1,10 +1,22 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>main page</title>
+    <script type="text/javascript" src="/js/event.js"></script>
 </head>
 <body>
-로그인 화면입니다 작성필요
+main page
+<hr>
+
+<h1>로그인</h1>
+<form action="/member/login" method="post" id="loginForm" name="loginForm">
+    <label>ID : </label>
+    <input type="text" name="memberId">
+    <label>PWD : </label>
+    <input type="password" name="memberPwd">
+    <input type="submit" value=" 로그인" id="loginSubmit">
+</form>
+    <button id="regist">회원가입</button>
 </body>
 </html>
