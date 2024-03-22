@@ -4,12 +4,25 @@
     <meta charset="UTF-8">
     <title>main page</title>
     <script type="text/javascript" src="/js/event.js"></script>
+    <style>
+        b{color:red}
+    </style>
 </head>
 <body>
 main page
 <hr>
-
+<p>
+    [관리자]<br>
+    ID : 1 <br>
+    PW : 1 <br>
+    [일반 유저] <br>
+    ID : (DB참고) <br>
+    PW : pass01 <br>
+    <b>머지 시에는 DB테이블이 바뀌었을 수 도 있으니 모든 테이블 드랍 후 다시 구성해주세요</b>
+</p>
 <h1>로그인</h1>
+<h3>테스트용 ID</h3>
+
 <form action="/member/login" method="post" id="loginForm" name="loginForm">
     <label>ID : </label>
     <input type="text" name="memberId">
