@@ -6,8 +6,8 @@ import com._3dhs.tnproject.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -59,6 +59,10 @@ public class ManagerController {
      if  신고횟수가 5이면 게시물정보를 가져와서
      게시물 아이디를 정지 or 삭제 처리
 
+//    @GetMapping("admin")
+//    public String adminP() {
+//        return "admin";
+//    }
      1. 일단 신고버튼 누르고 페이지 띄우는것
      2. 신고내용 적고 서브밋했을때
       db에 신고내용이랑 신고카운트가 저장이 잘되는지 확인*/
