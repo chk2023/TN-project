@@ -29,7 +29,7 @@
             <li>글 본문</li>
             <li th:text="${trend.postText}"></li>
             <li>썸네일</li>
-
+            <li><img th:src="${trend.thumbnailPath}" alt="썸네일이미지"> </li>
             <li>댓글 수</li>
             <li th:text="${trend.cmtCount}"></li>
             <li>좋아요 수</li>

@@ -21,8 +21,6 @@ public class TimelineController {
     public String findTrendList(Model model) {
         List<PostDTO> trendList = service.findListWithLike();
         trendList.sort((a,b)-> b.getLikeCount()-a.getLikeCount());
-
-
         model.addAttribute("trendList", trendList);
         return "timeline/trendlist";
     }

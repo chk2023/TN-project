@@ -30,6 +30,7 @@ public class PostDTO {
     private int cmtCount;
 //    private List<TagDTO> tagList;
     private List<AttachmentDTO> attachmentList;
+    private String thumbnailPath;
 
 
     public String getAttachmentPath(int index) {
@@ -39,5 +40,8 @@ public class PostDTO {
             path += "/" + attachmentList.get(index).getSafeName();
         } else path = "/image/icon_default_photo.png";
         return path;
+    }
+    public void makeThumbnailPath() {
+       thumbnailPath =  getAttachmentPath(0);
     }
 }
