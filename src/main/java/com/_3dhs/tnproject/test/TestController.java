@@ -34,8 +34,8 @@ public class TestController {
     @GetMapping("/layout/05_layout")
     public void goto05_layout() {
     }
-//    @GetMapping(value = {"/","/main"})
-//    public String gotoTestHubPage() {
-//        return "/common/testhub";
-//    }
+    @GetMapping(value = {"/common/testhub"})
+    public String gotoTestHubPage() {
+        return "/common/testhub";
+    }
 }
