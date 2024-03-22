@@ -49,3 +49,5 @@ VALUES (2, 5),
        (7, 11),
        (7, 10);
 
+INSERT INTO tbl_attachment(origin_name, safe_name, file_path, post_code)
+VALUES

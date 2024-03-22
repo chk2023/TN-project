@@ -228,4 +228,30 @@ CREATE TABLE IF NOT EXISTS `tbl_tissue`
 CREATE UNIQUE INDEX `tbl_tissue_PK` ON `tbl_tissue`
     ( `order_code` );
 
-
+CREATE VIEW view_post_contents AS
+SELECT po.post_code,
+       po.post_title,
+       po.post_text,
+       po.post_price,
+       po.post_view,
+       po.po_member_code,
+       po.folder_code,
+       pr.pr_member_code,
+       pr.profile_code,
+       pr.profile_nickname,
+       pr.profile_statmsg,
+       pr.profile_img_path,
+       mb.member_birth
+FROM tbl_post po
+         JOIN
+     tbl_profile pr ON (po.po_member_code = pr.pr_member_code)
+         JOIN
+     tbl_member mb ON (po.po_member_code = mb.member_code)
+WHERE po.post_status = 'PUBLIC'
+  AND po.post_is_deleted = false
+  AND EXISTS (
+    SELECT COUNT(*) like_count
+    FROM tbl_like_list li
+    WHERE li.post_code = po.post_code
+)
+ORDER BY po.post_code;
