@@ -23,16 +23,16 @@
             <th> 유저 ID </th>
             <th> 신고 날짜 </th>
         </tr>
-<!--        <tr th:each="board : ${ boardList }" th:onclick="|location.href='/board/detail?boardNo=${board.boardNo}'|">-->
-<!--            <td th:text="${ board.boardNo }"></td>-->
-<!--            <td th:text="${ board.category.categoryName}"></td>-->
-<!--            <td th:text="${ board.boardTitle}"></td>-->
-<!--            <td th:text="${ board.writer.nickname}"></td>-->
-<!--            <td th:text="${ board.boardCount}"></td>-->
-<!--            <td th:text="${ board.createDate}"></td>-->
+        <tr th:each="board : ${ boardList }" th:onclick="|location.href='/board/detail?boardNo=${board.boardNo}'|">
+            <td th:text="${ board.boardNo }"></td>
+            <td th:text="${ board.category.categoryName}"></td>
+            <td th:text="${ board.boardTitle}"></td>
+            <td th:text="${ board.writer.nickname}"></td>
+            <td th:text="${ board.boardCount}"></td>
+            <td th:text="${ board.createDate}"></td>
 
-<!--        </tr>-->
-<!--    </table>-->
+        </tr>
+    </table>
     <div id="pageView">1 | 2 | 3 | ... | 10 </div>
     <div id="search"> 검색바 </div>
 

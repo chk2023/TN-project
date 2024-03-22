@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>신고 게시판</title>
+</head>
+<body>
+<div>
+    <h1 align="center"> 신고 게시판 </h1>
+    <div>
+        <form id="registReportForm" action="/board/regist" method="post">
+            <table style="margin:auto;">
+                <tr> 신고 번호</tr>
+                <tr>
+                    <td>신고 구분</td>
+                    <td><select name="category.categoryCode">
+                        <option value="1">욕설/비방</option>
+                        <option value="1">음란/선정</option>
+                        <option value="1">기타</option>
+                    </select></td>
+                </tr>
+                <tr> 신고 사유
+                    <td colspan="3"><textarea name="boardBody" cols="60" rows="20"
+                                              style="resize:none;"></textarea></td>
+                </tr>
+            </table>
+            <br>
+            <div align="center">
+                <button type="button" th:onclick="'location.href\'board/reportList\''">
+                    취소
+                </button>
+                <button type="submit">등록하기</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
