@@ -59,6 +59,9 @@ public class MemberController {
         return "redirect:/";
     }
 
+    @GetMapping("/info")
+    public void memberPage(){}
+
     protected Authentication createNewAuthentication(String memberId) {
         UserDetails newPrincipal = authenticationService.loadUserByUsername(memberId);
         UsernamePasswordAuthenticationToken newAuth

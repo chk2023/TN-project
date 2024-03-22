@@ -5,4 +5,14 @@ window.onload = function () {
             location.href = "/member/regist";
         }
     }
+
+    if (document.getElementById("logout")) {
+        const $logout = document.getElementById("logout");
+        $logout.onclick = function () {
+            location.href = "/member/logout";
+        }
+    }
+
+
+
 }
