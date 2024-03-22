@@ -4,7 +4,7 @@
 2.0 - Layout
 3.0 - Page Design
 
-update : 2024-03-20
+update : 2024-03-22
 */
 /*------------------------------------------
     0.0     Font
@@ -90,17 +90,18 @@ update : 2024-03-20
     box-sizing: border-box;
     transition: ease .5s;
     appearance: none;
-    -moz-appearance: none; /*Firefox*/
-    -webkit-appearance: none; /*SafariandChrome*/
+    -moz-appearance: none;
+    -webkit-appearance: none;
 }
 
 *:hover {
-    transition: ease .5s;
+    transition: ease .3s;
 }
 
 *:after,
 *:before {
     position: absolute;
+    transition: ease .3s;
 }
 
 html,
@@ -129,9 +130,15 @@ span {
     font-size: 1rem;
 }
 
-a, button {
+a,
+button {
     cursor: pointer;
     background-color: transparent;
+}
+
+a:hover,
+button:hover {
+    opacity: 0.7;
 }
 
 img {
@@ -146,32 +153,17 @@ li {
     font-size: 1rem;
 }
 
+/*------------------------------------------
+    2.0     Layout
+ ------------------------------------------*/
+
+/* 2.1 form Layout */
+
 input:focus,
 textarea:focus,
 select:focus {
     outline: none;
 }
-
-
-/*------------------------------------------
-    2.0     Layout
- ------------------------------------------*/
-
-
-.wrap {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    padding: 0 calc((100% - 1360px) / 2);
-    overflow: hidden auto;
-}
-
-.wrap:not(:has(aside)) > main {
-    margin-left: 380px;
-}
-
-
-/* 24.03.20 추가 input radio check select */
 
 label {
     display: inline-flex;
@@ -249,33 +241,14 @@ option {
     outline: none;
     border-radius: 5px;
 }
+
 option:checked {
     color: #FFF;
     background-color: #85BFE2;
 }
 
-/* 24.03.20 추가 button */
-.btn.border {
-    background-color: #FFF;
-    border: 1px solid #448AC6;
-    color: #448AC6;
-}
+/* 2.2 table Layout */
 
-.btn.skyblue {
-    background-color: #85BFE2;
-}
-
-.paging button {
-    color: #317AA9;
-    margin: 0 5px;
-}
-
-.paging button:first-child,
-.paging button:last-child {
-    margin: 0;
-}
-
-/* 24.03.20 테이블*/
 table {
     width: 560px;
     border-collapse: collapse;
@@ -308,33 +281,46 @@ td {
     border-bottom: 1px #F2F2F2 solid;
 }
 
+/* 2.3 button Layout */
 
-/* button */
-a.btn,
-button.btn {
+.btn {
     color: #FFFFFF;
     background-color: #5C95C2;
     border-radius: 20px;
     padding: 5px 15px;
 }
 
-a.btn:hover,
-button.btn:hover {
-    opacity: 0.7;
+.btn.skyblue {
+    background-color: #85BFE2;
 }
 
-a.btn.gray,
-button.btn.gray {
+.btn.gray {
     color: #448AC6;
     background-color: #E1E1E1;
 }
-a.btn.border:hover,
-button.btn.border:hover {
+
+.btn.border {
+    background-color: #FFF;
+    border: 1px solid #448AC6;
+    color: #448AC6;
+}
+
+.btn.border:hover {
     background-color: #f5fbff;
 }
 
+/* 2.4 option Layout */
 
-/* optionBox */
+.optionBtn:not(.blogList .optionBtn) {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+*:has( > .optionBox) {
+    position: relative;
+}
+
 .optionBox {
     position: absolute;
     top: 20px;
@@ -372,14 +358,8 @@ button.btn.border:hover {
     color: #779289;
 }
 
-/*optionBtn*/
-.optionBtn:not(.blogList .optionBtn) {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-}
+/* 2.5 tab Layout */
 
-/* tabMenu */
 .tabMenu {
     display: flex;
 }
@@ -392,6 +372,10 @@ button.btn.border:hover {
     height: 45px;
 }
 
+.tabMenu li:not(.viewBtn) {
+    flex-grow: 1;
+}
+
 .tabMenu li.active {
     background-color: #5C95C2;
 }
@@ -400,12 +384,7 @@ button.btn.border:hover {
     color: #FFF;
 }
 
-.tabMenu li:not(.viewBtn) {
-    flex-grow: 1;
-}
-
 .tabMenu li:after {
-    position: absolute;
     bottom: 0;
     content: "";
     width: 0;
@@ -415,13 +394,81 @@ button.btn.border:hover {
 
 .tabMenu li:hover:after {
     width: 100%;
-    transition: ease .3s;
 }
 
 .viewBtn {
     width: 70px;
     background-color: #E8D1A5;
 }
+
+
+/*페이징 문제 수정중*/
+.paging .pagingNumBtn:disabled { font-weight: bold; }
+.paging .arrowBtn {background-color: #317AA9;}
+
+
+.paging .arrowBtn:disabled {background-color: #D9D9D9;}
+.paging .pagingFrontBtn:disabled~.pagingFrontBtn,
+.paging .pagingBackBtn:disabled~.pagingBackBtn{background-color: #D9D9D9;}
+.paging button:nth-of-type(1),
+.paging button:nth-last-of-type(1) { opacity: 0.7;}
+/*.paging button:not(.pagingNumBtn) { background-color: #317AA9}*/
+/*.paging button:not(.pagingNumBtn):disabled { background-color: #D9D9D9}*/
+/*.paging button:not(.pagingNumBtn):disabled ~ button {opacity: 0.7}*/
+
+
+
+
+
+
+
+
+
+.wrap {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    padding: 0 calc((100% - 1360px) / 2);
+    overflow: hidden auto;
+}
+
+.wrap:not(:has(aside)) > main {
+    margin-left: 380px;
+}
+
+
+
+
+/* 페이징바 버튼 */
+
+.paging {
+    display: flex;
+    align-items: center;
+}
+.paging button {
+    display: flex;
+    align-items: center;
+    color: #317AA9;
+    margin: 0 10px;
+}
+
+.paging button:first-child,
+.paging button:last-child {
+    margin: 0;
+}
+
+
+
+
+
+
+
+/* optionBox */
+
+
+/*optionBtn*/
+
+
 
 
 /* 2.1 header */
@@ -654,7 +701,6 @@ main {
 }
 
 .mprofStatus {
-    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -693,7 +739,6 @@ main {
 }
 
 .list_head {
-    position: relative;
     height: 80px;
     align-items: center;
     padding: 0 40px 0 20px;
