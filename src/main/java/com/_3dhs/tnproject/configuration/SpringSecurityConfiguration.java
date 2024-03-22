@@ -26,28 +26,30 @@ public class SpringSecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-            http
+            return http
                 /* CSRF 공격 방지는 기본적으로 활성화 되어 있어 비활성화 처리 */
                 .csrf(auth -> auth.disable())
                 /* 요청에 대한 권한 체크 */
                 .authorizeHttpRequests(auth -> {
-
                     auth.requestMatchers("/").permitAll(); //main 페이지와 login 페이지는 모두에게 허용.
-                    auth.requestMatchers("/admin").hasRole("ADMIN"); //ADMIN이라는 role을 가진 경우에만 허용
-                    auth.requestMatchers("/my/**").hasAnyRole("ADMIN", "USER"); // /my/ 뒤에는 여러 유저의 아이디가 올 수 있는데 일일이 지정할 수 없으니 와일드카드 처리.
+//                    auth.requestMatchers("/admin").hasRole("ADMIN"); //ADMIN이라는 role을 가진 경우에만 허용
+//                    auth.requestMatchers("/my/**").hasAnyRole("ADMIN", "USER"); // /my/ 뒤에는 여러 유저의 아이디가 올 수 있는데 일일이 지정할 수 없으니 와일드카드 처리.
                     auth.anyRequest().permitAll(); /* 위에 서술 된 패턴 외의 요청은 로그인한 사용자만 요청 허가 */
                 })
                 /* 로그인 설정 */
-                .formLogin(auth ->{
+                .formLogin(login ->{
                     /* 로그인 페이지 설정 */
-                    auth.loginPage("/");
-                    auth.loginProcessingUrl("/loginProc");
-                    auth.permitAll();
-//                    /* 성공 시 랜딩 페이지 설정 */
-//                    auth.defaultSuccessUrl("/");
-//                    /* 로그인 실패 시 랜딩 페이지 설정 */
-//                    auth.failureForwardUrl("/error/login");
-                });
+                    login.loginPage("/member/login");
+//                    login.loginProcessingUrl("/main");
+//                    login.permitAll();
+                    /* 성공 시 랜딩 페이지 설정 */
+                    login.defaultSuccessUrl("/common/testhub");
+                    /* 로그인 실패 시 랜딩 페이지 설정 */
+                    login.failureForwardUrl("/member/loginfail");
+                    /* 파라미터명 변경 */
+                    login.usernameParameter("memberId");
+                    login.passwordParameter("memberPwd");
+                })
 //                /* 로그아웃 설정 */
 //                .logout(logout ->{
 //                    /* 로그아웃 요청 URL */
@@ -65,7 +67,7 @@ public class SpringSecurityConfiguration {
 //                    /* 인가 되지 않았을 때 - 권한이 없는 기능을 요청했을 때 랜딩 될 페이지 */
 //                    exception.accessDeniedPage("/error/denied");
 //                })
-            return http.build();
+            .build();
 
     }
 }
