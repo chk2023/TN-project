@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 가입</title>
+    <script type="text/javascript" src="/js/event.js"></script>
+</head>
+<body>
+<h1>회원가입</h1>
+<hr>
+
+<form action="/regist" method="post">
+    아이디
+    <input type="text" maxlength="20" name="memberId" id="memberId" required>
+    <select id="optionalId" onchange="toggleOptionalId()">
+        <option value="default">직접입력</option>
+        <option value="gmail.com">@gmail.com</option>
+        <option value="naver.com">@naver.com</option>
+        <option value="daum.net">@daum.net</option>
+    </select>
+    <input type="button" value="중복확인" id="duplicationCheck"><br>
+    비밀번호
+    <input type="password" maxlength="20" name="memberPwd" required><br>
+    비밀번호 확인
+    <input type="password" maxlength="20" name="memberPwd2" required><br>
+    성별
+    <select name="memberGender">
+        <option value="MALE">남자</option>
+        <option value="FEMALE">여자</option>
+    </select><br>
+    나이
+    <input type="number" name="memberAge" min="0" max="100" required><br>
+    생일
+    <input type="date" name="memberBirth" id="memberBirth" required><br>
+    <input type="submit" value="가입하기">
+
+</form>
+
+</body>
+</html>
