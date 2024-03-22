@@ -45,8 +45,8 @@ public class ManagerController {
 
         List<ReportDTO> reportList = reportService.viewAllReport();
         model.addAttribute("reportList", reportList);
-
-        return "/manager/reportList";
+        System.out.println("테스트 잘 불러와졋어?? : " + reportList);
+        return "/manager/board/reportList";
 
 
     }
