@@ -8,6 +8,8 @@ import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -66,5 +68,11 @@ public class ManagerController {
      1. 일단 신고버튼 누르고 페이지 띄우는것
      2. 신고내용 적고 서브밋했을때
       db에 신고내용이랑 신고카운트가 저장이 잘되는지 확인*/
+
+
+    @GetMapping("admin")
+    public String adminP() {
+        return "admin";
+    }
 
 }
