@@ -281,7 +281,39 @@ td {
     border-bottom: 1px #F2F2F2 solid;
 }
 
-/* 2.3 button Layout */
+/* 2.3 pagingBar Layout */
+
+.paging,
+.paging button {
+    display: flex;
+    align-items: center;
+}
+.paging button {
+    color: #317AA9;
+    margin: 0 10px;
+}
+
+.paging button:nth-of-type(1),
+.paging button:nth-last-of-type(1) {
+    opacity: 0.7;
+    margin: 0;
+}
+
+.paging .arrowBtn {
+    background-color: #317AA9;
+}
+
+.paging .arrowBtn:disabled,
+.paging .pagingFrontBtn:has(+.pagingFrontBtn:disabled),
+.paging .pagingBackBtn:disabled + .pagingBackBtn {
+    background-color: #D9D9D9;
+}
+
+.paging .pagingNumBtn:disabled {
+    font-weight: bold;
+}
+
+/* 2.4 button Layout */
 
 .btn {
     color: #FFFFFF;
@@ -309,7 +341,7 @@ td {
     background-color: #f5fbff;
 }
 
-/* 2.4 option Layout */
+/* 2.5 optionBtn Layout */
 
 .optionBtn:not(.blogList .optionBtn) {
     position: absolute;
@@ -358,7 +390,7 @@ td {
     color: #779289;
 }
 
-/* 2.5 tab Layout */
+/* 2.6 tab Layout */
 
 .tabMenu {
     display: flex;
@@ -401,29 +433,7 @@ td {
     background-color: #E8D1A5;
 }
 
-
-/*페이징 문제 수정중*/
-.paging .pagingNumBtn:disabled { font-weight: bold; }
-.paging .arrowBtn {background-color: #317AA9;}
-
-
-.paging .arrowBtn:disabled {background-color: #D9D9D9;}
-.paging .pagingFrontBtn:disabled~.pagingFrontBtn,
-.paging .pagingBackBtn:disabled~.pagingBackBtn{background-color: #D9D9D9;}
-.paging button:nth-of-type(1),
-.paging button:nth-last-of-type(1) { opacity: 0.7;}
-/*.paging button:not(.pagingNumBtn) { background-color: #317AA9}*/
-/*.paging button:not(.pagingNumBtn):disabled { background-color: #D9D9D9}*/
-/*.paging button:not(.pagingNumBtn):disabled ~ button {opacity: 0.7}*/
-
-
-
-
-
-
-
-
-
+/* 2.7 wrap Layout*/
 .wrap {
     display: flex;
     width: 100%;
@@ -436,42 +446,8 @@ td {
     margin-left: 380px;
 }
 
+/* 2.8 header Layout*/
 
-
-
-/* 페이징바 버튼 */
-
-.paging {
-    display: flex;
-    align-items: center;
-}
-.paging button {
-    display: flex;
-    align-items: center;
-    color: #317AA9;
-    margin: 0 10px;
-}
-
-.paging button:first-child,
-.paging button:last-child {
-    margin: 0;
-}
-
-
-
-
-
-
-
-/* optionBox */
-
-
-/*optionBtn*/
-
-
-
-
-/* 2.1 header */
 header {
     order: 1;
 }
@@ -484,72 +460,10 @@ header, aside {
     padding-top: 30px;
 }
 
-/* 2.2 title */
-.title {
-    position: sticky;
-    display: flex;
-    align-items: center;
-    width: 600px;
-    height: 55px;
-    top: 0;
-    padding: 0 20px;
-    background-color: #FFFFFF;
-    border-bottom: 1px solid #E1E1E1;
-    z-index: 2;
-}
-
-.title input,
-.title textarea {
-    display: block;
-    width: 100%;
-    border: none;
-}
-
-.title > div {
-    display: block;
-    width: calc(100% - 35px);
-    padding: 0 40px;
-}
-
-.title:not(:has(.backBtn)) > div {
-    margin-left: 15px;
-}
-
-.title button {
-    font-size: 0;
-    background-color: transparent;
-}
-
-
-.title .search_input,
-.title .closeBtn {
-    display: none;
-    border: none;
-}
-
-/* 2.3 title.search */
-.title.search > div {
-    display: none;
-}
-
-.title.search .backBtn,
-.title.search .searchBtn {
-    display: none;
-}
-
-.title.search input,
-.title.search .closeBtn {
-    display: block;
-}
-
-.title.search input {
-    padding-left: 40px;
-    background-image: url("../image/btn_search.png");
-    background-position: left center;
-}
-
-/* 2.4 profile */
-.profile, nav, .folder {
+/* 2.9 header - profile Layout */
+.profile,
+nav,
+.folder {
     position: relative;
     min-width: 350px;
     border-radius: 20px;
@@ -562,7 +476,6 @@ header, aside {
     padding: 30px 25px;
     margin-bottom: 30px;
 }
-
 
 .profileStatus {
     display: flex;
@@ -613,7 +526,8 @@ header, aside {
     margin-left: 15px;
 }
 
-/* 2.5 nav */
+/* 2.10 header - nav Menu Layout */
+
 nav {
     padding: 90px 65px 55px;
 }
@@ -638,7 +552,8 @@ nav li:first-child {
     color: #779289;
 }
 
-/* 2.6 folder */
+/* 2.11 folder Layout */
+
 .folder {
     padding: 30px 30px 60px;
 }
@@ -675,10 +590,12 @@ strong.minTit {
     right: 25px;
 }
 
-
 /*------------------------------------------
     3.0     Page Design
  ------------------------------------------*/
+
+/* 3.1 main */
+
 main {
     width: 600px;
     height: fit-content;
@@ -687,7 +604,73 @@ main {
     background-color: #FFF;
 }
 
-/* 프로필 영역 */
+/* 3.2 pageTitle default Layout */
+
+.title {
+    position: sticky;
+    display: flex;
+    align-items: center;
+    width: 600px;
+    height: 55px;
+    top: 0;
+    padding: 0 20px;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #E1E1E1;
+    z-index: 2;
+}
+
+.title input,
+.title textarea {
+    display: block;
+    width: 100%;
+    border: none;
+}
+
+.title > div {
+    display: block;
+    width: calc(100% - 35px);
+    padding: 0 40px;
+}
+
+.title:not(:has(.backBtn)) > div {
+    margin-left: 15px;
+}
+
+.title button {
+    font-size: 0;
+    background-color: transparent;
+}
+
+.title .search_input,
+.title .closeBtn {
+    display: none;
+    border: none;
+}
+
+/* 3.3 pageTitle search Layout */
+
+.title.search > div {
+    display: none;
+}
+
+.title.search .backBtn,
+.title.search .searchBtn {
+    display: none;
+}
+
+.title.search input,
+.title.search .closeBtn {
+    display: block;
+}
+
+.title.search input {
+    padding-left: 40px;
+    background-image: url("../image/btn_search.png");
+    background-position: left center;
+}
+
+/* 3.4 blog page profile Layout */
+
 .mainProfile {
     border-bottom: 1px solid #E1E1E1;
 }
@@ -728,8 +711,8 @@ main {
     margin-right: 30px;
 }
 
+/* 3.5 blog type list Layout */
 
-/* 24.03.21 추가 레이아웃 조회 */
 .blogList li:not(.optionBox li) {
     border-bottom: 1px solid #E1E1E1;
 }
@@ -777,7 +760,7 @@ main {
     margin-bottom: 20px;
 }
 
-.list_body .contentsTxt, /* 블로그는 3줄 고정인데 반해 SnS는 몇줄로 갈것인지 fixed로 가야할듯 */
+.list_body .contentsTxt,
 .snsList .list_body .contentsTxt {
     white-space: normal;
     display: -webkit-box;
@@ -794,7 +777,6 @@ main {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
 
 .list_body:not(.snsList .list_body) .thumbnailPhoto {
     width: 100px;
@@ -818,8 +800,6 @@ main {
     opacity: 0.8;
 }
 
-
-
 .list_body:not(.snsList .list_body) .showLikeAndComments > * {
     display: inline-flex;
     align-items: center;
@@ -833,7 +813,6 @@ main {
     margin-right: 10px;
 }
 
-
 .list_body .showLikeAndComments {
     margin-top: 20px;
 }
@@ -842,7 +821,7 @@ main {
     content: url("../image/icon_like_active.png");
 }
 
-
+/* 3.6 sns type list Layout */
 
 .snsList .list_body {
     flex-direction: column;
@@ -853,7 +832,6 @@ main {
     margin-top: 20px;
 }
 
-
 .snsList .list_body .showLikeAndComments {
     position: absolute;
     bottom: 20px;
@@ -862,9 +840,7 @@ main {
     justify-content: space-between;
 }
 
-
 .snsList .list_body .showLikeAndComments img {
     display: block;
     margin: 0 auto 5px auto;
 }
-
