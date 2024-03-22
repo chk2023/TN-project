@@ -8,15 +8,13 @@
         <div>
             <table style="margin:auto">
             <tr>
-                <td> 신고 대상 </td>
-                <td> <p th:text="${ board.reportTarget}"></p></td>
-                <td> 신고 구분 </td>
-                <td> <p th:text="${ board.reportCategory}"></p></td>
-                <td> 신고 내용 </td>
+
+                <td><p th:text="${ reportList.reportCode}"></p> 신고 번호</td>
+                <td> <p th:text="${ board.reportTarget}"></p>신고 대상</td>
+                <td> <p th:text="${ board.reportCategory}"></p>신고 구분</td>
                 <td colspan="3"><textarea name="reportBody" cols="60" rows="20" style="resize:none;"
-                                          readonly th:text="${ board.reportBody}"></textarea></td>
-                <td> 작성자 </td>
-                <td><p th:text="${ board.repoter }"></p></td>
+                                          readonly th:text="${ board.reportBody}"></textarea>신고 내용</td>
+                <td><p th:text="${ board.repoter }"></p>작성자</td>
 
 
             </tr>

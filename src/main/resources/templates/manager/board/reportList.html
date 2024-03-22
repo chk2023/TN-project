@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>DecList 신고 목록 조회</title>
-    <link href="reportList.css" type="text/css" rel="stylesheet">
+    <link href="/css/reportList.css" type="text/css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
@@ -22,12 +22,13 @@
             <th> 신고 내용 </th>
             <th> 신고자  </th>
         </tr>
-        <tr th:each="board : ${ reportList }" th:onclick="|location.href='/board/detail?boardNo=${board.boardNo}'|">
-            <td th:text="${ board.boardNo }"></td>
-            <td th:text="${ board.reportTarget }"></td>
-            <td th:text="${ board.reportCategory }"></td>
-            <td th:text="${ board.reportBody }"></td>
-            <td th:text="${ board.repoter }"></td>
+        <tr th:each="ReportDTO : ${reportList}" th:onclick="|location.href='/board/detail?boardNo=' + ${ReportDTO.reportCode}|">
+
+            <td th:text="${ ReportDTO.getReportCode}"></td>
+            <td th:text="${ ReportDTO.getReportContent }"></td>
+            <td th:text="${ ReportDTO.getRCategoryCode }"></td>
+            <td th:text="${ ReportDTO.getReportText}"></td>
+            <td th:text="${ ReportDTO.getReporterCode }"></td>
 
         </tr>
     </table>

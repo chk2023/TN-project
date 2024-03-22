@@ -184,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `tbl_report`
     `report_code`     INT         NOT NULL AUTO_INCREMENT
         COMMENT '신고번호',
     `r_category_code` INT         NOT NULL COMMENT '신고구분코드',
-    `report_text`     VARCHAR(50) COMMENT '신고내용',
+    `report_text`     VARCHAR(255) COMMENT '신고내용',
     `report_date`     DATETIME    NOT NULL COMMENT '신고일자',
     `report_status`   VARCHAR(10) COMMENT '처리상태',
     `processing_date` DATETIME COMMENT '처리날짜',
