@@ -89,6 +89,9 @@ update : 2024-03-20
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     transition: ease .5s;
+    appearance: none;
+    -moz-appearance: none; /*Firefox*/
+    -webkit-appearance: none; /*SafariandChrome*/
 }
 
 *:after,
@@ -116,12 +119,10 @@ h1 {
 
 a, img, span, em, strong, label {
     display: inline-block;
-    vertical-align: middle;
 }
 
 span {
     font-size: 1rem;
-    vertical-align: baseline;
 }
 
 a, button {
@@ -141,9 +142,12 @@ li {
     font-size: 1rem;
 }
 
-input:focus, textarea:focus {
+input:focus,
+textarea:focus,
+select:focus {
     outline: none;
 }
+
 
 /* button */
 a.btn, button.btn {
@@ -248,6 +252,7 @@ header, aside {
     padding: 0 20px;
     background-color: #FFFFFF;
     border-bottom: 1px solid #E1E1E1;
+    z-index: 1;
 }
 
 .title input,
@@ -410,7 +415,6 @@ strong.minTit {
 
 .folder img {
     margin-right: 15px;
-    vertical-align: baseline;
 }
 
 .folderSetBtn {
@@ -471,6 +475,137 @@ main {
 
 .mprofStatus .prof_info span {
     margin-right: 30px;
+}
+
+
+/* 24.03.20 추가 input radio check select */
+
+label {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 30px;
+    color: #404040;
+}
+
+label:last-of-type {
+    margin-right: 0;
+}
+
+input:not(input[type="radio"],
+        input[type="checkbox"]),
+select,
+textarea {
+    display: flex;
+    align-items: center;
+    border: 1px solid #E1E1E1;
+    padding: 0 20px;
+    border-radius: 5px;
+}
+
+input {
+    height: 45px;
+    color: #595959;
+}
+
+input::placeholder {
+    color: #A8A8A8;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    display: inline-block;
+    border: 1px solid #779289;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-right: 10px;
+}
+
+[type="radio"] {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+}
+
+[type="radio"]:checked {
+    background-image: url(../image/icon_radio_active.png);
+}
+
+input[type="checkbox"] {
+    width: 21px;
+    height: 21px;
+    border-width: 2px;
+    border-radius: 3px;
+}
+
+input[type="checkbox"]:checked {
+    background-image: url(../image/icon_check_active.png);
+}
+
+select {
+    min-width: 160px;
+    height: 30px;
+    padding: 0 30px 0 10px;
+    background-image: url(../image/icon_select_arrow.png);
+    background-position: calc(100% - 10px) center;
+}
+
+option {
+    font-size: 14px;
+}
+
+
+/* 24.03.20 추가 button */
+.btn.border {
+    background-color: #FFF;
+    border: 1px solid #448AC6;
+    color: #448AC6;
+}
+
+.btn.skyblue {
+    background-color: #85BFE2;
+}
+
+.paging button {
+    color: #317AA9;
+    margin: 0 5px;
+}
+
+.paging button:first-child,
+.paging button:last-child {
+    margin: 0;
+}
+
+/* 24.03.20 테이블*/
+table {
+    width: 560px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    color: #85BFE2;
+    font-size: medium;
+    text-align: center;
+    margin: auto;
+}
+
+th,
+td {
+    vertical-align: middle;
+}
+
+th {
+    height: 40px;
+    font-size: 15px;
+    border-bottom: 1px #E1E1E1 solid;
+    color: #448AC6;
+}
+
+td {
+    height: 35px;
+    font-size: 14px;
+    color: #85BFE2;
+    margin: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-bottom: 1px #F2F2F2 solid;
 }
 
 
