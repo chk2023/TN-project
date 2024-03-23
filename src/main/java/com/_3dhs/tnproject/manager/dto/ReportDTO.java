@@ -1,5 +1,7 @@
 package com._3dhs.tnproject.manager.dto;
 
+import com._3dhs.tnproject.manager.model.ReportContents;
+import com._3dhs.tnproject.manager.model.ReportState;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,13 +16,13 @@ public class ReportDTO {
     private int rCategoryCode;
     private String reportText;
     private LocalDateTime reportDate;
-    private String reportStatus; //TODO : enum 사용할지 작업자 재량
+    private ReportState reportStatus;
     private LocalDateTime processingDate;
     private String processingText;
     private int subMemberCode;
     private int managerCode;
     private int reporterCode;
-    private String reportContent;
+    private ReportContents reportContent;
     private Integer postCode;
     private Integer cmtCode;
 }

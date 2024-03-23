@@ -7,14 +7,15 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
 @ToString
 public class PostDTO {
     private int postCode;
-    private String PostTitle;
-    private String PostText;
+    private String postTitle;
+    private String postText;
     private PostState postState;
     private  int postPrice;
     private LocalDateTime postWriDate;
@@ -25,5 +26,22 @@ public class PostDTO {
     private boolean isDeleted;
     private int folderCode;
     private ProfileDTO profile;
+    private int likeCount;
+    private int cmtCount;
+//    private List<TagDTO> tagList;
+    private List<AttachmentDTO> attachmentList;
+    private String thumbnailPath;
 
+
+    public String getAttachmentPath(int index) {
+        String path = "";
+        if (attachmentList.size() > index) {
+            path = attachmentList.get(index).getFilePath();
+            path += "/" + attachmentList.get(index).getSafeName();
+        } else path = "/image/icon_default_photo.png";
+        return path;
+    }
+    public void makeThumbnailPath() {
+       thumbnailPath =  getAttachmentPath(0);
+    }
 }

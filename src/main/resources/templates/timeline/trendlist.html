@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>TN - 인기글 조회</title>
+</head>
+<body>
+<h1>인기글 조회</h1>
+<button onclick="location.href='/timeline/latestList'">최신글 조회로</button>
+<button onclick="location.href='/timeline/recommendedlist'">추천글 조회로</button>
+<hr>
+<div th:each="trend : ${trendList}">
+    <div>
+        <ul>
+            <li>프로필</li>
+            <li><img th:src="${trend.profile.profileImgPath}" alt="프로필이미지"> </li>
+            <li>닉네임</li>
+            <li th:text="${trend.profile.profileNickname}"></li>
+            <li>작성일</li>
+            <li th:text="${trend.postWriDate}"></li>
+            <li>상태메시지</li>
+            <li th:text="${trend.profile.profileStatmsg}"></li>
+        </ul>
+    </div>
+    <div>
+        <ul>
+            <li>글 제목</li>
+            <li th:text="${trend.postTitle}"></li>
+            <li>글 본문</li>
+            <li th:text="${trend.postText}"></li>
+            <li>썸네일</li>
+            <li><img th:src="${trend.thumbnailPath}" alt="썸네일이미지"> </li>
+            <li>댓글 수</li>
+            <li th:text="${trend.cmtCount}"></li>
+            <li>좋아요 수</li>
+            <li th:text="${trend.likeCount}"></li>
+        </ul>
+    </div>
+    <hr>
+</div>
+</body>
+</html>

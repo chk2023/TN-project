@@ -1,12 +1,15 @@
 package com._3dhs.tnproject.member.dto;
 
 import com._3dhs.tnproject.member.model.Authority;
+import com._3dhs.tnproject.member.model.MemberGender;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
@@ -17,9 +20,9 @@ public class MemberDTO implements UserDetails {
     private int memberCode;
     private String memberId;
     private String memberPwd;
-    private String memberGender;
+    private MemberGender memberGender;
     private int memberAge;
-    private LocalDateTime memberBirth;
+    private LocalDate memberBirth;
     private LocalDateTime memberSubDate;
     private String memberStatus;
     private int haveTissue;
@@ -62,4 +65,6 @@ public class MemberDTO implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 }
