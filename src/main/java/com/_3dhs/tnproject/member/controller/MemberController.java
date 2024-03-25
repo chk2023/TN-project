@@ -39,11 +39,11 @@ public class MemberController {
     @GetMapping(value = {"/login"})
     public void loginPage(){}
 
-//    @PostMapping("/loginfail")
-//    public String loginFailed(RedirectAttributes rttr) {
-//        rttr.addFlashAttribute("message", messageSourceAccessor.getMessage("error.login"));
-//        return "redirect:/";
-//    }
+    @PostMapping("/loginfail")
+    public String loginFailed(RedirectAttributes rttr) {
+        rttr.addFlashAttribute("message", messageSourceAccessor.getMessage("error.login"));
+        return "redirect:/";
+    }
 
     @GetMapping("/regist")
     public void registPage(){}

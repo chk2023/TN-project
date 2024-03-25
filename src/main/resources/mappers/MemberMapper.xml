@@ -25,7 +25,7 @@
             tbl_member
         <where>
             <if test="memberId != null">
-                AND member_id = #{memberId}
+                member_id = #{memberId}
             </if>
         </where>
     </select>
@@ -37,7 +37,7 @@
         tbl_member
         <where>
             <if test="memberId != null">
-                AND member_id = #{memberId}
+                member_id = #{memberId}
             </if>
         </where>
     </select>
