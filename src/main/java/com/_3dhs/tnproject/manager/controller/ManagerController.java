@@ -8,7 +8,6 @@ import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -47,7 +46,7 @@ public class ManagerController {
         List<ReportDTO> reportList = reportService.viewAllReport();
         model.addAttribute("reportList", reportList);
 
-        return "manager/reportList";
+        return "manager(01)";
 
 
     }
