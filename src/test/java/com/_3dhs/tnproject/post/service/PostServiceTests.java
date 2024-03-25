@@ -1,13 +1,10 @@
 package com._3dhs.tnproject.post.service;
 
-import com._3dhs.tnproject.post.dao.PostMapper;
-import com._3dhs.tnproject.post.dto.LikeListDTO;
 import com._3dhs.tnproject.post.dto.PostDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -25,7 +22,7 @@ public class PostServiceTests {
 
     @Test
     void 인기글리스트_조회테스트() {
-        List<PostDTO> postDTOList = postService.findListWithLike();
+        List<PostDTO> postDTOList = postService.findListWithLike(index, range);
         for (int i = 0; i < postDTOList.size(); i++) {
             System.out.println("======="+postDTOList.get(i).getPostCode()+"=======");
             System.out.println("likeCount");

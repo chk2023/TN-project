@@ -17,8 +17,8 @@ public class PostService {
     private final CommentsMapper commentsMapper;
 
     @Transactional(readOnly = true)
-    public List<PostDTO> findListWithLike() {
-        List<PostDTO> postList = postMapper.findListWithLike();
+    public List<PostDTO> findListWithLike(int index, int range) {
+        List<PostDTO> postList = postMapper.findListWithLike(index,range);
         for (int i = 0; i < postList.size(); i++) {
             postList.get(i).setAttachmentList(postMapper.findAttListByPostCode(postList.get(i).getPostCode()));
             postList.get(i).makeThumbnailPath();

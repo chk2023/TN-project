@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper
 public interface PostMapper {
-    List<PostDTO> findListWithLike();
+    List<PostDTO> findListWithLike(int index, int range);
 
     List<LikeListDTO> findLikeListByCode(int postCode);
 

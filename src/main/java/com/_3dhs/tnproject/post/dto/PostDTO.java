@@ -27,11 +27,35 @@ public class PostDTO {
     private int folderCode;
     private ProfileDTO profile;
     private int likeCount;
+    private String likeCountStr;
     private int cmtCount;
-//    private List<TagDTO> tagList;
+    private  String cmtCountStr;
+    private List<TagDTO> tagList;
     private List<AttachmentDTO> attachmentList;
     private String thumbnailPath;
 
+    public PostDTO(int postCode, String postTitle, String postText, PostState postState, int postPrice, LocalDateTime postWriDate, int postView, int memberCode, LocalDateTime postModDate, LocalDateTime postDeleDate, boolean isDeleted, int folderCode, ProfileDTO profile, int likeCount, String likeCountStr, int cmtCount, String cmtCountStr, List<TagDTO> tagList, List<AttachmentDTO> attachmentList, String thumbnailPath) {
+        this.postCode = postCode;
+        this.postTitle = postTitle;
+        this.postText = postText;
+        this.postState = postState;
+        this.postPrice = postPrice;
+        this.postWriDate = postWriDate;
+        this.postView = postView;
+        this.memberCode = memberCode;
+        this.postModDate = postModDate;
+        this.postDeleDate = postDeleDate;
+        this.isDeleted = isDeleted;
+        this.folderCode = folderCode;
+        this.profile = profile;
+        this.likeCount = likeCount;
+        this.likeCountStr = likeCountStr;
+        this.cmtCount = cmtCount;
+        this.cmtCountStr = cmtCountStr;
+        this.tagList = tagList;
+        this.attachmentList = attachmentList;
+        this.thumbnailPath = thumbnailPath;
+    }
 
     public String getAttachmentPath(int index) {
         String path = "";
@@ -40,6 +64,32 @@ public class PostDTO {
             path += "/" + attachmentList.get(index).getSafeName();
         } else path = "/image/icon_default_photo.png";
         return path;
+    }
+    public void setLikeCountStr() {
+        String tempS = "";
+        if (likeCount >= 1000) {
+            double tempD = (double) likeCount * 0.001;
+            tempS = Double.toString(Math.floor(tempD)) + "k";
+        } else if (likeCount >=100) {
+            double tempD =(double)likeCount / 100;
+            tempD = Math.floor(tempD);
+            int result = (int)tempD *100;
+            tempS = Integer.toString(result);
+        }
+        likeCountStr = tempS;
+    }
+    public void setCmtCountStr() {
+        String tempS = "";
+        if (cmtCount >= 1000) {
+            double tempD = (double) cmtCount * 0.001;
+            tempS = Double.toString(Math.floor(tempD)) + "k";
+        } else if (cmtCount >=100) {
+            double tempD =(double)cmtCount / 100;
+            tempD = Math.floor(tempD);
+            int result = (int)tempD *100;
+            tempS = Integer.toString(result);
+        }
+        cmtCountStr = tempS;
     }
     public void makeThumbnailPath() {
        thumbnailPath =  getAttachmentPath(0);
