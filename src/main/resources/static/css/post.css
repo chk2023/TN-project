@@ -1,0 +1,152 @@
+/**
+
+1.0 - Blog Page Design Common
+2.0 - Folder Edit Page
+3.0 - Blog Write Page
+4.0 - Temporary Storage List Page
+
+update : 2024-03-25
+*/
+/*------------------------------------------
+    2.0     Folder Edit Page
+ ------------------------------------------*/
+.btn * {
+    color: inherit;
+}
+section:has(.fEditList) {
+    padding: 40px 0;
+}
+
+em {
+    font-size: 12px;
+    color: #448AC6;
+    margin-left: 5px;
+}
+
+.fEditList {
+    width: 350px;
+    height: 380px;
+    border-radius: 20px;
+    box-shadow: 0 0 5px;
+    padding-bottom: 20px;
+    margin: auto;
+}
+
+.fEditList * {
+    font-size: 14px;
+    color: #595959;
+}
+
+.fEditList li {
+    display: flex;
+    align-items: center;
+}
+
+.fixed {
+    width: 310px;
+    padding: 20px 15px;
+    border-bottom: 1px solid #E1E1E1;
+    margin: auto auto 20px;
+}
+
+.fixed,
+.fixed * {
+    color: #D9D9D9;
+}
+
+.fEditList li:not(.fixed) {
+    padding: 4px 45px;
+    cursor: pointer;
+}
+
+.fEditList li:not(.fixed):hover {
+    background-color: #F2F2F2;
+}
+
+.fEditList + dl {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.fEditList + dl dt {
+    display: inline-block;
+    color: #404040;
+    padding-right: 30px;
+}
+
+.fEditList + dl dd {
+    display: flex;
+}
+
+.fEditList + dl input {
+    height: 30px;
+    margin-right: 25px;
+}
+
+.fEditList + dl .btnWrap {
+    align-items: flex-start;
+}
+
+/*------------------------------------------
+    3.0     Blog Write Page
+ ------------------------------------------*/
+
+section:has(.post_setting,.post) {
+    padding: 0 20px;
+}
+
+section:has(.post_tit) .post_tit {
+    padding: 0;
+    border: none;
+    width: 100%;
+    margin: 30px 0;
+    height: 20px;
+}
+textarea.post_content {
+    width: 100%;
+    height: 450px;
+    padding: 10px;
+}
+.post_setting {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+.post_setting dt,
+.post_setting dd {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #E1E1E1;
+}
+.post_setting dt {
+    width: 90px;
+    color: #404040;
+    padding-left: 10px;
+}
+.post_setting dd {
+    width: calc(100% - 90px);
+    padding-right: 10px;
+}
+.post_setting dd textarea {
+    width: 100%;
+    height: 70px;
+    padding: 10px;
+}
+
+/*------------------------------------------
+    4.0     Temporary Storage List Page
+ ------------------------------------------*/
+
+table input[type="checkbox"] {
+    margin-right: 0;
+}
+
+
+
+
+
+
+
+
+

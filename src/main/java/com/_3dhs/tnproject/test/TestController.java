@@ -61,4 +61,5 @@ public class TestController {
         model.addAttribute("password", password);
         return "/common/makepassword";
     }
+
 }
