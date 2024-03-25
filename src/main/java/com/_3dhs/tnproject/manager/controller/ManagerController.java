@@ -40,7 +40,7 @@ public class ManagerController {
 
     }
 
-    @GetMapping("/manager/reportList")
+    @GetMapping("/manager/manager(01)")
     public String viewAllReportList(Model model) {
 
         List<ReportDTO> reportList = reportService.viewAllReport();

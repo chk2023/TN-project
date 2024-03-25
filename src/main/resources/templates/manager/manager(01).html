@@ -110,22 +110,23 @@
                     <th> 신고 날짜</th>
                 </tr>
 
-                <a href="/manager/manager(02)">
+
                 <tr th:each=" memberDTO: ${ reportList }"
                     th:onclick="|location.href='/manager/manager(01) -> '${memberDTO.reportCode}''|">
                     <td th:text="${ memberDTO.reportCode }"></td>
                     <td th:text="${ memberDTO.RCategoryCode}"></td>
                     <td th:text="${ memberDTO.reportText}"></td>
                     <td th:text="${ memberDTO.reporterCode}"></td>
-                    <td th:text="${ memberDTO.reportDate}"></td>
+                    <td th:text="${ memberDTO.reportDate}"
+                        th:onclick="|location.href='/manager/manager(02)'|"></td>
                 </tr>
-                </a>
 
 
-                <script type="text/javascript">
-                  var page = '/manager/manager(02)';
-                  location.href=page;
-                </script>
+
+<!--                <script type="text/javascript">-->
+<!--                  var page = '/manager/manager(02)';-->
+<!--                  location.href=page;-->
+<!--                </script>-->
 
             </table>
 
