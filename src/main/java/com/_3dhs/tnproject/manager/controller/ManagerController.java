@@ -54,6 +54,7 @@ public class ManagerController {
         List<ReportDTO> report = reportService.viewOneReport();
         model.addAttribute("reportOneList", report);
 
+
         return"/manager/manager(02)";
     }
 

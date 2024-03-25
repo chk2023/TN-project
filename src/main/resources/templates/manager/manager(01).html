@@ -116,10 +116,18 @@
                     <td th:text="${ memberDTO.reportText}"></td>
                     <td th:text="${ memberDTO.reporterCode}"></td>
                     <td th:text="${ memberDTO.reportDate}"></td>
+                    <script type="text/javascript">
+                        function page_link(page) {
+                            $( "input[id='page'").val(page);
+                            $( "form[name='viewForm']").submit();
+                        }
+
+                    </script>
                 </tr>
+
             </table>
 
-            <!--            <h2>페이징</h2>-->
+            <!--페이징-->
             <div id="paging" class="paging">
                 <!-- 맨 앞으로 이동 -->
                 <button class="pagingFrontBtn arrowBtn"><img src="/image/icon_paging_arrow_front.png" alt="맨 앞으로 이동 버튼">
