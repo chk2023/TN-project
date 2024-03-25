@@ -9,7 +9,7 @@ html {
     height : 1080px;
     background-color: white;
     text-align : center;
-
+    display: flex;
 }
 
 
