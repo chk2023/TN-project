@@ -9,5 +9,5 @@ import java.util.List;
 public interface ReportMapper {
     List<ReportDTO> viewAllReport();
 
-    List<ReportDTO> viewOneReport();
+    ReportDTO viewOneReport(Integer reportCode);
 }

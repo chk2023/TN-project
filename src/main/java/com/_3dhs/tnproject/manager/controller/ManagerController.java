@@ -40,22 +40,21 @@ public class ManagerController {
 
     }
 
-    @GetMapping("/manager/manager(01)")
-    public String viewAllReportList(Model model) {
+    @GetMapping("/manager/report/list")
+    public void viewAllReportList(Model model) {
 
         List<ReportDTO> reportList = reportService.viewAllReport();
         model.addAttribute("reportList", reportList);
 
-        return "/manager/manager(01)";
     }
 
-    @GetMapping("/reportDetail")
-    public String viewOneReport (Model model) {
-        List<ReportDTO> report = reportService.viewOneReport();
+    @GetMapping("/manager/report")
+    public String viewOneReport (Model model, Integer reportCode) {
+        ReportDTO report = reportService.viewOneReport(reportCode);
         model.addAttribute("viewOneReport", report);
 
 
-        return"/manager/manager(02)";
+        return "/manager/report/detail";
     }
 
 

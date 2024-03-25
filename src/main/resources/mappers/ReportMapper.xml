@@ -37,8 +37,8 @@
             cmt_code
         FROM
             tbl_report
-        ORDER BY
-            report_code
+        WHERE
+            report_code = #{ reportCode }
     </select>
 
 

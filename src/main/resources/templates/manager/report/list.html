@@ -87,17 +87,17 @@
         </form>
         <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
 
-            <ul class="tabMenu">
-                <li class="active">
-                    <button>포스팅</button>
-                </li>
-                <li>
-                    <button>댓글</button>
-                </li>
-                <li class="viewBtn">
-                    <button><img src="/image/btn_view_type.png" alt="보기타입 선택버튼"></button>
-                </li>
-            </ul>
+<!--            <ul class="tabMenu">-->
+<!--                <li class="active">-->
+<!--                    <button>포스팅</button>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <button>댓글</button>-->
+<!--                </li>-->
+<!--                <li class="viewBtn">-->
+<!--                    <button><img src="/image/btn_view_type.png" alt="보기타입 선택버튼"></button>-->
+<!--                </li>-->
+<!--            </ul>-->
 
             <h1>신고 내역</h1>
 
@@ -112,21 +112,14 @@
 
 
                 <tr th:each=" memberDTO: ${ reportList }"
-                    th:onclick="|location.href='/manager/manager(01) -> '${memberDTO.reportCode}''|">
+                    th:onclick="|location.href='/manager/report?reportCode=${memberDTO.reportCode}'|">
                     <td th:text="${ memberDTO.reportCode }"></td>
                     <td th:text="${ memberDTO.RCategoryCode}"></td>
                     <td th:text="${ memberDTO.reportText}"></td>
                     <td th:text="${ memberDTO.reporterCode}"></td>
-                    <td th:text="${ memberDTO.reportDate}"
-                        th:onclick="|location.href='/manager/manager(02)'|"></td>
+                    <td th:text="${ memberDTO.reportDate}"></td>
                 </tr>
 
-
-
-<!--                <script type="text/javascript">-->
-<!--                  var page = '/manager/manager(02)';-->
-<!--                  location.href=page;-->
-<!--                </script>-->
 
             </table>
 
