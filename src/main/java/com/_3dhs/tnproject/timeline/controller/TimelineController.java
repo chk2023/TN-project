@@ -18,10 +18,17 @@ public class TimelineController {
     private final PostService service;
 
     @GetMapping("/trendlist")
-    public String findTrendList(Model model) {
+    public String findTrendList(Model model, int index) {
         List<PostDTO> trendList = service.findListWithLike();
         trendList.sort((a,b)-> b.getLikeCount()-a.getLikeCount());
-        model.addAttribute("trendList", trendList);
+        if (index <= 0) {
+            model.addAttribute("trendList", trendList);
+        } else {
+
+        }
+
         return "timeline/trendlist";
     }
+
+
 }

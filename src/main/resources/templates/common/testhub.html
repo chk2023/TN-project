@@ -7,19 +7,22 @@
 <body>
 <h1>각종View로 이동하는 TEST용 허브입니다.</h1>
 
-<button onclick="location.href='/layout/01_layout'">레이아웃1로 이동</button>
-<button onclick="location.href='/layout/02_layout'">레이아웃2로 이동</button>
-<button onclick="location.href='/layout/03_layout'">레이아웃3로 이동</button>
-<button onclick="location.href='/layout/04_layout'">레이아웃4로 이동</button>
-<button onclick="location.href='/layout/05_layout'">레이아웃5로 이동</button>
+<button onclick="location.href='/layout/common_layout'"> common 레이아웃 으로 이동</button>
 <button onclick="location.href='/manager/reportList'">신고목록으로 이동</button>
 
 <h3>타임라인 테스트 코드</h3>
-<button onclick="location.href='/timeline/trendlist'">인기글 목록 조회</button>
+<button onclick="location.href='/timeline/trendlist'+'?index=0'">인기글 목록 조회</button>
 <hr>
 <form action="/common/makepassword" method="post">
     <input type="text" name="pass">
     <button type="submit">비밀번호 제조기</button>
 </form>
+<button onclick="location.href='/common/makelikelist'">좋아요 리스트 추가하기</button>
 </body>
+<script>
+    const message = '[[${message}]]';
+    if (message) {
+        alert(message);
+    }
+</script>
 </html>
