@@ -16,4 +16,8 @@ public class ReportService {
     public List<ReportDTO> viewAllReport() {
         return  reportMapper.viewAllReport();
     }
+
+    public List<ReportDTO> viewOneReport() {
+        return reportMapper.viewOneReport();
+    }
 }
