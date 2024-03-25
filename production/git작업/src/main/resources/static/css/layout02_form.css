@@ -1,0 +1,266 @@
+.background-div {
+    width: 100vw;
+    height: 100vh;
+    background-color: #F1E3C8;
+    position: absolute;
+    text-align: center;
+}
+
+.content-div {
+    width: 600px;
+    height: 100vh;
+    background-color: white;
+    display: inline-block;
+    position: relative;
+}
+
+/*.top-wrapper {*/
+/*    width: 600px;*/
+/*    height: 33px;*/
+/*    top: 0;*/
+/*    position: absolute;*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    justify-content: left;*/
+/*}*/
+
+/*.top .btn {*/
+/*    width: 20px;*/
+/*    border: none;*/
+/*    background-color: white;*/
+/*    float: left;*/
+
+/*}*/
+
+/*.top .text {*/
+/*    width: 580px;*/
+/*    text-align: left;*/
+/*}*/
+
+.login-wrapper {
+    width: 470px;
+    height: 226px;
+    margin-top: 20vh;
+    display: inline-block;
+    border: 1px solid #E1E1E1;
+    border-radius: 10px;
+}
+
+.id-wrapper {
+    margin-top: 35px;
+    width: 430px;
+    height: 45px;
+    display: flex;
+    flex-direction: row;
+}
+
+.id-label{
+    width: 100px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    margin-left: 35px;
+}
+
+.id-form {
+    width: 310px;
+    height: 45px;
+    border: 1px solid #E1E1E1;
+    border-radius: 10px;
+}
+
+.pw-wrapper {
+    margin-top: 15px;
+    width: 430px;
+    height: 45px;
+    display: flex;
+    flex-direction: row;
+}
+
+.pw-label {
+    width: 100px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    margin-left: 35px;
+}
+
+.pw-form {
+    width: 310px;
+    height: 45px;
+    border: 1px solid #E1E1E1;
+    border-radius: 10px;
+}
+
+.btn-wrapper {
+    margin-top: 20px;
+}
+
+.join-btn {
+    margin-left: 15px;
+}
+
+.login-btn {
+    margin-left: 5px;
+}
+
+
+
+a:link {
+    color: #A8A8A8;
+    font-size: 11px;
+}
+
+a:visited {
+    /* 링크를 클릭해본 상태 */
+}
+
+a:hover {
+    /* 링크 위에 마우스 포인터가 위치한 상태 */
+}
+
+.dropdown-wrapper {
+    margin-top: 30px;
+}
+
+/*===========*/
+#options {
+    width: 160px;
+    height: 30px;
+    border-radius: 5px;
+}
+
+#options option{
+    color: #404040;
+    border: 1px solid #E1E1E1;
+
+}
+
+
+.search-wrapper {
+    margin-top: 30px;
+    margin-left: 35%;
+    width: 250px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.search-bar {
+    width: 177px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid #E1E1E1;
+}
+
+.search-btn {
+    margin-left: 10px;
+    border: none;
+    background : url("https://ifh.cc/g/n4R9mN.png") no-repeat;
+    background-size: contain;
+    width: 25px;
+    height: 25px;
+}
+
+.radiobtn-wrapper {
+    margin-top: 30px;
+}
+
+.radiobtn{
+    vertical-align: middle;
+    color: #404040;
+}
+
+[type="radio"] {
+    display: inline-block;
+    appearance: none;
+    width: 1.25em;
+    height: 1.25em;
+    border: 1px solid #404040;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+[type="radio"]:checked {
+    /*border: 0.4em solid #779289;*/
+    background-image: url(../image/icon_radio_active.png);
+    background-position: center;
+}
+
+
+
+
+.checkbox_wrapper {
+    margin-top: 30px;
+    margin-left: 38%;
+    display: flex;
+    align-items: center;
+    color: #404040;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+[type="checkbox"] {
+    appearance: none;
+    width: 1.25em;
+    height: 1.25em;
+    border: 1px solid #779289;
+    cursor: pointer;
+    margin-right: 5px;
+
+    &:checked {
+        background-color: #779289;
+    }
+}
+
+.btn-align {
+    margin-top: 30px;
+}
+
+.sbtn {
+    width: 80px;
+}
+
+.mbtn {
+    width: 120px;
+}
+
+.lbtn {
+    width: 180px;
+}
+
+.btn1 {
+    background-color: #E1E1E1;
+    color: #448AC6;
+    border: none;
+    border-radius: 30px;
+    height: 30px;
+}
+
+.btn2 {
+    background-color: #FFFFFF;
+    color: #448AC6;
+    border: 1px solid #448AC6;
+    border-radius: 30px;
+    height: 30px;
+}
+
+.btn3 {
+    background-color: #85BFE2;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 30px;
+    height: 30px;
+}
+
+.btn4 {
+    background-color: #448AC6;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 30px;
+    height: 30px;
+}
