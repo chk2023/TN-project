@@ -60,6 +60,29 @@ public class TimelineController {
                 null,
                 "/userUploadFiles/tree.jpg"
         );
+
+        PostDTO testPost2 = new PostDTO(1,
+                "테스트 제목22222",
+                "본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글",
+                PostState.PUBLIC,
+                0,
+                LocalDateTime.now(),
+                20,
+                1,
+                LocalDateTime.now(),
+                null,
+                false,
+                0,
+                new ProfileDTO(1,1,"닉네임","버그나지말아주세요","/userUploadFiles/cat.jpg",null,null),
+                10,
+                "10",
+                10,
+                "10",
+                null,
+                null,
+                "/userUploadFiles/tree.jpg"
+        );
+        postList.add(testPost2);
         postList.add(testPost);
         //테스트코드 END
         return postList;
