@@ -4,7 +4,7 @@
 2.0 - Layout
 3.0 - Page Design
 
-update : 2024-03-22
+update : 2024-03-25
 */
 /*------------------------------------------
     0.0     Font
@@ -626,7 +626,7 @@ main {
     border: none;
 }
 
-.title > div {
+.title > div:not(.btnWrap) {
     display: block;
     width: calc(100% - 35px);
     padding: 0 40px;
@@ -636,7 +636,7 @@ main {
     margin-left: 15px;
 }
 
-.title button {
+.title button:not(.btn) {
     font-size: 0;
     background-color: transparent;
 }
@@ -645,6 +645,27 @@ main {
 .title .closeBtn {
     display: none;
     border: none;
+}
+
+/* 24.03.25 추가 */
+
+.title .backBtn {
+    min-width: 15px;
+}
+
+.title:has(.btnWrap) button:not(.btn, .backBtn) {
+    display: none;
+}
+.btnWrap {
+    display: flex;
+    align-items: center;
+}
+.btnWrap button {
+    white-space: nowrap;
+    margin-left: 10px;
+}
+.btnWrap button:first-of-type {
+    margin-left: 0;
 }
 
 /* 3.3 pageTitle search Layout */
@@ -660,7 +681,7 @@ main {
 
 .title.search input,
 .title.search .closeBtn {
-    display: block;
+    display: block!important;
 }
 
 .title.search input {
