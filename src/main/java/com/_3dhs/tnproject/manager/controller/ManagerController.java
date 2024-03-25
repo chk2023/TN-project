@@ -52,7 +52,7 @@ public class ManagerController {
     @GetMapping("/reportDetail")
     public String viewOneReport (Model model) {
         List<ReportDTO> report = reportService.viewOneReport();
-        model.addAttribute("reportOneList", report);
+        model.addAttribute("viewOneReport", report);
 
 
         return"/manager/manager(02)";

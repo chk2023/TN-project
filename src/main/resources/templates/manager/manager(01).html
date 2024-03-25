@@ -109,21 +109,23 @@
                     <th> 유저 ID</th>
                     <th> 신고 날짜</th>
                 </tr>
+
+                <a href="/manager/manager(02)">
                 <tr th:each=" memberDTO: ${ reportList }"
-                    th:onclick="|location.href='/manager/reportList -> '${memberDTO.reportCode}''|">
+                    th:onclick="|location.href='/manager/manager(01) -> '${memberDTO.reportCode}''|">
                     <td th:text="${ memberDTO.reportCode }"></td>
                     <td th:text="${ memberDTO.RCategoryCode}"></td>
                     <td th:text="${ memberDTO.reportText}"></td>
                     <td th:text="${ memberDTO.reporterCode}"></td>
                     <td th:text="${ memberDTO.reportDate}"></td>
-                    <script type="text/javascript">
-                        function page_link(page) {
-                            $( "input[id='page'").val(page);
-                            $( "form[name='viewForm']").submit();
-                        }
-
-                    </script>
                 </tr>
+                </a>
+
+
+                <script type="text/javascript">
+                  var page = '/manager/manager(02)';
+                  location.href=page;
+                </script>
 
             </table>
 
@@ -153,9 +155,12 @@
             <br><br>
 
             <div id="searchBar">
-                <label><input type="checkbox" name="postNum"/>포스팅 번호 </label>
-                <label><input type="checkbox" name="commentNum"/>댓글 번호</label><br><br>
-                <label><input type="checkbox" name="admNum"/>관리자 번호</label><br><br>
+                <select name="">
+                    <option value="1">포스팅 번호</option>
+                    <option value="2">댓글 번호</option>
+                    <option value="3">관리자 번호</option>
+                    <option value="4">처리 상태</option>
+                </select><br><br>
                 <input class="search_input" type="text" placeholder="검색어를 입력하세요">
                 <button class="searchBtn"><img src="/image/btn_search.png" alt="검색 버튼"></button>
                 <button class="closeBtn"><img src="/image/btn_close.png" alt="닫기 버튼"></button>
