@@ -46,7 +46,7 @@ public class ManagerController {
         List<ReportDTO> reportList = reportService.viewAllReport();
         model.addAttribute("reportList", reportList);
 
-        return "manager(01)";
+        return "/manager/manager(01)";
 
 
     }
