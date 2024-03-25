@@ -41,6 +41,14 @@
             report_code = #{ reportCode }
     </select>
 
+    <insert id="processingReport">
+        SELECT processing_text
+        FROM tbl_report
+
+
+
+
+    </insert>
 
 
 

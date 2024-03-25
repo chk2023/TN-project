@@ -10,4 +10,6 @@ public interface ReportMapper {
     List<ReportDTO> viewAllReport();
 
     ReportDTO viewOneReport(Integer reportCode);
+
+    String processingReport(String proccessingText);
 }

@@ -21,4 +21,9 @@ public class ReportService {
 
         return reportMapper.viewOneReport(reportCode);
     }
+
+    public String processingReport(String proccessingText) {
+
+        return reportMapper.processingReport(proccessingText);
+    }
 }

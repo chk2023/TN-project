@@ -53,8 +53,23 @@ public class ManagerController {
         ReportDTO report = reportService.viewOneReport(reportCode);
         model.addAttribute("viewOneReport", report);
 
-
         return "/manager/report/detail";
+    }
+
+    @GetMapping("/manager/report/admin")
+    public String processingReport (Model model, String proccessingText) {
+        //입력 받은 스트링 값을 담을 객체를 선언하고
+        //훌라훌라훌라 훌~라 훌~라 훌라~~~ 훌라춤을 추우는 탬버륀~~~~
+         String reportProcessingText = reportService.processingReport(proccessingText);
+         model.addAttribute("processingReport", processingReport);
+
+
+        //완료 버튼을 누르면 디비에 해당 값이 저장된다.
+
+        //mapper에서 insert로 처리해야 할 듯....
+
+
+        return "/manager/report/processing ";
     }
 
 
