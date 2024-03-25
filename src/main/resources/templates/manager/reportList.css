@@ -8,13 +8,8 @@ html {
     width : 600px;
     height : 1080px;
     background-color: white;
+    text-align : center;
 
 }
 
-#title {
-    width : 600px;
-    height : 53px;
-    text-align : left;
-    border : 1px black solid;
-}
 

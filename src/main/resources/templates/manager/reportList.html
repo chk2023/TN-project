@@ -14,7 +14,7 @@
             <li> 포스팅 </li>
         </ul>
     <div>신고 내역</div>
-    <h3> 해당 유저는 너무 잦은 비방글을 올림미다~~~</h3>
+
     <table id="reportList" style="text-align:center">
         <tr>
             <th> 신고 번호 </th>
@@ -23,13 +23,13 @@
             <th> 유저 ID </th>
             <th> 신고 날짜 </th>
         </tr>
-        <tr th:each=" : ${ reportList }" th:onclick="|location.href='/board/detail?boardNo=${board.boardNo}'|">
-            <td th:text="${ .boardNo }"></td>
-            <td th:text="${ .category.categoryName}"></td>
-            <td th:text="${ .boardTitle}"></td>
-            <td th:text="${ .writer.nickname}"></td>
-            <td th:text="${ .boardCount}"></td>
-            <td th:text="${ .createDate}"></td>
+        <tr th:each=" memberDTO: ${ reportList }" th:onclick="|location.href='/manager/reportList -> '${memberDTO.reportCode}''|">
+            <td th:text="${ memberDTO.reportCode }"></td>
+            <td th:text="${ memberDTO.RCategoryCode}"></td>
+            <td th:text="${ memberDTO.reportText}"></td>
+            <td th:text="${ memberDTO.reporterCode}"></td>
+            <td th:text="${ memberDTO.reportDate}"></td>
+
 
         </tr>
     </table>
