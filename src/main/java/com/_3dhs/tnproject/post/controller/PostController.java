@@ -11,14 +11,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/post")
 public class PostController {
     private final PostService postService;
-
-    @GetMapping("/blog_main")
+//TODO 폴더아이콘변경기능 넣기
+    @GetMapping("/main")
     public void blogMainPage() {}
     @GetMapping("/folder_edit")
     public void folderEditPage() {}
-    @GetMapping("/blog_write")
+    @GetMapping("/write")
     public void blogWritePage() {}
     @GetMapping("/temporary_storage/list")
     public void temporaryStorageListPage() {}
+    @GetMapping("/list")
+    public void blogListPage() {}
+    @GetMapping("/detail")
+    public void blogDetailPage() {}
 
 }

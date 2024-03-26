@@ -4,6 +4,8 @@
 2.0 - Folder Edit Page
 3.0 - Blog Write Page
 4.0 - Temporary Storage List Page
+5.0 - Blog List Page
+6.0 - Blog Detail Page
 
 update : 2024-03-25
 */
@@ -135,18 +137,124 @@ textarea.post_content {
 }
 
 /*------------------------------------------
-    4.0     Temporary Storage List Page
+    4.0     Temporary Storage List Page,
+    5.0     Blog List Page
  ------------------------------------------*/
 
-table input[type="checkbox"] {
+section:has(.tbl_list, h2) {
+    padding: 20px;
+}
+
+section:has(.tbl_list, h2) h2,
+section:has(.tbl_list, h2) h2 * {
+    color:#317AA9;
+    font-weight: normal;
+}
+
+.title:has(.btnWrap.active) .btnWrap:not(.active) {
+    display: none;
+}
+
+.btnWrap button+button+button {
+    margin-left: 20px;
+}
+
+.tbl_list {
+    table-layout: fixed;
+    margin-top: 30px;
+}
+
+.tbl_list input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    border-color: #85BFE2;
     margin-right: 0;
 }
 
+.tbl_list input[type="checkbox"]:checked {
+    background-image: url(../image/icon_check_checked.png);
+    background-size: 15px;
+    background-color: #85BFE2;
+}
 
+.tbl_list:has(input[type="checkbox"]) td {
+    padding: 0 5px;
+}
 
+th,
+td {
+    padding: 0 10px;
+    font-weight: normal;
+}
 
+td * {
+    color: #85BFE2;
+    font-size: inherit;
+}
 
+.tbl_check {
+    display: none;
+    width: 25px;
+}
 
+.tbl_user {
+    width: 120px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
 
+.tbl_date {
+    width: 90px;
+}
+
+.tbl_tit * {
+    width: 100%;
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: left;
+}
+
+.paging {
+    justify-content: center;
+    margin-top: 50px;
+}
+
+/*------------------------------------------
+    6.0     Blog Detail Page
+ ------------------------------------------*/
+
+.detail .optionBox li > * {
+    display: block;
+}
+
+.detail .list_body .contentTit {
+    white-space: normal;
+}
+
+.detail.snsList .list_body .contentsTxt {
+    display: block;
+}
+
+.tagList {
+    margin: 20px 0;
+}
+
+.tagList li {
+    border: none !important;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.tagList li:nth-last-child(1) {
+    margin-right: 0;
+}
+
+.detail.snsList .list_body .showLikeAndComments {
+    position: static;
+    padding: 0 35px;
+}
 
 
