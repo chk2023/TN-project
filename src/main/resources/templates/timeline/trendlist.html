@@ -220,7 +220,7 @@
 </script>
 <script>
     function update() {
-        fetch('/timeline/trendUpdate')
+        fetch('/timeline/trendUpdate'+'?index='+index+'&range='+range)
             .then(res => res.json())
             .then(data => {
                 console.log(data);
@@ -228,10 +228,11 @@
                 var template = Handlebars.compile(source);
                 var html = template(data);
                 console.log(html);
-
                 var element = document.createElement("li");
                 element.innerHTML = html;
                 document.querySelector(".blogList").appendChild(element);
+
+                index = index + range;
             }).catch(error => console.error('Error fetching profile data:', error));
     }
 </script>

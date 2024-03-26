@@ -34,29 +34,6 @@ public class PostDTO {
     private List<AttachmentDTO> attachmentList;
     private String thumbnailPath;
 
-    public PostDTO(int postCode, String postTitle, String postText, PostState postState, int postPrice, LocalDateTime postWriDate, int postView, int memberCode, LocalDateTime postModDate, LocalDateTime postDeleDate, boolean isDeleted, int folderCode, ProfileDTO profile, int likeCount, String likeCountStr, int cmtCount, String cmtCountStr, List<TagDTO> tagList, List<AttachmentDTO> attachmentList, String thumbnailPath) {
-        this.postCode = postCode;
-        this.postTitle = postTitle;
-        this.postText = postText;
-        this.postState = postState;
-        this.postPrice = postPrice;
-        this.postWriDate = postWriDate;
-        this.postView = postView;
-        this.memberCode = memberCode;
-        this.postModDate = postModDate;
-        this.postDeleDate = postDeleDate;
-        this.isDeleted = isDeleted;
-        this.folderCode = folderCode;
-        this.profile = profile;
-        this.likeCount = likeCount;
-        this.likeCountStr = likeCountStr;
-        this.cmtCount = cmtCount;
-        this.cmtCountStr = cmtCountStr;
-        this.tagList = tagList;
-        this.attachmentList = attachmentList;
-        this.thumbnailPath = thumbnailPath;
-    }
-
     public String getAttachmentPath(int index) {
         String path = "";
         if (attachmentList.size() > index) {
