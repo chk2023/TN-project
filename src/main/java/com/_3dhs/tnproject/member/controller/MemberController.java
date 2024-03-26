@@ -13,10 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -64,7 +61,11 @@ public class MemberController {
     }
 
     @PostMapping("/regist")
-    public String registMember(MemberDTO member, RedirectAttributes rttr) throws MemberRegistException {
+    public String registMember(MemberDTO member, @RequestParam("optionalId") String optionalId, RedirectAttributes rttr) throws MemberRegistException {
+        String memberId = member.getMemberId() + optionalId;
+
+        if (!"default".equals(optionalId)) member.setMemberId(memberId);
+
         member.setMemberPwd(passwordEncoder.encode(member.getPassword()));
 
         log.info("Request regist member : {}", member);
@@ -73,7 +74,7 @@ public class MemberController {
 
         rttr.addFlashAttribute("message", messageSourceAccessor.getMessage("member.regist"));
 
-        return "redirect:/";
+        return "redirect:/common/testhub";
     }
 
     @GetMapping("/info")

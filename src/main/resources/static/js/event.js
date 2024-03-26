@@ -50,8 +50,6 @@ window.onload = function () {
             // 도메인과 아이디 조합해서 fetch로 요청 보내기
             memberId += domain;
 
-            console.log(memberId);
-
             fetch("/member/idDupCheck", {
                 method: "POST",
                 headers: {
@@ -70,15 +68,6 @@ window.onload = function () {
                     }
                 })
                 .catch((error) => error.text().then((res) => alert(res)));
-
-            // 조합한 아이디와 도메인을 회원가입 주소에도 요청하기 (db에 이메일 형식으로 저장하기 위함)
-            fetch("/member/regist", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json;charset=UTF-8'
-                },
-                body: JSON.stringify({ memberId: memberId })
-            })
         }
     }
 
