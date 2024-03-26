@@ -6,6 +6,7 @@ window.onload = function () {
         }
     }
 
+
     if (document.getElementById("logout")) {
         const $logout = document.getElementById("logout");
         $logout.onclick = function () {
@@ -13,9 +14,9 @@ window.onload = function () {
         }
     }
 
-    if(document.getElementById("duplicationCheck")) {
+    if(document.getElementById("emailCheck")) {
 
-        const $duplication = document.getElementById("duplicationCheck");
+        const $duplication = document.getElementById("emailCheck");
         const $signupButton = document.getElementById("signupButton");
         const $duplicationMessage = document.getElementById("duplicationMessage");
         const $optionalId = document.getElementById("optionalId");
