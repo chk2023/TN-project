@@ -713,7 +713,7 @@ main {
     justify-content: center;
 }
 
-.reportBtn label {
+.reportBtn a {
     margin-left: 10px;
     margin-right: 10px;
 }
