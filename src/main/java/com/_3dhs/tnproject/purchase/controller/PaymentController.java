@@ -1,13 +1,12 @@
 package com._3dhs.tnproject.purchase.controller;
 
+import com._3dhs.tnproject.purchase.dto.TissueDTO;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -27,6 +26,15 @@ public class PaymentController {
     public IamportResponse<Payment> paymentByImpUid(@PathVariable("imp_uid") String imp_uid)
             throws IamportResponseException, IOException {
         return iamportClient.paymentByImpUid(imp_uid);
+    }
+
+    @ResponseBody
+    @PostMapping("/purchase_success")
+    public String purchaseSuccess(@RequestBody TissueDTO tissueDTO) {
+        System.out.println(tissueDTO.getOrderCode());
+        System.out.println();
+
+        return "결제 성공";
     }
 
 }
