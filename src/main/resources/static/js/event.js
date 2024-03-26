@@ -83,4 +83,25 @@ window.onload = function () {
         const idPattern = /^[a-zA-Z0-9._%+-]+$/;
         return idPattern.test(Id);
     }
+
+    // 비밀번호와 2차 비밀번호가 같은지 확인하는 함수
+    function checkPasswordMatch() {
+        const password = document.getElementById("memberPwd").value.trim();
+        const confirmPassword = document.getElementById("memberPwd2").value.trim();
+
+        if (password !== confirmPassword) {
+            alert("비밀번호와 2차 비밀번호가 일치하지 않습니다.");
+            return false;
+        }
+
+        return true;
+    }
+
+    // 폼 submit 이벤트에 대한 리스너 등록
+    const $signupForm = document.querySelector("form");
+    $signupForm.addEventListener("submit", function(event) {
+        if (!checkPasswordMatch()) {
+            event.preventDefault(); // submit 중지
+        }
+    });
 }
