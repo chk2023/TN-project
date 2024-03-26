@@ -25,10 +25,21 @@
             tbl_member
         <where>
             <if test="memberId != null">
-                AND member_id = #{memberId}
+                member_id = #{memberId}
             </if>
         </where>
+    </select>
 
+    <select id="selectMemberById" resultType="string">
+        SELECT
+        member_id
+        FROM
+        tbl_member
+        <where>
+            <if test="memberId != null">
+                member_id = #{memberId}
+            </if>
+        </where>
     </select>
 
     <insert id="insertMember">
