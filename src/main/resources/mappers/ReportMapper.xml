@@ -41,11 +41,19 @@
             report_code = #{ reportCode }
     </select>
 
-    <insert id="processingReport">
-        SELECT processing_text
-        FROM tbl_report
+    <insert id="insertRecord">
+        SELECT
+        report_code,
+        r_category_code,
+        report_text,
+        sub_member_code,
+        report_date,
+        processing_text
 
+        FROM
+         tbl_report
 
+        WHERE report_code = #{ reportCode }
 
 
     </insert>

@@ -26,4 +26,8 @@ public class ReportService {
 
         return reportMapper.processingReport(proccessingText);
     }
+
+    public ReportDTO insertRecord(Integer reportCode) {
+        return reportMapper.insertRecord(reportCode) ;
+    }
 }
