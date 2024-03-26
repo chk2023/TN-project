@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -17,13 +18,11 @@ public class PostService {
     private final CommentsMapper commentsMapper;
 
     @Transactional(readOnly = true)
-    public List<PostDTO> findListWithLike(int index, int range) {
-        List<PostDTO> postList = postMapper.findListWithLike(index,range);
+    public List<PostDTO> findListByIndex(Map<String,Integer> params) {
+        List<PostDTO> postList = postMapper.findListByIndex(params);
         for (int i = 0; i < postList.size(); i++) {
             postList.get(i).setAttachmentList(postMapper.findAttListByPostCode(postList.get(i).getPostCode()));
             postList.get(i).makeThumbnailPath();
-            postList.get(i).setLikeCountStr();
-            postList.get(i).setCmtCountStr();
         }
         return postList;
     }

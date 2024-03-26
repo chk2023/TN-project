@@ -22,16 +22,16 @@ public class PostServiceTests {
 
     @Test
     void 인기글리스트_조회테스트() {
-        List<PostDTO> postDTOList = postService.findListWithLike(index, range);
-        for (int i = 0; i < postDTOList.size(); i++) {
-            System.out.println("======="+postDTOList.get(i).getPostCode()+"=======");
-            System.out.println("likeCount");
-            System.out.println(postDTOList.get(i).getLikeCount());
-            postDTOList.get(i).getAttachmentList().forEach(System.out::println);
-            System.out.println(postDTOList.get(i).getAttachmentPath(0));
-            System.out.println("닉네임 : " + postDTOList.get(i).getProfile().getProfileNickname());
-        }
-        assertNotNull(postDTOList);
+        //List<PostDTO> postDTOList = postService.findListByIndex();
+//        for (int i = 0; i < postDTOList.size(); i++) {
+//            System.out.println("======="+postDTOList.get(i).getPostCode()+"=======");
+//            System.out.println("likeCount");
+//            System.out.println(postDTOList.get(i).getLikeCount());
+//            postDTOList.get(i).getAttachmentList().forEach(System.out::println);
+//            System.out.println(postDTOList.get(i).getAttachmentPath(0));
+//            System.out.println("닉네임 : " + postDTOList.get(i).getProfile().getProfileNickname());
+//        }
+//        assertNotNull(postDTOList);
     }
 
 

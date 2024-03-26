@@ -27,11 +27,10 @@ public class PostDTO {
     private int folderCode;
     private ProfileDTO profile;
     private int likeCount;
-    private String likeCountStr;
     private int cmtCount;
-    private  String cmtCountStr;
     private List<TagDTO> tagList;
     private List<AttachmentDTO> attachmentList;
+    //가공하는 자료
     private String thumbnailPath;
 
     public String getAttachmentPath(int index) {
@@ -41,32 +40,6 @@ public class PostDTO {
             path += "/" + attachmentList.get(index).getSafeName();
         } else path = "/image/icon_default_photo.png";
         return path;
-    }
-    public void setLikeCountStr() {
-        String tempS = "";
-        if (likeCount >= 1000) {
-            double tempD = (double) likeCount * 0.001;
-            tempS = Double.toString(Math.floor(tempD)) + "k";
-        } else if (likeCount >=100) {
-            double tempD =(double)likeCount / 100;
-            tempD = Math.floor(tempD);
-            int result = (int)tempD *100;
-            tempS = Integer.toString(result);
-        }
-        likeCountStr = tempS;
-    }
-    public void setCmtCountStr() {
-        String tempS = "";
-        if (cmtCount >= 1000) {
-            double tempD = (double) cmtCount * 0.001;
-            tempS = Double.toString(Math.floor(tempD)) + "k";
-        } else if (cmtCount >=100) {
-            double tempD =(double)cmtCount / 100;
-            tempD = Math.floor(tempD);
-            int result = (int)tempD *100;
-            tempS = Integer.toString(result);
-        }
-        cmtCountStr = tempS;
     }
     public void makeThumbnailPath() {
        thumbnailPath =  getAttachmentPath(0);
