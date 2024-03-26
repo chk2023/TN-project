@@ -1,0 +1,612 @@
+/**
+0.0 - Font
+1.0 - Generalization
+2.0 - Layout
+3.0 - Page Design
+
+update : 2024-03-20
+*/
+/*------------------------------------------
+    0.0     Font
+ ------------------------------------------*/
+@font-face {
+    font-family: 'NotoSansKR';
+    font-style: normal;
+    font-weight: 100;
+    src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff2) format('woff2'),
+    url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff) format('woff'),
+    url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'NotoSansKR';
+    font-style: normal;
+    font-weight: 300;
+    src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff2) format('woff2'),
+    url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff) format('woff'),
+    url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'NotoSansKR';
+    font-style: normal;
+    font-weight: 400;
+    src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff2) format('woff2'),
+    url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff) format('woff'),
+    url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'NotoSansKR';
+    font-style: normal;
+    font-weight: 500;
+    src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff2) format('woff2'),
+    url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff) format('woff'),
+    url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'NotoSansKR';
+    font-style: normal;
+    font-weight: 700;
+    src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff2) format('woff2'),
+    url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff) format('woff'),
+    url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'NotoSansKR';
+    font-style: normal;
+    font-weight: 900;
+    src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff2) format('woff2'),
+    url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff) format('woff'),
+    url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.otf) format('opentype');
+}
+
+
+/*------------------------------------------
+    1.0     Generalization
+ ------------------------------------------*/
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    text-decoration: none;
+    list-style: none;
+    vertical-align: baseline;
+    background-repeat: no-repeat;
+    color: #A8A8A8;
+    font-size: 1rem; /*1rem = 16px*/
+    word-break: break-word;
+    font-family: "NotoSansKR", AppleSDGothic, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: -.02em;
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    font-size-adjust: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    transition: ease .5s;
+    appearance: none;
+    -moz-appearance: none; /*Firefox*/
+    -webkit-appearance: none; /*SafariandChrome*/
+}
+
+*:after,
+*:before {
+    position: absolute;
+}
+
+html,
+body {
+    display: flex;
+    justify-content: center;
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    font-size: 1rem;
+    background-color: #F1E3C8;
+}
+
+h1 {
+    font-size: 20px;
+    line-height: 24px;
+    color: #000000;
+}
+
+a, img, span, em, strong, label {
+    display: inline-block;
+}
+
+span {
+    font-size: 1rem;
+}
+
+a, button {
+    cursor: pointer;
+    background-color: transparent;
+}
+
+img {
+    max-width: 100%;
+}
+
+ul {
+    font-size: 0;
+}
+
+li {
+    font-size: 1rem;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+}
+
+
+/* button */
+a.btn, button.btn {
+    color: #FFFFFF;
+    background-color: #5C95C2;
+    border-radius: 20px;
+    padding: 5px 15px;
+}
+
+a.btn.gray, button.btn.gray {
+    color: #448AC6;
+    background-color: #E1E1E1;
+}
+
+/* optionBox */
+.optionBox {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 200px;
+    height: 90px;
+    display: none;
+    justify-content: center;
+    flex-direction: column;
+    text-align: right;
+    background-color: #FFF;
+    box-shadow: 0 0 5px;
+    border-radius: 5px;
+    padding: 0 30px;
+}
+
+.optionBox.active {
+    display: flex;
+}
+
+.optionBox * {
+    color: #595959;
+}
+
+.optionBox li {
+    margin-bottom: 10px;
+}
+
+.optionBox li:last-child {
+    margin: 0;
+}
+
+/* tabMenu */
+.tabMenu {
+    display: flex;
+}
+
+.tabMenu li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 45px;
+}
+
+.tabMenu li.active {
+    background-color: #5C95C2;
+    border-bottom: 2px solid #448AC6;
+}
+
+.tabMenu li.active * {
+    color: #FFF;
+}
+
+.tabMenu li:not(.viewBtn) {
+    flex-grow: 1;
+}
+
+.viewBtn {
+    width: 70px;
+    background-color: #E8D1A5;
+}
+
+/*------------------------------------------
+    2.0     Layout
+ ------------------------------------------*/
+/* 2.1 header */
+header {
+    order: 1;
+}
+
+header, aside {
+    width: 350px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    padding-top: 30px;
+}
+
+/* 2.2 title */
+.title {
+    position: sticky;
+    display: flex;
+    align-items: center;
+    width: 600px;
+    height: 55px;
+    top: 0;
+    padding: 0 20px;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #E1E1E1;
+    z-index: 1;
+}
+
+.title input,
+.title textarea {
+    display: block;
+    width: 100%;
+    border: none;
+}
+
+.title > div {
+    display: block;
+    width: calc(100% - 35px);
+    padding: 0 40px;
+}
+
+.title button {
+    font-size: 0;
+    background-color: transparent;
+}
+
+.title input,
+.title .closeBtn {
+    display: none;
+}
+
+/* 2.3 title.search */
+.title.search > div {
+    display: none;
+}
+
+.title.search .backBtn,
+.title.search .searchBtn {
+    display: none;
+}
+
+.title.search input,
+.title.search .closeBtn {
+    display: block;
+}
+
+.title.search input {
+    padding-left: 40px;
+    background-image: url("../image/btn_search.png");
+    background-position: left center;
+}
+
+/* 2.4 profile */
+.profile, nav, .folder {
+    position: relative;
+    min-width: 350px;
+    border-radius: 20px;
+    background-color: #FFF;
+}
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    padding: 30px 25px;
+    margin-bottom: 30px;
+}
+
+.optionBtn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.profileStatus {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.prof_photo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    background-color: #448AC6;
+}
+
+.prof_txt {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 30px;
+}
+
+.prof_txt strong {
+    font-size: 20px;
+    font-weight: normal;
+    color: #404040;
+}
+
+.profileInfo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tissueCount {
+    background-image: url(../image/icon_tissue.png);
+    background-position: left center;
+    padding-left: 25px;
+    margin-left: 15px;
+}
+
+/* 2.5 nav */
+nav {
+    padding: 90px 65px 55px;
+}
+
+nav * {
+    color: #595959;
+}
+
+nav li {
+    margin-top: 20px;
+}
+
+nav li:first-child {
+    margin-top: 0;
+}
+
+.logoutBtn {
+    margin-top: 90px;
+}
+
+.logoutBtn * {
+    color: #779289;
+}
+
+/* 2.6 folder */
+.folder {
+    padding: 30px 30px 60px;
+}
+
+strong.minTit {
+    font-size: 20px;
+    font-weight: normal;
+    color: #317AA9;
+}
+
+.folder * {
+    font-size: 14px;
+    line-height: 14px;
+    color: #595959;
+}
+
+.folder li {
+    padding: 15px 35px 0;
+}
+
+.folder .AllList {
+    padding: 30px 35px 20px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #E1E1E1;
+}
+
+.folder img {
+    margin-right: 15px;
+}
+
+.folderSetBtn {
+    position: absolute;
+    top: 30px;
+    right: 25px;
+}
+
+
+/*------------------------------------------
+    3.0     Page Design
+ ------------------------------------------*/
+main {
+    width: 600px;
+    height: fit-content;
+    min-height: 100%;
+    margin: 0 30px;
+    background-color: #FFF;
+}
+
+/* 프로필 영역 */
+.mainProfile {
+    border-bottom: 1px solid #E1E1E1;
+}
+
+.mainProfile > * {
+    height: 200px;
+}
+
+.mprofBackground {
+    background-color: #5C95C2;
+}
+
+.mprofStatus {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 65px 20px 30px;
+}
+
+.mprofStatus .prof_photo {
+    position: absolute;
+    top: -42.5px;
+    left: 20px;
+    border-radius: 5px;
+}
+
+.mprofStatus .prof_txt {
+    margin: 0;
+}
+
+.mprofStatus .prof_info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mprofStatus .prof_info span {
+    margin-right: 30px;
+}
+
+
+/* 24.03.20 추가 input radio check select */
+
+label {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 30px;
+    color: #404040;
+}
+
+label:last-of-type {
+    margin-right: 0;
+}
+
+input:not(input[type="radio"],
+        input[type="checkbox"]),
+select,
+textarea {
+    display: flex;
+    align-items: center;
+    border: 1px solid #E1E1E1;
+    padding: 0 20px;
+    border-radius: 5px;
+}
+
+input {
+    height: 45px;
+    color: #595959;
+}
+
+input::placeholder {
+    color: #A8A8A8;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    display: inline-block;
+    border: 1px solid #779289;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-right: 10px;
+}
+
+[type="radio"] {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+}
+
+[type="radio"]:checked {
+    background-image: url(../image/icon_radio_active.png);
+}
+
+input[type="checkbox"] {
+    width: 21px;
+    height: 21px;
+    border-width: 2px;
+    border-radius: 3px;
+}
+
+input[type="checkbox"]:checked {
+    background-image: url(../image/icon_check_active.png);
+}
+
+select {
+    min-width: 160px;
+    height: 30px;
+    padding: 0 30px 0 10px;
+    background-image: url(../image/icon_select_arrow.png);
+    background-position: calc(100% - 10px) center;
+}
+
+option {
+    font-size: 14px;
+}
+
+
+/* 24.03.20 추가 button */
+.btn.border {
+    background-color: #FFF;
+    border: 1px solid #448AC6;
+    color: #448AC6;
+}
+
+.btn.skyblue {
+    background-color: #85BFE2;
+}
+
+.paging button {
+    color: #317AA9;
+    margin: 0 5px;
+}
+
+.paging button:first-child,
+.paging button:last-child {
+    margin: 0;
+}
+
+/* 24.03.20 테이블*/
+table {
+    width: 560px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    color: #85BFE2;
+    font-size: medium;
+    text-align: center;
+    margin: auto;
+}
+
+th,
+td {
+    vertical-align: middle;
+}
+
+th {
+    height: 40px;
+    font-size: 15px;
+    border-bottom: 1px #E1E1E1 solid;
+    color: #448AC6;
+}
+
+td {
+    height: 35px;
+    font-size: 14px;
+    color: #85BFE2;
+    margin: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-bottom: 1px #F2F2F2 solid;
+}
+
+
+

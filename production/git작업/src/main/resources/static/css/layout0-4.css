@@ -1,0 +1,147 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    text-align: center;
+    font-size: 16px;
+}
+
+
+body {
+    background-color: #F1E3C8;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+button{
+    border-style: none;
+}
+span{
+    color: #A8A8A8;
+}
+hr{
+    color: #E1E1E1;
+}
+
+.btns{
+    font-size: 0;
+    width: 600px;
+    height: 45px;
+    display: flex;
+    margin: auto;
+}
+
+.btns li {
+    display: inline-block;
+}
+.btns button {
+    width: 176.67px;
+    height: 45px;
+}
+.btns #etc {
+    width: 70px;
+    background-color: #E8D1A5;
+}
+
+.contents {
+    display: inline-block;
+    background-color: white;
+}
+.head{
+    width: 600px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.head img{
+    width: 40px;
+    height: 40px;
+}
+
+.container{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.container img{
+    width: 40px;
+    height: 40px;
+    margin-left: 20px;
+}
+.container div{
+    display: grid;
+    grid-template-columns: 45px 75px;
+    column-gap: 10px;
+    margin-right: 350px;
+}
+.container strong{
+    width: 45px;
+    height: 19px;
+}
+.container span {
+    height: 18px;
+}
+.container span:nth-child(3){
+    grid-column: 1 / span 2;
+    width: 270px;
+    text-align: left;
+}
+.head button{
+    width: 17px;
+    height: 17px;
+    background-color: rgba(255, 255, 255, 0);
+    justify-content: center;
+}
+.head button img{
+    width: 3px;
+    height: 17px;
+    margin: 0;
+}
+.body{
+    min-height: 180px;
+    max-height: 460px;
+}
+.text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 아이템을 세로 방향으로 가운데 정렬합니다. */
+    align-items: center;
+    gap: 11px;
+    width: 470px;
+    margin-left: 65px;
+}
+.text strong{
+    width: 100%;
+    text-align: left;
+}
+.text p{
+    width: 100%;
+    text-align: left;
+}
+
+.body div{
+    display: flex;
+    justify-content: center; /* 아이템을 세로 방향으로 가운데 정렬합니다. */
+    align-items: center;
+}
+.body .container{
+    gap: 357px;
+}
+.body div button{
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 아이템을 세로 방향으로 가운데 정렬합니다. */
+    align-items: center;
+    margin: 0;
+    background-color: rgba(255, 255, 255, 0);
+}
+.body span{
+    font-size: 12px;
+    text-align: center;
+}
+.body img{
+    margin: 0;
+}
+
+
+

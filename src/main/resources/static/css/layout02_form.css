@@ -182,7 +182,9 @@ a:hover {
 }
 
 [type="radio"]:checked {
-    border: 0.4em solid #779289;
+    /*border: 0.4em solid #779289;*/
+    background-image: url(../image/icon_radio_active.png);
+    background-position: center;
 }
 
 
