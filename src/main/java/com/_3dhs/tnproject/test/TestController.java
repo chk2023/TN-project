@@ -21,6 +21,10 @@ public class TestController {
         return "/error/global";
     }
 
+    @GetMapping("/layout/common_layout")
+    public void goto_common_layout() {
+    }
+
     @GetMapping("/layout/01_layout")
     public void goto01_layout() {
     }
