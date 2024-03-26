@@ -42,18 +42,10 @@
     </select>
 
     <insert id="insertRecord">
-        SELECT
-        report_code,
-        r_category_code,
-        report_text,
-        sub_member_code,
-        report_date,
-        processing_text
-
-        FROM
-         tbl_report
-
-        WHERE report_code = #{ reportCode }
+        INSERT INTO
+            report_text
+        VALUES
+            (#{ reportText })
 
 
     </insert>

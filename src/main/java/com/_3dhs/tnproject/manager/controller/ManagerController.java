@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.sql.*;
 import java.util.List;
 
 
@@ -52,7 +53,7 @@ public class ManagerController {
     public String viewOneReport(Model model, Integer reportCode) {
         ReportDTO report = reportService.viewOneReport(reportCode);
         model.addAttribute("viewOneReport", report);
-        // 페이지가 로딩될 때 값이 들어와야 한다.
+
 
         return"/manager/report/detail";
 }
@@ -68,6 +69,56 @@ public String insertRecord(Model model, Integer reportCode, RedirectAttributes r
 
     ReportDTO record = reportService.insertRecord(reportCode);
     model.addAttribute("insertRecord", record);
+   // model.getAttribute("insertRecord", reportCode);
+    //모델 객체에 reportCode 값을 담는다.
+    System.out.println(record);
+
+    //db에서 reportcode로 담은 값을 페이지에 출력...을....
+    int repNum = 0;
+
+    repNum = record.getReportCode();
+
+
+
+
+//    // JDBC 드라이버 로드
+//    Class.forName("com.mysql.jdbc.Driver");
+//
+//    // 데이터베이스 연결
+//    Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/database_name", "username", "password");
+//
+//    // 쿼리 실행
+//    Statement statement = connection.createStatement();
+//    ResultSet resultSet = statement.executeQuery("SELECT * FROM table_name");
+//
+//    // 결과 처리 및 출력
+//    while (resultSet.next()) {
+//        String value = resultSet.getString("column_name");
+//        System.out.println("Value: " + value);
+//        // 여기서는 콘솔에 출력했지만, 실제로는 모델에 데이터를 추가하여 페이지에 전달합니다.
+//    }
+//
+//    // 연결 종료
+//    resultSet.close();
+//    statement.close();
+//    connection.close();
+//} catch (Exception e) {
+//        e.printStackTrace();
+//    }
+
+
+
+
+    // 페이지가 로딩될 때 값이 들어와야 한다.
+    for(int i = 0 ; i > 0 ; i ++) {
+        //순환하면서 확인해줘. 라는 명령문을 쓸 때에 포문을 사용했던 것 같은데..
+
+    }
+
+
+
+
+
 
 
     //
