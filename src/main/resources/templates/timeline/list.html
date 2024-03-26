@@ -8,8 +8,10 @@
 </head>
 <body>
 <script>
-    let index = `[[${index}]]`;
-    const range = `[[${range}]]`;
+    let index = parseInt(`[[${index}]]`);
+    const range = parseInt(`[[${range}]]`);
+    let viewType = `[[${viewType}]]`;
+    let keycode = 1;
 </script>
 <div class="wrap">
     <header>
@@ -117,72 +119,22 @@
 
             <div style="padding: 20px">
                 <ul class="blogList">
-                    <li id="blogContents">
-                        <div class="list_head">
-                            <div class="prof_photo">
-                                <!--                    <img src="/image/icon_default_profile.png" alt="프로필 사진">-->
-                                <img src="https://cdn.inflearn.com/public/users/thumbnails/759418/09bcc1e5-b03d-46ed-8c6b-4aa283267e28"
-                                     alt="프로필 사진" id="prof_photo">
-                            </div>
-                            <div>
-                                <div>
-                                    <strong class="blog_user_name" id="nickname">조한결</strong>
-                                    <span class="blog_user_birth" id="wri_date">2월12일</span>
-                                </div>
-                                <span class="status_msg" id="status">오늘도 나는 눈물을 흘린다 또르륵오늘도 나는 눈물을 흘린다 또르륵오늘도 나는 눈물을 흘린다 또르륵</span>
-                            </div>
-                            <button class="optionBtn"><img src="/image/icon_option.png" alt="글 옵션 버튼"></button>
-                            <ul class="optionBox">
-                                <li><a>글 신고하기</a></li>
-                                <li><a>글 관심없음</a></li>
-                            </ul>
-                        </div>
-                        <div class="list_body">
-                            <div>
-                                <strong class="contentTit" id="title">글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목</strong>
-                                <div class="contentsTxt" id="text">
-                                    <p>
-                                        본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
-                                        본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
-                                        본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
-                                        본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
-                                        본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
-                                    </p>
-                                </div>
-                                <div class="showLikeAndComments">
-                                    <button class="commentsBtn">
-                                        <img src="/image/icon_comment.png" alt="댓글 버튼 아이콘">
-                                        <span id="cmt_count">300</span>+
-                                    </button>
-                                    <button class="likeBtn active">
-                                        <img src="/image/icon_like.png" alt="좋아요 버튼 아이콘">
-                                        <span id="like_count">200</span>k
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="thumbnailPhoto">
-                                <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2F20160310_12%2Flee_h_i2_1457596672049c0vMY_JPEG%2Ftumblr_nxt9emqtjP1uh04bco1_540.jpg&type=sc960_832"
-                                     alt="썸네일 이미지">
-                            </div>
-                        </div>
-                    </li>
                 </ul>
                 <br><br>
             </div>
         </section>
     </main>
 </div>
-<script src="/js/timeline.js"></script>
 <script id="blogTemplate" type="text/x-handlebars-template">
     {{#each this}}
     <div class="list_head">
         <div class="prof_photo">
-            <!--                    <img src="/image/icon_default_profile.png" alt="프로필 사진">-->
+
             <img src="{{profile.profileImgPath}}" alt="프로필 사진">
         </div>
         <div>
             <div>
-                <strong class="blog_user_name">{{profile.profileNickName}}</strong>
+                <strong class="blog_user_name">{{profile.profileNickname}}</strong>
                 <span class="blog_user_birth">{{postWriDate}}</span>
             </div>
             <span class="status_msg">{{profile.profileStatmsg}}</span>
@@ -204,11 +156,11 @@
             <div class="showLikeAndComments">
                 <button class="commentsBtn">
                     <img src="/image/icon_comment.png" alt="댓글 버튼 아이콘">
-                    <span>{{cmtCountStr}}</span>
+                    <span>{{cmtCount}}</span>
                 </button>
                 <button class="likeBtn active">
                     <img src="/image/icon_like.png" alt="좋아요 버튼 아이콘">
-                    <span>{{likeCountStr}}</span>
+                    <span>{{likeCount}}</span>
                 </button>
             </div>
         </div>
@@ -219,21 +171,58 @@
     {{/each}}
 </script>
 <script>
+    update(); //최초 1회 실행
     function update() {
-        fetch('/timeline/trendUpdate'+'?index='+index+'&range='+range)
+        fetch(`/timeline/updateList?index=${index}&range=${range}&keycode=${keycode}`)
             .then(res => res.json())
             .then(data => {
-                console.log(data);
-                var source = document.querySelector("#blogTemplate").innerHTML;
-                var template = Handlebars.compile(source);
-                var html = template(data);
-                console.log(html);
-                var element = document.createElement("li");
-                element.innerHTML = html;
-                document.querySelector(".blogList").appendChild(element);
+                console.log(index);
+                console.log(range);
+                if (!data.length) {
+                    alert("더이상 보여줄 글이 없습니다.");
+                    return;
+                }
+                // 템플릿 소스 설정
+                var source = '';
+                if (viewType == 'blog') {
+                    source = document.querySelector("#blogTemplate").innerHTML;
+                } else {
+                    // 다른 viewType에 대한 템플릿 소스 설정
+                }
 
-                index = index + range;
+                var fragment = document.createDocumentFragment();
+                const $blogList = document.querySelector(".blogList");
+                var template = Handlebars.compile(source);
+
+                data.forEach(item => {
+                    item.cmtCount = formatCount(item.cmtCount);
+                    item.likeCount = formatCount(item.likeCount);
+                    item.postWriDate = formatWriDate(item.postWriDate);
+                });
+                var html = document.createElement("li");
+                html.innerHTML = template(data, {data: {handlebars: Handlebars.create()}});
+                fragment.appendChild(html); // DocumentFragment에 요소 추가
+                // DocumentFragment를 한 번에 추가하여 DOM 조작 효율성 향상
+                $blogList.appendChild(fragment);
+
+                index =index + range    ;
             }).catch(error => console.error('Error fetching profile data:', error));
+    }
+
+    function formatWriDate(postWriDate) {
+        let time = new Date(postWriDate);
+        return time.toLocaleDateString("ko-KR", {
+            month: 'long',
+            day: 'numeric',
+        });
+    }
+
+    function formatCount(count) {
+        if (count > 1000) {
+            return count = (count / 1000).toFixed(1) + 'k';
+        } else {
+            return count.toString();
+        }
     }
 </script>
 </body>
