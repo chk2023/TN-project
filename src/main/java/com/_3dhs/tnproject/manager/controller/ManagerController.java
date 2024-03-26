@@ -56,12 +56,14 @@ public class ManagerController {
         return "/manager/report/detail";
     }
 
-    @GetMapping("/manager/report/admin")
+    @GetMapping("/admin")
     public String processingReport (Model model, String proccessingText) {
+        //신고목록 상세조회에서 내용을 입력하고 완료 버튼을 눌렀을 때의 동작
+
         //입력 받은 스트링 값을 담을 객체를 선언하고
         //훌라훌라훌라 훌~라 훌~라 훌라~~~ 훌라춤을 추우는 탬버륀~~~~
          String reportProcessingText = reportService.processingReport(proccessingText);
-         model.addAttribute("processingReport", processingReport);
+       //  model.addAttribute("processingReport", processingReport);
 
 
         //완료 버튼을 누르면 디비에 해당 값이 저장된다.
@@ -71,6 +73,8 @@ public class ManagerController {
 
         return "/manager/report/processing ";
     }
+
+
 
 
 

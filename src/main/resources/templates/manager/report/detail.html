@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/reportDetail.css">
 </head>
 <body>
 <div class="wrap">
@@ -67,25 +67,25 @@
 <!--            <input class="search_input" type="text" placeholder="검색어를 입력하세요">-->
 <!--            <button class="searchBtn"><img src="/image/btn_search.png" alt="검색 버튼"></button>-->
 <!--            <button class="closeBtn"><img src="/image/btn_close.png" alt="닫기 버튼"></button>-->
-        </form>
+        </form> <br><br>
         <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
-            <h2>신고 내역 상세 </h2>
-            <input type="text" placeholder="신고 내용을 상세히 작성해주세요."/><br><br>
+              <div id="reportDetail">
+                 <label><h4>신고 번호</h4>  <input type="text"></label> <br>
+                 <label><h4>신고 구분 코드</h4>  <input type="text"></label> <br>
+                 <label><h4>신고 내역</h4>  <input type="text"></label> <br>
+                 <label><h4>신고 대상 유저</h4>  <input type="text"></label> <br>
+                 <label><h4>신고 날자</h4>  <input type="text"></label> <br>
+                 <label><h4>처리 기록</h4>  <input type="text"></label> <br>
+              </div>
+              <br><br>
+        <div class="reportBtn">
+            <label><button class="btn skyblue">계정 정지</button></label>
+            <labe><button class="btn skyblue">계정 정지 해제</button></labe>
+            <label><button class="btn skyblue">완료</button></label>
+        </div>
 
-            <form type="reportDetail=" method="post" >
-                <input type="text" name="reportCode">
-                <input type="number" name="RCategoryCode">
-                <input type="text" name="reportText">
-                <input type="text" name="subMemberCode">
-                <input type="datetime-local" name="reportDate">
-                <input type="text" name="processingText">
 
-            </form>
 
-            <button class="btn skyblue">계정 정지</button>
-            <button class="btn skyblue">계정 정지 해제</button>
-            <button class="btn skyblue">완료</button>
-            <br><br>
 
         </section>
     </main>
