@@ -44,22 +44,20 @@ window.onload = function () {
 
             // 옵션 박스에서 선택한 도메인 확인
             if ($optionalId.value !== "default") {
-                domain = "@" + $optionalId.value;
+                domain = $optionalId.value;
             }
 
             // 도메인과 아이디 조합해서 fetch로 요청 보내기
-            if ($optionalId.value === "default") {
-                fullEmail = memberId;
-            } else {
-                fullEmail = memberId + domain;
-            }
+            memberId += domain;
+
+            console.log(memberId);
 
             fetch("/member/idDupCheck", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json;charset=UTF-8'
                 },
-                body: JSON.stringify({memberId: fullEmail})
+                body: JSON.stringify({memberId: memberId})
             })
                 .then(result => result.text())
                 .then(result => {
@@ -72,6 +70,15 @@ window.onload = function () {
                     }
                 })
                 .catch((error) => error.text().then((res) => alert(res)));
+
+            // 조합한 아이디와 도메인을 회원가입 주소에도 요청하기 (db에 이메일 형식으로 저장하기 위함)
+            fetch("/member/regist", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json;charset=UTF-8'
+                },
+                body: JSON.stringify({ memberId: memberId })
+            })
         }
     }
 
