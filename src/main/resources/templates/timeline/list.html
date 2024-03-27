@@ -5,16 +5,23 @@
     <title>Timeline - main</title>
     <link rel="stylesheet" href="/css/common.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+    <style>
+        .mainProfile {
+            width: 600px;
+            height: 200px;
+            overflow: hidden;
+        }
+        .mprofBackground img {
+            min-width: 100%;
+            min-height: 100%;
+            background-color: #448AC6;
+            filter: blur(3px);
+        }
+    </style>
 </head>
 <body>
-<script>
-    let index = parseInt(`[[${index}]]`);
-    const range = parseInt(`[[${range}]]`);
-    let viewType = `[[${viewType}]]`;
-    let contentsType = parseInt(`[[${contentsType}]]`);
-    const $tabMenu = document.querySelector(`.tabMenu`);
-</script>
-<div class="wrap">
+
+< class="wrap">
     <header>
         <div class="profile">
             <button class="optionBtn"><img src="/image/icon_option.png" alt="프로필 옵션 버튼"></button>
@@ -123,9 +130,19 @@
                 </ul>
                 <br><br>
             </div>
+            <div id="listEnd"></div>
         </section>
     </main>
 </div>
+<script>
+    let index = parseInt(`[[${index}]]`);
+    const range = parseInt(`[[${range}]]`);
+    let viewType = `[[${viewType}]]`;
+    let contentsType = parseInt(`[[${contentsType}]]`);
+    const $tabMenu = document.querySelector(`.tabMenu`);
+    let isTitlePhotoChanged = false;
+    let isLoading = false;
+</script>
 <script id="blogTemplate" type="text/x-handlebars-template">
     {{#each this}}
     <div class="list_head">
@@ -171,8 +188,7 @@
     </div>
     {{/each}}
 </script>
-<script src="/js/timeline.js">
-
-</script>
+<script src="/js/timeline.js"></script>
+<script src="/js/scrollEvent.js"></script>
 </body>
 </html>
