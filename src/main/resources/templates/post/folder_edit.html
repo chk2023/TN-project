@@ -55,7 +55,11 @@
         </form>
         <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
 
-            <form action="">
+<!--            <form action="">-->
+                <div class="btnWrap">
+                    <button class="addBtn btn gray">추가</button>
+                    <button class="deleteBtn btn gray">삭제</button>
+                </div>
                 <ul class="fEditList">
                     <li class="fixed">전체목록 (<span>56</span>)</li>
                     <li>폴더 1의 폴더명</li>
@@ -64,17 +68,86 @@
                     <dt>폴더명</dt>
                     <dd>
                         <div class="txt">
-                            <input type="text" placeholder="폴더명을 입력하세요.">
+                            <input id="folderName" type="text" readonly>
                             <em>* 폴더는 최대 10개 까지 추가 가능합니다.</em>
-                        </div>
-                        <div class="btnWrap">
-                            <button class="btn gray">추가</button>
-                            <button class="btn gray">삭제</button>
                         </div>
                     </dd>
                 </dl>
-            </form>
+<!--            </form>-->
+            <script>
+                const $addBtn = document.querySelector(".addBtn");
+                const $delBtn = document.querySelector(".deleteBtn");
+                const $fragment = document.createDocumentFragment();
+                const $feList = document.querySelector(".fEditList")
+                const fName = document.getElementById("folderName");
 
+                $addBtn.addEventListener('click', () => {
+                    const fNameValue = fName.value;
+                    const $li = document.createElement("li");
+
+                    if(!fNameValue) {
+                        if(document.querySelectorAll(".fEditList li").length <= 10 ) {
+                            removeActive()
+                            $li.textContent = '폴더';
+                            $fragment.appendChild($li)//.classList.add("active");
+                            $feList.appendChild($fragment);
+                        } else {
+                            alert("웅 안대ㅎㅎㅎ 10개 넘었엉")
+                        }
+                    } else {
+                        alert("미쳤음?? 공백임ㅇ")
+                    }
+                })
+
+                $delBtn.addEventListener('click', function() {
+                    const $feListActive = document.querySelector(".fEditList .active")
+
+                        $feListActive.remove();
+                        fName.removeAttribute("readonly");
+                        fName.value = thisfName;
+                        fName.focus();
+
+                })
+
+                $feList.addEventListener('click', function(e) {
+                    let thisEl = e.target;
+                    if(thisEl.tagName === "LI" && !thisEl.classList.contains("fixed")) {
+                        removeActive();
+                        let thisfName = thisEl.textContent;
+                        thisEl.classList.add("active");
+                        fName.removeAttribute("readonly");
+                        fName.value = thisfName;
+                        fName.focus();
+                    }
+                })
+
+                // fName.addEventListener("blur", (e)=> {
+                //     removeActive();
+                //     fName.setAttribute("readonly", "readonly");
+                //     fName.value = '';
+                // })
+
+                fName.addEventListener('input', () => {
+                    console.log(fName.value);
+                    document.querySelector(".fEditList .active").textContent = fName.value;
+                })
+
+                fName.addEventListener("keydown", (e) => {
+                    if(e.key === "Enter") {
+                        removeActive();
+                        fName.setAttribute("readonly", "readonly");
+                        fName.value = '';
+                        fName.blur();
+                    }
+                })
+
+                function removeActive() {
+                    const $lis = document.querySelectorAll(".fEditList li");
+                    $lis.forEach((li)=>{
+                        li.classList.remove("active");
+                    })
+                }
+            </script>
         </section>
     </main>
 </div>

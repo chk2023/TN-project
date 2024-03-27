@@ -61,7 +61,8 @@ em {
     cursor: pointer;
 }
 
-.fEditList li:not(.fixed):hover {
+.fEditList li:not(.fixed):hover,
+.fEditList li:not(.fixed).active {
     background-color: #F2F2F2;
 }
 
@@ -83,11 +84,17 @@ em {
 
 .fEditList + dl input {
     height: 30px;
-    margin-right: 25px;
 }
 
-.fEditList + dl .btnWrap {
-    align-items: flex-start;
+.fEditList + dl input[readonly] {
+    background-color: #F2F2F2;
+    cursor: not-allowed;
+}
+
+section:has(.fEditList) .btnWrap {
+    width: 350px;
+    justify-content: flex-end;
+    margin: auto auto 20px;
 }
 
 /*------------------------------------------
