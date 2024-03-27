@@ -11,7 +11,8 @@
     let index = parseInt(`[[${index}]]`);
     const range = parseInt(`[[${range}]]`);
     let viewType = `[[${viewType}]]`;
-    let keycode = 1;
+    let contentsType = parseInt(`[[${contentsType}]]`);
+    const $tabMenu = document.querySelector(`.tabMenu`);
 </script>
 <div class="wrap">
     <header>
@@ -103,11 +104,11 @@
                 </div>
             </div>
             <ul class="tabMenu">
-                <li class="active">
-                    <button>인기글</button>
+                <li id="trend" class="active">
+                    <button onclick="trendBtnClicked()">인기글</button>
                 </li>
-                <li>
-                    <button>최신글</button>
+                <li id="latest">
+                    <button onclick="latestBtnClicked()">최신글</button>
                 </li>
                 <li>
                     <button>추천글</button>
@@ -170,60 +171,8 @@
     </div>
     {{/each}}
 </script>
-<script>
-    update(); //최초 1회 실행
-    function update() {
-        fetch(`/timeline/updateList?index=${index}&range=${range}&keycode=${keycode}`)
-            .then(res => res.json())
-            .then(data => {
-                console.log(index);
-                console.log(range);
-                if (!data.length) {
-                    alert("더이상 보여줄 글이 없습니다.");
-                    return;
-                }
-                // 템플릿 소스 설정
-                var source = '';
-                if (viewType == 'blog') {
-                    source = document.querySelector("#blogTemplate").innerHTML;
-                } else {
-                    // 다른 viewType에 대한 템플릿 소스 설정
-                }
+<script src="/js/timeline.js">
 
-                var fragment = document.createDocumentFragment();
-                const $blogList = document.querySelector(".blogList");
-                var template = Handlebars.compile(source);
-
-                data.forEach(item => {
-                    item.cmtCount = formatCount(item.cmtCount);
-                    item.likeCount = formatCount(item.likeCount);
-                    item.postWriDate = formatWriDate(item.postWriDate);
-                });
-                var html = document.createElement("li");
-                html.innerHTML = template(data, {data: {handlebars: Handlebars.create()}});
-                fragment.appendChild(html); // DocumentFragment에 요소 추가
-                // DocumentFragment를 한 번에 추가하여 DOM 조작 효율성 향상
-                $blogList.appendChild(fragment);
-
-                index =index + range    ;
-            }).catch(error => console.error('Error fetching profile data:', error));
-    }
-
-    function formatWriDate(postWriDate) {
-        let time = new Date(postWriDate);
-        return time.toLocaleDateString("ko-KR", {
-            month: 'long',
-            day: 'numeric',
-        });
-    }
-
-    function formatCount(count) {
-        if (count > 1000) {
-            return count = (count / 1000).toFixed(1) + 'k';
-        } else {
-            return count.toString();
-        }
-    }
 </script>
 </body>
 </html>

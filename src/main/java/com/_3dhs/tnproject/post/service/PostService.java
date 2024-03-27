@@ -18,8 +18,8 @@ public class PostService {
     private final CommentsMapper commentsMapper;
 
     @Transactional(readOnly = true)
-    public List<PostDTO> findListByIndex(Map<String,Integer> params) {
-        List<PostDTO> postList = postMapper.findListByIndex(params);
+    public List<PostDTO> findListByParam(Map<String,Integer> params) {
+        List<PostDTO> postList = postMapper.findListByParam(params);
         for (int i = 0; i < postList.size(); i++) {
             postList.get(i).setAttachmentList(postMapper.findAttListByPostCode(postList.get(i).getPostCode()));
             postList.get(i).makeThumbnailPath();

@@ -22,23 +22,24 @@ public class TimelineController {
     private final PostService service;
 
     @GetMapping("/list")
-    public String findTrendList(Model model, String viewType) {
+    public String findTrendList(Model model, String viewType,int contentsType) {
         int index = 0;
         int range = 10;
 
         model.addAttribute("index", index);
         model.addAttribute("range", range);
         model.addAttribute("viewType", viewType);
+        model.addAttribute("contentsType", contentsType);
         return "timeline/list";
     }
 
     @ResponseBody
     @GetMapping("/updateList")
-    public List<PostDTO> findTrendListByIndex(int index, int range, int keycode) {
+    public List<PostDTO> findListByParam(int index, int range, int contentsType) {
         Map<String, Integer> params = new HashMap<>();
         params.put("index",index);
         params.put("range", range);
-        params.put("keycode", keycode);
-        return service.findListByIndex(params);
+        params.put("contentsType", contentsType);
+        return service.findListByParam(params);
     }
 }

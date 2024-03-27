@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Mapper
 public interface PostMapper {
-    List<PostDTO> findListByIndex(Map<String ,Integer> params);
+    List<PostDTO> findListByParam(Map<String ,Integer> params);
 
     List<LikeListDTO> findLikeListByCode(int postCode);
 
