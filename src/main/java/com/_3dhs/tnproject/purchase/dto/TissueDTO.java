@@ -14,6 +14,6 @@ public class TissueDTO {
     private String orderClass; //TODO : enum으로 대체할지 작업자가 설정하기
     private LocalDateTime orderDate;
     private int tissuePrice;
-    private int memberCode;
+    private int tMemberCode;
     private Integer postCode;
 }

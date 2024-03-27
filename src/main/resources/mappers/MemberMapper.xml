@@ -51,4 +51,15 @@
             'ACTIVE', 0, 'COMMON')
     </insert>
 
+    <update id="updateTissue" parameterType="com._3dhs.tnproject.member.dto.MemberDTO">
+        UPDATE
+            tbl_member
+        SET
+            have_tissue = #{haveTissue}
+        WHERE
+            member_id = #{memberId}
+
+    </update>
+
+
 </mapper>

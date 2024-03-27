@@ -29,4 +29,20 @@ public class MemberService {
 
         if (!(result > 0)) throw new MemberRegistException("회원 가입에 실패하였습니다.");
     }
+
+    // 결제 추가
+//    public void updateHaveTissue(String memberId, int nTissue) {
+//        memberMapper.updateTissue(memberId, nTissue);
+//    }
+
+    public MemberDTO getMemberbyId(String userId) {
+        return memberMapper.findByMemberId(userId);
+    }
+
+    public void updateHaveTissue(String memberId, int nTissue) {
+        memberMapper.updateTissue(memberId, nTissue);
+
+
+    }
+
 }

@@ -10,4 +10,7 @@ public interface MemberMapper {
     int insertMember(MemberDTO member);
 
     String selectMemberById(String memberId);
+
+    void updateTissue(String memberId, int nTissue);
+
 }
