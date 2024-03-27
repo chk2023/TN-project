@@ -52,11 +52,7 @@ public class ManagerController {
 
     }
 
-
-
-    @GetMapping("admin")
-    public String adminP() {
-        return "admin";
-    }
-
 }
+
+
+
