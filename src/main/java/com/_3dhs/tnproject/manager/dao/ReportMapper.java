@@ -11,7 +11,6 @@ public interface ReportMapper {
 
     ReportDTO viewOneReport(Integer reportCode);
 
-    String processingReport(String proccessingText);
 
-    ReportDTO insertRecord(Integer reportCode);
+    ReportDTO updateReport(int reportCode);
 }

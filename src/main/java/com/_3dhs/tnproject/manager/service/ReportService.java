@@ -14,7 +14,7 @@ public class ReportService {
 
 
     public List<ReportDTO> viewAllReport() {
-        return  reportMapper.viewAllReport();
+        return reportMapper.viewAllReport();
     }
 
     public ReportDTO viewOneReport(Integer reportCode) {
@@ -22,12 +22,11 @@ public class ReportService {
         return reportMapper.viewOneReport(reportCode);
     }
 
-    public String processingReport(String proccessingText) {
 
-        return reportMapper.processingReport(proccessingText);
-    }
-
-    public ReportDTO insertRecord(Integer reportCode) {
-        return reportMapper.insertRecord(reportCode) ;
+    public ReportDTO updateReport(int reportCode, String processingText) {
+        return reportMapper.updateReport(reportCode);
     }
 }
+
+
+

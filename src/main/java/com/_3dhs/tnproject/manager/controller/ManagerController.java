@@ -63,82 +63,45 @@ public class ManagerController {
 
 
 @GetMapping("/detail")
-public String insertRecord(Model model, Integer reportCode, RedirectAttributes rttr) {
+public String updateReport(ReportDTO reportDTO, RedirectAttributes rttr) {
 
     // 신고 목록 상세에서 내역을 입력해서 완료 버튼을 누르면 해당 내용이 디비에 저장하는 기능
 
-    ReportDTO record = reportService.insertRecord(reportCode);
-    model.addAttribute("insertRecord", record);
-   // model.getAttribute("insertRecord", reportCode);
-    //모델 객체에 reportCode 값을 담는다.
-    System.out.println(record);
-
-    //db에서 reportcode로 담은 값을 페이지에 출력...을....
-    int repNum = 0;
-
-    repNum = record.getReportCode();
+//    ReportDTO record = reportService.insertRecord(reportCode);
+//    model.addAttribute("insertRecord", record);
 
 
+    ReportDTO record = reportService.updateReport(reportDTO.getReportCode(), reportDTO.getProcessingText());
+    record.setProcessingText(reportDTO.getProcessingText());
+    reportService.updateReport(reportDTO.getReportCode(), reportDTO.getProcessingText());
 
-
-//    // JDBC 드라이버 로드
-//    Class.forName("com.mysql.jdbc.Driver");
-//
-//    // 데이터베이스 연결
-//    Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/database_name", "username", "password");
-//
-//    // 쿼리 실행
-//    Statement statement = connection.createStatement();
-//    ResultSet resultSet = statement.executeQuery("SELECT * FROM table_name");
-//
-//    // 결과 처리 및 출력
-//    while (resultSet.next()) {
-//        String value = resultSet.getString("column_name");
-//        System.out.println("Value: " + value);
-//        // 여기서는 콘솔에 출력했지만, 실제로는 모델에 데이터를 추가하여 페이지에 전달합니다.
-//    }
-//
-//    // 연결 종료
-//    resultSet.close();
-//    statement.close();
-//    connection.close();
-//} catch (Exception e) {
-//        e.printStackTrace();
-//    }
-
-
-
-
-    // 페이지가 로딩될 때 값이 들어와야 한다.
-    for(int i = 0 ; i > 0 ; i ++) {
-        //순환하면서 확인해줘. 라는 명령문을 쓸 때에 포문을 사용했던 것 같은데..
-
-    }
-
-
-
-
-
-
-
-    //
-
-    //오호.....???? 윗 코드가 잘못된건가 에에?
-
-
-
-    //훌라훌라훌라~~~~ 훌라훌라후~~울라
-
-
-
-    //변경된 값을 객체에 담아 디비에 보내준다..?
-
-    //
+    //record를 db에 저장한 후에
+    //저장이 잘됐으면 저장 확인 얼럿을 띄워준다
+    //서브밋이 결과에 따라 알럿창을 띄워주는 기능을 개발해야함.
 
     rttr.addFlashAttribute("insertRecord");
+    return"redirect:/manager/report/list";
 
 
-    return "redirect:/manager/report/list";
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+    //
+
+
+
 
 }
 
@@ -160,7 +123,7 @@ public String insertRecord(Model model, Integer reportCode, RedirectAttributes r
 //        return "redirect:/manager/report/list";
 //    }
 
-}
+
 
 
 //    @GetMapping("admin")

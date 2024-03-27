@@ -41,14 +41,14 @@
             report_code = #{ reportCode }
     </select>
 
-    <insert id="insertRecord">
-        INSERT INTO
-            report_text
-        VALUES
-            (#{ reportText })
-
-
-    </insert>
+    <update id="insertRecord" >
+        UPDATE
+            tbl_report
+        SET
+            processing_text = #{ processingText }
+        WHERE
+            report_code = #{ reportCode}
+    </update>
 
 
 
