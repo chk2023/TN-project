@@ -62,14 +62,25 @@
                 </div>
                 <ul class="fEditList">
                     <li class="fixed">전체목록 (<span>56</span>)</li>
-                    <li>폴더 1의 폴더명</li>
+                    <li><img src="/image/icon_folder.png" alt="기본 폴더 아이콘"> 폴더 1의 폴더명</li>
                 </ul>
+
                 <dl>
                     <dt>폴더명</dt>
                     <dd>
                         <div class="txt">
                             <input id="folderName" type="text" readonly>
                             <em>* 폴더는 최대 10개 까지 추가 가능합니다.</em>
+                        </div>
+                    </dd>
+                    <dt class="iconDt">아이콘 설정</dt>
+                    <dd>
+                        <div class="iconBox">
+                            <img src="/image/icon_folder.png" alt=""/>
+                            <img src="/image/icon_star.png" alt=""/>
+                            <img src="/image/icon_heart.png" alt=""/>
+                            <img src="/image/icon_lamp.png" alt=""/>
+                            <img src="/image/icon_note.png" alt=""/>
                         </div>
                     </dd>
                 </dl>
@@ -92,21 +103,15 @@
                             $fragment.appendChild($li)//.classList.add("active");
                             $feList.appendChild($fragment);
                         } else {
-                            alert("웅 안대ㅎㅎㅎ 10개 넘었엉")
+                            alert("폴더는 최대 10개 까지만 생성 가능합니다.")
                         }
-                    } else {
-                        alert("미쳤음?? 공백임ㅇ")
                     }
                 })
 
                 $delBtn.addEventListener('click', function() {
-                    const $feListActive = document.querySelector(".fEditList .active")
-
+                    const $feListActive = document.querySelector(".fEditList .active");
                         $feListActive.remove();
-                        fName.removeAttribute("readonly");
-                        fName.value = thisfName;
-                        fName.focus();
-
+                        inputBlur();
                 })
 
                 $feList.addEventListener('click', function(e) {
@@ -121,11 +126,11 @@
                     }
                 })
 
-                // fName.addEventListener("blur", (e)=> {
-                //     removeActive();
-                //     fName.setAttribute("readonly", "readonly");
-                //     fName.value = '';
-                // })
+                fName.addEventListener("blur", (e)=> {
+                    //removeActive();
+                    fName.setAttribute("readonly", "readonly");
+                    fName.value = '';
+                })
 
                 fName.addEventListener('input', () => {
                     console.log(fName.value);
@@ -135,11 +140,14 @@
                 fName.addEventListener("keydown", (e) => {
                     if(e.key === "Enter") {
                         removeActive();
-                        fName.setAttribute("readonly", "readonly");
-                        fName.value = '';
-                        fName.blur();
+                        inputBlur();
                     }
                 })
+                function inputBlur() {
+                    fName.setAttribute("readonly", "readonly");
+                    fName.value = '';
+                    fName.blur();
+                }
 
                 function removeActive() {
                     const $lis = document.querySelectorAll(".fEditList li");

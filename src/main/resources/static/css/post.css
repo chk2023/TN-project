@@ -68,27 +68,47 @@ em {
 
 .fEditList + dl {
     display: flex;
-    justify-content: center;
-    margin-top: 20px;
+    width: 350px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin: 40px auto;
 }
 
 .fEditList + dl dt {
     display: inline-block;
+    width: 110px;
     color: #404040;
     padding-right: 30px;
 }
 
 .fEditList + dl dd {
-    display: flex;
+    display: inline-flex;
+    width: calc(100% - 110px);
 }
 
 .fEditList + dl input {
+    width: 100%;
     height: 30px;
 }
 
 .fEditList + dl input[readonly] {
     background-color: #F2F2F2;
     cursor: not-allowed;
+}
+
+.fEditList + dl .iconDt,
+.fEditList + dl .iconDt + dd {
+    margin-top: 20px;
+}
+
+.iconBox {
+    padding:0 20px;
+}
+
+.iconBox * {
+    /*border: 1px solid #E1E1E1; */
+    padding: 5px;
+    margin-right: 5px;
 }
 
 section:has(.fEditList) .btnWrap {
