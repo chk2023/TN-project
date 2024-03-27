@@ -60,7 +60,6 @@ public class TestController {
     @GetMapping("/common/makepassword")
     public void gotoMakePasswordPage() {
     }
-
     @PostMapping("/common/makepassword")
     public String makePassword(String pass, Model model) {
         String password = encoder.encode(pass);
