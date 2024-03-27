@@ -69,6 +69,9 @@ window.onload = function () {
                     }
                 })
                 .catch((error) => error.text().then((res) => alert(res)));
+
+            /* 인증 코드 이메일 전송 */
+            sendNumber(memberId);
         }
     }
 
@@ -104,4 +107,30 @@ window.onload = function () {
             event.preventDefault(); // submit 중지
         }
     });
+
+    /* 이메일 인증 코드 전송 */
+    function sendNumber(memberId){
+        // const ver_code = document.getElementById("ver_code");
+        const confirm = document.getElementById("confirm");
+        fetch("/mail", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8'
+            },
+            body: JSON.stringify({memberId: memberId})
+        })
+            .then(result => alert("인증번호 발송"))
+            .catch((error) => error.text().then((res) => alert(res)));
+    }
+
+    function confirmNumber(){
+        var number1 = $("#code").val();
+        var number2 = $("#confirm").val();
+
+        if(number1 == number2){
+            alert("인증되었습니다.");
+        }else{
+            alert("번호가 다릅니다.");
+        }
+    }
 }
