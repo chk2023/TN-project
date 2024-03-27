@@ -58,6 +58,7 @@ public class ManagerController {
         return"/manager/report/detail";
 }
 
+}
 
 
 
@@ -92,43 +93,4 @@ public String updateReport(ReportDTO reportDTO, RedirectAttributes rttr) {
 
 }
 
-
-
-
-
-
-
-    //
-
-
-
-
 }
-
-//    @GetMapping("/")
-//    public String failedInsert(Model model, Integer reportCode, RedirectAttributes rttr) {
-//
-//        // 신고 목록 상세에서 내역을 입력해서 디비에 저장하는 기능
-//        //insetRC 페이지랑 어떻게 연동을 해야 하는가..
-//        //detail 페이지랑 연동해서, detail 페이지에서 버튼 기능 추가하면 되는거 아닌가...
-//        //디비에 저장되는 기능이랑, 버튼을 눌렀을 때 알럿창이 뜨는 거는 기능?????을 분리해야 되지 않나. => 기능이라고 묶는 것도 좀..
-//
-//        //객체를 디비에 보내서 값을 입력하고, 완료 했을 경우 알럿 창으로 띄우게 만드는 기능.
-//
-//        ReportDTO record = reportService.insertRecord(reportCode);
-//        model.addAttribute("insertRecord", record);
-//
-//        //변경된 값을 객체에 담아 디비에 보내준다..?
-//
-//        return "redirect:/manager/report/list";
-//    }
-
-
-
-
-//    @GetMapping("admin")
-//    public String adminP() {
-//        return "admin";
-//    }
-//
-//}
