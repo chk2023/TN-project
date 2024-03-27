@@ -24,7 +24,7 @@ public class ReportService {
 
 
     public ReportDTO updateReport(int reportCode, String processingText) {
-        return reportMapper.updateReport(reportCode);
+        return reportMapper.updateReport(reportCode, processingText);
     }
 }
 

@@ -20,6 +20,21 @@
             report_code
     </select>
 
+
+    <select id="viewAllReport" resultType="com.._3dhs.tnproject.manager.dto.ReportDTO">
+        select
+            tbl_report.report_code,
+            tbl_report.r_category_code,
+            tbl_report.report_text,
+            tbl_report.manager_code,
+            tbl_report.report_text,
+            tbl_member.member_code,
+            tbl_member.report
+                aleft join b on a.id = b.idorder by a.id asc
+
+
+    </select>
+
     <select id="viewOneReport" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">
         SELECT
             report_code,
@@ -47,7 +62,7 @@
         SET
             processing_text = #{ processingText }
         WHERE
-            report_code = #{ reportCode}
+            report_code = #{ reportCode }
     </update>
 
 
