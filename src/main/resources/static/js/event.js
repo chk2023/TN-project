@@ -17,7 +17,6 @@ window.onload = function () {
     if(document.getElementById("emailCheck")) {
 
         const $duplication = document.getElementById("emailCheck");
-        const $signupButton = document.getElementById("signupButton");
         const $duplicationMessage = document.getElementById("duplicationMessage");
         const $optionalId = document.getElementById("optionalId");
 
@@ -67,8 +66,6 @@ window.onload = function () {
                     }
                 })
                 .catch((error) => error.text().then((res) => alert(res)));
-
-            sendNumber(memberId);
         }
     }
     // 이메일 형식인지 검증하는 함수
@@ -105,23 +102,38 @@ window.onload = function () {
     });
 
     /* 이메일 인증 코드 전송 */
-    function sendNumber(memberId){
-        // const ver_code = document.getElementById("ver_code");
-        const confirm = document.getElementById("confirm");
-        fetch("/mail", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json;charset=UTF-8'
-            },
-            body: JSON.stringify({memberId: memberId})
-        })
-            .then(res => res.text())
-            .then(result =>{
-                console.log(result);
-                alert("인증번호 발송");
-                generatedCode = result;
+    if (document.getElementById("verCode")) {
+
+        const $verifyEmail = document.getElementById("verCode");
+        const $optionalId = document.getElementById("optionalId");
+
+        $verifyEmail.onclick = function () {
+            let memberId = document.getElementById("memberId").value.trim();
+            let domain = '';
+
+            // 옵션 박스에서 선택한 도메인 확인
+            if ($optionalId.value !== "default") {
+                domain = $optionalId.value;
+            }
+
+            // 도메인과 아이디 조합해서 fetch로 요청 보내기
+            memberId += domain;
+
+            fetch("/mail", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json;charset=UTF-8'
+                },
+                body: JSON.stringify({memberId: memberId})
             })
-            .catch((error) => error.text().then((res) => alert(res)));
+                .then(res => res.text())
+                .then(result =>{
+                    console.log(result);
+                    alert("인증번호 발송");
+                    generatedCode = result;
+                })
+                .catch((error) => error.text().then((res) => alert(res)));
+        }
     }
 
     let generatedCode;
