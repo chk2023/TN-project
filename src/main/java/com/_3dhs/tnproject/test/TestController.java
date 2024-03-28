@@ -1,7 +1,10 @@
 package com._3dhs.tnproject.test;
 
+import com._3dhs.tnproject.member.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.MessageSourceAccessor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class TestController {
     private final MessageSourceAccessor messageSourceAccessor;
     private final PasswordEncoder encoder;
@@ -55,6 +59,7 @@ public class TestController {
     @GetMapping("/common/makepassword")
     public void gotoMakePasswordPage() {
     }
+
     @PostMapping("/common/makepassword")
     public String makePassword(String pass, Model model) {
         String password = encoder.encode(pass);
@@ -62,4 +67,11 @@ public class TestController {
         return "/common/makepassword";
     }
 
+    @GetMapping("/common/userdetailstest")
+    public String getMemberByUserDetails(Authentication authentication,Model model) {
+        MemberDTO memberDTO = (MemberDTO) authentication.getPrincipal();
+        log.info("memberDTO : {}", memberDTO);
+        model.addAttribute("member", memberDTO);
+        return "/common/userdetailstest";
+    }
 }

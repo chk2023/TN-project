@@ -32,4 +32,8 @@ public class AuthService implements UserDetailsService {
 
         return member;
     }
+
+    public static MemberDTO FindLoggedInMembers() {
+        return null;
+    }
 }
