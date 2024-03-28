@@ -11,14 +11,24 @@
             height: 200px;
             overflow: hidden;
         }
+
         .mprofBackground img {
             min-width: 100%;
             min-height: 100%;
             background-color: #448AC6;
             filter: blur(3px);
         }
-        main{
+
+        main {
             min-height: 1000px;
+        }
+
+        .viewBtn.active .optionBox {
+            display: flex;
+        }
+
+        .optionBox.optionBoxColor li * {
+            color: #595959;
         }
     </style>
 </head>
@@ -67,7 +77,7 @@
                     <button>회원정보 검색</button>
                 </li>
                 <li>
-                    <button onclick="makeElementsVisible()">test:패이드 인</button>
+                    <button onclick="">test:패이드 인</button>
                 </li>
                 <li class="logoutBtn">
                     <button>로그아웃</button>
@@ -119,11 +129,15 @@
                 <li id="latest">
                     <button onclick="latestBtnClicked()">최신글</button>
                 </li>
-                <li>
+                <li id="recommended">
                     <button>추천글</button>
                 </li>
                 <li class="viewBtn">
-                    <button><img src="/image/btn_view_type.png" alt="보기타입 선택버튼"></button>
+                    <button onclick="viewBtnClicked()"><img src="/image/btn_view_type.png" alt="보기타입 선택버튼"></button>
+                    <ul class="optionBox optionBoxColor">
+                        <li><a onclick="blogViewClicked()">Blog view</a></li>
+                        <li><a onclick="snsViewClicked()">SNS view</a></li>
+                    </ul>
                 </li>
             </ul>
             <div style="padding: 20px">
@@ -143,8 +157,9 @@
     const $tabMenu = document.querySelector(`.tabMenu`);
     let isTitlePhotoChanged = false;
     let isLoading = false;
+    const $viewBtn = document.querySelector(".viewBtn");
 </script>
-<script id="blogTemplate" type="text/x-handlebars-template">
+<script id="contentsTemplate" type="text/x-handlebars-template">
     {{#each this}}
     <div class="list_head">
         <div class="prof_photo">

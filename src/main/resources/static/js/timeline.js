@@ -2,23 +2,16 @@ const $blogList = document.querySelector(".blogList");
 const $main = document.querySelector("main");
 
 // update(); //최초 1회 실행
+viewTypeChange();
 function update() {
     fetch(`/timeline/updateList?index=${index}&range=${range}&contentsType=${contentsType}`)
         .then(res => res.json())
         .then(data => {
-            console.log("업데이트 실행됨")
             if (!data.length) {
                 alert("이런! 오늘은 글이 더 없네요.");
                 return;
             }
-            // 템플릿 소스 설정
-            var source = '';
-            if (viewType == 'blog') {
-                source = document.querySelector("#blogTemplate").innerHTML;
-            } else {
-                // 다른 viewType에 대한 템플릿 소스 설정
-            }
-
+            source = document.querySelector("#contentsTemplate").innerHTML;
             var fragment = document.createDocumentFragment();
             var template = Handlebars.compile(source);
 
@@ -45,6 +38,7 @@ function update() {
         });
 }
 
+//------------------------------------------------------------------------------------format관련코드
 function setTitlePhoto(path) {
     $img = document.querySelector(".mainProfile img");
     $img.src = path;
@@ -66,27 +60,59 @@ function formatCount(count) {
     }
 }
 
+//------------------------------------------------------------------------------------tabMenu관련코드
 function trendBtnClicked() {
     contentsType = 1;
     btnProcess();
-    $tabMenu.querySelector("#trend").classList.add("active");
 }
 
 function latestBtnClicked() {
     contentsType = 2;
     btnProcess();
-    $tabMenu.querySelector("#latest").classList.add("active");
 }
-
-async function btnProcess() {
+function btnProcess() {
     $blogList.innerHTML = "";
     index = 0;
     isTitlePhotoChanged = false;
     childList = $tabMenu.querySelectorAll("*");
     console.log(childList);
     childList.forEach(element => element.classList.remove("active"));
+    switch (contentsType) {
+        case 1:
+            $tabMenu.querySelector("#trend").classList.add("active");
+            break;
+        case 2:
+            $tabMenu.querySelector("#latest").classList.add("active");
+            break;
+        case 3:
+            $tabMenu.querySelector("#recommended").classList.add("active");
+    }
 }
-function delay(ms) {
-    console.log('딜레이 실행됨')
-    return new Promise(resolve => setTimeout(resolve, ms));
+//------------------------------------------------------------------------------------viewType관련코드
+function viewBtnClicked() {
+    $viewBtn.classList.add(`active`);
+}
+
+function blogViewClicked() {
+    $viewBtn.classList.remove('active');
+    viewType = "blog";
+    viewTypeChange();
+}
+
+function snsViewClicked() {
+    $viewBtn.classList.remove('active');
+    viewType = "sns";
+    viewTypeChange();
+}
+
+function viewTypeChange() {
+    console.log(viewType);
+    switch (viewType) {
+        case 'blog':
+            $blogList.classList.remove(`snsList`);
+            break;
+        case `sns`:
+            $blogList.classList.add(`snsList`);
+            break;
+    }
 }
