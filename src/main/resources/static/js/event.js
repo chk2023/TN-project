@@ -62,19 +62,15 @@ window.onload = function () {
                 .then(result => {
                     if (result === '중복 된 아이디가 존재합니다.') {
                         $duplicationMessage.textContent = result;
-                        $signupButton.disabled = true;
                     } else {
                         $duplicationMessage.textContent = result;
-                        $signupButton.disabled = false;
                     }
                 })
                 .catch((error) => error.text().then((res) => alert(res)));
 
-            /* 인증 코드 이메일 전송 */
             sendNumber(memberId);
         }
     }
-
     // 이메일 형식인지 검증하는 함수
     function isValidEmail(email) {
         const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -119,18 +115,32 @@ window.onload = function () {
             },
             body: JSON.stringify({memberId: memberId})
         })
-            .then(result => alert("인증번호 발송"))
+            .then(res => res.text())
+            .then(result =>{
+                console.log(result);
+                alert("인증번호 발송");
+                generatedCode = result;
+            })
             .catch((error) => error.text().then((res) => alert(res)));
     }
 
-    function confirmNumber(){
-        var number1 = $("#code").val();
-        var number2 = $("#confirm").val();
+    let generatedCode;
 
-        if(number1 == number2){
-            alert("인증되었습니다.");
-        }else{
-            alert("번호가 다릅니다.");
+    if(document.getElementById("confirmBtn")) {
+        const $confirmBtn = document.getElementById("confirmBtn");
+        const $signupButton = document.getElementById("signupButton");
+
+        $confirmBtn.onclick = function() {
+            const userInput = document.getElementById("code").value.trim();
+            console.log("userinput : " +userInput);
+            console.log("generatedCode :" +generatedCode);
+
+            if (userInput === generatedCode) {
+                alert("인증되었습니다.");
+                $signupButton.disabled = true;
+            } else {
+                alert("인증번호가 일치하지 않습니다.");
+            }
         }
     }
 }

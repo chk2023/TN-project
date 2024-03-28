@@ -61,13 +61,16 @@ public class MemberController {
     }
 
     @PostMapping("/regist")
-    public String registMember(MemberDTO member, @RequestParam("optionalId") String optionalId, RedirectAttributes rttr) throws MemberRegistException {
+    public String registMember(MemberDTO member,
+                               @RequestParam("optionalId") String optionalId,
+                               @RequestParam("memberPwd") String memberPwd,
+                               RedirectAttributes rttr) throws MemberRegistException {
         // 이메일 도메인 까지 추가하여 db에 입력
         String memberId = member.getMemberId() + optionalId;
         if (!"default".equals(optionalId)) member.setMemberId(memberId);
 
         // 비밀번호 BCrypt 해싱처리하여 db에 입력
-        member.setMemberPwd(passwordEncoder.encode(member.getPassword()));
+        member.setMemberPwd(passwordEncoder.encode(memberPwd));
 
         log.info("Request regist member : {}", member);
 
