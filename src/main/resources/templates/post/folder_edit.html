@@ -62,7 +62,7 @@
             <div>
                 <h1>폴더 편집</h1>
             </div>
-            <input class="search_input" type="text" placeholder="검색어를 입력하세요">
+            <input class="search_input" type="text" placeholder="검색어를 입력하세요"/>
             <button class="searchBtn"><img src="/image/btn_search.png" alt="검색 버튼"></button>
             <button class="closeBtn"><img src="/image/btn_close.png" alt="닫기 버튼"></button>
             <div class="btnWrap">
@@ -76,16 +76,16 @@
                 <button class="addBtn btn gray">추가</button>
                 <button class="deleteBtn btn gray">삭제</button>
             </div>
-            <ul class="fEditList">
+            <ul class="fEditList" id="fEditList">
                 <li class="fixed">전체목록 (<span>56</span>)</li>
-                <li><img src="/image/icon_folder.png" alt="기본 폴더 아이콘"> <span>폴더 1의 폴더명</span></li>
+                <li draggable="true"><img src="/image/icon_folder.png" alt="기본 폴더 아이콘"> <span>폴더 1의 폴더명</span></li>
             </ul>
 
             <dl>
                 <dt>폴더명</dt>
                 <dd>
                     <div class="txt">
-                        <input id="folderName" type="text" readonly>
+                        <input id="folderName" type="text" readonly/>
                         <em>* 폴더는 최대 10개 까지 추가 가능합니다.</em>
                     </div>
                 </dd>
@@ -123,6 +123,7 @@
                     if (!fNameValue) {
                         const $li = createFolderElement();
                         if ($feList.querySelectorAll("li").length <= 10) {
+                            $li.setAttribute("draggable", "true");
                             $fragment.appendChild($li);
                             $feList.appendChild($fragment);
                         } else {
@@ -148,7 +149,7 @@
 
                 function deleteFolder() {
                     const $feListActive = $feList.querySelector(".active");
-                    if($feListActive) {
+                    if ($feListActive) {
                         $feListActive.remove();
                         inputBlur();
                     } else {
@@ -168,7 +169,7 @@
                             thisEl.parentElement.classList.add("active");
                             document.querySelector(".iconDt").classList.add("active");
                         }
-                        if (thisEl.tagName === "LI" && !thisEl.classList.contains("fixed") || thisEl.tagName === "SPAN") {
+                        if (thisEl.tagName === "LI" && !thisEl.classList.contains("fixed") || thisEl.tagName === "SPAN" && !thisEl.parentElement.classList.contains("fixed")) {
                             inputFocus(thisEl);
                         }
                     }
@@ -225,6 +226,45 @@
                     $lis.forEach((li) => {
                         li.classList.remove("active");
                     })
+                }
+
+                $feList.addEventListener('dragstart', function (e) {
+                    e.dataTransfer.setData('text/plain', e.target.id);
+                    setTimeout(() => {
+                        e.target.classList.add('drag_active');
+                        const $activeElement = $feList.querySelector(".active");
+                        if ($activeElement) {
+                            $activeElement.classList.remove("active");
+                        }
+                    }, 0);
+                });
+
+                $feList.addEventListener('dragend', function (e) {
+                    e.target.classList.remove('drag_active');
+                });
+
+                $feList.addEventListener('dragover', function (e) {
+                    e.preventDefault();
+                    const afterElement = getDragAfterElement($feList, e.clientY);
+                    const draggable = document.querySelector('.drag_active');
+                    if (afterElement == null) {
+                        $feList.appendChild(draggable);
+                    } else {
+                        $feList.insertBefore(draggable, afterElement);
+                    }
+                });
+
+                function getDragAfterElement(container, y) {
+                    const draggableElements = [...container.querySelectorAll('li:not(.fixed):not(.drag_active)')];
+                    return draggableElements.reduce((closest, child) => {
+                        const box = child.getBoundingClientRect();
+                        const offset = y - box.top - box.height / 2;
+                        if (offset < 0 && offset > closest.offset) {
+                            return {offset: offset, element: child};
+                        } else {
+                            return closest;
+                        }
+                    }, {offset: Number.NEGATIVE_INFINITY}).element;
                 }
             </script>
 

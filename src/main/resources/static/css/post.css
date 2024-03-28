@@ -15,6 +15,7 @@ update : 2024-03-25
 .btn * {
     color: inherit;
 }
+
 section:has(.fEditList) {
     padding: 40px 0;
 }
@@ -59,6 +60,10 @@ em {
 .fEditList li:not(.fixed) {
     padding: 4px 45px;
     cursor: pointer;
+}
+
+.fEditList li.drag_active {
+    background-color: #E1E1E1;
 }
 
 .fEditList li:not(.fixed):hover,
@@ -118,7 +123,7 @@ em {
 }
 
 .iconBox {
-    padding:0 20px;
+    padding: 0 20px;
 }
 
 .iconBox * {
@@ -149,31 +154,37 @@ section:has(.post_tit) .post_tit {
     margin: 30px 0;
     height: 20px;
 }
+
 textarea.post_content {
     width: 100%;
     height: 450px;
     padding: 10px;
 }
+
 .post_setting {
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 40px;
 }
+
 .post_setting dt,
 .post_setting dd {
     padding-top: 20px;
     padding-bottom: 20px;
     border-bottom: 1px solid #E1E1E1;
 }
+
 .post_setting dt {
     width: 90px;
     color: #404040;
     padding-left: 10px;
 }
+
 .post_setting dd {
     width: calc(100% - 90px);
     padding-right: 10px;
 }
+
 .post_setting dd textarea {
     width: 100%;
     height: 70px;
@@ -191,7 +202,7 @@ section:has(.tbl_list, h2) {
 
 section:has(.tbl_list, h2) h2,
 section:has(.tbl_list, h2) h2 * {
-    color:#317AA9;
+    color: #317AA9;
     font-weight: normal;
 }
 
@@ -199,7 +210,7 @@ section:has(.tbl_list, h2) h2 * {
     display: none;
 }
 
-.btnWrap button+button+button {
+.btnWrap button + button + button {
     margin-left: 20px;
 }
 
