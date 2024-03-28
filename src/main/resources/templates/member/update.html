@@ -11,26 +11,29 @@
     </style>
 </head>
 <body>
-<h1>회원정보</h1>
-<hr>
-<label>아이디 :</label> <span th:text="${ #authentication.principal.memberId }"></span> <br>
-<label>성별 :</label>
-<span th:text="${#authentication.principal.memberGender}" id="genderParagraph"></span>
-<select id="genderInput" class="hidden">
-    <option th:value="${T(com._3dhs.tnproject.member.model.MemberGender).MALE}">남자</option>
-    <option th:value="${T(com._3dhs.tnproject.member.model.MemberGender).FEMALE}">여자</option>
-</select>
-<br>
-<label>나이 :</label>
-<span th:text="${ #authentication.principal.memberAge }" id="ageParagraph"></span>
-<input type="text" id="ageInput" class="hidden">
-<br>
-<label>생일 :</label>
-<span th:text="${ #authentication.principal.memberBirth }" id="birthParagraph"></span>
-<input type="text" id="birthInput" class="hidden">
-<br>
+<form method="post" action="/member/update">
+    <h1>회원정보</h1>
+    <hr>
+    <label>아이디 :</label> <span th:text="${ #authentication.principal.memberId }"></span> <br>
+    <label>성별 :</label>
+    <span th:text="${#authentication.principal.memberGender}" id="genderParagraph"></span>
+    <select id="genderInput" class="hidden">
+        <option th:value="${T(com._3dhs.tnproject.member.model.MemberGender).MALE}">남자</option>
+        <option th:value="${T(com._3dhs.tnproject.member.model.MemberGender).FEMALE}">여자</option>
+    </select>
+    <br>
+    <label>나이 :</label>
+    <span th:text="${ #authentication.principal.memberAge }" id="ageParagraph"></span>
+    <input type="text" id="ageInput" class="hidden">
+    <br>
+    <label>생일 :</label>
+    <span th:text="${ #authentication.principal.memberBirth }" id="birthParagraph"></span>
+    <input type="text" id="birthInput" class="hidden">
+    <br>
 
-<input type="button" value="정보수정" id="updateMemberBtn">
+    <input type="button" value="정보수정" id="updateMemberBtn">
+</form>
+
 
 <script>
     /* 회원 정보 수정 버튼을 클릭하면 입력창이 나타나는 로직 */

@@ -156,4 +156,35 @@ window.onload = function () {
             }
         }
     }
+
+    if (document.getElementById("updateMember")) {
+        const $updateMember = document.getElementById("updateMember");
+
+        $updateMember.onclick = function () {
+            location.href = "/member/update";
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
