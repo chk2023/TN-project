@@ -66,6 +66,16 @@ em {
     background-color: #F2F2F2;
 }
 
+.fEditList li:not(.fixed).active_tit span {
+    color: #779289;
+    background-color: #FFF;
+    padding: 0 10px;
+}
+
+.fEditList li img {
+    margin-right: 10px;
+}
+
 .fEditList + dl {
     display: flex;
     width: 350px;
@@ -98,7 +108,13 @@ em {
 
 .fEditList + dl .iconDt,
 .fEditList + dl .iconDt + dd {
+    display: none;
     margin-top: 20px;
+}
+
+.fEditList + dl .iconDt.active,
+.fEditList + dl .iconDt.active + dd {
+    display: inline-flex;
 }
 
 .iconBox {
@@ -109,6 +125,7 @@ em {
     /*border: 1px solid #E1E1E1; */
     padding: 5px;
     margin-right: 5px;
+    cursor: pointer;
 }
 
 section:has(.fEditList) .btnWrap {
