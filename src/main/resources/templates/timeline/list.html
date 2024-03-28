@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Timeline - main</title>
@@ -17,11 +17,13 @@
             background-color: #448AC6;
             filter: blur(3px);
         }
+        main{
+            min-height: 1000px;
+        }
     </style>
 </head>
 <body>
-
-< class="wrap">
+<div class="wrap">
     <header>
         <div class="profile">
             <button class="optionBtn"><img src="/image/icon_option.png" alt="프로필 옵션 버튼"></button>
@@ -65,7 +67,7 @@
                     <button>회원정보 검색</button>
                 </li>
                 <li>
-                    <button onclick="update()">test:목록 더보기</button>
+                    <button onclick="makeElementsVisible()">test:패이드 인</button>
                 </li>
                 <li class="logoutBtn">
                     <button>로그아웃</button>
@@ -124,7 +126,6 @@
                     <button><img src="/image/btn_view_type.png" alt="보기타입 선택버튼"></button>
                 </li>
             </ul>
-
             <div style="padding: 20px">
                 <ul class="blogList">
                 </ul>

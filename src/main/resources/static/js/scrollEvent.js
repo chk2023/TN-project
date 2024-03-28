@@ -7,7 +7,7 @@ const options ={
 };
 const observer = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && !isLoading) {
             // 타겟 요소가 뷰포트에 들어왔을 때 호출되는 로직을 여기에 작성합니다.
             console.log('무한 스크롤 작동');
             // 무한 스크롤을 구현하는 로직을 호출합니다.

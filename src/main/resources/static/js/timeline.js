@@ -32,9 +32,9 @@ function update() {
                     isTitlePhotoChanged = true;
                 }
             });
-            var html = document.createElement("li");
-            html.innerHTML = template(data, {data: {handlebars: Handlebars.create()}});
-            fragment.appendChild(html); // DocumentFragment에 요소 추가
+            var element = document.createElement("li");
+            element.innerHTML = template(data, {data: {handlebars: Handlebars.create()}});
+            fragment.appendChild(element); // DocumentFragment에 요소 추가
             // DocumentFragment를 한 번에 추가하여 DOM 조작 효율성 향상
             $blogList.appendChild(fragment);
 
@@ -78,25 +78,15 @@ function latestBtnClicked() {
     $tabMenu.querySelector("#latest").classList.add("active");
 }
 
-function btnProcess() {
+async function btnProcess() {
     $blogList.innerHTML = "";
     index = 0;
     isTitlePhotoChanged = false;
-    update();
     childList = $tabMenu.querySelectorAll("*");
     console.log(childList);
     childList.forEach(element => element.classList.remove("active"));
 }
-//무한 스크롤 이벤트
-$main.addEventListener("scroll", function () {
-    let scrollTop = $main.scrollTop;
-    let viewportHeight = $main.clientHeight;
-    let containerHeight = $main.scrollHeight;
-    console.log("scrollTop : " + scrollTop);
-    console.log("vHeight : " + viewportHeight);
-    console.log("cHeight :" + containerHeight);
-    if (scrollTop + viewportHeight >= containerHeight && !isLoading) {
-        isLoading = true;
-        update();
-    }
-});
+function delay(ms) {
+    console.log('딜레이 실행됨')
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
