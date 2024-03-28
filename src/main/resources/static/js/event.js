@@ -137,9 +137,10 @@ window.onload = function () {
 
             if (userInput === generatedCode) {
                 alert("인증되었습니다.");
-                $signupButton.disabled = true;
+                $signupButton.disabled = false;
             } else {
                 alert("인증번호가 일치하지 않습니다.");
+                $signupButton.disabled = true;
             }
         }
     }
