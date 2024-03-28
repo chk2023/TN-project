@@ -39,8 +39,8 @@ public class MemberService {
         return memberMapper.findByMemberId(userId);
     }
 
-    public void updateHaveTissue(String memberId, int nTissue) {
-        memberMapper.updateTissue(memberId, nTissue);
+    public void updateHaveTissue(MemberDTO memberDTO) {
+        memberMapper.updateTissue(memberDTO.getMemberId(), memberDTO.getHaveTissue());
 
 
     }

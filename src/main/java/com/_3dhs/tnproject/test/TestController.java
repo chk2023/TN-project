@@ -63,7 +63,4 @@ public class TestController {
     }
 
 
-    @GetMapping("/purchase/purchase")
-    public void gotoPurchase() {
-    }
 }

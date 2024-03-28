@@ -1,13 +1,10 @@
 package com._3dhs.tnproject.purchase.dao;
 
 import com._3dhs.tnproject.purchase.dto.TissueDTO;
-import com.siot.IamportRestClient.response.Payment;
+import org.apache.ibatis.annotations.Mapper;
 
-public class PaymentMapper {
+@Mapper
+public interface PaymentMapper {
 
-
-    public void insertPayment(TissueDTO tissue) {
-    }
-
-
+    void insertPayment(TissueDTO tissueDTO);
 }

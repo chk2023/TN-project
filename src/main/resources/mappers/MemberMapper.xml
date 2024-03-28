@@ -51,11 +51,11 @@
             'ACTIVE', 0, 'COMMON')
     </insert>
 
-    <update id="updateTissue" parameterType="com._3dhs.tnproject.member.dto.MemberDTO">
+    <update id="updateTissue">
         UPDATE
             tbl_member
         SET
-            have_tissue = #{haveTissue}
+            have_tissue = #{nTissue}
         WHERE
             member_id = #{memberId}
 

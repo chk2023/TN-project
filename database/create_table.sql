@@ -216,7 +216,9 @@ CREATE UNIQUE INDEX `tbl_tag_PK` ON `tbl_tag`
 
 CREATE TABLE IF NOT EXISTS `tbl_tissue`
 (
-    `order_code`    INT         NOT NULL AUTO_INCREMENT COMMENT '주문번호',
+    `order_code`    INT         NOT NULL AUTO_INCREMENT COMMENT '주문코드',
+    /* 주문번호 추가 */
+    `order_num`     INT         NOT NULL COMMENT '주문번호',
     `order_class`   VARCHAR(10) NOT NULL COMMENT '상품구분',
     `order_date`    DATETIME    NOT NULL COMMENT '일자',
     `tissue_price`  INT         NOT NULL COMMENT '금액',
