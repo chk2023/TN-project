@@ -26,4 +26,14 @@ public class PostService {
         }
         return postList;
     }
+
+    @Transactional(readOnly = true)
+    public List<PostDTO> findLikeListPostByMemberCode(int memberCode) {
+        List<PostDTO> postList = postMapper.findLikeListPostByMemberCode(memberCode);
+        for (int i = 0; i < postList.size(); i++) {
+            postList.get(i).setAttachmentList(postMapper.findAttListByPostCode(postList.get(i).getPostCode()));
+            postList.get(i).makeThumbnailPath();
+        }
+        return postList;
+    }
 }

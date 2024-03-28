@@ -13,7 +13,7 @@ import java.util.Map;
 public interface PostMapper {
     List<PostDTO> findListByIndex(Map<String ,Integer> params);
 
-    List<LikeListDTO> findLikeListByCode(int postCode);
-
     List<AttachmentDTO> findAttListByPostCode(int postCode);
+
+    List<PostDTO> findLikeListPostByMemberCode(int memberCode);
 }
