@@ -22,9 +22,9 @@ public class TimelineController {
     private final PostService service;
 
     @GetMapping("/list")
-    public String findTrendList(Model model, String viewType,int contentsType) {
-        int index = 0;
-        int range = 10;
+    public String findTrendList(Model model, String viewType,Integer contentsType) {
+        Integer index = 0;
+        Integer range = 10;
 
         model.addAttribute("index", index);
         model.addAttribute("range", range);
@@ -35,7 +35,7 @@ public class TimelineController {
 
     @ResponseBody
     @GetMapping("/updateList")
-    public List<PostDTO> findListByParam(int index, int range, int contentsType) {
+    public List<PostDTO> findListByParam(Integer index, Integer range, Integer contentsType) {
         Map<String, Integer> params = new HashMap<>();
         params.put("index",index);
         params.put("range", range);

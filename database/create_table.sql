@@ -220,13 +220,13 @@ CREATE TABLE `tbl_tissue`
 (
     `tissue_code`    INT NOT NULL AUTO_INCREMENT
         COMMENT '티슈번호',
+    `ump_uid`    VARCHAR(50) COMMENT '결제고유번호',
+    `marchant_uid`    VARCHAR(50) COMMENT '주문번호',
     `order_class`    VARCHAR(10) NOT NULL COMMENT '상품구분',
     `order_date`    DATETIME NOT NULL COMMENT '일자',
     `tissue_price`    INT NOT NULL COMMENT '금액',
     `t_member_code`    INT NOT NULL COMMENT '회원번호',
     `post_code`    INT COMMENT '글번호',
-    `ump_uid`    VARCHAR(50) COMMENT '결제고유번호',
-    `marchant_uid`    VARCHAR(50) COMMENT '주문번호',
     PRIMARY KEY ( `tissue_code` )
 ) COMMENT = '티슈';
 

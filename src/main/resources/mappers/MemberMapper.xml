@@ -65,4 +65,15 @@
         </where>
     </update>
 
+    <update id="updateTissue">
+        UPDATE
+            tbl_member
+        SET
+            have_tissue = #{nTissue}
+        WHERE
+            member_id = #{memberId}
+
+    </update>
+
+
 </mapper>
