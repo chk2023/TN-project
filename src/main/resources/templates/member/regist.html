@@ -3,26 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>회원 가입</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript" src="/js/event.js"></script>
 </head>
+
 <body>
 <h1>회원가입</h1>
 <hr>
 
 <form action="/member/regist" method="post">
+
+    <div id="mail_input" name="mail_input">
     아이디
-    <input type="text" maxlength="20" name="memberId" id="memberId" required>
-    <select id="optionalId">
+    <input type="text" maxlength="30" name="memberId" id="memberId" placeholder="이메일 입력" required>
+    <select id="optionalId" name="optionalId">
         <option value="default">직접입력</option>
-        <option value="gmail.com">@gmail.com</option>
-        <option value="naver.com">@naver.com</option>
-        <option value="daum.net">@daum.net</option>
+        <option value="@gmail.com">@gmail.com</option>
+        <option value="@naver.com">@naver.com</option>
+        <option value="@daum.net">@daum.net</option>
     </select>
-    <input type="button" value="중복확인" id="duplicationCheck"><br>
-    비밀번호
-    <input type="password" maxlength="20" name="memberPwd" required><br>
-    비밀번호 확인
-    <input type="password" maxlength="20" name="memberPwd2" required><br>
+    <input type="button" value="중복확인" id="emailCheck"><br>
+    </div>
+
     성별
     <select name="memberGender">
         <option value="MALE">남자</option>
@@ -32,8 +34,29 @@
     <input type="number" name="memberAge" min="0" max="100" required><br>
     생일
     <input type="date" name="memberBirth" id="memberBirth" required><br>
-    <input type="submit" value="가입하기" id="signupButton" disabled>
-    <span id="duplicationMessage" style="color: red"></span>
+
+
+    <div id="password_input" name="password_input">
+        비밀번호
+        <input type="password" maxlength="20" id="memberPwd" name="memberPwd" required><br>
+        비밀번호 확인
+        <input type="password" maxlength="20" id="memberPwd2" name="memberPwd2" required><br>
+    </div>
+
+
+    <div>
+        <hr> 이메일 인증 <br>
+        <input type="button" value="인증코드 받기" id="verCode"> <br>
+        <input type="text" name="code" id="code" placeholder="인증번호 입력">
+        <input type="button" value="인증 확인" name="confirmBtn" id="confirmBtn"><br>
+    </div>
+    <input type="text" id="confirm" name="confirm" style="display: none" th:value="${generatedCode}">
+
+    <br>
+    <div>
+        <input type="submit" value="가입하기" id="signupButton" disabled>
+        <span id="duplicationMessage" style="color: red"></span>
+    </div>
 
 </form>
 

@@ -13,6 +13,20 @@ spring:
       max-request-size: 10MB
       location: C:/lecture/10_spring/4_spring-comprehensive/chap01-comprehensive
 
+    # email verification
+  mail:
+    # Google smtp server 사용
+    host: smtp.gmail.com
+    port: 587
+    username: tissuenetwork@gmail.com
+    password: iafcnfbvcbtylicr
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
+
 # Mybatis config
 mybatis:
   mapper-locations: mappers/**/*.xml
@@ -22,3 +36,5 @@ mybatis:
 # image upload dir
 image:
   image-dir: src/main/resources/upload/
+
+

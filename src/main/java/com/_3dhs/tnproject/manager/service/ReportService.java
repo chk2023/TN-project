@@ -14,6 +14,19 @@ public class ReportService {
 
 
     public List<ReportDTO> viewAllReport() {
-        return  reportMapper.viewAllReport();
+        return reportMapper.viewAllReport();
+    }
+
+    public ReportDTO viewOneReport(Integer reportCode) {
+
+        return reportMapper.viewOneReport(reportCode);
+    }
+
+
+    public ReportDTO updateReport(int reportCode, String processingText) {
+        return reportMapper.updateReport(reportCode, processingText);
     }
 }
+
+
+

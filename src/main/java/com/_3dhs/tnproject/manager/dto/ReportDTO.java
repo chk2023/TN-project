@@ -20,8 +20,10 @@ public class ReportDTO {
     private LocalDateTime processingDate;
     private String processingText;
     private int subMemberCode;
+    private String subMemberId;
     private int managerCode;
     private int reporterCode;
+    private String reporterId;
     private ReportContents reportContent;
     private Integer postCode;
     private Integer cmtCode;
