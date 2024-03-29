@@ -20,12 +20,14 @@
 
     <select id="findByMemberId" resultType="com._3dhs.tnproject.member.dto.MemberDTO">
         SELECT
-            *
+            m.*, p.*
         FROM
-            tbl_member
+            tbl_member m
+        LEFT JOIN
+            tbl_profile p ON m.member_code = p.p_member_code
         <where>
             <if test="memberId != null">
-                member_id = #{memberId}
+                AND m.member_id = #{memberId}
             </if>
         </where>
     </select>
@@ -37,7 +39,7 @@
         tbl_member
         <where>
             <if test="memberId != null">
-                member_id = #{memberId}
+                AND member_id = #{memberId}
             </if>
         </where>
     </select>
@@ -64,5 +66,7 @@
             </if>
         </where>
     </update>
+
+
 
 </mapper>
