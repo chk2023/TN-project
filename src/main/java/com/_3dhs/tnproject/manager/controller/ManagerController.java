@@ -35,14 +35,6 @@ public class ManagerController {
     }
 
 
-    @GetMapping("/manager/report/list")
-    public void viewAllReportList(Model model) {
-
-        List<ReportDTO> reportList = reportService.viewAllReport();
-        model.addAttribute("reportList", reportList);
-
-    }
-
     @GetMapping("/manager/report")
     public String viewOneReport(Model model, Integer reportCode) {
         ReportDTO report = reportService.viewOneReport(reportCode);
@@ -79,9 +71,9 @@ public class ManagerController {
 
     }
 
-    @GetMapping("/manager/admin/list")
-    public String showAdminList (ReportDTO reportDTO) {
-        ReportDTO admin = reportService.showAdminList(reportDTO);
-                return "/manager/admin/adminList";
-    }
+//    @GetMapping("/manager/admin/list")
+//    public String showAdminList (ReportDTO reportDTO) {
+//        ReportDTO admin = reportService.showAdminList(reportDTO);
+//                return "/manager/admin/adminList";
+//    }
 }
