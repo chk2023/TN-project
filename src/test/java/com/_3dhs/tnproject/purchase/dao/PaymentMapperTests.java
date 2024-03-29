@@ -17,7 +17,8 @@ public class PaymentMapperTests {
     @Test
     void 입력값_테스트() {
         TissueDTO tissueDTO = new TissueDTO(
-                123456789,
+                "111111",
+                "123456789",
                 "오더클래스",
                 LocalDateTime.now(),
                 20000,

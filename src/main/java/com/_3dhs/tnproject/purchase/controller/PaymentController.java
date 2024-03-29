@@ -57,7 +57,7 @@ public class PaymentController {
     }
 
     @ResponseBody
-    @PostMapping("/purchase_success")
+    @PostMapping("/purchaseSuccess")
     public String purchaseSuccess(@RequestParam String imp_uid,
                                   @RequestParam String merchant_uid,
                                   @RequestParam String buyer_name,
@@ -72,7 +72,8 @@ public class PaymentController {
 
         //티슈 정보 추가
         TissueDTO tissueDTO = new TissueDTO(
-                Integer.parseInt(merchant_uid),
+                imp_uid,
+                merchant_uid,
                 "BUY",
                 LocalDateTime.now(),
                 tissuePrice,
@@ -81,9 +82,15 @@ public class PaymentController {
         //tissueDTO.setOrderCode(Integer.parseInt(imp_uid));
         paymentService.savePaymentList(tissueDTO);
 
-        String resultPath = "/purchase/purchase_success.html";
+        //사용자 티슈 수 업데이트
+        int ntissuePrice = currentMember.getHaveTissue() + tissuePrice;
+        memberService.updateHaveTissue(currentMember);
 
-        return resultPath;
+        return "/purchase_success";
     }
 
+    @GetMapping("/purchase/purchase_success")
+    public void gotoPurchaseSuccessPage() {
+
+    }
 }
