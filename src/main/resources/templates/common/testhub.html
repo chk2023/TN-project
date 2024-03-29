@@ -15,6 +15,9 @@
 <h3> 관리자 메뉴</h3>
 <button onclick="location.href='/manager/reportList'">신고목록으로 이동</button>
 <hr>
+<h3>블로그 화면</h3>
+<a href="/post/main">블로그메인화면</a>
+<hr>
 <h3>테스트코드</h3>
 <form action="/common/makepassword" method="post">
     <input type="text" name="pass">
@@ -23,7 +26,6 @@
 <button onclick="location.href='/common/makelikelist'">좋아요 리스트 추가하기</button>
 <hr>
 <input type="button" value="로그아웃" id="logout">
-<br>
 <script>
     const message = '[[${message}]]';
     if (message) {
