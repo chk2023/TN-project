@@ -10,7 +10,8 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 public class TissueDTO {
-    private int orderCode;
+
+    private int tissueCode;
     private String impUid;
     private String merchantUid;
     private String orderClass; //TODO : enum으로 대체할지 작업자가 설정하기
