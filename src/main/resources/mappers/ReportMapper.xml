@@ -35,7 +35,7 @@
 <!--    </select>-->
 
 
-    <select id="viewAllReport" resultMap="ReportDTO">
+    <select id="viewAllReport" resultType="ReportDTO">
 SELECT r.report_code,
        r.r_category_code,
        r.report_text,
