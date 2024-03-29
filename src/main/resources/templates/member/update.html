@@ -17,21 +17,21 @@
     <label>아이디 :</label> <span th:text="${ #authentication.principal.memberId }"></span> <br>
     <label>성별 :</label>
     <span th:text="${#authentication.principal.memberGender}" id="genderParagraph"></span>
-    <select id="genderInput" class="hidden">
+    <select id="genderInput" class="hidden" name="memberGender">
         <option th:value="${T(com._3dhs.tnproject.member.model.MemberGender).MALE}">남자</option>
         <option th:value="${T(com._3dhs.tnproject.member.model.MemberGender).FEMALE}">여자</option>
     </select>
     <br>
     <label>나이 :</label>
     <span th:text="${ #authentication.principal.memberAge }" id="ageParagraph"></span>
-    <input type="text" id="ageInput" class="hidden">
+    <input type="number" id="ageInput" class="hidden" name="memberAge" min="0" max="100" required>
     <br>
     <label>생일 :</label>
     <span th:text="${ #authentication.principal.memberBirth }" id="birthParagraph"></span>
-    <input type="text" id="birthInput" class="hidden">
+    <input type="date" id="birthInput" class="hidden" name="memberBirth" required>
     <br>
-
     <input type="button" value="정보수정" id="updateMemberBtn">
+    <input type="submit" value="수정완료" id="submitUpdateMember" class="hidden">
 </form>
 
 
@@ -39,9 +39,10 @@
     /* 회원 정보 수정 버튼을 클릭하면 입력창이 나타나는 로직 */
     document.addEventListener("DOMContentLoaded", function () {
         const $updateMemberButton = document.getElementById("updateMemberBtn");
-        const $genderParagraph = document.querySelector("#genderParagraph");//?????
-        const $ageParagraph = document.querySelector("#ageParagraph"); //?????????
-        const $birthParagraph = document.querySelector("#birthParagraph");//????????
+        const $submitUpdateMemberButton = document.getElementById("submitUpdateMember");
+        const $genderParagraph = document.querySelector("#genderParagraph");
+        const $ageParagraph = document.querySelector("#ageParagraph");
+        const $birthParagraph = document.querySelector("#birthParagraph");
         const $genderInput = document.getElementById("genderInput");
         const $ageInput = document.getElementById("ageInput");
         const $birthInput = document.getElementById("birthInput");
@@ -70,7 +71,17 @@
             } else {
                 $genderInput.selectedIndex = 1;
             }
+
+            // 수정완료 버튼 보이기
+            $submitUpdateMemberButton.classList.remove("hidden");
+            $updateMemberButton.classList.add("hidden");
         });
+
+        // $submitUpdateMemberButton.addEventListener("click", function (){
+        //     // 폼 제출
+        //     document.getElementById("submitUpdateMember").submit();
+        // });
+
     });
 </script>
 <button>탈퇴하기</button>
