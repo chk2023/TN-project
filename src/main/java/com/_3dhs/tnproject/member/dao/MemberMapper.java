@@ -12,4 +12,7 @@ public interface MemberMapper {
     String selectMemberById(String memberId);
 
     int updateMember(MemberDTO updateMember);
+
+    void updateTissue(String memberId, int nTissue);
+
 }
