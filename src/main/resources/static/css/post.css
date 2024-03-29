@@ -15,6 +15,7 @@ update : 2024-03-25
 .btn * {
     color: inherit;
 }
+
 section:has(.fEditList) {
     padding: 40px 0;
 }
@@ -61,33 +62,81 @@ em {
     cursor: pointer;
 }
 
-.fEditList li:not(.fixed):hover {
+.fEditList li.drag_active {
+    background-color: #E1E1E1;
+}
+
+.fEditList li:not(.fixed):hover,
+.fEditList li:not(.fixed).active {
     background-color: #F2F2F2;
+}
+
+.fEditList li:not(.fixed).active_tit span {
+    color: #779289;
+    background-color: #FFF;
+    padding: 0 10px;
+}
+
+.fEditList li img {
+    margin-right: 10px;
 }
 
 .fEditList + dl {
     display: flex;
-    justify-content: center;
-    margin-top: 20px;
+    width: 350px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin: 40px auto;
 }
 
 .fEditList + dl dt {
     display: inline-block;
+    width: 110px;
     color: #404040;
     padding-right: 30px;
 }
 
 .fEditList + dl dd {
-    display: flex;
+    display: inline-flex;
+    width: calc(100% - 110px);
 }
 
 .fEditList + dl input {
+    width: 100%;
     height: 30px;
-    margin-right: 25px;
 }
 
-.fEditList + dl .btnWrap {
-    align-items: flex-start;
+.fEditList + dl input[readonly] {
+    background-color: #F2F2F2;
+    cursor: not-allowed;
+}
+
+.fEditList + dl .iconDt,
+.fEditList + dl .iconDt + dd {
+    display: none;
+    margin-top: 20px;
+}
+
+.fEditList + dl .iconDt.active,
+.fEditList + dl .iconDt.active + dd {
+    display: inline-flex;
+}
+
+.iconBox {
+    padding: 0 20px;
+}
+
+.iconBox * {
+    /*border: 1px solid #E1E1E1; */
+    padding: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+section:has(.fEditList) .btnWrap {
+    width: 350px;
+    justify-content: flex-end;
+    margin: auto auto 20px;
 }
 
 /*------------------------------------------
@@ -105,31 +154,37 @@ section:has(.post_tit) .post_tit {
     margin: 30px 0;
     height: 20px;
 }
+
 textarea.post_content {
     width: 100%;
     height: 450px;
     padding: 10px;
 }
+
 .post_setting {
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 40px;
 }
+
 .post_setting dt,
 .post_setting dd {
     padding-top: 20px;
     padding-bottom: 20px;
     border-bottom: 1px solid #E1E1E1;
 }
+
 .post_setting dt {
     width: 90px;
     color: #404040;
     padding-left: 10px;
 }
+
 .post_setting dd {
     width: calc(100% - 90px);
     padding-right: 10px;
 }
+
 .post_setting dd textarea {
     width: 100%;
     height: 70px;
@@ -147,7 +202,7 @@ section:has(.tbl_list, h2) {
 
 section:has(.tbl_list, h2) h2,
 section:has(.tbl_list, h2) h2 * {
-    color:#317AA9;
+    color: #317AA9;
     font-weight: normal;
 }
 
@@ -155,7 +210,7 @@ section:has(.tbl_list, h2) h2 * {
     display: none;
 }
 
-.btnWrap button+button+button {
+.btnWrap button + button + button {
     margin-left: 20px;
 }
 

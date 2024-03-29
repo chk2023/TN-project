@@ -85,4 +85,25 @@
         WHERE post_code = #{postCode}
     </select>
 
+    <select id="findLikeListPostByMemberCode">
+        SELECT
+            pv.post_code,
+            pv.post_title,
+            pv. post_text,
+            pv.post_price,
+            pv. po_member_code,
+            pv.folder_code,
+            pv.post_wri_date,
+            pv.profile_code,
+            pv. profile_nickname,
+            pv.profile_statmsg,
+            pv.profile_img_path,
+            pv.like_count,
+            pv.cmt_count
+        FROM post_view pv
+        INNER JOIN
+            tbl_like_list li ON li.post_code = pv.post_code
+        WHERE li.l_member_code = #{memberCode}
+        ORDER BY li.post_code DESC
+    </select>
 </mapper>

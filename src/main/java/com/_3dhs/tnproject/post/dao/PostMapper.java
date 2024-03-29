@@ -16,4 +16,6 @@ public interface PostMapper {
     List<LikeListDTO> findLikeListByCode(int postCode);
 
     List<AttachmentDTO> findAttListByPostCode(int postCode);
+
+    List<PostDTO> findLikeListPostByMemberCode(int memberCode);
 }

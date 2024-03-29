@@ -1,6 +1,7 @@
 package com._3dhs.tnproject.post.dao;
 
 import com._3dhs.tnproject.post.dto.LikeListDTO;
+import com._3dhs.tnproject.post.dto.PostDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,11 +16,11 @@ public class PostMapperTests {
     private PostMapper mapper;
 
     @Test
-    void findLikeListsByCode_테스트() {
-        int rdCode = (int)(Math.random()*10) +1;
-        System.out.println(rdCode);
-        List<LikeListDTO> dtoList = mapper.findLikeListByCode(rdCode);
-        dtoList.forEach(System.out::println);
-        assertNotNull(dtoList);
+    void findLikeListPostByMemberCode_테스트() {
+        int rdCode = (int)(Math.random() * 12) + 1;
+        List<PostDTO> testList = mapper.findLikeListPostByMemberCode(rdCode);
+        System.out.println("memberCode : " + rdCode);
+        testList.forEach(System.out::println);
+        assertNotNull(testList);
     }
 }

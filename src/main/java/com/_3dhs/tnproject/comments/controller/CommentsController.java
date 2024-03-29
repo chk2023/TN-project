@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 
 @Controller
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class CommentsController {
-    private final CommentsService commentsService;
+   // private final CommentsService commentsService;
 }
