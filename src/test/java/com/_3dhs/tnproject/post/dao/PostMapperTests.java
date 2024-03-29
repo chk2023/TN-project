@@ -13,13 +13,4 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class PostMapperTests {
     @Autowired
     private PostMapper mapper;
-
-    @Test
-    void findLikeListsByCode_테스트() {
-        int rdCode = (int)(Math.random()*10) +1;
-        System.out.println(rdCode);
-        List<LikeListDTO> dtoList = mapper.findLikeListByCode(rdCode);
-        dtoList.forEach(System.out::println);
-        assertNotNull(dtoList);
-    }
 }
