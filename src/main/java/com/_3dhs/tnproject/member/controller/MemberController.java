@@ -1,5 +1,6 @@
 package com._3dhs.tnproject.member.controller;
 
+import com._3dhs.tnproject.common.exceptionhandler.member.MemberUpdateException;
 import com._3dhs.tnproject.common.exceptionhandler.member.MemberRegistException;
 import com._3dhs.tnproject.member.dto.MemberDTO;
 import com._3dhs.tnproject.member.service.AuthService;
@@ -10,6 +11,8 @@ import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -76,13 +79,30 @@ public class MemberController {
 
         memberService.registMember(member);
 
-        rttr.addFlashAttribute("message", messageSourceAccessor.getMessage("member.regist"));
+//        rttr.addFlashAttribute("message", messageSourceAccessor.getMessage("member.regist"));
 
         return "redirect:/";
     }
 
-    @GetMapping("/info")
-    public void memberPage(){}
+    @GetMapping("/update")
+    public void updatePage(){}
+
+    @PostMapping("/update")
+    public String updateMember(MemberDTO updateMember,
+                               @AuthenticationPrincipal MemberDTO loginMember) throws MemberUpdateException {
+
+        updateMember.setMemberCode(loginMember.getMemberCode());
+
+        log.info("updateMember request Member : {}", updateMember);
+
+        memberService.updateMember(updateMember);
+
+        /* 로그인 시 저장된 Authentication 객체를 변경된 정보로 교체한다. */
+        SecurityContextHolder.getContext().setAuthentication(createNewAuthentication(loginMember.getMemberId()));
+
+        return "redirect:/common/testhub";
+    }
+
 
     protected Authentication createNewAuthentication(String memberId) {
         UserDetails newPrincipal = authenticationService.loadUserByUsername(memberId);

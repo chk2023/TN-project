@@ -8,7 +8,6 @@ window.onload = function () {
 
 
     if (document.getElementById("logout")) {
-        console.log("로그아웃객체 입력됨")
         const $logout = document.getElementById("logout");
         $logout.onclick = function () {
             location.href = "/member/logout";
@@ -157,4 +156,37 @@ window.onload = function () {
             }
         }
     }
+
+    if (document.getElementById("updateMember")) {
+        const $updateMember = document.getElementById("updateMember");
+
+        $updateMember.onclick = function () {
+            location.href = "/member/update";
+        }
+    }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
