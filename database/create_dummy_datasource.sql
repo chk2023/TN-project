@@ -202,3 +202,16 @@ VALUES ('cat.jpg','cat.jpg','/userUploadFiles',4),
        ('dog.jpg','dog.jpg','/userUploadFiles',7),
        ('tiger.jpg','tiger.jpg','/userUploadFiles',8),
        ('tree.jpg','tree.jpg','/userUploadFiles',5);
+
+INSERT INTO tbl_report(r_category_code, report_text, report_date, report_status, processing_date, processing_text, sub_member_code, manager_code, reporter_code, report_content,post_code,cmt_code)
+values
+    (1, '정치색을 너무 드러냅니다~~', NOW(), 'IN_PROGRESS', NOW(), null, 3, 1, 8, 'BLOG', 1, null),
+    (1, '혐오스럽습니다. ', NOW(),'IN_PROGRESS', NOW(), null, 4, 1, 8, 'BLOG', 2, null),
+    (1, '아무리 온라인이라지만..', NOW(), 'WAITING', NOW(), null, 3, 2, 7, 'BLOG', 3, null),
+    (1, '이게 맞아요?', NOW(),'IN_PROGRESS', NOW(), null, 4, 1, 6, 'COMMENT', 4, null),
+    (1, '그루핑 오지구요~~', NOW(),'IN_PROGRESS', NOW(), null, 5, 1, 9, 'COMMENT', 5, null),
+    (1, '끼리끼리 논다지만, 이런글 보기 싫습니다.', NOW(),'IN_PROGRESS', NOW(), null, 3, 1, 8, 'BLOG', 6, null),
+    (1, '불편하네요.', NOW(), 'WAITING', NOW(), null, 4, 2, 8, 'BLOG', 7, null),
+    (1, '이런 헛소리를 허용가능한 부분?!', NOW(), 'IN_PROGRESS', NOW(), null, 4, 1, 6, 'COMMENT', 8, null),
+    (1, '여기 정치 커뮤니티인가염..?', NOW(), 'WAITING', NOW(), null, 4, 3,4 , 'COMMENT', 9, null),
+    (1, '친목질 안하려고 여기 왔는데 도대체..', NOW(), 'IN_PROGRESS', NOW(), null, 6, 2,7 , 'BLOG', 9, null) ;
