@@ -13,10 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -64,8 +61,16 @@ public class MemberController {
     }
 
     @PostMapping("/regist")
-    public String registMember(MemberDTO member, RedirectAttributes rttr) throws MemberRegistException {
-        member.setMemberPwd(passwordEncoder.encode(member.getPassword()));
+    public String registMember(MemberDTO member,
+                               @RequestParam("optionalId") String optionalId,
+                               @RequestParam("memberPwd") String memberPwd,
+                               RedirectAttributes rttr) throws MemberRegistException {
+        // 이메일 도메인 까지 추가하여 db에 입력
+        String memberId = member.getMemberId() + optionalId;
+        if (!"default".equals(optionalId)) member.setMemberId(memberId);
+
+        // 비밀번호 BCrypt 해싱처리하여 db에 입력
+        member.setMemberPwd(passwordEncoder.encode(memberPwd));
 
         log.info("Request regist member : {}", member);
 
