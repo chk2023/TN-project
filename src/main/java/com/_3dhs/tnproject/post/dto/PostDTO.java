@@ -28,10 +28,10 @@ public class PostDTO {
     private ProfileDTO profile;
     private int likeCount;
     private int cmtCount;
-//    private List<TagDTO> tagList;
+    private List<TagDTO> tagList;
     private List<AttachmentDTO> attachmentList;
+    //가공하는 자료
     private String thumbnailPath;
-
 
     public String getAttachmentPath(int index) {
         String path = "";
