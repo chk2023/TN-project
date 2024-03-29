@@ -8,4 +8,9 @@ import java.util.List;
 @Mapper
 public interface ReportMapper {
     List<ReportDTO> viewAllReport();
+
+    ReportDTO viewOneReport(Integer reportCode);
+
+
+    ReportDTO updateReport(int reportCode, String processingText);
 }

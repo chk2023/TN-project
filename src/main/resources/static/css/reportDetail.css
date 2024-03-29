@@ -124,7 +124,6 @@ h1 {
 
 a, img, span, em, strong, label {
     display: inline-block;
-
 }
 
 span {
@@ -691,178 +690,39 @@ main {
     background-position: left center;
 }
 
-/* 3.4 blog page profile Layout */
-
-.mainProfile {
-    border-bottom: 1px solid #E1E1E1;
+#reportDetail {
+    padding : 0 20px;
+}
+#reportDetail label {
+    width : 100% ;
+    margin-right : 0 ;
+    margin-bottom : 20px;
 }
 
-.mainProfile > * {
-    height: 200px;
+#reportDetail input {
+    width : calc(100% - 120px);
 }
 
-.mprofBackground {
-    background-color: #5C95C2;
+#reportDetail h4 {
+    width : 120px;
 }
 
-.mprofStatus {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 65px 20px 30px;
+.reportBtn {
+    width : 100%;
+    display : flex ;
+    justify-content: center;
 }
 
-.mprofStatus .prof_photo {
-    position: absolute;
-    top: -42.5px;
-    left: 20px;
-    border-radius: 5px;
-}
-
-.mprofStatus .prof_txt {
-    margin: 0;
-}
-
-.mprofStatus .prof_info {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.mprofStatus .prof_info span {
-    margin-right: 30px;
-}
-
-/* 3.5 blog type list Layout */
-
-.blogList li:not(.optionBox li) {
-    border-bottom: 1px solid #E1E1E1;
-}
-
-.blogList li > * {
-    display: flex;
-}
-
-.list_head {
-    height: 80px;
-    align-items: center;
-    padding: 0 40px 0 20px;
-}
-
-.list_head .prof_photo {
-    width: 40px;
-    height: 40px;
-    border-radius: 5px;
-}
-
-.list_head > div:not(.prof_photo) {
-    width: calc(100% - 43px);
-    display: flex;
-    flex-direction: column;
-    padding: 20px 10px;
-}
-
-.list_head strong {
-    color: #000;
+.reportBtn a {
+    margin-left: 10px;
     margin-right: 10px;
 }
 
-.list_body {
-    position: relative;
-    display: flex;
-    padding: 20px 65px 30px;
-}
 
-.list_body:not(.snsList .list_body) > div:not(.thumbnailPhoto) {
-    width: 340px;
-}
 
-.list_body .contentTit {
-    color: #404040;
-    margin-bottom: 20px;
-}
 
-.list_body .contentsTxt,
-.snsList .list_body .contentsTxt {
-    white-space: normal;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
 
-.list_head .status_msg,
-.list_body .contentTit {
-    display: block;
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
 
-.list_body:not(.snsList .list_body) .thumbnailPhoto {
-    width: 100px;
-    height: 100px;
-    overflow: hidden;
-    margin-left: 30px;
-    background-color: #448AC6;
-}
 
-.list_body .thumbnailPhoto img {
-    min-height: 100%;
-    min-width: 100%;
-    vertical-align: middle;
-}
 
-.list_body .showLikeAndComments {
-    display: flex;
-    width: 100%;
-}
-.list_body .showLikeAndComments button:hover {
-    opacity: 0.8;
-}
 
-.list_body:not(.snsList .list_body) .showLikeAndComments > * {
-    display: inline-flex;
-    align-items: center;
-}
-
-.list_body:not(.snsList .list_body) .showLikeAndComments button {
-    margin-right: 30px;
-}
-
-.list_body:not(.snsList .list_body) .showLikeAndComments img {
-    margin-right: 10px;
-}
-
-.list_body .showLikeAndComments {
-    margin-top: 20px;
-}
-
-.list_body .likeBtn.active img {
-    content: url("../image/icon_like_active.png");
-}
-
-/* 3.6 sns type list Layout */
-
-.snsList .list_body {
-    flex-direction: column;
-    padding: 20px 65px 100px;
-}
-
-.snsList .list_body .thumbnailPhoto:has(img) {
-    margin-top: 20px;
-}
-
-.snsList .list_body .showLikeAndComments {
-    position: absolute;
-    bottom: 20px;
-    padding: 0 95px;
-    left: 0;
-    justify-content: space-between;
-}
-
-.snsList .list_body .showLikeAndComments img {
-    display: block;
-    margin: 0 auto 5px auto;
-}

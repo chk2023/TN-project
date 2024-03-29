@@ -5,8 +5,54 @@
 
 <mapper namespace="com._3dhs.tnproject.manager.dao.ReportMapper">
 
-    <select id="viewAllReport" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">
+<!--    <select id="viewAllReport" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">-->
+<!--        SELECT-->
+<!--            report_code,-->
+<!--            r_category_code,-->
+<!--            report_text,-->
+<!--            sub_member_code,-->
+<!--            report_date,-->
+<!--            manager_code,-->
+<!--            reporter_code-->
+<!--        FROM-->
+<!--            tbl_report-->
+<!--        ORDER BY-->
+<!--            report_code-->
+<!--    </select>-->
+
+
+<!--    <select id="viewAllReport" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">&ndash;&gt;-->
+<!--        SELECT-->
+<!--            tbl_report.report_code,-->
+<!--            tbl_report.r_category_code,-->
+<!--            tbl_report.report_text,-->
+<!--            tbl_report.manager_code,-->
+<!--            tbl_report.report_text,-->
+<!--            tbl_member.member_code,-->
+<!--            tbl_member.report-->
+<!--                tbl_report left join tbl_member on tbl_report.report_code = tbl_member.member_id-->
+<!--            ORDER by tbl_report.report_code asc-->
+<!--    </select>-->
+
+
+    <select id="viewAllReport" resultMap="ReportDTO">
+SELECT r.report_code,
+       r.r_category_code,
+       r.report_text,
+       r.sub_member_code,
+       m.member_code,
+       m.member_id
+
+FROM tbl_report r
+JOIN tbl_member m	ON r.sub_member_code = m.member_code
+WHERE r.sub_member_code = #{ subMemberId }
+</select>
+
+
+
+    <select id="viewOneReport" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">
         SELECT
+            report_code,
             r_category_code,
             report_text,
             report_date,
@@ -21,9 +67,19 @@
             cmt_code
         FROM
             tbl_report
-        ORDER BY
-            r_category_code
+        WHERE
+            report_code = #{ reportCode }
     </select>
+
+    <update id="insertRecord" >
+        UPDATE
+            tbl_report
+        SET
+            processing_text = #{ processingText }
+        WHERE
+            report_code = #{ reportCode }
+    </update>
+
 
 
 </mapper>
