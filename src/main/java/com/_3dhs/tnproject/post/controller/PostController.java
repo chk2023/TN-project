@@ -30,7 +30,7 @@ public class PostController {
     @GetMapping("/detail")
     public void blogDetailPage() {}
     @GetMapping("/likelist")
-    public void findLikeListByMemberCode(int memberCode, Model model) {
+    public void blogLikeListPage(int memberCode, Model model) {
         List<PostDTO> likeList = postService.findLikeListPostByMemberCode(memberCode);
         model.addAttribute("likeList", likeList);
     }
