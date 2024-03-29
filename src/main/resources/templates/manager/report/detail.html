@@ -70,11 +70,11 @@
 <!--            <button class="closeBtn"><img src="/image/btn_close.png" alt="닫기 버튼"></button>-->
         </form> <br><br>
         <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
-            <form id="reportDetail" action="/manager/report/list" onsubmit="서브밋하기전에_해야할_것 ">
+            <form id="reportDetail" action="/manager/report/detail">
                 <label>신고 번호 <input name="reportCode" th:value="${report.reportCode}"></label> <br>
-                    <label>신고 구분 코드  <input type="text"  th:value='${report.rCategoryCode}'></label> <br>
+                    <label>신고 구분 코드  <input type="text"  th:value='${report.rCategoryName}'></label> <br>
                     <label>신고 내역  <input type="text"   th:value='${report.reportText}'></label> <br>
-                    <label>신고 대상 유저  <input type="text" name=" " th:value='${report.subMemberId}'></label> <br>
+                    <label>신고 대상 유저  <input type="text" name=" " th:value='${report.memberId}'></label> <br>
                     <label>처리 기록  <input type="text"></label> <br>
                     <!-- form 마다 서브밋이 있어야 한다 -->
 

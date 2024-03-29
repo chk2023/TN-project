@@ -14,13 +14,14 @@ import java.time.LocalDateTime;
 public class ReportDTO {
     private int reportCode;
     private int rCategoryCode;
+    private String rCategoryName;
     private String reportText;
     private LocalDateTime reportDate;
     private ReportState reportStatus;
     private LocalDateTime processingDate;
     private String processingText;
     private int subMemberCode;
-    private String subMemberId;
+    private String memberId;
     private int managerCode;
     private int reporterCode;
     private String reporterId;

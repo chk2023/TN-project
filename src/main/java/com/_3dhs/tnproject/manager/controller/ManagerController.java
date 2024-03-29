@@ -23,22 +23,22 @@ public class ManagerController {
     private final MessageSourceAccessor messageSourceAccessor;
 
 
-    @GetMapping("/manager/reportList")
+    @GetMapping("/manager/report/list")
     public String viewAllReportList(Model model) {
 
         List<ReportDTO> reportList = reportService.viewAllReport();
         model.addAttribute("reportList", reportList);
 
-        return "manager/reportList";
+        return "manager/report/list";
 
 
     }
 
 
-    @GetMapping("/manager/report")
+    @GetMapping("/detail")
     public String viewOneReport(Model model, Integer reportCode) {
         ReportDTO report = reportService.viewOneReport(reportCode);
-        model.addAttribute("report", report);
+        model.addAttribute("detail", report);
 
 
         return "/manager/report/detail";

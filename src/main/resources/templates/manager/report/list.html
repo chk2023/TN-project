@@ -114,9 +114,9 @@
                 <tr th:each=" memberDTO: ${ reportList }"
                     th:onclick="|location.href='/manager/report?reportCode=${memberDTO.reportCode}'|">
                     <td th:text="${ memberDTO.reportCode }"></td>
-                    <td th:text="${ memberDTO.RCategoryCode}"></td>
+                    <td th:text="${ memberDTO.RCategoryName}"></td>
                     <td th:text="${ memberDTO.reportText}"></td>
-                    <td th:text="${ memberDTO.reporterCode}"></td>
+                    <td th:text="${ memberDTO.memberId}"></td>
                     <td th:text="${ memberDTO.reportDate}"></td>
                 </tr>
 
