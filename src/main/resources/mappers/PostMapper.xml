@@ -44,7 +44,7 @@
         <result property="profile.profileImgPath" column="profile_img_path"/>
     </resultMap>
 
-    <select id="findListWithLike" resultMap="postMap">
+    <select id="findListByParam" resultMap="postMap">
         SELECT post_code,
                post_title,
                post_text,
@@ -61,9 +61,14 @@
         FROM post_view
         WHERE post_status = 'PUBLIC'
           AND post_is_deleted= false
-        ORDER BY post_code
+        <if test="contentsType != null and contentsType == 1">
+            ORDER BY like_count DESC, post_code
+        </if>
+        <if test="contentsType != null and contentsType == 2">
+            ORDER BY post_wri_date DESC, post_code DESC
+        </if>
+        LIMIT #{index}, #{range}
     </select>
-
     <select id="findLikeListByPostCode" parameterType="int" resultMap="likeListMap">
         SELECT
             post_code,
@@ -73,12 +78,6 @@
             tbl_like_list
         WHERE post_code = #{postCode}
     </select>
-    <select id="findLikeCountByPostCode" parameterType="int">
-        SELECT
-            COUNT(*)
-        FROM tbl_like_list
-        WHERE post_code = #{postCode}
-    </select>
     <select id="findAttListByPostCode">
         SELECT
             *
@@ -86,4 +85,25 @@
         WHERE post_code = #{postCode}
     </select>
 
+    <select id="findLikeListPostByMemberCode">
+        SELECT
+            pv.post_code,
+            pv.post_title,
+            pv. post_text,
+            pv.post_price,
+            pv. po_member_code,
+            pv.folder_code,
+            pv.post_wri_date,
+            pv.profile_code,
+            pv. profile_nickname,
+            pv.profile_statmsg,
+            pv.profile_img_path,
+            pv.like_count,
+            pv.cmt_count
+        FROM post_view pv
+        INNER JOIN
+            tbl_like_list li ON li.post_code = pv.post_code
+        WHERE li.l_member_code = #{memberCode}
+        ORDER BY li.post_code DESC
+    </select>
 </mapper>
