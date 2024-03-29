@@ -116,6 +116,9 @@ public class MemberController {
     public String deleteMember(@AuthenticationPrincipal MemberDTO member) throws MemberRemoveException {
         log.info("login member : {}", member);
 
+        member.setMemberStatus("DELETE");
+        member.setIsDeleted(true);
+
         memberService.deleteMember(member);
 
         return "redirect:/member/logout";

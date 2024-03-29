@@ -5,7 +5,6 @@ import com._3dhs.tnproject.member.model.MemberGender;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -30,6 +29,8 @@ public class MemberDTO implements UserDetails {
     private LocalDateTime dormantTransDate;
     private LocalDateTime suspendTransDate;
     private ProfileDTO profile;
+    private LocalDateTime deleteTransDate;
+    private Boolean isDeleted;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

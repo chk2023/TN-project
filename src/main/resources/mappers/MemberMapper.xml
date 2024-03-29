@@ -41,6 +41,7 @@
             <if test="memberId != null">
                 AND member_id = #{memberId}
             </if>
+            AND is_deleted = 0
         </where>
     </select>
 
@@ -67,6 +68,17 @@
         </where>
     </update>
 
-
-
+    <update id="deleteMember">
+        UPDATE
+            tbl_member
+        SET
+            member_status = #{ memberStatus },
+            delete_trans_date = now(),
+            is_deleted = #{ isDeleted }
+        <where>
+            <if test="memberCode != null">
+                member_code = #{ memberCode }
+            </if>
+        </where>
+    </update>
 </mapper>
