@@ -62,4 +62,18 @@
     </update>
 
 
+    <update id="updateMember">
+        UPDATE
+            tbl_member
+        SET
+           member_gender = #{ memberGender },
+           member_age = #{ memberAge },
+           member_birth = #{ memberBirth }
+        <where>
+            <if test="memberCode != null">
+                member_code = #{ memberCode }
+            </if>
+        </where>
+    </update>
+
 </mapper>
