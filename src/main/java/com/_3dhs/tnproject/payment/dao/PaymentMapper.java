@@ -1,6 +1,6 @@
-package com._3dhs.tnproject.purchase.dao;
+package com._3dhs.tnproject.payment.dao;
 
-import com._3dhs.tnproject.purchase.dto.TissueDTO;
+import com._3dhs.tnproject.payment.dto.TissueDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

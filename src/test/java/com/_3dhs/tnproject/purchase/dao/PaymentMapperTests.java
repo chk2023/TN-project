@@ -1,11 +1,11 @@
 package com._3dhs.tnproject.purchase.dao;
 
-import com._3dhs.tnproject.purchase.dto.TissueDTO;
+import com._3dhs.tnproject.payment.dao.PaymentMapper;
+import com._3dhs.tnproject.payment.dto.TissueDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @SpringBootTest

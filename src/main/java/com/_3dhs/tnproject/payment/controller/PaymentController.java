@@ -1,10 +1,10 @@
-package com._3dhs.tnproject.purchase.controller;
+package com._3dhs.tnproject.payment.controller;
 
 import com._3dhs.tnproject.member.dto.MemberDTO;
 import com._3dhs.tnproject.member.service.AuthService;
 import com._3dhs.tnproject.member.service.MemberService;
-import com._3dhs.tnproject.purchase.dto.TissueDTO;
-import com._3dhs.tnproject.purchase.service.PaymentService;
+import com._3dhs.tnproject.payment.dto.TissueDTO;
+import com._3dhs.tnproject.payment.service.PaymentService;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.IamportResponse;
@@ -29,14 +29,14 @@ public class PaymentController {
     private final PaymentService paymentService;
     private final MemberService memberService;
 
-    @GetMapping("purchase/purchase")
-    public String getPurchasePage(Model model, Authentication authentication) {
+    @GetMapping("payment/payment")
+    public String getPaymentPage(Model model, Authentication authentication) {
         MemberDTO member = (MemberDTO) authentication.getPrincipal();
 
         model.addAttribute("loginUserId", member.getMemberId());
         model.addAttribute("member", member);
 
-        return "/purchase/purchase";
+        return "/payment/payment";
     }
 
     @Autowired
@@ -57,8 +57,8 @@ public class PaymentController {
     }
 
     @ResponseBody
-    @PostMapping("/purchaseSuccess")
-    public String purchaseSuccess(@RequestParam String imp_uid,
+    @PostMapping("/paymentSuccess")
+    public String paymentSuccess(@RequestParam String imp_uid,
                                   @RequestParam String merchant_uid,
                                   @RequestParam String buyer_name,
                                   @RequestParam int tissuePrice,
@@ -79,18 +79,17 @@ public class PaymentController {
                 tissuePrice,
                 currentMember.getMemberCode()
         );
-        //tissueDTO.setOrderCode(Integer.parseInt(imp_uid));
         paymentService.savePaymentList(tissueDTO);
 
         //사용자 티슈 수 업데이트
         int ntissuePrice = currentMember.getHaveTissue() + tissuePrice;
         memberService.updateHaveTissue(currentMember);
 
-        return "/purchase_success";
+        return "/payment_success";
     }
 
-    @GetMapping("/purchase/purchase_success")
-    public void gotoPurchaseSuccessPage() {
+    @GetMapping("/payment/payment_success")
+    public void gotoPaymentSuccessPage() {
 
     }
 }

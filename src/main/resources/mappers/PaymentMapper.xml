@@ -3,13 +3,13 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com._3dhs.tnproject.purchase.dao.PaymentMapper">
+<mapper namespace="com._3dhs.tnproject.payment.dao.PaymentMapper">
 
-    <resultMap id="profileMap" type="com._3dhs.tnproject.purchase.dto.TissueDTO">
+    <resultMap id="profileMap" type="com._3dhs.tnproject.payment.dto.TissueDTO">
         <id property="orderCode" column="order_code"/>
     </resultMap>
 
-    <insert id="insertPayment" parameterType="com._3dhs.tnproject.purchase.dto.TissueDTO">
+    <insert id="insertPayment" parameterType="com._3dhs.tnproject.payment.dto.TissueDTO">
         INSERT INTO
             tbl_tissue (imp_uid, merchant_uid, order_class, order_date, tissue_price, t_member_code, post_code)
         VALUES

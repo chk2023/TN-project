@@ -1,4 +1,4 @@
-package com._3dhs.tnproject.purchase.dto;
+package com._3dhs.tnproject.payment.dto;
 
 import lombok.Getter;
 import lombok.Setter;
