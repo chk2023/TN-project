@@ -35,18 +35,18 @@
 <!--    </select>-->
 
 
-    <select id="viewAllReport" resultType="ReportDTO">
-SELECT r.report_code,
-       r.r_category_code,
-       r.report_text,
-       r.sub_member_code,
-       m.member_code,
-       m.member_id
+    <select id="viewAllReport" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">
+        SELECT r.report_code,
+               r.r_category_code,
+               r.report_text,
+               r.sub_member_code,
+               m.member_code,
+               m.member_id
 
-FROM tbl_report r
-JOIN tbl_member m	ON r.sub_member_code = m.member_code
-WHERE r.sub_member_code = #{ subMemberId }
-</select>
+        FROM tbl_report r
+                 JOIN tbl_member m ON r.sub_member_code = m.member_code
+        WHERE r.sub_member_code = #{ subMemberId }
+    </select>
 
 
 
