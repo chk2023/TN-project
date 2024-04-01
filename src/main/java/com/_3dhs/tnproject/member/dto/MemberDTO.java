@@ -6,10 +6,12 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Collection;
 
 @Getter
@@ -34,7 +36,9 @@ public class MemberDTO implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        String roleName = "";
+        if(memberAuthority != null) roleName = memberAuthority.name();
+        return Arrays.asList(new SimpleGrantedAuthority(roleName));
     }
 
     @Override

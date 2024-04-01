@@ -3,6 +3,7 @@ import com._3dhs.tnproject.post.dto.PostDTO;
 import com._3dhs.tnproject.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Indexed;
 import org.springframework.ui.Model;
@@ -22,7 +23,7 @@ public class TimelineController {
     private final PostService service;
 
     @GetMapping("/list")
-    public String findTrendList(Model model, String viewType,Integer contentsType) {
+    public String findTrendList(Model model, String viewType, Integer contentsType, Authentication authentication) {
         Integer index = 0;
         Integer range = 10;
 
@@ -30,6 +31,7 @@ public class TimelineController {
         model.addAttribute("range", range);
         model.addAttribute("viewType", viewType);
         model.addAttribute("contentsType", contentsType);
+
         return "timeline/list";
     }
 
