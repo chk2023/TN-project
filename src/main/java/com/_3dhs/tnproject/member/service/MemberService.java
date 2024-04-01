@@ -5,9 +5,12 @@ import com._3dhs.tnproject.common.exceptionhandler.member.MemberUpdateException;
 import com._3dhs.tnproject.common.exceptionhandler.member.MemberRegistException;
 import com._3dhs.tnproject.member.dao.MemberMapper;
 import com._3dhs.tnproject.member.dto.MemberDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class MemberService {
@@ -29,6 +32,10 @@ public class MemberService {
         int result = memberMapper.insertMember(member);
 
         if (!(result > 0)) throw new MemberRegistException("회원 가입에 실패하였습니다.");
+    }
+
+    public List<MemberDTO> viewAllMembers(MemberDTO memberDTO) {
+        return memberMapper.viewAllMembers(memberDTO);
     }
 
     // 결제 추가

@@ -82,6 +82,40 @@
         VALUES
             (#{memberId}, #{memberPwd}, #{memberAge}, #{memberBirth})
     </insert>
+    <select id="findLastInsertId">
+        SELECT LAST_INSERT_ID()
+    </select>
+    <insert id="insertProfile">
+        INSERT INTO tbl_profile (pr_member_code, profile_nickname)
+        VALUES (LAST_INSERT_ID(), 'newUser')
+    </insert>
+
+
+
+
+    <select id="viewAllMembers" resultType="com._3dhs.tnproject.member.dto.MemberDTO">
+        SELECT
+            member_code,
+            member_id,
+            member_pwd,
+            member_gender,
+            member_age,
+            member_birth,
+            member_subdate,
+            member_status,
+            have_tissue,
+            member_authority,
+            dormant_trans_date,
+            suspend_trans_date,
+            delete_trans_date,
+            is_deleted
+
+        FROM
+            tbl_member
+
+
+    </select>
+
 
     <update id="updateTissue">
         UPDATE
