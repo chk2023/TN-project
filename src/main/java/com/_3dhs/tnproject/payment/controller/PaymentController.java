@@ -22,10 +22,6 @@ import java.time.LocalDateTime;
 public class PaymentController {
 
     private final IamportClient iamportClient;
-
-    @Autowired
-    private AuthService authService;
-
     private final PaymentService paymentService;
     private final MemberService memberService;
 
@@ -89,7 +85,12 @@ public class PaymentController {
     }
 
     @GetMapping("/payment/payment_success")
-    public void gotoPaymentSuccessPage() {
+    public String getPaymentSuccessPage(Model model, Authentication authentication) {
+        MemberDTO member = (MemberDTO) authentication.getPrincipal();
 
+        model.addAttribute("loginUserId", member.getMemberId());
+        model.addAttribute("member", member);
+
+        return "/payment/payment_success";
     }
 }

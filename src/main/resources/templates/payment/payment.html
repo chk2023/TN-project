@@ -50,7 +50,6 @@
         })
     }
 
-    console.log()
 </script>
 <div class="wrap">
 
@@ -100,13 +99,22 @@
 
         <section>
 
-            <button onclick="requestPay(10)">테스트</button>
+            <div class="haveTissueWrapper">
+                <p>현재 보유한 티슈</p>
+                <h5><span th:text="${member.haveTissue}"></span> 개</h5>
+            </div>
 
-            <button onclick="requestPay(1000)">1000원</button>
-            <button onclick="requestPay(5000)">5000원</button>
-            <button onclick="requestPay(10000)">10000원</button>
-            <button onclick="requestPay(30000)">30000원</button>
-            <button onclick="requestPay(50000)">50000원</button>
+            <div class="paymentBtnWrapper">
+
+                <button class="paymentBtn" onclick="requestPay(10)">테스트</button>
+
+                <button class="paymentBtn" onclick="requestPay(1000)">1000원</button>
+                <button class="paymentBtn" onclick="requestPay(5000)">5000원</button>
+                <button class="paymentBtn" onclick="requestPay(10000)">10000원</button>
+                <button class="paymentBtn" onclick="requestPay(30000)">30000원</button>
+                <button class="paymentBtn" onclick="requestPay(50000)">50000원</button>
+
+            </div>
 
         </section>
 

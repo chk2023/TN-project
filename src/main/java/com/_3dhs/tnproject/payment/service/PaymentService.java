@@ -19,6 +19,5 @@ public class PaymentService {
         paymentMapper.insertPayment(paymentDTO);
     }
 
-//    public boolean isPostPurchased(int memberCode, Integer postCode) {
-//    }
+
 }

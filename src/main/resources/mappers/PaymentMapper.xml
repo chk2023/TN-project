@@ -5,7 +5,7 @@
 
 <mapper namespace="com._3dhs.tnproject.payment.dao.PaymentMapper">
 
-    <resultMap id="profileMap" type="com._3dhs.tnproject.payment.dto.PaymentDTO">
+    <resultMap id="paymentMap" type="com._3dhs.tnproject.payment.dto.PaymentDTO">
         <id property="orderCode" column="order_code"/>
     </resultMap>
 
