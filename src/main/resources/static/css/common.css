@@ -839,9 +839,6 @@ main {
     margin-top: 20px;
 }
 
-.list_body .likeBtn.active img {
-    content: url("../image/icon_like_active.png");
-}
 
 /* 3.6 sns type list Layout */
 

@@ -106,4 +106,51 @@
         WHERE li.l_member_code = #{memberCode}
         ORDER BY li.post_code DESC
     </select>
+
+    <insert id="addLike" parameterType="com._3dhs.tnproject.post.dao.PostMapper">
+        INSERT INTO
+            tbl_like_list (postCode, memberCode, isPrivate)
+        VALUES
+            (#{postCode}, #{memberCode}, #{isPrivate})
+    </insert>
+
+    <delete id="cancelLike">
+        DELETE INTO
+            tbl_like_list
+        WHERE
+            postCode = #{postCode}
+        AND
+            memberCode = #{memberCode}
+    </delete>
+
+    <select id="hasLiked" resultType="boolean">
+        SELECT
+            COUNT(*) > 0
+        FROM
+            tbl_like_list
+        WHERE
+            postCode = #{postCode}
+        AND
+            memberCode = #{memberCode}
+    </select>
+
+    <select id="getLikeListByPostCode" resultType="com._3dhs.tnproject.post.dto.LikeListDTO">
+        SELECT
+            *
+        FROM
+            tbl_like_list
+        WHERE
+            postCode = #{postCode}
+    </select>
+
+    <select id="getPrivateLikesByPostCode" resultType="com._3dhs.tnproject.post.dto.LikeListDTO">
+        SELECT
+            *
+        FROM
+            tbl_like_list
+        WHERE
+            postCode = #{postCode}
+        AND
+            isPrivate = false
+    </select>
 </mapper>

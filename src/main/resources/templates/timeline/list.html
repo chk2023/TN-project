@@ -192,7 +192,7 @@
                     <img src="/image/icon_comment.png" alt="댓글 버튼 아이콘">
                     <span>{{cmtCount}}</span>
                 </button>
-                <button class="likeBtn active">
+                <button class="likeBtn active" onclick="changeLikeIcon(this)">
                     <img src="/image/icon_like.png" alt="좋아요 버튼 아이콘">
                     <span>{{likeCount}}</span>
                 </button>
@@ -206,5 +206,41 @@
 </script>
 <script src="/js/timeline.js"></script>
 <script src="/js/scrollEvent.js"></script>
+<script>
+
+    function changeLikeIcon(element) {
+        var likeImg = element.getElementsByTagName("img")[0];
+        var isActive = element.classList.toggle("active");
+
+        if (isActive) {
+            likeImg.src = "/image/icon_like_active.png";
+        } else {
+            likeImg.src = "/image/icon_like.png";
+        }
+
+    }
+
+    function likePost(postCode, memberCode) {
+        fetch('/post/like', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application.json',
+            },
+            body: JSON.stringify({
+                postCode: postCode,
+                memberCode: memberCode,
+                isPrivate: false,
+            }),
+        })
+            .then(response => response.text())
+            .then(result => {
+                console.log(result);
+            })
+            .catch((err) => {
+                console.log(err)
+            });
+    }
+
+</script>
 </body>
 </html>
