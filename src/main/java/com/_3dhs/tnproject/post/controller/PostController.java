@@ -28,7 +28,11 @@ public class PostController {
     @GetMapping("/list")
     public void blogListPage() {}
     @GetMapping("/detail")
-    public void blogDetailPage() {}
+    public void blogDetailPage(Integer postCode) {
+        //1. 해당하는 코드의 post정보를 불러오기
+        //2. post가 유료글인지 판단하기
+        //3. 유료글이라면 유료글 처리를 하는 곳으로 리다이렉트하기
+    }
     @GetMapping("/likelist")
     public void blogLikeListPage(int memberCode, Model model) {
         List<PostDTO> likeList = postService.findLikeListPostByMemberCode(memberCode);

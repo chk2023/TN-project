@@ -12,9 +12,10 @@ public class MemberMapperTests {
 
     @Test
     void ID로맴버찾기_테스트() {
-       MemberDTO dto = memberMapper.findByMemberId("hk");
+       MemberDTO dto = memberMapper.findByMemberId("1");
         if (dto != null) {
             System.out.println(dto.getMemberId());
+            System.out.println(dto.getProfile());
         }
 
         assert (dto != null);

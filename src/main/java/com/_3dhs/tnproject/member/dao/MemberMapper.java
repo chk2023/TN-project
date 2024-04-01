@@ -14,4 +14,8 @@ public interface MemberMapper {
     String selectMemberById(String memberId);
 
     List<MemberDTO> viewAllMembers(MemberDTO memberDTO);
+
+    int updateMember(MemberDTO updateMember);
+
+    void updateTissue(String memberId, int nTissue);
 }

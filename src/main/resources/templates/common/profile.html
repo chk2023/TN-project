@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<div class="profile">
+    <button class="optionBtn"><img src="/image/icon_option.png" alt="프로필 옵션 버튼"></button>
+    <ul class="optionBox">
+        <li><a>프로필 수정</a></li>
+        <li><a>공유</a></li>
+    </ul>
+    <div class="profileStatus">
+        <div class="prof_photo"><img th:src="${#authentication.principal.profile.profileImgPath}" alt="프로필 사진"></div>
+        <div class="prof_txt">
+            <strong th:text="${#authentication.principal.profile.profileNickname}"></strong>
+            <span th:text="${#authentication.principal.profile.profileStatmsg}"></span>
+        </div>
+    </div>
+    <div class="profileInfo">
+        <span class="tissueCount" th:text="${#authentication.principal.haveTissue}"></span>
+        <button class="myBlogBtn btn" th:onclick="|location.href= '/post/main?memberCode=' + '${#authentication.principal.memberCode}'|">내 블로그</button>
+    </div>
+</div>
+</html>

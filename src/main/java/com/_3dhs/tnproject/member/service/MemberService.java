@@ -1,5 +1,6 @@
 package com._3dhs.tnproject.member.service;
 
+import com._3dhs.tnproject.common.exceptionhandler.member.MemberUpdateException;
 import com._3dhs.tnproject.common.exceptionhandler.member.MemberRegistException;
 import com._3dhs.tnproject.member.dao.MemberMapper;
 import com._3dhs.tnproject.member.dto.MemberDTO;
@@ -34,5 +35,30 @@ public class MemberService {
 
     public List<MemberDTO> viewAllMembers(MemberDTO memberDTO) {
         return memberMapper.viewAllMembers(memberDTO);
+    }
+
+    // 결제 추가
+//    public void updateHaveTissue(String memberId, int nTissue) {
+//        memberMapper.updateTissue(memberId, nTissue);
+//    }
+
+    public MemberDTO getMemberbyId(String userId) {
+        return memberMapper.findByMemberId(userId);
+    }
+
+    public void updateHaveTissue(MemberDTO memberDTO) {
+        memberMapper.updateTissue(memberDTO.getMemberId(), memberDTO.getHaveTissue());
+
+
+    }
+
+
+    @Transactional
+    public void updateMember(MemberDTO updateMember) throws MemberUpdateException {
+
+        int result = memberMapper.updateMember(updateMember);
+
+        if (!(result > 0)) throw new MemberUpdateException("회원 정보 수정에 실패하였습니다.");
+
     }
 }

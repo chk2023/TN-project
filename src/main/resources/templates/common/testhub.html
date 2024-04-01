@@ -24,6 +24,12 @@
 <h3>블로그 화면</h3>
 <a href="/post/main">블로그메인화면</a>
 <hr>
+
+<h3>결제</h3>
+<button onclick="location.href='/payment/payment'">결제</button>
+<hr>
+
+
 <h3>테스트코드</h3>
 <form action="/common/makepassword" method="post">
     <input type="text" name="pass">
@@ -31,6 +37,7 @@
 </form>
 <button onclick="location.href='/common/makelikelist'">좋아요 리스트 추가하기</button>
 <hr>
+<input type="button" value="정보수정" id="updateMember">
 <input type="button" value="로그아웃" id="logout">
 <script>
     const message = '[[${message}]]';
@@ -39,5 +46,9 @@
     }
 </script>
 <script src="/js/event.js"></script>
+<br>
+<br>
+
+
 </body>
 </html>
