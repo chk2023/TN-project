@@ -47,8 +47,6 @@
         FROM tbl_report r
                  JOIN tbl_member m ON r.target_code = m.member_code
                  JOIN tbl_r_category c ON c.r_category_code = r.r_category_code
-        WHERE r.target_code = #{ targetCode }
-
     </select>
 
 
