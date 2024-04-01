@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>회원정보</title>
-    <script type="text/javascript" src="/js/event.js"></script>
+    <script type="text/javascript" src="/js/memberEvent.js"></script>
     <style>
         .hidden {
             display: none;
@@ -17,6 +17,18 @@
     <label>아이디 :</label> <span th:text="${ #authentication.principal.memberId }"></span> <br>
     <label>성별 :</label>
     <span th:text="${#authentication.principal.memberGender}" id="genderParagraph"></span>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const $genderParagraph = document.querySelector("#genderParagraph");
+
+            /* DB에서 MALE 값이면 화면에서 남자, FEMALE이면 여자 출력 */
+            if ($genderParagraph.textContent === 'MALE') {
+                $genderParagraph.textContent = '남자';
+            } else {
+                $genderParagraph.textContent = '여자';
+            }
+        });
+    </script>
     <select id="genderInput" class="hidden" name="memberGender">
         <option th:value="${T(com._3dhs.tnproject.member.model.MemberGender).MALE}">남자</option>
         <option th:value="${T(com._3dhs.tnproject.member.model.MemberGender).FEMALE}">여자</option>
@@ -38,52 +50,9 @@
 <script>
     /* 회원 정보 수정 버튼을 클릭하면 입력창이 나타나는 로직 */
     document.addEventListener("DOMContentLoaded", function () {
-        const $updateMemberButton = document.getElementById("updateMemberBtn");
-        const $submitUpdateMemberButton = document.getElementById("submitUpdateMember");
-        const $genderParagraph = document.querySelector("#genderParagraph");
-        const $ageParagraph = document.querySelector("#ageParagraph");
-        const $birthParagraph = document.querySelector("#birthParagraph");
-        const $genderInput = document.getElementById("genderInput");
-        const $ageInput = document.getElementById("ageInput");
-        const $birthInput = document.getElementById("birthInput");
-
-        /* DB에서 MALE 값이면 화면에서 남자, FEMALE이면 여자 출력 */
-        if ($genderParagraph.textContent == 'MALE') {
-            $genderParagraph.textContent = '남자';
-        } else {
-            $genderParagraph.textContent = '여자';
-        }
-
-        $updateMemberButton.addEventListener("click", function () {
-            $genderParagraph.classList.add("hidden");
-            $ageParagraph.classList.add("hidden");
-            $birthParagraph.classList.add("hidden");
-            $genderInput.classList.remove("hidden");
-            $ageInput.classList.remove("hidden");
-            $birthInput.classList.remove("hidden");
-
-            $genderInput.value = $genderParagraph.textContent;
-            $ageInput.value = $ageParagraph.textContent;
-            $birthInput.value = $birthParagraph.textContent;
-
-            if ($genderParagraph.textContent === '남자') {
-                $genderInput.selectedIndex = 0;
-            } else {
-                $genderInput.selectedIndex = 1;
-            }
-
-            // 수정완료 버튼 보이기
-            $submitUpdateMemberButton.classList.remove("hidden");
-            $updateMemberButton.classList.add("hidden");
-        });
-
-        // $submitUpdateMemberButton.addEventListener("click", function (){
-        //     // 폼 제출
-        //     document.getElementById("submitUpdateMember").submit();
-        // });
 
     });
 </script>
-<button>탈퇴하기</button>
+<input type="button" value="탈퇴하기" id="deleteMember">
 </body>
 </html>
