@@ -46,8 +46,8 @@
 
         FROM tbl_report r
                  JOIN tbl_member m ON r.sub_member_code = m.member_code
-        JOIN tbl_r_category c ON c.r_category_code = r.r_category_code
-        ORDER BY r.sub_member_code = #{ subMemberCode }
+                 JOIN tbl_r_category c ON c.r_category_code = r.r_category_code
+        WHERE r.sub_member_code = #{ subMemberCode }
 
     </select>
 
