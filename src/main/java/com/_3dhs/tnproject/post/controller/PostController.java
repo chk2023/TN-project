@@ -28,7 +28,9 @@ public class PostController {
     @GetMapping("/list")
     public void blogListPage() {}
     @GetMapping("/detail")
-    public void blogDetailPage() {}
+    public void blogDetailPage(Integer postCode) {
+        //유료글일 경우 리다이렉트 등등 처리를 하시면 될것 같아요
+    }
     @GetMapping("/likelist")
     public void blogLikeListPage(int memberCode, Model model) {
         List<PostDTO> likeList = postService.findLikeListPostByMemberCode(memberCode);
