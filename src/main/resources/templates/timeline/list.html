@@ -5,33 +5,8 @@
     <meta charset="UTF-8">
     <title>Timeline - main</title>
     <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/timeline.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
-    <style>
-        .mainProfile {
-            width: 600px;
-            height: 200px;
-            overflow: hidden;
-        }
-
-        .mprofBackground img {
-            min-width: 100%;
-            min-height: 100%;
-            background-color: #448AC6;
-            filter: blur(3px);
-        }
-
-        main {
-            min-height: 1000px;
-        }
-
-        .viewBtn.active .optionBox {
-            display: flex;
-        }
-
-        .optionBox.optionBoxColor li * {
-            color: #595959;
-        }
-    </style>
 </head>
 <body>
 <div class="wrap">
@@ -103,7 +78,7 @@
         </div>
         <div>
             <div>
-                <strong class="blog_user_name">{{profile.profileNickname}}</strong>
+                <strong class="blog_user_name"><a href="/post/main?memberCode={{memberCode}}">{{profile.profileNickname}}</a></strong>
                 <span class="blog_user_birth">{{postWriDate}}</span>
             </div>
             <span class="status_msg">{{profile.profileStatmsg}}</span>
@@ -116,8 +91,8 @@
     </div>
     <div class="list_body">
         <div>
-            <strong class="contentTit">{{postTitle}}</strong>
-            <div class="contentsTxt">
+            <strong class="contentTit" onclick="location.href='/post/detail?postCode={{postCode}}'">{{postTitle}}</strong>
+            <div class="contentsTxt" onclick="location.href='/post/detail?postCode={{postCode}}'">
                 <p>
                     {{postText}}
                 </p>
@@ -133,7 +108,7 @@
                 </button>
             </div>
         </div>
-        <div class="thumbnailPhoto">
+        <div class="thumbnailPhoto" onclick="location.href='/post/detail?postCode={{postCode}}'">
             <img src="{{thumbnailPath}}" alt="썸네일 이미지">
         </div>
     </div>
