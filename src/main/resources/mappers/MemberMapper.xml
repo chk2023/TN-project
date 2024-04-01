@@ -59,7 +59,7 @@
         JOIN tbl_profile p ON m.member_code = p.pr_member_code
         <where>
             <if test="memberId != null">
-                member_id = #{memberId}
+                AND m.member_id = #{memberId}
             </if>
         </where>
     </select>
@@ -71,18 +71,16 @@
         tbl_member
         <where>
             <if test="memberId != null">
-                member_id = #{memberId}
+                AND member_id = #{memberId}
             </if>
         </where>
     </select>
 
     <insert id="insertMember">
         INSERT INTO
-            tbl_member (member_id, member_pwd, member_gender, member_age, member_birth, member_subdate, member_status,
-                      have_tissue, member_authority)
+            tbl_member (member_id, member_pwd, member_age, member_birth)
         VALUES
-            (#{ memberId }, #{ memberPwd }, #{ memberGender }, #{ memberAge }, #{ memberBirth }, now(),
-             'ACTIVE', 0, 'COMMON')
+            (#{memberId}, #{memberPwd}, #{memberAge}, #{memberBirth})
     </insert>
 
     <update id="updateTissue">
@@ -110,4 +108,17 @@
         </where>
     </update>
 
+    <update id="deleteMember">
+        UPDATE
+            tbl_member
+        SET
+            member_status = #{ memberStatus },
+            delete_trans_date = now(),
+            is_deleted = #{ isDeleted }
+        <where>
+            <if test="memberCode != null">
+                member_code = #{ memberCode }
+            </if>
+        </where>
+    </update>
 </mapper>

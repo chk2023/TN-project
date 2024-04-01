@@ -1,5 +1,6 @@
 package com._3dhs.tnproject.member.controller;
 
+import com._3dhs.tnproject.common.exceptionhandler.member.MemberRemoveException;
 import com._3dhs.tnproject.common.exceptionhandler.member.MemberUpdateException;
 import com._3dhs.tnproject.common.exceptionhandler.member.MemberRegistException;
 import com._3dhs.tnproject.member.dto.MemberDTO;
@@ -37,7 +38,13 @@ public class MemberController {
     }
 
     @GetMapping(value = {"/login"})
-    public void loginPage(){}
+    public String loginPage(Authentication authentication){
+        Object user = authentication;
+        if (user != null) {
+            return "redirect:/timeline/list";
+        }
+        return "member/login";
+    }
 
     @PostMapping("/loginfail")
     public String loginFailed(RedirectAttributes rttr) {
@@ -103,12 +110,23 @@ public class MemberController {
         return "redirect:/common/testhub";
     }
 
-
     protected Authentication createNewAuthentication(String memberId) {
         UserDetails newPrincipal = authenticationService.loadUserByUsername(memberId);
         UsernamePasswordAuthenticationToken newAuth
                 = new UsernamePasswordAuthenticationToken(newPrincipal, newPrincipal.getPassword(),
                 newPrincipal.getAuthorities());
         return newAuth;
+    }
+
+    @GetMapping("/delete")
+    public String deleteMember(@AuthenticationPrincipal MemberDTO member) throws MemberRemoveException {
+        log.info("login member : {}", member);
+
+        member.setMemberStatus("DELETE");
+        member.setIsDeleted(true);
+
+        memberService.deleteMember(member);
+
+        return "redirect:/member/logout";
     }
 }

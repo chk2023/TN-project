@@ -1,5 +1,6 @@
 package com._3dhs.tnproject.member.service;
 
+import com._3dhs.tnproject.common.exceptionhandler.member.MemberRemoveException;
 import com._3dhs.tnproject.common.exceptionhandler.member.MemberUpdateException;
 import com._3dhs.tnproject.common.exceptionhandler.member.MemberRegistException;
 import com._3dhs.tnproject.member.dao.MemberMapper;
@@ -53,5 +54,13 @@ public class MemberService {
 
         if (!(result > 0)) throw new MemberUpdateException("회원 정보 수정에 실패하였습니다.");
 
+    }
+
+    public void deleteMember(MemberDTO member) throws MemberRemoveException {
+        int result = memberMapper.deleteMember(member);
+
+        if (!(result > 0)) {
+            throw new MemberRemoveException("회원 탈퇴에 실패하였습니다.");
+        }
     }
 }
