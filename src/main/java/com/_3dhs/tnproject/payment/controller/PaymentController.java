@@ -3,7 +3,7 @@ package com._3dhs.tnproject.payment.controller;
 import com._3dhs.tnproject.member.dto.MemberDTO;
 import com._3dhs.tnproject.member.service.AuthService;
 import com._3dhs.tnproject.member.service.MemberService;
-import com._3dhs.tnproject.payment.dto.TissueDTO;
+import com._3dhs.tnproject.payment.dto.PaymentDTO;
 import com._3dhs.tnproject.payment.service.PaymentService;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
@@ -71,7 +71,7 @@ public class PaymentController {
 
 
         //티슈 정보 추가
-        TissueDTO tissueDTO = new TissueDTO(
+        PaymentDTO paymentDTO = new PaymentDTO(
                 imp_uid,
                 merchant_uid,
                 "BUY",
@@ -79,7 +79,7 @@ public class PaymentController {
                 tissuePrice,
                 currentMember.getMemberCode()
         );
-        paymentService.savePaymentList(tissueDTO);
+        paymentService.savePaymentList(paymentDTO);
 
         //사용자 티슈 수 업데이트
         int ntissuePrice = currentMember.getHaveTissue() + tissuePrice;

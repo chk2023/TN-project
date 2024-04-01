@@ -106,4 +106,14 @@
         WHERE li.l_member_code = #{memberCode}
         ORDER BY li.post_code DESC
     </select>
+
+    <select id="getPostByPostCode" resultType="com._3dhs.tnproject.post.dto.PostDTO">
+        SELECT
+            *
+        FROM
+            tbl_post
+        WHERE
+            post_code = #{postCode}
+    </select>
+
 </mapper>

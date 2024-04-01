@@ -1,7 +1,7 @@
 package com._3dhs.tnproject.purchase.dao;
 
 import com._3dhs.tnproject.payment.dao.PaymentMapper;
-import com._3dhs.tnproject.payment.dto.TissueDTO;
+import com._3dhs.tnproject.payment.dto.PaymentDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,7 +16,7 @@ public class PaymentMapperTests {
 
     @Test
     void 입력값_테스트() {
-        TissueDTO tissueDTO = new TissueDTO(
+        PaymentDTO paymentDTO = new PaymentDTO(
                 "111111",
                 "123456789",
                 "오더클래스",
@@ -25,7 +25,7 @@ public class PaymentMapperTests {
                 1
         );
 
-        paymentMapper.insertPayment(tissueDTO);
+        paymentMapper.insertPayment(paymentDTO);
 
     }
 }

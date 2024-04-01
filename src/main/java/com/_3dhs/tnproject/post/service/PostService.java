@@ -3,6 +3,7 @@ package com._3dhs.tnproject.post.service;
 
 import com._3dhs.tnproject.comments.dao.CommentsMapper;
 import com._3dhs.tnproject.post.dao.PostMapper;
+import com._3dhs.tnproject.post.dto.AttachmentDTO;
 import com._3dhs.tnproject.post.dto.PostDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,5 +36,16 @@ public class PostService {
             postList.get(i).makeThumbnailPath();
         }
         return postList;
+    }
+
+    public PostDTO getPostByPostCode(Integer postCode) {
+        PostDTO postDTO = postMapper.getPostByPostCode(postCode);
+
+        List<AttachmentDTO> attachmentList = postMapper.findAttListByPostCode(postCode);
+        postDTO.setAttachmentList(attachmentList);
+
+        postDTO.makeThumbnailPath();
+
+        return postDTO;
     }
 }

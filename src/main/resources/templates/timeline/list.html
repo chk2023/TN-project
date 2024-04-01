@@ -158,6 +158,22 @@
     let isTitlePhotoChanged = false;
     let isLoading = false;
     const $viewBtn = document.querySelector(".viewBtn");
+
+</script>
+<script>
+    function purchasePaidPost(postCode) {
+        $.ajax({
+            url: '/getPostInfo',
+            method: "GET",
+            data: { postCode: postCode },
+            success: function(response) {
+                var postPrice = response.post_price;
+            },
+            error: function(xhr, status, error) {
+                alert("구매에 실패하였습니다. 에러 내용: " + error);
+            }
+        })
+    }
 </script>
 <script id="contentsTemplate" type="text/x-handlebars-template">
     {{#each this}}
@@ -173,6 +189,10 @@
             </div>
             <span class="status_msg">{{profile.profileStatmsg}}</span>
         </div>
+
+        <!-- 유료글 테스트 버튼 -->
+        <button onclick="purchasePaidPost()">글 구매</button>
+
         <button class="optionBtn"><img src="/image/icon_option.png" alt="글 옵션 버튼"></button>
         <ul class="optionBox">
             <li><a>글 신고하기</a></li>
