@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>payment</title>
+    <link rel="stylesheet" href="/css/common.css">
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+
+</head>
+
+<body>
+<script>
+    memberId = `[[${loginUserId}]]`;
+
+    function requestPay(tissuePrice) {
+
+        var IMP = window.IMP;
+        IMP.init("imp74535646");
+
+        IMP.request_pay({
+            pg: "html5_inicis",
+            pay_method: "card",
+            merchant_uid: "payment" + new Date().getTime(),
+            name: "티슈" + tissuePrice + "개",
+            amount: tissuePrice,
+            buyer_email: memberId,
+            buyer_name: '프로필닉네임',
+        }, function (rsp) {
+            console.log(rsp);
+            if (rsp.success) {
+                jQuery.ajax({
+                    url: "/paymentSuccess",
+                    method: "POST",
+                    data: {
+                        imp_uid: rsp.imp_uid,            // 결제 고유번호
+                        merchant_uid: rsp.merchant_uid,  // 주문번호
+                        buyer_name: rsp.buyer_name,
+                        tissuePrice: tissuePrice,
+                    },
+                    success : () => {
+                        alert("성공");
+                        location.href = "/payment/payment_success";
+                    }
+                })
+            } else {
+                alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
+            }
+        })
+    }
+
+    console.log()
+</script>
+<div class="wrap">
+
+    <header>
+        <div class="profile">
+            <button class="optionBtn"><img src="/static/image/icon_option.png" alt="프로필 옵션 버튼"></button>
+            <ul class="optionBox">
+                <li><a>프로필 수정</a></li>
+                <li><a>공유</a></li>
+            </ul>
+            <div class="profileStatus">
+                <div class="prof_photo"><img src="/static/image/icon_no_image_lg.png" alt="프로필 사진"></div>
+                <div class="prof_txt">
+                    <strong>닉네임</strong>
+                    <span>상태메시지</span>
+                </div>
+            </div>
+            <div class="profileInfo">
+                <span class="tissueCount">500</span>
+                <button class="myBlogBtn btn">내 블로그</button>
+            </div>
+        </div>
+        <nav>
+            <ul class="rnb">
+                <li><button>홈</button></li>
+                <li><button>회원 정보</button></li>
+                <li><button>결제 관리</button></li>
+                <li><button>차단 목록</button></li>
+                <li><button>관리기록 조회</button></li>
+                <li><button>신고목록 조회</button></li>
+                <li><button>회원정보 검색</button></li>
+                <li class="logoutBtn"><button>로그아웃</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+
+        <form class="title">
+            <button class="backBtn"><img src="/image/btn_arrow.png" alt="뒤로가기 버튼"></button>
+            <div>
+                <h1>닉네임</h1>
+                <p><span>0000</span>게시물</p>
+            </div>
+        </form>
+
+        <section>
+
+            <button onclick="requestPay(10)">테스트</button>
+
+            <button onclick="requestPay(1000)">1000원</button>
+            <button onclick="requestPay(5000)">5000원</button>
+            <button onclick="requestPay(10000)">10000원</button>
+            <button onclick="requestPay(30000)">30000원</button>
+            <button onclick="requestPay(50000)">50000원</button>
+
+        </section>
+
+    </main>
+
+
+</div>
+
+
+</body>
+</html>
