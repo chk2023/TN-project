@@ -30,15 +30,6 @@ public class MemberService {
         if (!(result > 0)) throw new MemberRegistException("회원 가입에 실패하였습니다.");
     }
 
-    @Transactional
-    public void updateMember(MemberDTO updateMember) throws MemberUpdateException {
-
-        int result = memberMapper.updateMember(updateMember);
-
-        if (!(result > 0)) throw new MemberUpdateException("회원 정보 수정에 실패하였습니다.");
-
-    }
-
     // 결제 추가
 //    public void updateHaveTissue(String memberId, int nTissue) {
 //        memberMapper.updateTissue(memberId, nTissue);
@@ -54,4 +45,13 @@ public class MemberService {
 
     }
 
+
+    @Transactional
+    public void updateMember(MemberDTO updateMember) throws MemberUpdateException {
+
+        int result = memberMapper.updateMember(updateMember);
+
+        if (!(result > 0)) throw new MemberUpdateException("회원 정보 수정에 실패하였습니다.");
+
+    }
 }

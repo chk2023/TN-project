@@ -11,8 +11,7 @@ public interface MemberMapper {
 
     String selectMemberById(String memberId);
 
-    void updateTissue(String memberId, int nTissue);
-
-
     int updateMember(MemberDTO updateMember);
+
+    void updateTissue(String memberId, int nTissue);
 }

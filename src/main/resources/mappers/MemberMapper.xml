@@ -51,6 +51,17 @@
              'ACTIVE', 0, 'COMMON')
     </insert>
 
+    <update id="updateTissue">
+        UPDATE
+            tbl_member
+        SET
+            have_tissue = #{nTissue}
+        WHERE
+            member_id = #{memberId}
+
+    </update>
+
+
     <update id="updateMember">
         UPDATE
             tbl_member
@@ -64,16 +75,5 @@
             </if>
         </where>
     </update>
-
-    <update id="updateTissue">
-        UPDATE
-            tbl_member
-        SET
-            have_tissue = #{nTissue}
-        WHERE
-            member_id = #{memberId}
-
-    </update>
-
 
 </mapper>
