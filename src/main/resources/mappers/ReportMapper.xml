@@ -80,5 +80,19 @@
     </update>
 
 
+    <select id="showAllAdmList">
+        SELECT
+            report_code,
+            manager_code,
+            report_content,
+            processing_text,
+            sub_member_code,
+            processing_date
+        FROM
+            tbl_report
+        WHERE
+            report_code = #{ reportCode }
+    </select>
+
 
 </mapper>
