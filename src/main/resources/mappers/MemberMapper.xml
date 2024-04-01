@@ -51,4 +51,31 @@
              'ACTIVE', 0, 'COMMON')
     </insert>
 
+
+
+
+    <select id="viewAllMembers" resultType="com._3dhs.tnproject.member.dto.MemberDTO">
+        SELECT
+            member_code,
+            member_id,
+            member_pwd,
+            member_gender,
+            member_age,
+            member_birth,
+            member_subdate,
+            member_status,
+            have_tissue,
+            member_authority,
+            dormant_trans_date,
+            suspend_trans_date,
+            delete_trans_date,
+            is_deleted
+
+        FROM
+            tbl_member
+
+
+    </select>
+
+
 </mapper>

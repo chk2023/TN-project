@@ -2,6 +2,7 @@ package com._3dhs.tnproject.manager.service;
 
 import com._3dhs.tnproject.manager.dao.ReportMapper;
 import com._3dhs.tnproject.manager.dto.ReportDTO;
+import com._3dhs.tnproject.member.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -35,9 +36,9 @@ public class ReportService {
          * 경고 횟수가 5회 미만이면 알럿창 띄워서 "해당 처리를 할 수 없습니다" */
     }
 
-    public ReportDTO showAdminList(ReportDTO reportDTO) {
-        return reportMapper.showAdminList(reportDTO) ;
 
+    public List<ReportDTO> viewAllAdmList(ReportDTO reportDTO) {
+        return reportMapper.viewAllAdmList(reportDTO);
     }
 }
 

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class MemberService {
     private final MemberMapper memberMapper;
@@ -28,5 +30,9 @@ public class MemberService {
         int result = memberMapper.insertMember(member);
 
         if (!(result > 0)) throw new MemberRegistException("회원 가입에 실패하였습니다.");
+    }
+
+    public List<MemberDTO> viewAllMembers(MemberDTO memberDTO) {
+        return memberMapper.viewAllMembers(memberDTO);
     }
 }

@@ -45,6 +45,7 @@
 
         FROM tbl_report r
                  JOIN tbl_member m ON r.sub_member_code = m.member_code
+
         WHERE r.sub_member_code = #{ subMemberId }
     </select>
 

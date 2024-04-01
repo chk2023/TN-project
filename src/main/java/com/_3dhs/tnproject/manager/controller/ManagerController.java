@@ -2,6 +2,7 @@ package com._3dhs.tnproject.manager.controller;
 
 import com._3dhs.tnproject.manager.dto.ReportDTO;
 import com._3dhs.tnproject.manager.service.ReportService;
+import com._3dhs.tnproject.member.dto.MemberDTO;
 import com._3dhs.tnproject.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -15,20 +16,21 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/manager")
 public class ManagerController {
 
     private final ReportService reportService;
+    private final MemberService memberService;
     private final MessageSourceAccessor messageSourceAccessor;
 
 
-    @GetMapping("/report/list")
+    @GetMapping("/manager/report/list")
     public String viewAllReportList(Model model) {
 
         List<ReportDTO> reportList = reportService.viewAllReport();
+        System.out.println(reportList.size());
         model.addAttribute("reportList", reportList);
 
-        return "/report/list";
+        return "manager/report/list";
 
 
     }
@@ -40,11 +42,11 @@ public class ManagerController {
         model1.addAttribute("detail", report);
 
 
-        return "/report/detail";
+        return "manager/report/detail";
     }
 
 
-    @GetMapping("/report/detail")
+    @PostMapping("/report/detail") //getMapping으로 값을 넘길 이유가 없으니까, 포스트 매핑을 시켜도 될 것 같은데..
     public String updateReport(ReportDTO reportDTO, RedirectAttributes rttr) {
 
         // 신고 목록 상세에서 내역을 입력해서 완료 버튼을 누르면 해당 내용이 디비에 저장하는 기능
@@ -66,6 +68,32 @@ public class ManagerController {
 
 
     }
+
+
+    @GetMapping ("/manager/admin/list")
+    public String viewAllAdmList (ReportDTO reportDTO) {
+        List<ReportDTO> reports = reportService.viewAllAdmList(reportDTO) ;
+
+
+        return "null";
+    }
+        //같은DTO를 쓰는건데 굳이 두번.... 만들 필요가 있는가.
+
+
+    @GetMapping ("manager/member/list")
+    public String viewAllMemebers (MemberDTO memberDTO, Model model) {
+        List<MemberDTO> members = memberService.viewAllMembers(memberDTO);
+        model.addAttribute("findAllMember", members);
+
+
+        return "/manager/member/list ";
+    }
+
+
+
+
+
+
 
 //    @GetMapping("/memberStop")
 //    public String memberStop(ReportDTO reportDTO, RedirectAttributes rttr) {
