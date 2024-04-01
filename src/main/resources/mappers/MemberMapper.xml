@@ -82,6 +82,13 @@
         VALUES
             (#{memberId}, #{memberPwd}, #{memberAge}, #{memberBirth})
     </insert>
+    <select id="findLastInsertId">
+        SELECT LAST_INSERT_ID()
+    </select>
+    <insert id="insertProfile">
+        INSERT INTO tbl_profile (pr_member_code, profile_nickname)
+        VALUES (LAST_INSERT_ID(), 'newUser')
+    </insert>
 
 
 

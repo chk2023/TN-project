@@ -20,4 +20,6 @@ public interface MemberMapper {
     void updateTissue(String memberId, int nTissue);
 
     int deleteMember(MemberDTO member);
+
+    int findLastInsertId();
 }
