@@ -27,10 +27,6 @@ public class ReportService {
         return reportMapper.updateReport(reportCode, processingText);
     }
 
-    public ReportDTO updateReport(int reportCode, String processingText) {
-
-        return reportMapper.updateReport(reportCode, processingText);
-    }
 
     public void memberStop(String subMemberId) {
 

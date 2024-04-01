@@ -72,7 +72,7 @@ public class ManagerController {
     public String memberStop(ReportDTO reportDTO, RedirectAttributes rttr) {
         System.out.println("memberStop 호출함");
 
-        reportService.memberStop(reportDTO.getSubMemberId());
+        reportService.memberStop(reportDTO.getMemberId());
         //경고횟수
 
         return "redrirect:/manager/report/list";
