@@ -1,18 +1,18 @@
 INSERT INTO tissuenetworkdb.tbl_member
 (member_id, member_pwd, member_gender, member_age, member_birth, member_subdate, member_status, have_tissue,
  member_authority)
-VALUES ('1', '$2a$10$SuOkKz8fObqmt4seurBGH.dUWKy030qi/ALM3jJg12Y5XZ3zfZU4y', 'MALE', 20, '2012-12-12 00:00:00', '2024-03-19 00:00:00', 'ACTIVE', 1000000, 'ADMIN'),
-       ('user01@gmail.com', '$2a$10$grAwEZQHmU7TiDuO.BCmP.sm.JcwMNjFDQZf.rR1sLFAA6F.Fffba', 'FEMALE', 18, '2021-01-01 00:00:00', '2024-03-19 00:00:00', 'ACTIVE', 0, 'ADMIN'),
-       ('user02@gmail.com', '$2a$10$grAwEZQHmU7TiDuO.BCmP.sm.JcwMNjFDQZf.rR1sLFAA6F.Fffba', 'MALE', 20, '2012-12-12 00:00:00', '2024-03-19 00:00:00', 'ACTIVE', 1000000, 'COMMON'),
-       ('user03@gmail.com', '$2a$10$grAwEZQHmU7TiDuO.BCmP.sm.JcwMNjFDQZf.rR1sLFAA6F.Fffba', 'FEMALE', 18, '2021-01-01 00:00:00', '2024-03-19 00:00:00', 'ACTIVE', 0, 'COMMON'),
-       ('user04@gmail.com', '$2a$10$grAwEZQHmU7TiDuO.BCmP.sm.JcwMNjFDQZf.rR1sLFAA6F.Fffba', 'MALE', 20, '2012-12-12 00:00:00', '2024-03-19 00:00:00', 'ACTIVE', 1000000, 'COMMON'),
-       ('user05@gmail.com', '$2a$10$grAwEZQHmU7TiDuO.BCmP.sm.JcwMNjFDQZf.rR1sLFAA6F.Fffba', 'FEMALE', 18, '2021-01-01 00:00:00', '2024-03-19 00:00:00', 'ACTIVE', 0, 'COMMON'),
-       ('user06@gmail.com', '$2a$10$grAwEZQHmU7TiDuO.BCmP.sm.JcwMNjFDQZf.rR1sLFAA6F.Fffba', 'MALE', 20, '2012-12-12 00:00:00', '2024-03-19 00:00:00', 'ACTIVE', 1000000, 'COMMON'),
-       ('user07@gmail.com', '$2a$10$grAwEZQHmU7TiDuO.BCmP.sm.JcwMNjFDQZf.rR1sLFAA6F.Fffba', 'FEMALE', 18, '2021-01-01 00:00:00', '2024-03-19 00:00:00', 'ACTIVE', 0, 'COMMON'),
-       ('user08@gmail.com', '$2a$10$grAwEZQHmU7TiDuO.BCmP.sm.JcwMNjFDQZf.rR1sLFAA6F.Fffba', 'MALE', 20, '2012-12-12 00:00:00', '2024-03-19 00:00:00', 'ACTIVE', 1000000, 'COMMON'),
-       ('user09@gmail.com', '$2a$10$grAwEZQHmU7TiDuO.BCmP.sm.JcwMNjFDQZf.rR1sLFAA6F.Fffba', 'FEMALE', 18, '2021-01-01 00:00:00', '2024-03-19 00:00:00', 'ACTIVE', 0, 'COMMON'),
-       ('user10@gmail.com', '$2a$10$grAwEZQHmU7TiDuO.BCmP.sm.JcwMNjFDQZf.rR1sLFAA6F.Fffba', 'MALE', 20, '2012-12-12 00:00:00', '2024-03-19 00:00:00', 'ACTIVE', 1000000, 'COMMON'),
-       ('user11@gmail.com', '$2a$10$grAwEZQHmU7TiDuO.BCmP.sm.JcwMNjFDQZf.rR1sLFAA6F.Fffba', 'FEMALE', 18, '2021-01-01 00:00:00', '2024-03-19 00:00:00', 'ACTIVE', 0, 'COMMON');
+VALUES ('1', '$2a$10$SuOkKz8fObqmt4seurBGH.dUWKy030qi/ALM3jJg12Y5XZ3zfZU4y', 'MALE', 20, '2012-12-12 00:00:00', '2024-03-19 00:00:00', 'ACTIVE', 1000000, 'ROLE_ADMIN'),
+       ('user01@gmail.com', '$2a$10$grAwEZQHmU7TiDuO.BCmP.sm.JcwMNjFDQZf.rR1sLFAA6F.Fffba', 'FEMALE', 18, '2021-01-01 00:00:00', '2024-03-19 00:00:00', 'ACTIVE', 0, 'ROLE_ADMIN'),
+       ('user02@gmail.com', '$2a$10$grAwEZQHmU7TiDuO.BCmP.sm.JcwMNjFDQZf.rR1sLFAA6F.Fffba', 'MALE', 20, '2012-12-12 00:00:00', '2024-03-19 00:00:00', 'ACTIVE', 1000000, 'ROLE_COMMON'),
+       ('user03@gmail.com', '$2a$10$grAwEZQHmU7TiDuO.BCmP.sm.JcwMNjFDQZf.rR1sLFAA6F.Fffba', 'FEMALE', 18, '2021-01-01 00:00:00', '2024-03-19 00:00:00', 'ACTIVE', 0, 'ROLE_COMMON'),
+       ('user04@gmail.com', '$2a$10$grAwEZQHmU7TiDuO.BCmP.sm.JcwMNjFDQZf.rR1sLFAA6F.Fffba', 'MALE', 20, '2012-12-12 00:00:00', '2024-03-19 00:00:00', 'ACTIVE', 1000000, 'ROLE_COMMON'),
+       ('user05@gmail.com', '$2a$10$grAwEZQHmU7TiDuO.BCmP.sm.JcwMNjFDQZf.rR1sLFAA6F.Fffba', 'FEMALE', 18, '2021-01-01 00:00:00', '2024-03-19 00:00:00', 'ACTIVE', 0, 'ROLE_COMMON'),
+       ('user06@gmail.com', '$2a$10$grAwEZQHmU7TiDuO.BCmP.sm.JcwMNjFDQZf.rR1sLFAA6F.Fffba', 'MALE', 20, '2012-12-12 00:00:00', '2024-03-19 00:00:00', 'ACTIVE', 1000000, 'ROLE_COMMON'),
+       ('user07@gmail.com', '$2a$10$grAwEZQHmU7TiDuO.BCmP.sm.JcwMNjFDQZf.rR1sLFAA6F.Fffba', 'FEMALE', 18, '2021-01-01 00:00:00', '2024-03-19 00:00:00', 'ACTIVE', 0, 'ROLE_COMMON'),
+       ('user08@gmail.com', '$2a$10$grAwEZQHmU7TiDuO.BCmP.sm.JcwMNjFDQZf.rR1sLFAA6F.Fffba', 'MALE', 20, '2012-12-12 00:00:00', '2024-03-19 00:00:00', 'ACTIVE', 1000000, 'ROLE_COMMON'),
+       ('user09@gmail.com', '$2a$10$grAwEZQHmU7TiDuO.BCmP.sm.JcwMNjFDQZf.rR1sLFAA6F.Fffba', 'FEMALE', 18, '2021-01-01 00:00:00', '2024-03-19 00:00:00', 'ACTIVE', 0, 'ROLE_COMMON'),
+       ('user10@gmail.com', '$2a$10$grAwEZQHmU7TiDuO.BCmP.sm.JcwMNjFDQZf.rR1sLFAA6F.Fffba', 'MALE', 20, '2012-12-12 00:00:00', '2024-03-19 00:00:00', 'ACTIVE', 1000000, 'ROLE_COMMON'),
+       ('user11@gmail.com', '$2a$10$grAwEZQHmU7TiDuO.BCmP.sm.JcwMNjFDQZf.rR1sLFAA6F.Fffba', 'FEMALE', 18, '2021-01-01 00:00:00', '2024-03-19 00:00:00', 'ACTIVE', 0, 'ROLE_COMMON');
 
 
 INSERT INTO tbl_tag(tag_name)

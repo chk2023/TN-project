@@ -14,5 +14,4 @@ public interface MemberMapper {
     int updateMember(MemberDTO updateMember);
 
     void updateTissue(String memberId, int nTissue);
-
 }
