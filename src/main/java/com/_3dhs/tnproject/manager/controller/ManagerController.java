@@ -44,32 +44,47 @@ public class ManagerController {
         return "/manager/report/detail";
     }
 
+
     @GetMapping("/detail")
     public String updateReport(ReportDTO reportDTO, RedirectAttributes rttr) {
 
         // 신고 목록 상세에서 내역을 입력해서 완료 버튼을 누르면 해당 내용이 디비에 저장하는 기능
 
-        //얘에느는........ 신고 내역을 처리하는 메소드인거고...
-        //조인을 해서 멤버 코드를 가져오는건 신고목록 상세조회....
-        //그러면 여기서는 메머 아이디를"처리"해야 하는건 아니고 상세 조회 페이지에서 보여지게 하는 것.
+        Integer incomingRecordcode = reportDTO.getReportCode();
+        String incProcessingText = reportDTO.getProcessingText();
+        System.out.println("들어온 recordCode : " + incomingRecordcode);
+        System.out.println("들어온 incProcessingText : " +incProcessingText);
 
-        ReportDTO record = reportService.updateReport(reportDTO.getReportCode(), reportDTO.getProcessingText());
-        record.setProcessingText(reportDTO.getProcessingText());
-        reportService.updateReport(reportDTO.getReportCode(), reportDTO.getProcessingText());
-
-        //record를 db에 저장한 후에??????????
+        reportService.updateReport(reportDTO.getReportCode(), incProcessingText);
 
 
         //저장이 잘됐으면 저장 확인 얼럿을 띄워준다
 
-
         //서브밋이 결과에 따라 알럿창을 띄워주는 기능을 개발해야함.
 
         rttr.addFlashAttribute("insertRecord");
-        return "redirect:/manager/report/list";
+        return"redirect:/manager/report/list";
 
 
     }
+
+    @GetMapping("/memberStop")
+    public String memberStop(ReportDTO reportDTO, RedirectAttributes rttr) {
+        System.out.println("memberStop 호출함");
+
+        reportService.memberStop(reportDTO.getSubMemberId());
+        //경고횟수
+
+        return "redrirect:/manager/report/list";
+    }
+
+    @GetMapping("/memActivate")
+    public String memberActivate(ReportDTO reportDTO,RedirectAttributes rttr) {
+
+        return "redirect:/manager/report/list";
+    }
+
+
 
 //    @GetMapping("/manager/admin/list")
 //    public String showAdminList (ReportDTO reportDTO) {
