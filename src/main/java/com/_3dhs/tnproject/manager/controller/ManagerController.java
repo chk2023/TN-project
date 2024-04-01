@@ -80,11 +80,9 @@ public class ManagerController {
 
 
     @GetMapping("/manager/admin/detail")
-    public String viewOneAdmReport ( ReportDTO reportDTO, Model model) {
-        ReportDTO admReport = reportService.viewOneAdmReport(reportDTO);
-        model.addAttribute("viewOneAdmReport", admReport);
-        System.out.println("==================");
-        System.out.println("admReport : " + admReport);
+    public String viewOneAdmReport ( Integer reportCode, Model model) {
+        ReportDTO admReport = reportService.findOneReportCord(reportCode);
+        model.addAttribute("report", admReport);
         return "/manager/admin/detail";
     }
 

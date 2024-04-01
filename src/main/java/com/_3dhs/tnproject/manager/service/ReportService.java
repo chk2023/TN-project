@@ -45,8 +45,8 @@ public class ReportService {
         return reportMapper.viewAllAdmList(reportDTO);
     }
 
-    public ReportDTO viewOneAdmReport(ReportDTO reportDTO) {
-        return reportMapper.viewOneAdmReport(reportDTO);
+    public ReportDTO findOneReportCord(Integer reportCode) {
+        return reportMapper.viewOneAdmReport(reportCode);
     }
 }
 

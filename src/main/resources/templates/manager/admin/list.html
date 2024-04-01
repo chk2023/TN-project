@@ -100,7 +100,7 @@
 
 
                 <tr th:each=" memberDTO: ${ viewAllAdmList }"
-                    th:onclick="|location.href='/manager/admin?reportCode=${memberDTO.reportCode}'|">
+                    th:onclick="|location.href='/manager/admin/detail?reportCode=${memberDTO.reportCode}'|">
                     <td th:text="${ memberDTO.reportCode }"></td>
                     <td th:text="${ memberDTO.managerCode}"></td>
                     <td th:text="${ memberDTO.reportText}"></td>
