@@ -15,7 +15,11 @@ public class ReportService {
 
 
     public List<ReportDTO> viewAllReport() {
-        return reportMapper.viewAllReport();
+        List<ReportDTO> list = reportMapper.viewAllReport();
+        for (ReportDTO reportDTO : list) {
+            reportDTO.makeFormattingReportDate();
+        }
+        return list;
     }
 
     public ReportDTO viewOneReport(Integer reportCode) {

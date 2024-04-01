@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -117,7 +117,7 @@
                     <td th:text="${ memberDTO.RCategoryName}"></td>
                     <td th:text="${ memberDTO.reportText}"></td>
                     <td th:text="${ memberDTO.memberId}"></td>
-                    <td th:text="${ memberDTO.reportDate}"></td>
+                    <td th:text="${memberDTO.formattingReportDate}"></td>
                 </tr>
 
 

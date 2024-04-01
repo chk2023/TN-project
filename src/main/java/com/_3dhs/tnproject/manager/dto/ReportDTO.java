@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -17,6 +18,7 @@ public class ReportDTO {
     private String rCategoryName;
     private String reportText;
     private LocalDateTime reportDate;
+    private String formattingReportDate;
     private ReportState reportStatus;
     private LocalDateTime processingDate;
     private String processingText;
@@ -28,4 +30,14 @@ public class ReportDTO {
     private ReportContents reportContent;
     private Integer postCode;
     private Integer cmtCode;
+
+    public String  formattingDate(LocalDateTime dateTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return dateTime.format(formatter);
+    }
+
+    public void makeFormattingReportDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        this.formattingReportDate = reportDate.format(formatter);
+    }
 }
