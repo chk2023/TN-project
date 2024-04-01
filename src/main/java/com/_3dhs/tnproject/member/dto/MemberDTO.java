@@ -30,8 +30,6 @@ public class MemberDTO implements UserDetails {
     private Authority memberAuthority;
     private LocalDateTime dormantTransDate;
     private LocalDateTime suspendTransDate;
-    private LocalDateTime deleteTransDate;
-    private boolean isDeleted;
     private ProfileDTO profile;
     private LocalDateTime deleteTransDate;
     private Boolean isDeleted;

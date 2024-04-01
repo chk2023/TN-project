@@ -38,7 +38,13 @@ public class MemberController {
     }
 
     @GetMapping(value = {"/login"})
-    public void loginPage(){}
+    public String loginPage(Authentication authentication){
+        Object user = authentication;
+        if (user != null) {
+            return "redirect:/timeline/list";
+        }
+        return "member/login";
+    }
 
     @PostMapping("/loginfail")
     public String loginFailed(RedirectAttributes rttr) {
