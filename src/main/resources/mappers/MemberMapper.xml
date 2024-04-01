@@ -4,25 +4,59 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com._3dhs.tnproject.member.dao.MemberMapper">
-<resultMap id="profileMap" type="com._3dhs.tnproject.member.dto.ProfileDTO">
-    <id property="memberCode" column="member_code"/>
-</resultMap>
+    <resultMap id="memberWithProfileMap" type="com._3dhs.tnproject.member.dto.MemberDTO">
+        <id property="memberCode" column="member_code"/>
+        <result property="memberId" column="member_id"/>
+        <result property="memberPwd" column="member_pwd"/>
+        <result property="memberGender" column="member_gender"/>
+        <result property="memberAge" column="member_age"/>
+        <result property="memberBirth" column="member_birth"/>
+        <result property="memberSubDate" column="member_subdate"/>
+        <result property="memberStatus" column="member_status"/>
+        <result property="haveTissue" column="have_tissue"/>
+        <result property="memberAuthority" column="member_authority"/>
+        <result property="dormantTransDate" column="dormant_trans_date"/>
+        <result property="suspendTransDate" column="suspend_trans_date"/>
+        <result property="deleteTransDate" column="delete_trans_date"/>
+        <result property="isDeleted" column="is_deleted"/>
 
-
-<!--<resultMap id="profileMap" type="com._3dhs.tnproject.member.dto.ProfileDTO">-->
-<!--    <id property="memberCode" column="member_code"/>-->
-<!--</resultMap>-->
-<resultMap id="memberMap" type="com._3dhs.tnproject.member.dto.MemberDTO">
-    <id property="memberCode" column="member_code"/>
-    <result property="memberId" column="member_id"/>
-    <association property="profile" resultMap="profileMap"/>
-</resultMap>
-
-    <select id="findByMemberId" resultType="com._3dhs.tnproject.member.dto.MemberDTO">
+        <association property="profile" resultMap="profileMap"/>
+    </resultMap>
+    <resultMap id="profileMap" type="com._3dhs.tnproject.member.dto.ProfileDTO">
+        <id property="memberCode" column="pr_member_code"/>
+        <result property="profileCode" column="profile_code"/>
+        <result property="profileNickname" column="profile_nickname"/>
+        <result property="profileStatmsg" column="profile_statmsg"/>
+        <result property="profileBgPath" column="profile_bg_path"/>
+        <result property="profileImgPath" column="profile_img_path"/>
+        <result property="memberBirth" column="member_birth"/>
+    </resultMap>
+    <select id="findByMemberId" resultMap="memberWithProfileMap">
         SELECT
-            *
+            m.member_code,
+            m.member_id,
+            m.member_pwd,
+            m.member_gender,
+            m.member_age,
+            m.member_birth,
+            m.member_subdate,
+            m.member_status,
+            m.have_tissue,
+            m.member_authority,
+            m.dormant_trans_date,
+            m.suspend_trans_date,
+            m.delete_trans_date,
+            m.is_deleted,
+            p.pr_member_code,
+            p.pr_member_code,
+            p.profile_code,
+            p.profile_nickname,
+            p.profile_statmsg,
+            p.profile_img_path,
+            p.profile_bg_path
         FROM
-            tbl_member
+            tbl_member m
+        JOIN tbl_profile p ON m.member_code = p.pr_member_code
         <where>
             <if test="memberId != null">
                 member_id = #{memberId}

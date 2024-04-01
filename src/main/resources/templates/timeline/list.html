@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <title>Timeline - main</title>
@@ -56,31 +57,33 @@
         <nav>
             <ul class="rnb">
                 <li>
-                    <button onclick="location.href='/timeline/list'">홈</button>
+                    <button id="homeBtn">홈</button>
                 </li>
                 <li>
-                    <button>회원 정보</button>
+                    <button id="memberInfoBtn">회원 정보</button>
                 </li>
                 <li>
-                    <button onclick="location.href='/payment/management'">결제 관리</button>
+                    <button id="paymentBtn">결제 관리</button>
                 </li>
                 <li>
-                    <button>차단 목록</button>
+                    <button id="blockListBtn">차단 목록</button>
                 </li>
                 <li>
-                    <button>관리기록 조회</button>
+                    <th:block sec:authorize="hasAnyAuthority('ADMIN','COMMON')">
+                        <button id="adminListBtn">관리기록 조회</button>
+                    </th:block>
                 </li>
                 <li>
-                    <button onclick="location.href='/manager/report/list'">신고목록 조회</button>
+                    <button id="reportListBtn">신고목록 조회</button>
                 </li>
                 <li>
-                    <button>회원정보 검색</button>
+                    <button id="memberListBtn">회원정보 검색</button>
                 </li>
                 <li>
-                    <button onclick="location.href='/common/testhub'">test:테스트허브로 이동</button>
+                    <button id="testHubBtn">test:테스트허브로 이동</button>
                 </li>
                 <li class="logoutBtn">
-                    <button>로그아웃</button>
+                    <button id="logoutBtn">로그아웃</button>
                 </li>
             </ul>
         </nav>
@@ -187,5 +190,6 @@
 </script>
 <script src="/js/timeline.js"></script>
 <script src="/js/scrollEvent.js"></script>
+<script src="/js/pathFinder.js"></script>
 </body>
 </html>

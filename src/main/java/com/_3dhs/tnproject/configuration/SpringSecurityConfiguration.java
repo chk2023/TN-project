@@ -35,10 +35,14 @@ public class SpringSecurityConfiguration {
                     auth.requestMatchers("/member/login").permitAll(); //main 페이지와 login 페이지는 모두에게 허용.
                     auth.requestMatchers("/member/regist").permitAll(); //회원가입 페이지 모두에게 허용.
                     auth.requestMatchers("/member/idDupCheck").permitAll();
+                    //한결 추가
+                    auth.requestMatchers("/timeline").hasAnyRole("ADMIN", "COMMON");
+                    auth.requestMatchers("/manager").hasRole("ADMIN");
+
 
 //                    auth.requestMatchers("/admin").hasRole("ADMIN"); //ADMIN이라는 role을 가진 경우에만 허용
 //                    auth.requestMatchers("/my/**").hasAnyRole("ADMIN", "USER"); // /my/ 뒤에는 여러 유저의 아이디가 올 수 있는데 일일이 지정할 수 없으니 와일드카드 처리.
-                    auth.anyRequest().permitAll(); /* 위에 서술 된 패턴 외의 요청은 로그인한 사용자만 요청 허가 */
+                    auth.anyRequest().authenticated(); /* 위에 서술 된 패턴 외의 요청은 로그인한 사용자만 요청 허가 */
                 })
                 /* 로그인 설정 */
                 .formLogin(login ->{
@@ -63,14 +67,14 @@ public class SpringSecurityConfiguration {
                     /* 세션 만료 */
                     logout.invalidateHttpSession(true);
                     /* 로그아웃 후 랜딩 페이지 */
-                    logout.logoutSuccessUrl("/");
+                    logout.logoutSuccessUrl("/member/login");
                 })
-//                /* 인증/인가 예외 처리 */
-//                .exceptionHandling(exception -> {
-//                    /* 인증이 필요할 때는 로그인 페이지로 이동하게 된다. */
-//                    /* 인가 되지 않았을 때 - 권한이 없는 기능을 요청했을 때 랜딩 될 페이지 */
-//                    exception.accessDeniedPage("/error/denied");
-//                })
+                /* 인증/인가 예외 처리 */
+                .exceptionHandling(exception -> {
+                    /* 인증이 필요할 때는 로그인 페이지로 이동하게 된다. */
+                    /* 인가 되지 않았을 때 - 권한이 없는 기능을 요청했을 때 랜딩 될 페이지 */
+                    exception.accessDeniedPage("/error/denied");
+                })
             .build();
 
     }
