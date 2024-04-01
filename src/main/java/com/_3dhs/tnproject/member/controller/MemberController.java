@@ -49,7 +49,7 @@ public class MemberController {
     @PostMapping("/loginfail")
     public String loginFailed(RedirectAttributes rttr) {
         rttr.addFlashAttribute("message", messageSourceAccessor.getMessage("error.login"));
-        return "redirect:/";
+        return "redirect:/member/login";
     }
 
     @GetMapping("/regist")
@@ -86,9 +86,9 @@ public class MemberController {
 
         memberService.registMember(member);
 
-//        rttr.addFlashAttribute("message", messageSourceAccessor.getMessage("member.regist"));
+        rttr.addFlashAttribute("message", messageSourceAccessor.getMessage("member.regist"));
 
-        return "redirect:/";
+        return "redirect:/member/login";
     }
 
     @GetMapping("/update")

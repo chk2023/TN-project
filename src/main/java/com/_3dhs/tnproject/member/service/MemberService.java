@@ -30,8 +30,9 @@ public class MemberService {
     @Transactional
     public void registMember(MemberDTO member) throws MemberRegistException {
         int result = memberMapper.insertMember(member);
+        int result2 = memberMapper.insertProfile(member.getMemberId());
 
-        if (!(result > 0)) throw new MemberRegistException("회원 가입에 실패하였습니다.");
+        if (result <= 0 || result2 <= 0) throw new MemberRegistException("회원 가입에 실패하였습니다.");
     }
 
     public List<MemberDTO> viewAllMembers(MemberDTO memberDTO) {
