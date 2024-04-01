@@ -21,6 +21,19 @@
 <!--    </select>-->
 
 
+<!--    <select id="viewAllReport" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">&ndash;&gt;-->
+<!--        SELECT-->
+<!--            tbl_report.report_code,-->
+<!--            tbl_report.r_category_code,-->
+<!--            tbl_report.report_text,-->
+<!--            tbl_report.manager_code,-->
+<!--            tbl_report.report_text,-->
+<!--            tbl_member.member_code,-->
+<!--            tbl_member.report-->
+<!--                tbl_report left join tbl_member on tbl_report.report_code = tbl_member.member_id-->
+<!--            ORDER by tbl_report.report_code asc-->
+<!--    </select>-->
+
 
     <select id="viewAllReport" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">
         SELECT r.report_code,
@@ -37,6 +50,7 @@
         ORDER BY r.sub_member_code = #{ subMemberCode }
 
     </select>
+
 
 
     <select id="viewOneReport" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">
@@ -74,9 +88,9 @@
         SELECT
             report_code,
             manager_code,
-            report_content,
+            report_text,
+            report_date,
             processing_text,
-            sub_member_code,
             processing_date
         FROM
             tbl_report
