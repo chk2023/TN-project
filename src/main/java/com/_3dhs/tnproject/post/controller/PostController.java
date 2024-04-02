@@ -60,8 +60,6 @@ public class PostController {
     public void blogWritePage() {}
     @GetMapping("/temporary_storage/list")
     public void temporaryStorageListPage() {}
-    @GetMapping("/list")
-    public void blogListPage() {}
     @GetMapping("/detail")
     public void blogDetailPage(Integer postCode) {
         //1. 해당하는 코드의 post정보를 불러오기
@@ -94,7 +92,7 @@ public class PostController {
 
     }
 
-    @PostMapping("/like")
+    @PostMapping("/post/like")
     public ResponseEntity<String> likePost(@RequestBody LikeListDTO likeListDTO) {
 
         boolean isLiked = postService.hasLiked(likeListDTO.getPostCode(), likeListDTO.getMemberCode());

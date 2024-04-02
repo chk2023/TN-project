@@ -78,14 +78,16 @@ public class PostService {
         LikeListDTO existLike =
                 postMapper.findLikeListByPostAndMemberCode(postCode, memberCode);
 
-//        if (existLike != null) {
-//            postMapper.cancelLike(likeListDTO.getPostCode(), likeListDTO.getMemberCode());
-//            return false;
-//        } else {
-//            postMapper.addLike(likeListDTO);
-//            return true;
-//        }
+        if (existLike != null) {
+            likeMapper.cancelLike(postCode, memberCode);
+            return false;
+        } else {
+            LikeListDTO newLike = new LikeListDTO(postCode, memberCode, false);
+            likeMapper.addLike(newLike);
+            return true;
+        }
 
-        return existLike != null;
     }
+
+
 }

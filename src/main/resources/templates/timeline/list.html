@@ -71,53 +71,35 @@
 </script>
 <script>
 
-    function setLikeBtnStatus(postCode, likeBtn) {
-        fetch(`/post/hasLiked?postCode=${postCode}`, { method: 'GET' })
-            .then(response => response.json())
-            .then(result => {
-                if (result.liked) {
-                    likeBtn.classList.add('active');
-                    likeBtn.querySelector('img').src = "/image/icon_like_active.png";
-                } else {
-                    likeBtn.classList.remove('active');
-                    likeBtn.querySelector('img').src = "/image/icon_like.png";
-                }
-            })
-            .catch(err => console.log(err))
-    }
 
-    function changeLikeIcon(element) {
-        var likeImg = element.getElementsByTagName("img")[0];
-        var isActive = element.classList.toggle("active");
-
-        if (isActive) {
-            likeImg.src = "/image/icon_like_active.png";
-        } else {
-            likeImg.src = "/image/icon_like.png";
-        }
-
-    }
-
-    function likePost(postCode, memberCode) {
+    function handleLike(postCode, memberCode) {
         fetch('/post/like', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application.json',
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({
                 postCode: postCode,
                 memberCode: memberCode,
                 isPrivate: false,
-            }),
-        })
+        }),
+    })
             .then(response => response.text())
             .then(result => {
-                console.log(result);
+                console.log(result); // 서버 응답 확인
+                // 좋아요 아이콘 변경
+                var likeBtn = document.querySelector(`[data-post-code="${postCode}"]`);
+                var likeImg = likeBtn.querySelector("img");
+                var isActive = likeBtn.classList.toggle("active");
+                likeImg.src = isActive ? "/image/icon_like_active.png" : "/image/icon_like.png";
+
+                console.log("좋아요 버튼 변경");
             })
             .catch((err) => {
-                console.log(err)
+                console.log(err);
             });
     }
+
 
 </script>
 <script id="contentsTemplate" type="text/x-handlebars-template">
@@ -153,7 +135,7 @@
                     <img src="/image/icon_comment.png" alt="댓글 버튼 아이콘">
                     <span>{{cmtCount}}</span>
                 </button>
-                <button class="likeBtn active" onclick="changeLikeIcon(this)">
+                <button class="likeBtn" onclick="handleLike('{{postCode}}', '{{memberCode}}')" data-post-code="{{postCode}}">
                     <img src="/image/icon_like.png" alt="좋아요 버튼 아이콘">
                     <span>{{likeCount}}</span>
                 </button>
