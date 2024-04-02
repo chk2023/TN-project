@@ -2,6 +2,7 @@ package com._3dhs.tnproject.post.dao;
 
 
 import com._3dhs.tnproject.post.dto.AttachmentDTO;
+import com._3dhs.tnproject.post.dto.FolderDTO;
 import com._3dhs.tnproject.post.dto.LikeListDTO;
 import com._3dhs.tnproject.post.dto.PostDTO;
 import org.apache.ibatis.annotations.Mapper;

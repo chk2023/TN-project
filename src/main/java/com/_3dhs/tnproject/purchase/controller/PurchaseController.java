@@ -28,8 +28,8 @@ public class PurchaseController {
         this.memberService = memberService;
     }
 
-    @GetMapping("/post/{postCode}")
-    public String getPostInfo(@PathVariable("postCode") Integer postCode, Model model, Authentication authentication) {
+    @GetMapping("/getPaidPostInfo")
+    public String getPaidPostInfo(@PathVariable("postCode") Integer postCode, Model model, Authentication authentication) {
         MemberDTO currentMember = (MemberDTO) authentication.getPrincipal();
 
         PostDTO postDTO = postService.getPostByPostCode(postCode);

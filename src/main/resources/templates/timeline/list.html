@@ -73,7 +73,7 @@
 <script>
     function purchasePaidPost(postCode) {
         $.ajax({
-            url: '/getPostInfo',
+            url: '/getPaidPostInfo',
             method: "GET",
             data: { postCode: postCode },
             success: function(response) {
