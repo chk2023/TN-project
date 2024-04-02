@@ -119,7 +119,7 @@
             member_Authority,
             is_deleted
 
-    FROM tbl_member
+        FROM tbl_member
 
 
     </select>
