@@ -73,9 +73,7 @@ public class ManagerController {
     @GetMapping ("/manager/admin/list")
     public String viewAllAdmList (ReportDTO reportDTO, Model model) {
         List<ReportDTO> reports = reportService.viewAllAdmList(reportDTO) ;
-        model.addAttribute("viewAllAdmList", reports);
-
-
+        model.addAttribute("reports", reports);
 
 
         return "/manager/admin/list";
@@ -95,10 +93,8 @@ public class ManagerController {
         List<MemberDTO> members = reportService.checkAllMember(memberDTO);
         model.addAttribute("members", members);
 
-
         return "manager/member/list";
-    }    //리턴이 파싱처리가 안되서 제대로 안되고 잇다.. 어디서 막힌걸까
-        //파싱개.....나리민들레 진또배기 으컁컁
+    }
 
 
 
