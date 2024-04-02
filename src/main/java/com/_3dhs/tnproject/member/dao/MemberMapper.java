@@ -23,4 +23,5 @@ public interface MemberMapper {
 
     int insertProfile(String memberId);
 
+    MemberDTO findMainBlogMemberInfo(int memberCode);
 }

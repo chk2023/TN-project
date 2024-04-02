@@ -28,8 +28,8 @@
             <form class="title">
                 <button class="backBtn"><img src="/image/btn_arrow.png" alt="뒤로가기 버튼"></button>
                 <div>
-                    <h1>닉네임</h1>
-                    <p><span>0000</span>게시물</p>
+                    <h1 th:text="${member.profile.profileNickname}">닉네임</h1>
+                    <p><span th:text="${postView.postCount}">0000</span> 게시물</p>
                 </div>
                 <input class="search_input" type="text" placeholder="검색어를 입력하세요">
                 <button class="searchBtn"><img src="/image/btn_search.png" alt="검색 버튼"></button>
@@ -38,7 +38,7 @@
             <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
                 <div class="mainProfile">
                     <div class="mprofBackground">
-                        <img src="/image/icon_no_image_lg.png" alt="사용자 설정 프로필 배경화면 사진">
+                        <img th:src="${member.profile.profileBgPath}" alt="사용자 설정 프로필 배경화면 사진">
                     </div>
                     <div class="mprofStatus">
                         <button class="optionBtn"><img src="/image/icon_option.png" alt="프로필 옵션 버튼"></button>
@@ -46,17 +46,17 @@
                             <li><a>사용자 차단하기</a></li>
                             <li><a>블로그 공유하기</a></li>
                         </ul>
-                        <div class="prof_photo"><img src="/image/icon_default_profile.png" alt="프로필 사진"></div>
+                        <div class="prof_photo"><img th:src="${member.profile.profileImgPath}" alt="프로필 사진"></div>
                         <div class="prof_txt">
-                            <strong>닉네임</strong>
-                            <span>상태메시지</span>
+                            <strong th:text="${member.profile.profileNickname}">닉네임</strong>
+                            <span th:text="${member.profile.profileStatmsg}">상태메시지</span>
                         </div>
                         <div class="prof_info">
                             <div>
-                                가입일 : <span>2020년10월20일</span>
-                                좋아요수 : <span>1,000</span>
+                                가입일 : <span th:text="${#temporals.format(member.memberSubDate, 'yyyy년 MM월 dd일')}">2020년10월20일</span>
+                                좋아요수 : <span th:text="${postView.likeCount}">1,000</span>
                             </div>
-                            <button class="btn" onClick="location.href='/post/write'">글 쓰기</button>
+                            <button th:if="${#strings.equals(param.memberCode, #strings.toString(#authentication.principal.memberCode))}" class="btn" onClick="location.href='/post/write'">글 쓰기</button>
                         </div>
                     </div>
                 </div>
@@ -68,18 +68,19 @@
                 </ul>
 
                 <ul class="blogList">
+                    <th:block th:object="${postList}" th:each="post, start : ${postList}">
                     <li>
                         <div class="list_head">
                             <div class="prof_photo">
                                 <!--                    <img src="/image/icon_default_profile.png" alt="프로필 사진">-->
-                                <img src="https://cdn.inflearn.com/public/users/thumbnails/759418/09bcc1e5-b03d-46ed-8c6b-4aa283267e28" alt="프로필 사진">
+                                <img th:src="${post.profile.profileImgPath}" alt="프로필 사진">
                             </div>
                             <div>
                                 <div>
-                                    <strong class="blog_user_name">조한결</strong>
-                                    <span class="blog_user_birth">2월12일</span>
+                                    <strong th:text="${post.profile.profileNickname}" class="blog_user_name">조한결</strong>
+                                    <span th:text="${post.postWriDate}" class="blog_user_birth">2월12일</span>
                                 </div>
-                                <span class="status_msg">오늘도 나는 눈물을 흘린다 또르륵오늘도 나는 눈물을 흘린다 또르륵오늘도 나는 눈물을 흘린다 또르륵</span>
+                                <span th:text="${post.profile.profileStatmsg}" class="status_msg">오늘도 나는 눈물을 흘린다 또르륵오늘도 나는 눈물을 흘린다 또르륵오늘도 나는 눈물을 흘린다 또르륵</span>
                             </div>
                             <button class="optionBtn"><img src="/image/icon_option.png" alt="글 옵션 버튼"></button>
                             <ul class="optionBox">
@@ -89,9 +90,9 @@
                         </div>
                         <div class="list_body">
                             <div>
-                                <strong class="contentTit">글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목</strong>
+                                <strong th:text="${post.postTitle}" class="contentTit">글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목</strong>
                                 <div class="contentsTxt">
-                                    <p>
+                                    <p th:text="${post.postText}">
                                         본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
                                         본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
                                         본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
@@ -102,11 +103,11 @@
                                 <div class="showLikeAndComments">
                                     <button class="commentsBtn">
                                         <img src="/image/icon_comment.png" alt="댓글 버튼 아이콘">
-                                        <span>300</span>+
+                                        <span th:text="${post.likeCount}">300</span>+
                                     </button>
                                     <button class="likeBtn active">
                                         <img src="/image/icon_like.png" alt="좋아요 버튼 아이콘">
-                                        <span>200</span>k
+                                        <span th:text="${post.cmtCount}">200</span>k
                                     </button>
                                 </div>
                             </div>
@@ -115,6 +116,7 @@
                             </div>
                         </div>
                     </li>
+                    </th:block>
                 </ul>
 
             </section>

@@ -107,6 +107,7 @@
         ORDER BY li.post_code DESC
     </select>
 
+
     <insert id="updateFolders" parameterType="java.util.List">
         INSERT INTO
             tbl_folder (folder_code, folder_name, folder_icon_path, folder_sequence, f_member_code, folder_status)
@@ -149,4 +150,38 @@
         ORDER BY
             folder_sequence ASC
     </select>
+
+    <select id="findPostLikeCount">
+        SELECT
+            SUM(like_count) AS like_count,
+            COUNT(*) AS post_count
+        FROM
+            post_view
+        WHERE
+            po_member_code = #{memberCode}
+    </select>
+
+    <select id="findPostList" resultMap="postMap">
+        SELECT
+            post_code,
+            post_title,
+            post_text,
+            post_price,
+            po_member_code,
+            folder_code,
+            post_wri_date,
+            post_status,
+            post_is_deleted,
+            profile_code,
+            profile_nickname,
+            profile_statmsg,
+            profile_img_path,
+            like_count,
+            cmt_count
+        FROM
+            post_view
+        WHERE
+            po_member_code = #{memberCode}
+    </select>
+
 </mapper>

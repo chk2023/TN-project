@@ -2,6 +2,7 @@ package com._3dhs.tnproject.post.service;
 
 
 import com._3dhs.tnproject.comments.dao.CommentsMapper;
+import com._3dhs.tnproject.member.dto.ProfileDTO;
 import com._3dhs.tnproject.post.dao.PostMapper;
 import com._3dhs.tnproject.post.dto.FolderDTO;
 import com._3dhs.tnproject.post.dto.PostDTO;
@@ -53,6 +54,14 @@ public class PostService {
     @Transactional
     public void addDefaultFolder(List<FolderDTO> addDefaultFolders) {
         postMapper.insertAddDefaultFolder(addDefaultFolders);
-        System.out.println("서비스단에 넘어온 addDefaultFolders : " + addDefaultFolders );
+    }
+
+    @Transactional
+    public PostDTO findPostLikeCount(int memberCode) {
+        return postMapper.findPostLikeCount(memberCode);
+    }
+
+    public List<PostDTO> findPostList(int memberCode) {
+        return postMapper.findPostList(memberCode);
     }
 }

@@ -32,6 +32,7 @@ public class PostDTO {
     private List<AttachmentDTO> attachmentList;
     //가공하는 자료
     private String thumbnailPath;
+    private int postCount;
 
     public String getAttachmentPath(int index) {
         String path = "";

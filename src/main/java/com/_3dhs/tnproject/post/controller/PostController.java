@@ -1,11 +1,14 @@
 package com._3dhs.tnproject.post.controller;
 
 import com._3dhs.tnproject.member.dto.MemberDTO;
+import com._3dhs.tnproject.member.dto.ProfileDTO;
+import com._3dhs.tnproject.member.service.MemberService;
 import com._3dhs.tnproject.post.dto.FolderDTO;
 import com._3dhs.tnproject.post.dto.PostDTO;
 import com._3dhs.tnproject.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -19,11 +22,21 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/post")
 public class PostController {
+
     private final PostService postService;
+    private final MemberService memberService;
+
     @GetMapping("/main")
-    public void blogMainPage(@AuthenticationPrincipal MemberDTO memberDTO, Model model) {
-        List<FolderDTO> folderList = postService.findFolderList(memberDTO.getMemberCode());
+    public void blogMainPage(int memberCode, Model model) {
+        List<FolderDTO> folderList = postService.findFolderList(memberCode);
+        MemberDTO memberDTO = memberService.findMainBlogMemberInfo(memberCode);
+        PostDTO postViewLikeCount =  postService.findPostLikeCount(memberCode);
+        List<PostDTO> postList =  postService.findPostList(memberCode);
+        System.out.println(postViewLikeCount);
         model.addAttribute("folderList", folderList);
+        model.addAttribute("member", memberDTO);
+        model.addAttribute("postView", postViewLikeCount);
+        model.addAttribute("postList", postList);
     }
     @Transactional
     @GetMapping("/folder_edit")

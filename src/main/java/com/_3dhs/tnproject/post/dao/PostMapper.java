@@ -1,6 +1,7 @@
 package com._3dhs.tnproject.post.dao;
 
 
+import com._3dhs.tnproject.member.dto.ProfileDTO;
 import com._3dhs.tnproject.post.dto.AttachmentDTO;
 import com._3dhs.tnproject.post.dto.FolderDTO;
 import com._3dhs.tnproject.post.dto.LikeListDTO;
@@ -25,4 +26,9 @@ public interface PostMapper {
     List<FolderDTO> findFolderList(int memberCode);
 
     void insertAddDefaultFolder(List<FolderDTO> addDefaultFolders);
+
+
+    PostDTO findPostLikeCount(int memberCode);
+
+    List<PostDTO> findPostList(int memberCode);
 }
