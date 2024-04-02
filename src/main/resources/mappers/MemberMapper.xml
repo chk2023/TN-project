@@ -152,4 +152,16 @@
             </if>
         </where>
     </update>
+
+    <update id="updatePwd">
+        UPDATE
+            tbl_member
+        SET
+            member_pwd = #{ memberPwd }
+        <where>
+            <if test="memberId != null">
+                member_Id = #{ memberId }
+            </if>
+        </where>
+    </update>
 </mapper>
