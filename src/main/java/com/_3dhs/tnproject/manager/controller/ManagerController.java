@@ -96,7 +96,7 @@ public class ManagerController {
 
     @GetMapping ("manager/member/list")
     public String viewAllMemebers (MemberDTO memberDTO, Model model) {
-        List<MemberDTO> members = memberService.viewAllMembers(memberDTO);
+        List<MemberDTO> members = reportService.viewAllMember(memberDTO);
         model.addAttribute("findAllMember", members);
 
 

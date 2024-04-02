@@ -97,8 +97,8 @@
                 </tr>
 
 
-                <tr th:each=" memberDTO: ${findAllMember }"
-                    th:onclick="|location.href='/manager/member/list?memberCode=${memberDTO.memberCode}'|">
+                <tr th:each=" memberDTO: ${findAllMember}"
+                    th:onclick="|location.href='/manager/member/detail?memberCode=${memberDTO.memberCode}'|">
                     <td th:text="${ memberDTO.memberCode }"></td>
                     <td th:text="${ memberDTO.memberId}"></td>
                     <td th:text="${ memberDTO.memberBirth}"></td>
