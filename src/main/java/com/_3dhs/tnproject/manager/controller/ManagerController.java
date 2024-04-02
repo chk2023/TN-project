@@ -75,22 +75,27 @@ public class ManagerController {
         List<ReportDTO> reports = reportService.viewAllAdmList(reportDTO) ;
         model.addAttribute("viewAllAdmList", reports);
 
-
-
-
         return "/manager/admin/list";
     }
-        //같은DTO를 쓰는건데 굳이 두번.... 만들 필요가 있는가.
 
 
-//    @GetMapping ("manager/member/list")
-//    public String viewAllMemebers (MemberDTO memberDTO, Model model) {
-//        List<MemberDTO> members = memberService.viewAllMembers(memberDTO);
-//        model.addAttribute("findAllMember", members);
-//
-//
-//        return "/manager/member/list ";
-//    }
+    @GetMapping("/manager/admin/detail")
+    public String viewOneAdmReport ( Integer reportCode, Model model) {
+        ReportDTO admReport = reportService.findOneReportCode(reportCode);
+        model.addAttribute("report", admReport);
+        return "/manager/admin/detail";
+    }
+
+
+
+    @GetMapping ("manager/member/list")
+    public String viewAllMemebers (MemberDTO memberDTO, Model model) {
+        List<MemberDTO> members = memberService.viewAllMembers(memberDTO);
+        model.addAttribute("findAllMember", members);
+
+
+        return "/manager/member/list ";
+    }
 
 
 

@@ -44,6 +44,10 @@ public class ReportService {
     public List<ReportDTO> viewAllAdmList(ReportDTO reportDTO) {
         return reportMapper.viewAllAdmList(reportDTO);
     }
+
+    public ReportDTO findOneReportCode(Integer reportCode) {
+        return reportMapper.viewOneAdmReport(reportCode);
+    }
 }
 
 
