@@ -60,7 +60,7 @@
             report_status,
             processing_date,
             processing_text,
-            sub_member_code,
+            target_code,
             manager_code,
             reporter_code,
             report_content,
