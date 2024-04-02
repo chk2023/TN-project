@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/css/reportDetail.css">
+  <script src="/js/pathFinder.js"></script>
+  <script>
+    function admUpdate()   {
+    document.getElementById(reportDetail).attr('action', '/detail');
+    document.getElementById(reportDetail).submit();
+    }
+
+    function memStop() {
+    document.getElementById(reportDetail).attr('action', '/memberStop');
+    document.getElementById(reportDetail).submit();
+    }
+
+    function memActivate() {
+    document.getElementById(reportDetail).attr('action', '/memActivate');
+    document.getElementById(reportDetail).submit();
+    }
+  </script>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div th:replace="~{common/profile.html}"></div>
+    <nav th:replace="~{common/navigation.html}"></nav>
+  </header>
+  <aside>
+    <div class="folder">
+      <strong class="minTit">폴더</strong>
+      <ul>
+        <li class="AllList"><a href="#"><img src="/image/icon_folder.png" alt="아이콘">전체목록(<span>56</span>)</a></li>
+        <li><a href="#"><img src="/image/icon_folder.png" alt="아이콘">폴더1의 폴더명</a></li>
+        <li><a href="#"><img src="/image/icon_folder.png" alt="아이콘">폴더2의 폴더명</a></li>
+        <li><a href="#"><img src="/image/icon_folder.png" alt="아이콘">폴더3의 폴더명</a></li>
+        <li><a href="#"><img src="/image/icon_folder.png" alt="아이콘">폴더4의 폴더명</a></li>
+        <li><a href="#"><img src="/image/icon_folder.png" alt="아이콘">폴더5의 폴더명</a></li>
+        <li><a href="#"><img src="/image/icon_folder.png" alt="아이콘">폴더6의 폴더명</a></li>
+        <li><a href="#"><img src="/image/icon_folder.png" alt="아이콘">폴더7의 폴더명</a></li>
+        <li><a href="#"><img src="/image/icon_folder.png" alt="아이콘">폴더8의 폴더명</a></li>
+        <li><a href="#"><img src="/image/icon_folder.png" alt="아이콘">폴더9의 폴더명</a></li>
+        <li><a href="#"><img src="/image/icon_folder.png" alt="아이콘">폴더10의 폴더명</a></li>
+      </ul>
+      <button class="folderSetBtn"><img src="/image/icon_folder_setting.png" alt="폴더 편집 버튼"></button>
+    </div>
+  </aside>
+  <main>
+    <form class="title">
+      <button class="backBtn"><img src="/image/btn_arrow.png" alt="뒤로가기 버튼"></button>
+      <div>
+        <h1>관리 기록 상세</h1>
+      </div>
+      <!--            <input class="search_input" type="text" placeholder="검색어를 입력하세요">-->
+      <!--            <button class="searchBtn"><img src="/image/btn_search.png" alt="검색 버튼"></button>-->
+      <!--            <button class="closeBtn"><img src="/image/btn_close.png" alt="닫기 버튼"></button>-->
+    </form> <br><br>
+    <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
+      <form id="reportDetail">
+        <label>신고 번호 <input name="reportCode" th:value="${report.reportCode}"></label> <br>
+        <label>관리자 번호  <input type="text" th:value='${report.managerCode}'></label> <br>
+        <label>신고 내용  <input type="text" th:value='${report.reportText}'></label> <br>
+        <label>신고 날짜  <input type="text"  th:value='${report.reportDate}'></label> <br>
+        <label>처리 내용  <input type="text" th:value='${report.processingText}'></label> <br>
+        <label>처리 날짜  <input type="text" th:value='${report.processingDate}'></label> <br>
+        <!-- form 마다 서브밋이 있어야 한다 -->
+        <!--            </form>-->
+
+
+        <br><br>
+        <!--            <form class="reportBtn" action="/">-- css 문재 해결 방안 찾아보기 -->
+        <a href="#"><button type="button" onclick="javascript:memActivate();" class="btn skyblue">계정 정지</button></a>
+        <a href="#"><button type='button' onclick="javascript:memStop();" class="btn skyblue">계정 정지 해제</button></a>
+        <a href="#"><button type='button' onclick="javascript:admUpdate();" class="btn skyblue">처리 완료</button></a>
+      </form>
+
+
+
+
+    </section>
+  </main>
+</div>
+</body>
+</html>

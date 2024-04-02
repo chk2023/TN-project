@@ -44,6 +44,10 @@ public class ReportService {
     public List<ReportDTO> viewAllAdmList(ReportDTO reportDTO) {
         return reportMapper.viewAllAdmList(reportDTO);
     }
+
+    public ReportDTO findOneReportCord(Integer reportCode) {
+        return reportMapper.viewOneAdmReport(reportCode);
+    }
 }
 
 
