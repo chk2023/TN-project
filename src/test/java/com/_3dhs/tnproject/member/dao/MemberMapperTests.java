@@ -37,7 +37,6 @@ public class MemberMapperTests {
         dto.setMemberAge(15);
         dto.setMemberBirth(LocalDate.of(2020,12,12));
         memberMapper.insertMember(dto);
-        int memberCode = memberMapper.findLastInsertId();
-        System.out.println(memberCode);
+        System.out.println();
     }
 }

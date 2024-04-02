@@ -24,4 +24,6 @@ public interface MemberMapper {
     int findLastInsertId();
 
     int updatePwd(MemberDTO member);
+    int insertProfile(String memberId);
+
 }

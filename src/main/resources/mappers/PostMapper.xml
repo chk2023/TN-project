@@ -69,15 +69,6 @@
         </if>
         LIMIT #{index}, #{range}
     </select>
-    <select id="findLikeListByPostCode" parameterType="int" resultMap="likeListMap">
-        SELECT
-            post_code,
-            l_member_code,
-            is_private
-        FROM
-            tbl_like_list
-        WHERE post_code = #{postCode}
-    </select>
     <select id="findAttListByPostCode">
         SELECT
             *
@@ -105,5 +96,68 @@
             tbl_like_list li ON li.post_code = pv.post_code
         WHERE li.l_member_code = #{memberCode}
         ORDER BY li.post_code DESC
+    </select>
+    <select id="findPostByPostCode" resultMap="postMap">
+        SELECT post_code,
+               post_title,
+               post_text,
+               post_price,
+               po_member_code,
+               folder_code,
+               post_wri_date,
+               post_mod_date,
+               post_status,
+               profile_code,
+               profile_nickname,
+               profile_statmsg,
+               profile_img_path,
+               like_count,
+               cmt_count
+        FROM post_view
+        WHERE post_code = #{postCode}
+          AND post_is_deleted = false
+    </select>
+
+    <insert id="updateFolders" parameterType="java.util.List">
+        INSERT INTO
+            tbl_folder (folder_code, folder_name, folder_icon_path, folder_sequence, f_member_code, folder_status)
+        VALUES
+        <foreach collection="list" item="folderDTO" separator=",">
+            (#{folderDTO.folderCode}, #{folderDTO.folderName}, #{folderDTO.folderIconPath}, #{folderDTO.folderSequence}, #{folderDTO.fMemberCode}, #{folderDTO.folderStatus})
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+            folder_name = VALUES(folder_name),
+            folder_icon_path = VALUES(folder_icon_path),
+            folder_sequence = VALUES(folder_sequence),
+            folder_status = VALUES(folder_status)
+    </insert>
+
+    <insert id="insertAddDefaultFolder" parameterType="java.util.List">
+        INSERT INTO
+            tbl_folder (folder_code, folder_name, folder_icon_path, folder_sequence, f_member_code, folder_status)
+        VALUES
+        <foreach collection="list" item="folderDTO" separator=",">
+            (#{folderDTO.folderCode}, #{folderDTO.folderName}, #{folderDTO.folderIconPath}, #{folderDTO.folderSequence}, #{folderDTO.fMemberCode}, #{folderDTO.folderStatus})
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+            folder_name = VALUES(folder_name),
+            folder_icon_path = VALUES(folder_icon_path),
+            folder_sequence = VALUES(folder_sequence),
+            folder_status = VALUES(folder_status)
+    </insert>
+
+    <select id="findFolderList">
+        SELECT
+            folder_code,
+            folder_name,
+            folder_icon_path,
+            folder_sequence,
+            f_member_code
+        FROM
+            tbl_folder
+        WHERE
+            f_member_code = #{memberCode}
+        ORDER BY
+            folder_sequence ASC
     </select>
 </mapper>
