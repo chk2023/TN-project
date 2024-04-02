@@ -25,4 +25,6 @@ public interface PostMapper {
     void insertAddDefaultFolder(List<FolderDTO> addDefaultFolders);
 
     PostDTO findPostByPostCode(int postCode);
+
+    List<PostDTO> findAllPostListForDoc();
 }

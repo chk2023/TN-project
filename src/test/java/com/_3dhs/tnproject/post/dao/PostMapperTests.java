@@ -23,4 +23,11 @@ public class PostMapperTests {
         testList.forEach(System.out::println);
         assertNotNull(testList);
     }
+
+    @Test
+    void findAllPostListForDoc_테스트() {
+        List<PostDTO> testList = mapper.findAllPostListForDoc();
+        testList.forEach(System.out::println);
+        assertNotNull(testList);
+    }
 }

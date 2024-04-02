@@ -59,4 +59,8 @@ public class PostService {
     public PostDTO findPostByPostCode(Integer postCode) {
         return postMapper.findPostByPostCode(postCode);
     }
+
+    public List<PostDTO> findAllPostListForDoc() {
+        return postMapper.findAllPostListForDoc();
+    }
 }

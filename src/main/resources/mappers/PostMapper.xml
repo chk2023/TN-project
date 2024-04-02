@@ -44,6 +44,17 @@
         <result property="profile.profileImgPath" column="profile_img_path"/>
     </resultMap>
 
+    <select id="findAllPostListForDoc" resultMap="postMap">
+        SELECT post_code,
+               post_title,
+               post_text,
+               po_member_code
+        FROM post_view
+        WHERE post_status = 'PUBLIC'
+          AND post_is_deleted = false
+        ORDER BY post_code;
+    </select>
+
     <select id="findListByParam" resultMap="postMap">
         SELECT post_code,
                post_title,
