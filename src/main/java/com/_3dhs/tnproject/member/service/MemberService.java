@@ -1,5 +1,6 @@
 package com._3dhs.tnproject.member.service;
 
+import com._3dhs.tnproject.common.exceptionhandler.member.MemberRegistException;
 import com._3dhs.tnproject.common.exceptionhandler.member.MemberRemoveException;
 import com._3dhs.tnproject.common.exceptionhandler.member.MemberUpdateException;
 import com._3dhs.tnproject.common.exceptionhandler.member.MemberRegistException;
@@ -35,6 +36,10 @@ public class MemberService {
         if (result <= 0 || result2 <= 0) throw new MemberRegistException("회원 가입에 실패하였습니다.");
     }
 
+    public List<MemberDTO> viewAllMembers(MemberDTO memberDTO) {
+        return memberMapper.viewAllMembers(memberDTO);
+    }
+
     // 결제 추가
 //    public void updateHaveTissue(String memberId, int nTissue) {
 //        memberMapper.updateTissue(memberId, nTissue);
@@ -68,5 +73,9 @@ public class MemberService {
         }
     }
 
+    public void updatePwd(MemberDTO member) throws MemberUpdateException {
+        int result = memberMapper.updatePwd(member);
 
+        if (!(result > 0)) throw new MemberUpdateException("회원 정보 수정에 실패하였습니다.");
+    }
 }
