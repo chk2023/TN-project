@@ -35,10 +35,6 @@ public class MemberService {
         if (result <= 0 || result2 <= 0) throw new MemberRegistException("회원 가입에 실패하였습니다.");
     }
 
-    public List<MemberDTO> viewAllMembers(MemberDTO memberDTO) {
-        return memberMapper.viewAllMembers(memberDTO);
-    }
-
     // 결제 추가
 //    public void updateHaveTissue(String memberId, int nTissue) {
 //        memberMapper.updateTissue(memberId, nTissue);

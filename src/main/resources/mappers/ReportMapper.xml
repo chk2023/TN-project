@@ -122,7 +122,7 @@
 
 
 
-    <select id="viewAllMembers" resultType="com._3dhs.tnproject.member.dto.MemberDTO">
+    <select id="checkAllMember" resultType="com._3dhs.tnproject.member.dto.MemberDTO">
         SELECT
             member_code,
             member_id,

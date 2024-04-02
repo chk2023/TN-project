@@ -90,19 +90,20 @@ public class ManagerController {
         System.out.println("report :" + report);
         return "/manager/admin/detail";
 
+
     }
 
 
 
-    @GetMapping ("manager/member/list")
-    public String viewAllMemebers (MemberDTO memberDTO, Model model) {
-        List<MemberDTO> members = reportService.viewAllMember(memberDTO);
-        model.addAttribute("findAllMember", members);
+    @GetMapping ("/manager/member/list")
+    public String checkAllMember (MemberDTO memberDTO, Model model) {
+        List<MemberDTO> members = reportService.checkAllMember(memberDTO);
+        model.addAttribute("members", members);
 
 
-        return "/manager/member/list ";
-    }
-
+        return "manager/member/list";
+    }    //리턴이 파싱처리가 안되서 제대로 안되고 잇다.. 어디서 막힌걸까
+        //파싱개.....나리민들레 진또배기 으컁컁
 
 
 
