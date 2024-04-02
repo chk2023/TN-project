@@ -53,5 +53,6 @@ public class TnProjectApplication implements CommandLineRunner {
             }
         });
         writer.close();
+        log.info("run 실행종료...");
     }
 }
