@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper>
+
+    <resultMap id="likeListMap" type="com._3dhs.tnproject.post.dto.LikeListDTO">
+        <id property="postCode" column="post_code"/>
+        <result property="memberCode" column="l_member_code"/>
+        <result property="isPrivate" column="is_private"/>
+    </resultMap>
+
+    <insert id="addLike" parameterType="com._3dhs.tnproject.post.dao.LikeMapper">
+        INSERT INTO
+        tbl_like_list (postCode, memberCode, isPrivate)
+        VALUES
+        (#{postCode}, #{memberCode}, #{isPrivate})
+    </insert>
+
+    <delete id="cancelLike">
+        DELETE INTO
+        tbl_like_list
+        WHERE
+        postCode = #{postCode}
+        AND
+        memberCode = #{memberCode}
+    </delete>
+
+    <select id="hasLiked" resultType="boolean">
+        SELECT
+        COUNT(*) > 0
+        FROM
+        tbl_like_list
+        WHERE
+        postCode = #{postCode}
+        AND
+        memberCode = #{memberCode}
+    </select>
+
+
+</mapper>

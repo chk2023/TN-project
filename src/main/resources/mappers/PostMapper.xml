@@ -69,6 +69,51 @@
         </if>
         LIMIT #{index}, #{range}
     </select>
+
+    <select id="findPostByPostCode" resultMap="postMap">
+        SELECT post_code,
+        post_title,
+        post_text,
+        post_price,
+        po_member_code,
+        folder_code,
+        post_wri_date,
+        post_mod_date,
+        post_status,
+        profile_code,
+        profile_nickname,
+        profile_statmsg,
+        profile_img_path,
+        like_count,
+        cmt_count
+        FROM post_view
+        WHERE post_code = #{postCode}
+        AND post_is_deleted = false
+    </select>
+
+
+    <select id="findLikeListPostByMemberCode">
+        SELECT
+        pv.post_code,
+        pv.post_title,
+        pv. post_text,
+        pv.post_price,
+        pv. po_member_code,
+        pv.folder_code,
+        pv.post_wri_date,
+        pv.profile_code,
+        pv. profile_nickname,
+        pv.profile_statmsg,
+        pv.profile_img_path,
+        pv.like_count,
+        pv.cmt_count
+        FROM post_view pv
+        INNER JOIN
+        tbl_like_list li ON li.post_code = pv.post_code
+        WHERE li.l_member_code = #{memberCode}
+        ORDER BY li.post_code DESC
+    </select>
+
     <select id="findLikeListByPostCode" parameterType="int" resultMap="likeListMap">
         SELECT
             post_code,
@@ -85,27 +130,7 @@
         WHERE post_code = #{postCode}
     </select>
 
-    <select id="findLikeListPostByMemberCode">
-        SELECT
-            pv.post_code,
-            pv.post_title,
-            pv. post_text,
-            pv.post_price,
-            pv. po_member_code,
-            pv.folder_code,
-            pv.post_wri_date,
-            pv.profile_code,
-            pv. profile_nickname,
-            pv.profile_statmsg,
-            pv.profile_img_path,
-            pv.like_count,
-            pv.cmt_count
-        FROM post_view pv
-        INNER JOIN
-            tbl_like_list li ON li.post_code = pv.post_code
-        WHERE li.l_member_code = #{memberCode}
-        ORDER BY li.post_code DESC
-    </select>
+
 
     <insert id="updateFolders" parameterType="java.util.List">
         INSERT INTO
@@ -150,32 +175,6 @@
             folder_sequence ASC
     </select>
 
-    <insert id="addLike" parameterType="com._3dhs.tnproject.post.dao.PostMapper">
-        INSERT INTO
-            tbl_like_list (postCode, memberCode, isPrivate)
-        VALUES
-            (#{postCode}, #{memberCode}, #{isPrivate})
-    </insert>
-
-    <delete id="cancelLike">
-        DELETE INTO
-            tbl_like_list
-        WHERE
-            postCode = #{postCode}
-        AND
-            memberCode = #{memberCode}
-    </delete>
-
-    <select id="hasLiked" resultType="boolean">
-        SELECT
-            COUNT(*) > 0
-        FROM
-            tbl_like_list
-        WHERE
-            postCode = #{postCode}
-        AND
-            memberCode = #{memberCode}
-    </select>
 
     <select id="getLikeListByPostCode" resultType="com._3dhs.tnproject.post.dto.LikeListDTO">
         SELECT
@@ -196,4 +195,6 @@
         AND
             isPrivate = false
     </select>
+
+
 </mapper>

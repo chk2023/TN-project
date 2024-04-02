@@ -2,9 +2,13 @@ package com._3dhs.tnproject.post.controller;
 
 import com._3dhs.tnproject.member.dto.MemberDTO;
 import com._3dhs.tnproject.post.dto.FolderDTO;
+import com._3dhs.tnproject.post.dto.LikeListDTO;
 import com._3dhs.tnproject.post.dto.PostDTO;
 import com._3dhs.tnproject.post.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,6 +73,38 @@ public class PostController {
         List<PostDTO> likeList = postService.findLikeListPostByMemberCode(memberCode);
         model.addAttribute("likeList", likeList);
     }
+
+    @GetMapping("/list")
+    public String blogListPage(Model model, Authentication authentication) {
+
+        if (authentication != null && authentication.isAuthenticated()) {
+            MemberDTO member = (MemberDTO) authentication.getPrincipal();
+            List<PostDTO> likedPostList = postService.findLikeListPostByMemberCode(member.getMemberCode());
+
+            for (PostDTO post : likedPostList) {
+                int postCode = post.getPostCode();
+                boolean hasLiked = postService.hasLiked(postCode, member.getMemberCode());
+            }
+
+            model.addAttribute("likedPostList",likedPostList);
+        }
+
+        return "list";
+
+
+    }
+
+    @PostMapping("/like")
+    public ResponseEntity<String> likePost(@RequestBody LikeListDTO likeListDTO) {
+
+        boolean isLiked = postService.hasLiked(likeListDTO.getPostCode(), likeListDTO.getMemberCode());
+        if (isLiked) {
+            return new ResponseEntity<>("Liked", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Unliked", HttpStatus.OK);
+        }
+    }
+
     @PostMapping("/folder_edit")
     public @ResponseBody String folderEditList(@AuthenticationPrincipal MemberDTO memberDTO, @RequestBody List<FolderDTO> requestBody){
         for(FolderDTO folderDTO : requestBody) {
