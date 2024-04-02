@@ -20,6 +20,8 @@ public interface ReportMapper {
     ReportDTO viewOneAdmReport(Integer reportCode);
 
 
-    List<MemberDTO> checkAllMember(MemberDTO memberDTO);
+    List<MemberDTO> checkAllMember();
+
+    MemberDTO checkOneMember(MemberDTO memberDTO);
 
 }

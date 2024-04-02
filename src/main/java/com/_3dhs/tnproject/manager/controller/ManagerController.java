@@ -89,11 +89,18 @@ public class ManagerController {
 
 
     @GetMapping ("/manager/member/list")
-    public String checkAllMember (MemberDTO memberDTO, Model model) {
-        List<MemberDTO> members = reportService.checkAllMember(memberDTO);
+    public String checkAllMember (Model model) {
+        List<MemberDTO> members = reportService.checkAllMember();
         model.addAttribute("members", members);
 
         return "manager/member/list";
+    }
+
+    @GetMapping("/manager/member/detail")
+    public String checkOneMember (MemberDTO memberDTO, Model model) {
+        MemberDTO oneMember = reportService.checkOneMember(memberDTO);
+        model.addAttribute("oneMember", oneMember);
+        return "manager/member/detail";
     }
 
 

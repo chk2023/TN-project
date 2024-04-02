@@ -50,12 +50,14 @@ public class ReportService {
     }
 
 
-    public List<MemberDTO> checkAllMember(MemberDTO memberDTO) {
-        return reportMapper.checkAllMember(memberDTO);
+    public List<MemberDTO> checkAllMember() {
+        return reportMapper.checkAllMember();
     }
 
 
-
+    public MemberDTO checkOneMember(MemberDTO memberDTO) {
+        return reportMapper.checkOneMember(memberDTO);
+    }
 }
 
 

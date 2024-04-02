@@ -123,4 +123,18 @@
 
 
     </select>
+
+    <select id="checkOneMember" resultType="com._3dhs.tnproject.member.dto.MemberDTO">
+        SELECT
+            member_code,
+            member_id,
+            member_birth,
+            member_status,
+            member_Authority,
+            is_deleted
+
+        FROM tbl_member
+
+        WHERE member_code = #{ memberCode }
+    </select>
 </mapper>
