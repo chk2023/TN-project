@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-public class TissueDTO {
+public class PaymentDTO {
 
     private int tissueCode;
     private String impUid;
@@ -20,7 +20,7 @@ public class TissueDTO {
     private int tMemberCode;
     private Integer postCode;
 
-    public TissueDTO(String impUid, String merchantUid, String orderClass, LocalDateTime orderDate, int tissuePrice, int tMemberCode) {
+    public PaymentDTO(String impUid, String merchantUid, String orderClass, LocalDateTime orderDate, int tissuePrice, int tMemberCode) {
         this.impUid = impUid;
         this.merchantUid = merchantUid;
         this.orderClass = orderClass;

@@ -12,7 +12,4 @@ public class LikeListDTO {
     private int postCode;
     private int memberCode;
     private boolean isPrivate;
-
-
 }
-
