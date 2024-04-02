@@ -1,7 +1,6 @@
 package com._3dhs.tnproject.member.service;
 
 import jakarta.mail.MessagingException;
-import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +26,6 @@ public class MailService {
     }
 
     public MimeMessage createMail(String memberId, String code){
-//        String code = createCode();
 
         MimeMessage message = javaMailSender.createMimeMessage();
 

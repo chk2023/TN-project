@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -79,7 +79,7 @@
         <form class="title">
             <button class="backBtn"><img src="/image/btn_arrow.png" alt="뒤로가기 버튼"></button>
             <div>
-                <h1>신고 목록</h1>
+                <h1>관리 기록</h1>
             </div>
             <input class="search_input" type="text" placeholder="검색어를 입력하세요">
             <button class="searchBtn"><img src="/image/btn_search.png" alt="검색 버튼"></button>
@@ -87,37 +87,26 @@
         </form>
         <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
 
-<!--            <ul class="tabMenu">-->
-<!--                <li class="active">-->
-<!--                    <button>포스팅</button>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <button>댓글</button>-->
-<!--                </li>-->
-<!--                <li class="viewBtn">-->
-<!--                    <button><img src="/image/btn_view_type.png" alt="보기타입 선택버튼"></button>-->
-<!--                </li>-->
-<!--            </ul>-->
-
-            <h1>신고 내역</h1>
 
             <table id="reportList" style="text-align:center">
                 <tr>
                     <th> 신고 번호</th>
-                    <th> 신고 구분</th>
+                    <th> 관리자 번호 </th>
                     <th> 신고 내용</th>
-                    <th> 유저 ID</th>
                     <th> 신고 날짜</th>
+                    <th> 처리 내용</th>
+                    <th> 처리 날짜</th>
                 </tr>
 
 
                 <tr th:each=" memberDTO: ${ reportList }"
                     th:onclick="|location.href='/manager/report?reportCode=${memberDTO.reportCode}'|">
                     <td th:text="${ memberDTO.reportCode }"></td>
-                    <td th:text="${ memberDTO.RCategoryName}"></td>
+                    <td th:text="${ memberDTO.managerCode}"></td>
                     <td th:text="${ memberDTO.reportText}"></td>
-                    <td th:text="${ memberDTO.memberId}"></td>
-                    <td th:text="${memberDTO.formattingReportDate}"></td>
+                    <td th:text="${ memberDTO.reportDate}"></td>
+                    <td th:text="${ memberDTO.processingText}"></td>
+                    <td th:text="${ memberDTO.processingDate}"></td>
                 </tr>
 
 

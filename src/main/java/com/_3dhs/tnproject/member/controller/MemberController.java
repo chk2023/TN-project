@@ -1,5 +1,7 @@
 package com._3dhs.tnproject.member.controller;
 
+import com._3dhs.tnproject.common.exceptionhandler.member.MemberRemoveException;
+import com._3dhs.tnproject.common.exceptionhandler.member.MemberUpdateException;
 import com._3dhs.tnproject.common.exceptionhandler.member.MemberRegistException;
 import com._3dhs.tnproject.member.dto.MemberDTO;
 import com._3dhs.tnproject.member.service.AuthService;
@@ -10,6 +12,8 @@ import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -34,12 +38,18 @@ public class MemberController {
     }
 
     @GetMapping(value = {"/login"})
-    public void loginPage(){}
+    public String loginPage(Authentication authentication){
+        Object user = authentication;
+        if (user != null) {
+            return "redirect:/timeline/list";
+        }
+        return "member/login";
+    }
 
     @PostMapping("/loginfail")
     public String loginFailed(RedirectAttributes rttr) {
         rttr.addFlashAttribute("message", messageSourceAccessor.getMessage("error.login"));
-        return "redirect:/";
+        return "redirect:/member/login";
     }
 
     @GetMapping("/regist")
@@ -78,11 +88,27 @@ public class MemberController {
 
         rttr.addFlashAttribute("message", messageSourceAccessor.getMessage("member.regist"));
 
-        return "redirect:/";
+        return "redirect:/member/login";
     }
 
-    @GetMapping("/info")
-    public void memberPage(){}
+    @GetMapping("/update")
+    public void updatePage(){}
+
+    @PostMapping("/update")
+    public String updateMember(MemberDTO updateMember,
+                               @AuthenticationPrincipal MemberDTO loginMember) throws MemberUpdateException {
+
+        updateMember.setMemberCode(loginMember.getMemberCode());
+
+        log.info("updateMember request Member : {}", updateMember);
+
+        memberService.updateMember(updateMember);
+
+        /* 로그인 시 저장된 Authentication 객체를 변경된 정보로 교체한다. */
+        SecurityContextHolder.getContext().setAuthentication(createNewAuthentication(loginMember.getMemberId()));
+
+        return "redirect:/common/testhub";
+    }
 
     protected Authentication createNewAuthentication(String memberId) {
         UserDetails newPrincipal = authenticationService.loadUserByUsername(memberId);
@@ -90,5 +116,17 @@ public class MemberController {
                 = new UsernamePasswordAuthenticationToken(newPrincipal, newPrincipal.getPassword(),
                 newPrincipal.getAuthorities());
         return newAuth;
+    }
+
+    @GetMapping("/delete")
+    public String deleteMember(@AuthenticationPrincipal MemberDTO member) throws MemberRemoveException {
+        log.info("login member : {}", member);
+
+        member.setMemberStatus("DELETE");
+        member.setIsDeleted(true);
+
+        memberService.deleteMember(member);
+
+        return "redirect:/member/logout";
     }
 }
