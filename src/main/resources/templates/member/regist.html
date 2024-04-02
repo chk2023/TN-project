@@ -11,7 +11,7 @@
 <h1>회원가입</h1>
 <hr>
 
-<form action="/member/regist" method="post">
+<form action="/member/regist" method="post" id="registForm">
 
     <div id="mail_input" name="mail_input">
     아이디
@@ -54,8 +54,8 @@
 
     <br>
     <div>
-        <input type="submit" value="가입하기" id="signupButton" disabled>
-        <span id="duplicationMessage" style="color: red"></span>
+        <input type="submit" value="가입하기" id="processButton" disabled>
+        <span id="resultMessage" style="color: red"></span>
     </div>
 
 </form>

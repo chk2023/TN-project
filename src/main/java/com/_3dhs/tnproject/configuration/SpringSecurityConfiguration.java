@@ -35,7 +35,9 @@ public class SpringSecurityConfiguration {
                     auth.requestMatchers("/member/login").permitAll(); //main 페이지와 login 페이지는 모두에게 허용.
                     auth.requestMatchers("/member/regist").hasRole("ANONYMOUS"); //회원가입 페이지 모두에게 허용.
                     auth.requestMatchers("/member/idDupCheck").permitAll();
+                    auth.requestMatchers("/member/idCheck").permitAll();
                     auth.requestMatchers("/mail").permitAll();
+                    auth.requestMatchers("/member/findPwd").permitAll();
                     //인가 범위 추가
                     auth.requestMatchers("/timeline").hasAnyRole("ADMIN", "COMMON");
                     auth.requestMatchers("/manager").hasRole("ADMIN");
