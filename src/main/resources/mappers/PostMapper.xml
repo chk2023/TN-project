@@ -69,15 +69,6 @@
         </if>
         LIMIT #{index}, #{range}
     </select>
-    <select id="findLikeListByPostCode" parameterType="int" resultMap="likeListMap">
-        SELECT
-            post_code,
-            l_member_code,
-            is_private
-        FROM
-            tbl_like_list
-        WHERE post_code = #{postCode}
-    </select>
     <select id="findAttListByPostCode">
         SELECT
             *
@@ -105,6 +96,26 @@
             tbl_like_list li ON li.post_code = pv.post_code
         WHERE li.l_member_code = #{memberCode}
         ORDER BY li.post_code DESC
+    </select>
+    <select id="findPostByPostCode" resultMap="postMap">
+        SELECT post_code,
+               post_title,
+               post_text,
+               post_price,
+               po_member_code,
+               folder_code,
+               post_wri_date,
+               post_mod_date,
+               post_status,
+               profile_code,
+               profile_nickname,
+               profile_statmsg,
+               profile_img_path,
+               like_count,
+               cmt_count
+        FROM post_view
+        WHERE post_code = #{postCode}
+          AND post_is_deleted = false
     </select>
 
     <insert id="updateFolders" parameterType="java.util.List">

@@ -12,9 +12,7 @@ import java.util.Map;
 
 @Mapper
 public interface PostMapper {
-    List<PostDTO> findListByParam(Map<String ,Integer> params);
-
-    List<LikeListDTO> findLikeListByCode(int postCode);
+    List<PostDTO> findListByParam(Map<String ,Integer> params); //TODO params 값 String으로 가독성 좋게 리펙터링 할것
 
     List<AttachmentDTO> findAttListByPostCode(int postCode);
 
@@ -25,4 +23,6 @@ public interface PostMapper {
     List<FolderDTO> findFolderList(int memberCode);
 
     void insertAddDefaultFolder(List<FolderDTO> addDefaultFolders);
+
+    PostDTO findPostByPostCode(int postCode);
 }

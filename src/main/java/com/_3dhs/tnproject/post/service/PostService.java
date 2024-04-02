@@ -55,4 +55,8 @@ public class PostService {
         postMapper.insertAddDefaultFolder(addDefaultFolders);
         System.out.println("서비스단에 넘어온 addDefaultFolders : " + addDefaultFolders );
     }
+
+    public PostDTO findPostByPostCode(Integer postCode) {
+        return postMapper.findPostByPostCode(postCode);
+    }
 }
