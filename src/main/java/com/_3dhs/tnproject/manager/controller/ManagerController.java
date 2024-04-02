@@ -79,18 +79,14 @@ public class ManagerController {
 
 
         return "/manager/admin/list";
-
-
     }
 
+
     @GetMapping("/manager/admin/detail")
-    public String viewOneAdmList (ReportDTO reportDTO, Model model) {
-        ReportDTO report = reportService.viewOneAdmList(reportDTO);
-        model.addAttribute("report", report) ;
-        System.out.println("report :" + report);
+    public String viewOneAdmReport ( Integer reportCode, Model model) {
+        ReportDTO admReport = reportService.findOneReportCord(reportCode);
+        model.addAttribute("report", admReport);
         return "/manager/admin/detail";
-
-
     }
 
 

@@ -10,6 +10,13 @@
 update : 2024-03-25
 */
 /*------------------------------------------
+    1.0     Blog Page Design Common
+ ------------------------------------------*/
+.folder li.hidden {
+    display: none;
+}
+
+/*------------------------------------------
     2.0     Folder Edit Page
  ------------------------------------------*/
 .btn * {
@@ -60,6 +67,10 @@ em {
 .fEditList li:not(.fixed) {
     padding: 4px 45px;
     cursor: pointer;
+}
+
+.fEditList li:not(.fixed).hidden {
+    display: none;
 }
 
 .fEditList li.drag_active {
@@ -311,5 +322,3 @@ td * {
     position: static;
     padding: 0 35px;
 }
-
-

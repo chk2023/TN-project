@@ -92,54 +92,8 @@
             processing_date
         FROM
             tbl_report
-
-
-
-
+        WHERE
+            report_code = #{ reportCode }
     </select>
-
-
-
-
-
-    <select id="viewOneAdmReport" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">
-        SELECT
-            report_code,
-            r_category_name,
-            report_text,
-            report_date,
-            report_status,
-            processing_date,
-            processing_text,
-            member_id
-        FROM
-            tbl_report r
-        JOIN tbl_member m ON r.target_code = m.member_code
-        JOIN tbl_r_category c ON c.r_category_code = r.r_category_code
-
-        WHERE report_code = #{ reportCode }
-    </select>
-
-
-
-    <select id="checkAllMember" resultType="com._3dhs.tnproject.member.dto.MemberDTO">
-        SELECT
-            member_code,
-            member_id,
-            member_birth,
-            member_status,
-            member_authority,
-            is_deleted
-        FROM
-            tbl_member
-
-
-    </select>
-
-
-
-
-
-
 
 </mapper>

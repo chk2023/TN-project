@@ -53,6 +53,10 @@ public class ReportService {
     public List<MemberDTO> checkAllMember(MemberDTO memberDTO) {
         return reportMapper.checkAllMember(memberDTO);
     }
+
+    public ReportDTO findOneReportCord(Integer reportCode) {
+        return reportMapper.viewOneAdmReport(reportCode);
+    }
 }
 
 
