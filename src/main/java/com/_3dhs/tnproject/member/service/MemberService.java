@@ -67,4 +67,6 @@ public class MemberService {
             throw new MemberRemoveException("회원 탈퇴에 실패하였습니다.");
         }
     }
+
+
 }

@@ -90,7 +90,6 @@ public class ManagerController {
     }
 
 
-
     @GetMapping ("/manager/member/list")
     public String checkAllMember (MemberDTO memberDTO, Model model) {
         List<MemberDTO> members = reportService.checkAllMember(memberDTO);
