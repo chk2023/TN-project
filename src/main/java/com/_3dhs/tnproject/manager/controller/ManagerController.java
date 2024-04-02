@@ -71,8 +71,8 @@ public class ManagerController {
 
 
     @GetMapping ("/manager/admin/list")
-    public String viewAllAdmList (ReportDTO reportDTO, Model model) {
-        List<ReportDTO> reports = reportService.viewAllAdmList(reportDTO) ;
+    public String viewAllAdmList (Model model) {
+        List<ReportDTO> reports = reportService.viewAllAdmList() ;
         model.addAttribute("reports", reports);
 
 

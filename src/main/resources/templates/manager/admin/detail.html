@@ -87,14 +87,14 @@
         </form> <br><br>
         <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
             <form id="reportDetail">
-                <label>신고 번호 <input name="reportCode" th:value="${findAllMember.reportCode}"></label> <br>
-                <label>신고 구분 코드  <input type="text" th:value='${findAllMember.rCategoryCode}'></label> <br>
-                <label>신고 내역  <input type="text" th:value='${findAllMember.reportText}'></label> <br>
-                <label>신고 날짜 <input type="text"  th:value='${findAllMember.reportDate}'></label> <br>
-                <label>신고 상태  <input type="text"  th:value='${findAllMember.reportStatus}'></label> <br>
-                <label>처리 날짜  <input type="text"  th:value='${findAllMember.processingDate}'></label> <br>
-                <label>처리 기록  <input type="text"  th:value='${findAllMember.processingText}'></label> <br>
-                <label>신고 대상 유저  <input type="text"  th:value='${findAllMember.memberId}'></label> <br>
+                <label>신고 번호 <input name="reportCode" th:value="${report.reportCode}"></label> <br>
+                <label>신고 구분 코드  <input type="text" th:value='${report.rCategoryCode}'></label> <br>
+                <label>신고 내역  <input type="text" th:value='${report.reportText}'></label> <br>
+                <label>신고 날짜 <input type="text"  th:value='${report.reportDate}'></label> <br>
+                <label>신고 상태  <input type="text"  th:value='${report.reportStatus}'></label> <br>
+                <label>처리 날짜  <input type="text"  th:value='${report.processingDate}'></label> <br>
+                <label>처리 기록  <input type="text"  th:value='${report.processingText}'></label> <br>
+                <label>신고 대상 유저  <input type="text"  th:value='${report.memberId}'></label> <br>
                 <!-- form 마다 서브밋이 있어야 한다 -->
                 <!--            </form>-->
 
@@ -106,24 +106,8 @@
                 <a href="#"><button type='button' onclick="javascript:admUpdate();" class="btn skyblue">처리 완료</button></a>
             </form>
 
-        <br><br>
-        <!--            <form class="reportBtn" action="/">-- css 문재 해결 방안 찾아보기 -->
-        <a href="#"><button type="button" onclick="javascript:memActivate();" class="btn skyblue">계정 정지</button></a>
-        <a href="#"><button type='button' onclick="javascript:memStop();" class="btn skyblue">계정 정지 해제</button></a>
-        <a href="#"><button type='button' onclick="javascript:admUpdate();" class="btn skyblue">처리 완료</button></a>
-      </form>
->>>>>>> master
-
-
-
-
-<<<<<<< HEAD
-        </section>
-    </main>
-=======
     </section>
   </main>
->>>>>>> master
 </div>
 </body>
 </html>

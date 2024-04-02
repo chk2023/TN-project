@@ -97,7 +97,7 @@
                     <th> 계정 삭제 여부 </th>
                 </tr>
 
-                <tr th:each=" memberDTO: ${reports}"
+                <tr th:each=" memberDTO: ${members}"
                     th:onclick="|location.href='/manager/member/detail?memberCode=${memberDTO.memberCode}'|">
                     <td th:text="${ memberDTO.memberCode }"></td>
                     <td th:text="${ memberDTO.memberId}"></td>

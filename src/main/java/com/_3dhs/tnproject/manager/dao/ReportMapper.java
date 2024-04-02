@@ -15,7 +15,7 @@ public interface ReportMapper {
 
     ReportDTO updateReport(int reportCode, String processingText);
 
-    List<ReportDTO> viewAllAdmList(ReportDTO reportDTO);
+    List<ReportDTO> viewAllAdmList();
 
     ReportDTO viewOneAdmReport(Integer reportCode);
 
