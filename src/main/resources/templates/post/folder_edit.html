@@ -1,63 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <title>Folder Edit Page</title>
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/post.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
 <div class="wrap">
     <header>
-        <div class="profile">
-            <button class="optionBtn"><img src="/image/icon_option.png" alt="프로필 옵션 버튼"></button>
-            <ul class="optionBox">
-                <li><a>프로필 수정</a></li>
-                <li><a>공유</a></li>
-            </ul>
-            <div class="profileStatus">
-                <div class="prof_photo"><img src="/image/icon_no_image_lg.png" alt="프로필 사진"></div>
-                <div class="prof_txt">
-                    <strong>닉네임</strong>
-                    <span>상태메시지</span>
-                </div>
-            </div>
-            <div class="profileInfo">
-                <span class="tissueCount">500</span>
-                <button class="myBlogBtn btn">내 블로그</button>
-            </div>
-        </div>
-        <nav>
-            <ul class="rnb">
-                <li>
-                    <button>홈</button>
-                </li>
-                <li>
-                    <button>회원 정보</button>
-                </li>
-                <li>
-                    <button>결제 관리</button>
-                </li>
-                <li>
-                    <button>차단 목록</button>
-                </li>
-                <li>
-                    <button>관리기록 조회</button>
-                </li>
-                <li>
-                    <button>신고목록 조회</button>
-                </li>
-                <li>
-                    <button>회원정보 검색</button>
-                </li>
-                <li class="logoutBtn">
-                    <button>로그아웃</button>
-                </li>
-            </ul>
-        </nav>
+        <div th:replace="~{common/profile.html}"></div>
+        <nav th:replace="~{common/navigation.html}"></nav>
     </header>
     <main>
-        <form class="title">
+        <div class="title">
             <button class="backBtn"><img src="/image/btn_arrow.png" alt="뒤로가기 버튼"></button>
             <div>
                 <h1>폴더 편집</h1>
@@ -66,9 +24,9 @@
             <button class="searchBtn"><img src="/image/btn_search.png" alt="검색 버튼"></button>
             <button class="closeBtn"><img src="/image/btn_close.png" alt="닫기 버튼"></button>
             <div class="btnWrap">
-                <button class="btn">완료</button>
+                <button class="btn" onclick="sendFolderData();">완료</button>
             </div>
-        </form>
+        </div>
         <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
 
             <!--            <form action="">-->
@@ -78,7 +36,9 @@
             </div>
             <ul class="fEditList" id="fEditList">
                 <li class="fixed">전체목록 (<span>56</span>)</li>
-                <li draggable="true"><img src="/image/icon_folder.png" alt="기본 폴더 아이콘"> <span>폴더 1의 폴더명</span></li>
+                <th:block th:object="${folderList}" th:each="folder, start : ${folderList}">
+                    <li th:classappend="${folder.folderName == 'NoName'} ? 'hidden'" draggable="true"><input type="hidden" th:value="${folder.folderCode}"/><img th:src="${folder.folderIconPath}" alt="폴더 아이콘"> <span th:text="${folder.folderName}"></span></li>
+                </th:block>
             </ul>
 
             <dl>
@@ -101,173 +61,7 @@
                 </dd>
             </dl>
 
-            <script>
-                const $addBtn = document.querySelector(".addBtn");
-                const $delBtn = document.querySelector(".deleteBtn");
-                const $fragment = document.createDocumentFragment();
-                const $feList = document.querySelector(".fEditList");
-                const fName = document.getElementById("folderName");
-
-                // 이벤트 리스너 등록
-                $addBtn.addEventListener('click', addFolder);
-                $delBtn.addEventListener('click', deleteFolder);
-                $feList.addEventListener('click', handleClick);
-                fName.addEventListener("keydown", handleEnter);
-                fName.addEventListener("focus", handleFocus);
-                fName.addEventListener("blur", handleBlur);
-                fName.addEventListener('input', handleInput);
-                document.querySelector(".iconBox").addEventListener("click", handleIconClick);
-
-                function addFolder() {
-                    const fNameValue = fName.value;
-                    if (!fNameValue) {
-                        const $li = createFolderElement();
-                        if ($feList.querySelectorAll("li").length <= 10) {
-                            $li.setAttribute("draggable", "true");
-                            $fragment.appendChild($li);
-                            $feList.appendChild($fragment);
-                        } else {
-                            alert("폴더는 최대 10개 까지만 생성 가능합니다.");
-                        }
-                    }
-                }
-
-                function createFolderElement() {
-                    const $li = document.createElement("li");
-                    const $span = document.createElement("span");
-                    $span.textContent = '폴더';
-                    $li.appendChild(createFolderImage());
-                    $li.appendChild($span);
-                    return $li;
-                }
-
-                function createFolderImage() {
-                    const $img = document.createElement("img");
-                    $img.src = "/image/icon_folder.png";
-                    return $img;
-                }
-
-                function deleteFolder() {
-                    const $feListActive = $feList.querySelector(".active");
-                    if ($feListActive) {
-                        $feListActive.remove();
-                        inputBlur();
-                    } else {
-                        alert("삭제할 폴더를 선택해 주세요.");
-                    }
-                }
-
-                function handleClick(e) {
-                    let thisEl = e.target;
-                    if (thisEl.tagName === "LI" || thisEl.tagName === "SPAN" || thisEl.tagName === "IMG") {
-                        removeActive();
-                        if (thisEl.tagName === "LI" && !thisEl.classList.contains("fixed")) {
-                            thisEl.classList.add("active");
-                        } else if (thisEl.tagName === "SPAN") {
-                            thisEl.parentElement.classList.add("active");
-                        } else if (thisEl.tagName === "IMG") {
-                            thisEl.parentElement.classList.add("active");
-                            document.querySelector(".iconDt").classList.add("active");
-                        }
-                        if (thisEl.tagName === "LI" && !thisEl.classList.contains("fixed") || thisEl.tagName === "SPAN" && !thisEl.parentElement.classList.contains("fixed")) {
-                            inputFocus(thisEl);
-                        }
-                    }
-                }
-
-                function handleFocus() {
-                    $feList.querySelector(".active").classList.add("active_tit");
-                }
-
-                function handleBlur() {
-                    inputBlur();
-                }
-
-                function handleInput() {
-                    $feList.querySelector(".active span").textContent = fName.value;
-                }
-
-                function handleEnter(e) {
-                    if (e.key === "Enter") {
-                        removeActive();
-                        inputBlur();
-                    }
-                }
-
-                function handleIconClick(e) {
-                    let thisEl = e.target;
-                    if (thisEl.tagName === "IMG") {
-                        let thisSrc = thisEl.src.slice(thisEl.src.indexOf("/image"));
-                        $feList.querySelector(".active img").src = thisSrc;
-                        document.querySelector(".iconDt").classList.remove("active");
-                        removeActive();
-                    }
-                }
-
-                function inputBlur() {
-                    const $activeElement = $feList.querySelector(".active_tit");
-                    if ($activeElement) {
-                        $activeElement.classList.remove("active_tit");
-                    }
-                    fName.setAttribute("readonly", "readonly");
-                    fName.value = '';
-                    fName.blur();
-                }
-
-                function inputFocus(thisEl) {
-                    let thisfName = thisEl.textContent;
-                    fName.removeAttribute("readonly");
-                    fName.value = thisfName;
-                    fName.focus();
-                }
-
-                function removeActive() {
-                    const $lis = $feList.querySelectorAll("li");
-                    $lis.forEach((li) => {
-                        li.classList.remove("active");
-                    })
-                }
-
-                $feList.addEventListener('dragstart', function (e) {
-                    e.dataTransfer.setData('text/plain', e.target.id);
-                    setTimeout(() => {
-                        e.target.classList.add('drag_active');
-                        const $activeElement = $feList.querySelector(".active");
-                        if ($activeElement) {
-                            $activeElement.classList.remove("active");
-                        }
-                    }, 0);
-                });
-
-                $feList.addEventListener('dragend', function (e) {
-                    e.target.classList.remove('drag_active');
-                });
-
-                $feList.addEventListener('dragover', function (e) {
-                    e.preventDefault();
-                    const afterElement = getDragAfterElement($feList, e.clientY);
-                    const draggable = document.querySelector('.drag_active');
-                    if (afterElement == null) {
-                        $feList.appendChild(draggable);
-                    } else {
-                        $feList.insertBefore(draggable, afterElement);
-                    }
-                });
-
-                function getDragAfterElement(container, y) {
-                    const draggableElements = [...container.querySelectorAll('li:not(.fixed):not(.drag_active)')];
-                    return draggableElements.reduce((closest, child) => {
-                        const box = child.getBoundingClientRect();
-                        const offset = y - box.top - box.height / 2;
-                        if (offset < 0 && offset > closest.offset) {
-                            return {offset: offset, element: child};
-                        } else {
-                            return closest;
-                        }
-                    }, {offset: Number.NEGATIVE_INFINITY}).element;
-                }
-            </script>
-
+            <script src="/js/folderEditEvent.js"></script>
         </section>
     </main>
 </div>

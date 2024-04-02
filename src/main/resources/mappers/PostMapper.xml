@@ -106,4 +106,47 @@
         WHERE li.l_member_code = #{memberCode}
         ORDER BY li.post_code DESC
     </select>
+
+    <insert id="updateFolders" parameterType="java.util.List">
+        INSERT INTO
+            tbl_folder (folder_code, folder_name, folder_icon_path, folder_sequence, f_member_code, folder_status)
+        VALUES
+        <foreach collection="list" item="folderDTO" separator=",">
+            (#{folderDTO.folderCode}, #{folderDTO.folderName}, #{folderDTO.folderIconPath}, #{folderDTO.folderSequence}, #{folderDTO.fMemberCode}, #{folderDTO.folderStatus})
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+            folder_name = VALUES(folder_name),
+            folder_icon_path = VALUES(folder_icon_path),
+            folder_sequence = VALUES(folder_sequence),
+            folder_status = VALUES(folder_status)
+    </insert>
+
+    <insert id="insertAddDefaultFolder" parameterType="java.util.List">
+        INSERT INTO
+            tbl_folder (folder_code, folder_name, folder_icon_path, folder_sequence, f_member_code, folder_status)
+        VALUES
+        <foreach collection="list" item="folderDTO" separator=",">
+            (#{folderDTO.folderCode}, #{folderDTO.folderName}, #{folderDTO.folderIconPath}, #{folderDTO.folderSequence}, #{folderDTO.fMemberCode}, #{folderDTO.folderStatus})
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+            folder_name = VALUES(folder_name),
+            folder_icon_path = VALUES(folder_icon_path),
+            folder_sequence = VALUES(folder_sequence),
+            folder_status = VALUES(folder_status)
+    </insert>
+
+    <select id="findFolderList">
+        SELECT
+            folder_code,
+            folder_name,
+            folder_icon_path,
+            folder_sequence,
+            f_member_code
+        FROM
+            tbl_folder
+        WHERE
+            f_member_code = #{memberCode}
+        ORDER BY
+            folder_sequence ASC
+    </select>
 </mapper>

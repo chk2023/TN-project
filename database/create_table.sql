@@ -45,12 +45,12 @@ CREATE UNIQUE INDEX `tbl_comments_PK` ON `tbl_comments`
 
 CREATE TABLE `tbl_folder`
 (
-    `folder_code`    INT NOT NULL AUTO_INCREMENT
-        COMMENT '폴더번호',
+    `folder_code`    INT NOT NULL AUTO_INCREMENT COMMENT '폴더번호',
     `folder_name`    VARCHAR(20) NOT NULL COMMENT '폴더이름',
     `folder_icon_path`    VARCHAR(50) DEFAULT '/image/icon_folder.png' NOT NULL COMMENT '폴더아이콘',
     `folder_sequence`    INT NOT NULL COMMENT '폴더순서',
     `f_member_code`    INT NOT NULL COMMENT '회원번호',
+    `folder_status`    VARCHAR(10) DEFAULT 'N' NOT NULL COMMENT '폴더상태',
     PRIMARY KEY ( `folder_code` )
 ) COMMENT = '폴더';
 
