@@ -44,6 +44,10 @@ public class ReportService {
     public List<ReportDTO> viewAllAdmList(ReportDTO reportDTO) {
         return reportMapper.viewAllAdmList(reportDTO);
     }
+
+    public ReportDTO viewOneAdmList(ReportDTO reportDTO) {
+        return reportMapper.viewOneAdmList(reportDTO);
+    }
 }
 
 

@@ -111,9 +111,7 @@
             report_status,
             processing_date,
             processing_text,
-            target_code,
-            manager_code,
-            report_content
+            target_code
         FROM
             tbl_report
         WHERE
@@ -131,25 +129,25 @@
 <!--            processing_date-->
 <!--        FROM-->
 <!--            tbl_report-->
-<!--        -->
-<!--           -->
+
+<!--        WHERE report_code = #{ reportCode }-->
 <!--    </select>-->
 
-    <select id="viewAllMembers" resultType="com._3dhs.tnproject.member.dto.MemberDTO">
-        SELECT
-            member_code,
-            member_id,
-            member_birth,
-            member_status,
-            member_authority,
-            is_deleted
+<!--    <select id="viewAllMembers" resultType="com._3dhs.tnproject.member.dto.MemberDTO">-->
+<!--        SELECT-->
+<!--            member_code,-->
+<!--            member_id,-->
+<!--            member_birth,-->
+<!--            member_status,-->
+<!--            member_authority,-->
+<!--            is_deleted-->
 
-        FROM
-            tbl_member
-
-
+<!--        FROM-->
+<!--            tbl_member-->
 
 
-    </select>
+
+
+<!--    </select>-->
 
 </mapper>

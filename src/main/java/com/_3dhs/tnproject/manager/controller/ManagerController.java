@@ -79,8 +79,18 @@ public class ManagerController {
 
 
         return "/manager/admin/list";
+
+
     }
-        //같은DTO를 쓰는건데 굳이 두번.... 만들 필요가 있는가.
+
+    @GetMapping("/admin/detail")
+    public String viewOneAdmList (ReportDTO reportDTO, Model model) {
+        ReportDTO admList = reportService.viewOneAdmList(reportDTO);
+        model.addAttribute("viewOneAdmReport", admList) ;
+        return "/manager/admin/detail";
+
+    }
+
 
 
 //    @GetMapping ("manager/member/list")
