@@ -12,4 +12,6 @@ public class FolderDTO {
     private String folderName;
     private String folderIconPath;
     private int folderSequence;
+    private int fMemberCode;
+    private String folderStatus;
 }
