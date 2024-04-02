@@ -175,7 +175,7 @@ VALUES ('욕설/비방'),
        ('광고/도배'),
        ('성적/음란'),
        ('기타');
-INSERT INTO tbl_tissue(order_num, order_class, order_date, tissue_price, t_member_code, post_code)
+INSERT INTO tbl_tissue(tissue_code, order_class, order_date, tissue_price, t_member_code, post_code)
 VALUES (11111111, 'BUY', '2024-03-19 00:00:00', 1000000, 1, 0);
 
 INSERT INTO tbl_comments(post_code, cmt_text, cmt_wri_date, member_code, parents_code)

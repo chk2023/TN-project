@@ -55,10 +55,10 @@ public class PaymentController {
     @ResponseBody
     @PostMapping("/paymentSuccess")
     public String paymentSuccess(@RequestParam String imp_uid,
-                                  @RequestParam String merchant_uid,
-                                  @RequestParam String buyer_name,
-                                  @RequestParam int tissuePrice,
-                                  Authentication authentication) {
+                                 @RequestParam String merchant_uid,
+                                 @RequestParam String buyer_name,
+                                 @RequestParam int tissuePrice,
+                                 Authentication authentication) {
 
         //유저 정보 업데이트
         MemberDTO currentMember = (MemberDTO) authentication.getPrincipal();
@@ -92,5 +92,10 @@ public class PaymentController {
         model.addAttribute("member", member);
 
         return "/payment/payment_success";
+    }
+
+    @GetMapping("/payment/management")
+    public void gotoManagementPage() {
+
     }
 }

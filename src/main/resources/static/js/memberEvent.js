@@ -8,13 +8,34 @@ window.onload = function () {
 
 
     if (document.getElementById("logout")) {
-        console.log("로그아웃객체 입력됨")
         const $logout = document.getElementById("logout");
         $logout.onclick = function () {
             location.href = "/member/logout";
         }
     }
 
+    if (document.getElementById("updateMember")) {
+        const $updateMember = document.getElementById("updateMember");
+
+        $updateMember.onclick = function () {
+            location.href = "/member/update";
+        }
+    }
+
+    if (document.getElementById("deleteMember")) {
+        const $deleteMember = document.getElementById("deleteMember");
+
+        $deleteMember.onclick = function () {
+            const $confirmDelete = confirm("정말로 탈퇴하시겠습니까?");
+
+            if ($confirmDelete) {
+                location.href = "/member/delete"
+                alert("탈퇴되었습니다.");
+            }
+        }
+    }
+
+    /* 회원가입 이메일 중복확인 */
     if(document.getElementById("emailCheck")) {
 
         const $duplication = document.getElementById("emailCheck");
@@ -157,4 +178,46 @@ window.onload = function () {
             }
         }
     }
+
+
+
+    /* 회원 정보 수정 비동기 처리 */
+    if (document.getElementById("updateMemberBtn")) {
+        const $updateMemberbtn = document.getElementById("updateMemberBtn");
+
+        $updateMemberbtn.onclick = function () {
+            const $updateMemberButton = document.getElementById("updateMemberBtn");
+            const $submitUpdateMemberButton = document.getElementById("submitUpdateMember");
+            const $genderParagraph = document.querySelector("#genderParagraph");
+            const $ageParagraph = document.querySelector("#ageParagraph");
+            const $birthParagraph = document.querySelector("#birthParagraph");
+            const $genderInput = document.getElementById("genderInput");
+            const $ageInput = document.getElementById("ageInput");
+            const $birthInput = document.getElementById("birthInput");
+
+            $genderParagraph.classList.add("hidden");
+            $ageParagraph.classList.add("hidden");
+            $birthParagraph.classList.add("hidden");
+            $genderInput.classList.remove("hidden");
+            $ageInput.classList.remove("hidden");
+            $birthInput.classList.remove("hidden");
+
+            $genderInput.value = $genderParagraph.textContent;
+            $ageInput.value = $ageParagraph.textContent;
+            $birthInput.value = $birthParagraph.textContent;
+
+            if ($genderParagraph.textContent === '남자') {
+                $genderInput.selectedIndex = 0;
+            } else {
+                $genderInput.selectedIndex = 1;
+            }
+
+            // 수정완료 버튼 보이기
+            $submitUpdateMemberButton.classList.remove("hidden");
+            $updateMemberButton.classList.add("hidden");
+        }
+    }
+
+
 }
+

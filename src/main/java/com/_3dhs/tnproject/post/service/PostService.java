@@ -20,7 +20,7 @@ public class PostService {
     private final CommentsMapper commentsMapper;
 
     @Transactional(readOnly = true)
-    public List<PostDTO> findListByParam(Map<String, Integer> params) {
+    public List<PostDTO> findListByParam(Map<String,Integer> params) {
         List<PostDTO> postList = postMapper.findListByParam(params);
         for (int i = 0; i < postList.size(); i++) {
             postList.get(i).setAttachmentList(postMapper.findAttListByPostCode(postList.get(i).getPostCode()));
@@ -48,24 +48,23 @@ public class PostService {
         postDTO.makeThumbnailPath();
 
         return postDTO;
+    }
 
-        @Transactional
-        public void updateFolders(List<FolderDTO> folderList) {
-            System.out.println("폴더리스트" + requestBody);
-            postMapper.updateFolders(requestBody);
-        }
+    @Transactional()
+    public void updateFolders(List<FolderDTO> requestBody) {
+        System.out.println("폴더리스트" + requestBody);
+        postMapper.updateFolders(requestBody);
+    }
 
-        @Transactional
-        public List<FolderDTO> findFolderList(int memberCode){
-            //System.out.println("코드 잘 넘어옴? : " + memberCode);
-            return postMapper.findFolderList(memberCode);
-        }
+    @Transactional
+    public List<FolderDTO> findFolderList(int memberCode) {
+        //System.out.println("코드 잘 넘어옴? : " + memberCode);
+        return postMapper.findFolderList(memberCode);
+    }
 
-        @Transactional
-        public void addDefaultFolder (List <FolderDTO> addDefaultFolders) {
-            postMapper.insertAddDefaultFolder(addDefaultFolders);
-            System.out.println("서비스단에 넘어온 addDefaultFolders : " + addDefaultFolders);
-
-        }
+    @Transactional
+    public void addDefaultFolder(List<FolderDTO> addDefaultFolders) {
+        postMapper.insertAddDefaultFolder(addDefaultFolders);
+        System.out.println("서비스단에 넘어온 addDefaultFolders : " + addDefaultFolders );
     }
 }

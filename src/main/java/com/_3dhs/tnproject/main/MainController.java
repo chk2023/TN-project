@@ -22,6 +22,6 @@ import java.net.Authenticator;
 public class MainController {
     @GetMapping({"/main", "/"})
     public String mainP() {
-        return "redirect:/member/login";
+        return "redirect:/timeline/list";
     }
 }

@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>hub</title>
-    <script type="text/javascript" src="/js/event.js"></script>
 </head>
 <body>
 <h1>각종View로 이동하는 TEST용 허브입니다.</h1>
@@ -15,6 +14,11 @@
 <hr>
 <h3> 관리자 메뉴</h3>
 <button onclick="location.href='/manager/report/list'">신고목록으로 이동</button>
+<br><br><br>
+<button onclick="location.href='/manager/admin/list'">관리 기록으로 이동</button>
+<br><br><br>
+<button onclick="location.href='/manager/member/list'">전체 회원으로 이동</button>
+<br><br><br>
 <hr>
 <h3>블로그 화면</h3>
 <a href="/post/main">블로그메인화면</a>
@@ -32,6 +36,7 @@
 </form>
 <button onclick="location.href='/common/makelikelist'">좋아요 리스트 추가하기</button>
 <hr>
+<input type="button" value="정보수정" id="updateMember">
 <input type="button" value="로그아웃" id="logout">
 <script>
     const message = '[[${message}]]';
@@ -39,10 +44,6 @@
         alert(message);
     }
 </script>
-<script src="/js/event.js"></script>
-<br>
-<br>
-
-
+<script src="/js/memberEvent.js"></script>
 </body>
 </html>
