@@ -46,7 +46,7 @@ public class ReportService {
     }
 
     public ReportDTO viewOneAdmList(ReportDTO reportDTO) {
-        return reportMapper.viewOneAdmList(reportDTO);
+        return reportMapper.viewOneAdmReport(reportDTO);
     }
 }
 

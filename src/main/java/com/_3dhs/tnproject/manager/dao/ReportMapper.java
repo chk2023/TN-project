@@ -16,5 +16,5 @@ public interface ReportMapper {
 
     List<ReportDTO> viewAllAdmList(ReportDTO reportDTO);
 
-    ReportDTO viewOneAdmList(ReportDTO reportDTO);
+    ReportDTO viewOneAdmReport(ReportDTO reportDTO);
 }

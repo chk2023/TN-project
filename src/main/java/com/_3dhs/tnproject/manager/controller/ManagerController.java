@@ -83,24 +83,25 @@ public class ManagerController {
 
     }
 
-    @GetMapping("/admin/detail")
+    @GetMapping("/manager/admin/detail")
     public String viewOneAdmList (ReportDTO reportDTO, Model model) {
-        ReportDTO admList = reportService.viewOneAdmList(reportDTO);
-        model.addAttribute("viewOneAdmReport", admList) ;
+        ReportDTO report = reportService.viewOneAdmList(reportDTO);
+        model.addAttribute("report", report) ;
+        System.out.println("report :" + report);
         return "/manager/admin/detail";
 
     }
 
 
 
-//    @GetMapping ("manager/member/list")
-//    public String viewAllMemebers (MemberDTO memberDTO, Model model) {
-//        List<MemberDTO> members = memberService.viewAllMembers(memberDTO);
-//        model.addAttribute("findAllMember", members);
-//
-//
-//        return "/manager/member/list ";
-//    }
+    @GetMapping ("manager/member/list")
+    public String viewAllMemebers (MemberDTO memberDTO, Model model) {
+        List<MemberDTO> members = memberService.viewAllMembers(memberDTO);
+        model.addAttribute("findAllMember", members);
+
+
+        return "/manager/member/list ";
+    }
 
 
 
