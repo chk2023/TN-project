@@ -8,11 +8,13 @@
 <table>
     <tr>
         <th>postCode</th>
+        <th>memberCode</th>
         <th>postTitle</th>
         <th>postText</th>
     </tr>
     <tr th:each="post : ${postList}">
         <td th:text="${post.postCode}"></td>
+        <td th:text="${post.memberCode}"></td>
         <td th:text="${post.postTitle}"></td>
         <td th:text="${post.postText}"></td>
     </tr>

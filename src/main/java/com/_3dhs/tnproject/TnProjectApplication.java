@@ -1,7 +1,7 @@
 package com._3dhs.tnproject;
 
 import com._3dhs.tnproject.search.controller.SearchController;
-import com._3dhs.tnproject.search.dao.DocumentMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -9,12 +9,9 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.util.ResourceUtils;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -26,9 +23,12 @@ import static com._3dhs.tnproject.search.controller.SearchController.INDEX_PATH;
 //@ComponentScan("com._3dhs.tnproject")
 @Slf4j
 public class TnProjectApplication implements CommandLineRunner {
+    private final SearchController searchController;
 
-    @Autowired
-    private SearchController controller;
+    public TnProjectApplication(SearchController searchController) {
+        this.searchController = searchController;
+    }
+
     public static void main(String[] args) {
         SpringApplication.run(TnProjectApplication.class, args);
     }
@@ -42,7 +42,7 @@ public class TnProjectApplication implements CommandLineRunner {
         IndexWriter writer = new IndexWriter(indexDir,config);
 
         //데이터베이스에서 데이터를 가져와 Lucene 인덱싱
-        List<Document> documents = controller.getAllDoc();
+        List<Document> documents = searchController.getAllDoc();
 
         log.info("documents의 사이즈 : {}",documents.size());
         documents.forEach(doc -> {
