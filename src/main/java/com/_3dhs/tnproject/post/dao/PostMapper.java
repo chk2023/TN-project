@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Mapper
 public interface PostMapper {
@@ -28,5 +29,5 @@ public interface PostMapper {
 
     List<PostDTO> findAllPostListForDoc();
 
-    List<PostDTO> findListByPostCodes(List<Integer> postCodes);
+    List<PostDTO> findListByPostCodes(Set<Integer> postCodes);
 }

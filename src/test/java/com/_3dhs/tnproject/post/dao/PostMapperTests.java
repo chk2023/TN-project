@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -34,7 +36,7 @@ public class PostMapperTests {
 
     @Test
     void findListByPostCodes_테스트() {
-        List<Integer> intList = new ArrayList<>();
+        Set<Integer> intList = new HashSet<>();
         for (int i = 0; i < 10; i++) {
             intList.add(i+1);
         }

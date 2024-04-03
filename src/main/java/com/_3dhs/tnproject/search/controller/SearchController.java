@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
@@ -27,7 +28,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @Slf4j
@@ -74,16 +77,28 @@ public class SearchController {
     }
 
     @PostMapping("/search/result")
-    public String search(String searchValue, Model model, RedirectAttributes attributes, HttpServletRequest request) {
-        List<Integer> postCodes = new ArrayList<>();
+    public String search(String searchValue,
+                         @RequestParam(required = false, defaultValue = "atMain")String searchType,
+                         @RequestParam(required = false, defaultValue = "0")int memberCode,
+                         Model model,
+                         RedirectAttributes attributes,
+                         HttpServletRequest request) {
+        Set<Integer> postCodes = new HashSet<>(); // 중복값을 자동으로 제거하기 위해서 Set사용
+        List<PostDTO> postList = new ArrayList<>();
         try (IndexReader reader = DirectoryReader.open(FSDirectory.open(Paths.get(INDEX_PATH)))){
             IndexSearcher searcher = new IndexSearcher(reader);
-            StandardAnalyzer analyzer = new StandardAnalyzer();
+            //StandardAnalyzer analyzer = new StandardAnalyzer();
             //QueryBuilder queryBuilder = new QueryBuilder(analyzer);
 
-            Query query = new WildcardQuery(new Term("postText", "*" + searchValue + "*"));
+            Query query1 = new WildcardQuery(new Term("postText", "*" + searchValue + "*"));
+            Query query2 = new WildcardQuery(new Term("postTitle", "*" + searchValue + "*"));
+            BooleanQuery.Builder booleanQueryBuilder = new BooleanQuery.Builder();
+            booleanQueryBuilder.add(query1, BooleanClause.Occur.SHOULD);
+            booleanQueryBuilder.add(query2, BooleanClause.Occur.SHOULD); // 해당 조건이 적용된 쿼리는 검색 결과에 포함되어도 되지만, 만족하지 않아도 됨
 
-            TopDocs result = searcher.search(query, 10);
+            Query query = booleanQueryBuilder.build();
+
+            TopDocs result = searcher.search(query, Integer.MAX_VALUE); //해당하는 모든 결과를 반환하도록 설정
             ScoreDoc[] hits = result.scoreDocs;
             for (ScoreDoc hit : hits) {
                 postCodes.add(Integer.parseInt(searcher.doc(hit.doc).get("postCode")));
@@ -91,17 +106,25 @@ public class SearchController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        //검색결과가 있으면 DB에서 값을 가져옴
         if (!postCodes.isEmpty()) {
-            List<PostDTO> postList = postService.findListByPostCodes(postCodes);
-            model.addAttribute("postList", postList);
-            return "/common/search_result"; //TODO : 테스트용 화면으로 연결중 수정바람
+            postList = postService.findListByPostCodes(postCodes);
         } else {
             attributes.addFlashAttribute("message", accessor.getMessage("search.noResult"));
             String tempURL = request.getHeader("Referer");
             return "redirect:" + tempURL;
         }
-
-
+        //검색이 블로그에서 이루어졌다면 블로그 주인의 맴버코드에 해당하지 않는 글 제거
+        if ("atBlog".equals(searchType)) {
+            for (int i = 0; i < postList.size(); i++) {
+                if (postList.get(i).getMemberCode() == memberCode) {
+                    postList.remove(i);
+                    i--;
+                }
+            }
+        }
+        model.addAttribute("postList", postList);
+        return "/common/search_result"; //TODO : 테스트용 화면으로 연결중 수정바람
     }
     @PostConstruct
     public void indexInitializer() {
