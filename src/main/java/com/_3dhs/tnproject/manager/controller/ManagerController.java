@@ -108,6 +108,8 @@ public class ManagerController {
 
 
 
+
+
 //    @GetMapping("/memberStop")
 //    public String memberStop(ReportDTO reportDTO, RedirectAttributes rttr) {
 //        System.out.println("memberStop 호출함");
