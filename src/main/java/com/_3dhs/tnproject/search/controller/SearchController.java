@@ -5,6 +5,7 @@ import com._3dhs.tnproject.post.service.PostService;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
@@ -33,6 +34,7 @@ public class SearchController {
     private final MessageSourceAccessor accessor;
 
     public static final String INDEX_PATH;
+    public static final IndexWriterConfig config = new IndexWriterConfig(new StandardAnalyzer());
 
     static {
         try {

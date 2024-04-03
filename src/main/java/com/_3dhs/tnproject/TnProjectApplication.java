@@ -18,6 +18,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import static com._3dhs.tnproject.search.controller.SearchController.INDEX_PATH;
+import static com._3dhs.tnproject.search.controller.SearchController.config;
 
 @SpringBootApplication
 //@ComponentScan("com._3dhs.tnproject")
@@ -38,7 +39,6 @@ public class TnProjectApplication implements CommandLineRunner {
         log.info("run 실행됨...");
         // Lucene 인덱스 생성
         Directory indexDir = FSDirectory.open(Paths.get(INDEX_PATH));
-        IndexWriterConfig config = new IndexWriterConfig(new StandardAnalyzer());
         IndexWriter writer = new IndexWriter(indexDir,config);
 
         //데이터베이스에서 데이터를 가져와 Lucene 인덱싱
