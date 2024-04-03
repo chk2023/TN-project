@@ -41,12 +41,22 @@ public class ReportService {
     }
 
 
-    public List<ReportDTO> viewAllAdmList(ReportDTO reportDTO) {
-        return reportMapper.viewAllAdmList(reportDTO);
+    public List<ReportDTO> viewAllAdmList() {
+        return reportMapper.viewAllAdmList();
     }
 
     public ReportDTO findOneReportCord(Integer reportCode) {
         return reportMapper.viewOneAdmReport(reportCode);
+    }
+
+
+    public List<MemberDTO> checkAllMember() {
+        return reportMapper.checkAllMember();
+    }
+
+
+    public MemberDTO checkOneMember(MemberDTO memberDTO) {
+        return reportMapper.checkOneMember(memberDTO);
     }
 }
 

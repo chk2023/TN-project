@@ -93,16 +93,18 @@
                     <th> 유저 ID</th>
                     <th> 유저 생년월일 </th>
                     <th> 계정 상태 </th>
-
+                    <th> 계정 등급 </th>
+                    <th> 계정 삭제 여부 </th>
                 </tr>
 
-
-                <tr th:each=" memberDTO: ${ memberList }"
-                    th:onclick="|location.href='/manager/member?memberCode=${memberDTO.memberCode}'|">
+                <tr th:each=" memberDTO: ${members}"
+                    th:onclick="|location.href='/manager/member/detail?memberCode=${memberDTO.memberCode}'|">
                     <td th:text="${ memberDTO.memberCode }"></td>
                     <td th:text="${ memberDTO.memberId}"></td>
                     <td th:text="${ memberDTO.memberBirth}"></td>
                     <td th:text="${ memberDTO.memberStatus}"></td>
+                    <td th:text="${ memberDTO.memberAuthority}"></td>
+                    <td th:text="${ memberDTO.isDeleted}"></td>
                 </tr>
 
 
