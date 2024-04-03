@@ -60,6 +60,7 @@ public class TestController {
     @GetMapping("/common/makepassword")
     public void gotoMakePasswordPage() {
     }
+
     @PostMapping("/common/makepassword")
     public String makePassword(String pass, Model model) {
         String password = encoder.encode(pass);
@@ -71,16 +72,21 @@ public class TestController {
     public String makeLikeList(RedirectAttributes attributes) {
         int memberCode = 1;
         for (int i = 26; i <= 80; i++) {
-            int rd = (int)(Math.random()*5) +1;
+            int rd = (int) (Math.random() * 5) + 1;
             for (int j = 0; j <= rd; j++) {
-                log.info("글 {}에 {}가 좋아요를 헀습니다 반복횟수: {}",i,memberCode,j);
+                log.info("글 {}에 {}가 좋아요를 헀습니다 반복횟수: {}", i, memberCode, j);
                 service.makeLikeList(i, memberCode);
                 if (++memberCode >= 13) {
-                    memberCode =1;
+                    memberCode = 1;
                 }
             }
         }
-        attributes.addFlashAttribute("message",messageSourceAccessor.getMessage("test.makelikelist"));
+        attributes.addFlashAttribute("message", messageSourceAccessor.getMessage("test.makelikelist"));
         return "redirect:/common/testhub";
+    }
+
+    @GetMapping("/common/temp")
+    public void getTempPage() {
+
     }
 }

@@ -27,4 +27,6 @@ public interface PostMapper {
     PostDTO findPostByPostCode(int postCode);
 
     List<PostDTO> findAllPostListForDoc();
+
+    List<PostDTO> findListByPostCodes(List<Integer> postCodes);
 }

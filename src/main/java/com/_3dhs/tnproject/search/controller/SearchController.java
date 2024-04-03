@@ -3,18 +3,29 @@ package com._3dhs.tnproject.search.controller;
 import com._3dhs.tnproject.post.dto.PostDTO;
 import com._3dhs.tnproject.post.service.PostService;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
-import org.apache.lucene.index.IndexOptions;
-import org.apache.lucene.index.IndexableFieldType;
+import org.apache.lucene.index.*;
+import org.apache.lucene.search.*;
+import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.util.QueryBuilder;
+import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.ResourceUtils;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +35,7 @@ import java.util.List;
 public class SearchController {
 
     private final PostService postService;
+    private final MessageSourceAccessor accessor;
 
     public static final String INDEX_PATH;
 
@@ -59,6 +71,37 @@ public class SearchController {
         }
 
         return resultList;
+    }
+
+    @PostMapping("/search/result")
+    public String search(String searchValue, Model model, RedirectAttributes attributes, HttpServletRequest request) {
+        List<Integer> postCodes = new ArrayList<>();
+        try (IndexReader reader = DirectoryReader.open(FSDirectory.open(Paths.get(INDEX_PATH)))){
+            IndexSearcher searcher = new IndexSearcher(reader);
+            StandardAnalyzer analyzer = new StandardAnalyzer();
+            //QueryBuilder queryBuilder = new QueryBuilder(analyzer);
+
+            Query query = new WildcardQuery(new Term("postText", "*" + searchValue + "*"));
+
+            TopDocs result = searcher.search(query, 10);
+            ScoreDoc[] hits = result.scoreDocs;
+            for (ScoreDoc hit : hits) {
+                postCodes.add(Integer.parseInt(searcher.doc(hit.doc).get("postCode")));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        if (!postCodes.isEmpty()) {
+            List<PostDTO> postList = postService.findListByPostCodes(postCodes);
+            model.addAttribute("postList", postList);
+            return "/common/search_result"; //TODO : 테스트용 화면으로 연결중 수정바람
+        } else {
+            attributes.addFlashAttribute("message", accessor.getMessage("search.noResult"));
+            String tempURL = request.getHeader("Referer");
+            return "redirect:" + tempURL;
+        }
+
+
     }
     @PostConstruct
     public void indexInitializer() {

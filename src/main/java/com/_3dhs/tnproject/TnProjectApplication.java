@@ -43,10 +43,11 @@ public class TnProjectApplication implements CommandLineRunner {
 
         //데이터베이스에서 데이터를 가져와 Lucene 인덱싱
         List<Document> documents = controller.getAllDoc();
+
         log.info("documents의 사이즈 : {}",documents.size());
         documents.forEach(doc -> {
             try {
-                log.info("doc 추가됨 : {}",doc);
+                log.info("doc 추가됨 : {}",doc.get("postTitle"));
                 writer.addDocument(doc);
             } catch (IOException e) {
                 throw new RuntimeException(e);

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -29,5 +30,16 @@ public class PostMapperTests {
         List<PostDTO> testList = mapper.findAllPostListForDoc();
         testList.forEach(System.out::println);
         assertNotNull(testList);
+    }
+
+    @Test
+    void findListByPostCodes_테스트() {
+        List<Integer> intList = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            intList.add(i+1);
+        }
+        List<PostDTO> postDTOList = mapper.findListByPostCodes(intList);
+        postDTOList.forEach(System.out::println);
+        assertNotNull(postDTOList);
     }
 }
