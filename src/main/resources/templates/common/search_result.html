@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>테스트용 검색결과</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th>postCode</th>
+        <th>memberCode</th>
+        <th>postTitle</th>
+        <th>postText</th>
+    </tr>
+    <tr th:each="post : ${postList}">
+        <td th:text="${post.postCode}"></td>
+        <td th:text="${post.memberCode}"></td>
+        <td th:text="${post.postTitle}"></td>
+        <td th:text="${post.postText}"></td>
+    </tr>
+</table>
+</body>
+</html>
