@@ -47,7 +47,6 @@ public class PostService {
 
     @Transactional
     public List<FolderDTO> findFolderList(int memberCode) {
-        //System.out.println("코드 잘 넘어옴? : " + memberCode);
         return postMapper.findFolderList(memberCode);
     }
 
@@ -61,7 +60,9 @@ public class PostService {
         return postMapper.findPostLikeCount(memberCode);
     }
 
-    public List<PostDTO> findPostList(int memberCode) {
-        return postMapper.findPostList(memberCode);
+    @Transactional
+    public List<PostDTO> findPostList(int memberCode, String tabMenu) {
+        return postMapper.findPostList(memberCode, tabMenu);
     }
+
 }

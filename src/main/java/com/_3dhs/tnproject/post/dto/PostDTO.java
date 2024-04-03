@@ -24,6 +24,7 @@ public class PostDTO {
     private LocalDateTime postModDate;
     private LocalDateTime postDeleDate;
     private boolean isDeleted;
+    private boolean postIsFixed;
     private int folderCode;
     private ProfileDTO profile;
     private int likeCount;
@@ -45,4 +46,7 @@ public class PostDTO {
     public void makeThumbnailPath() {
        thumbnailPath =  getAttachmentPath(0);
     }
+
+
+
 }

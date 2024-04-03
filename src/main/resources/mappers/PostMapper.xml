@@ -172,6 +172,7 @@
             post_wri_date,
             post_status,
             post_is_deleted,
+            post_is_fixed,
             profile_code,
             profile_nickname,
             profile_statmsg,
@@ -180,8 +181,18 @@
             cmt_count
         FROM
             post_view
-        WHERE
+        <where>
             po_member_code = #{memberCode}
+            <if test='tabMenu == "고정글"'>
+                AND post_is_fixed = 1
+            </if>
+            <if test='tabMenu == "최신순"'>
+            </if>
+            <if test='tabMenu == "♡"'>
+            </if>
+        </where>
+        ORDER BY
+            post_wri_date DESC;
     </select>
 
 </mapper>

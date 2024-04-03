@@ -156,7 +156,6 @@ function getDragAfterElement(container, y) {
 }
 
 async function sendFolderData() {
-    console.log("뭐지?? 일단 로그 찍어봐")
     let folderInfoList = [];
     $feList.querySelectorAll("li:not(.fixed)").forEach(function (li, index){
         const folderCode = li.querySelector('input[type="hidden"]').value;

@@ -30,5 +30,5 @@ public interface PostMapper {
 
     PostDTO findPostLikeCount(int memberCode);
 
-    List<PostDTO> findPostList(int memberCode);
+    List<PostDTO> findPostList(int memberCode, String tabMenu);
 }

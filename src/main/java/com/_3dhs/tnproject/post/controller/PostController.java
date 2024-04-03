@@ -5,7 +5,9 @@ import com._3dhs.tnproject.member.dto.ProfileDTO;
 import com._3dhs.tnproject.member.service.MemberService;
 import com._3dhs.tnproject.post.dto.FolderDTO;
 import com._3dhs.tnproject.post.dto.PostDTO;
+import com._3dhs.tnproject.post.dto.TabSearchDTO;
 import com._3dhs.tnproject.post.service.PostService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.parameters.P;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,12 +30,13 @@ public class PostController {
     private final MemberService memberService;
 
     @GetMapping("/main")
-    public void blogMainPage(int memberCode, Model model) {
+    public void blogMainPage(int memberCode, String tabMenu, Model model) {
         List<FolderDTO> folderList = postService.findFolderList(memberCode);
         MemberDTO memberDTO = memberService.findMainBlogMemberInfo(memberCode);
         PostDTO postViewLikeCount =  postService.findPostLikeCount(memberCode);
-        List<PostDTO> postList =  postService.findPostList(memberCode);
-        System.out.println(postViewLikeCount);
+        List<PostDTO> postList =  postService.findPostList(memberCode, tabMenu);
+        memberDTO.setMemberCode(memberCode);
+        System.out.println(memberDTO);
         model.addAttribute("folderList", folderList);
         model.addAttribute("member", memberDTO);
         model.addAttribute("postView", postViewLikeCount);
@@ -81,6 +85,15 @@ public class PostController {
     public void blogLikeListPage(int memberCode, Model model) {
         List<PostDTO> likeList = postService.findLikeListPostByMemberCode(memberCode);
         model.addAttribute("likeList", likeList);
+    }
+    @GetMapping("/load")
+    public @ResponseBody List<PostDTO> findTabMenuPostList(@ModelAttribute TabSearchDTO tabSearchDTO) {
+
+        System.out.println("tabSearchDTO 값 : " + tabSearchDTO);
+        List<PostDTO> postList =  postService.findPostList(tabSearchDTO.getMemberCode(), tabSearchDTO.getTabMenu());
+        //model.addAttribute("postList", postList);
+        System.out.println("postList : " + postList);
+        return postList;
     }
     @PostMapping("/folder_edit")
     public @ResponseBody String folderEditList(@AuthenticationPrincipal MemberDTO memberDTO, @RequestBody List<FolderDTO> requestBody){

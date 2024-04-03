@@ -7,68 +7,86 @@
     <link rel="stylesheet" href="/css/post.css">
 </head>
 <body>
-    <div class="wrap">
-        <header>
-            <div th:replace="~{common/profile.html}"></div>
-            <nav th:replace="~{common/navigation.html}"></nav>
-        </header>
-        <aside>
-            <div class="folder">
-                <strong class="minTit">폴더</strong>
-                <ul>
-                    <li class="AllList"><a href="#"><img src="/image/icon_folder.png" alt="아이콘">전체목록(<span>56</span>)</a></li>
-                    <th:block th:object="${folderList}" th:each="folder, start : ${folderList}">
-                        <li th:classappend="${folder.folderName == 'NoName'} ? 'hidden'" draggable="true"><input type="hidden" th:value="${folder.folderCode}"/><img th:src="${folder.folderIconPath}" alt="폴더 아이콘"> <span th:text="${folder.folderName}"></span></li>
-                    </th:block>
-                </ul>
-                <button class="folderSetBtn" onClick="location.href='/post/folder_edit'"><img src="/image/icon_folder_setting.png" alt="폴더 편집 버튼"></button>
+<div class="wrap">
+    <header>
+        <div th:replace="~{common/profile.html}"></div>
+        <nav th:replace="~{common/navigation.html}"></nav>
+    </header>
+    <aside>
+        <div class="folder">
+            <strong class="minTit">폴더</strong>
+            <ul>
+                <li class="AllList"><a href="#"><img src="/image/icon_folder.png" alt="아이콘">전체목록(<span>56</span>)</a>
+                </li>
+                <th:block th:object="${folderList}" th:each="folder, start : ${folderList}">
+                    <li th:classappend="${folder.folderName == 'NoName'} ? 'hidden'" draggable="true"><input
+                            type="hidden" th:value="${folder.folderCode}"/><img th:src="${folder.folderIconPath}"
+                                                                                alt="폴더 아이콘"> <span
+                            th:text="${folder.folderName}"></span></li>
+                </th:block>
+            </ul>
+            <button class="folderSetBtn" onClick="location.href='/post/folder_edit'"><img
+                    src="/image/icon_folder_setting.png" alt="폴더 편집 버튼"></button>
+        </div>
+    </aside>
+    <main>
+        <form class="title">
+            <button class="backBtn"><img src="/image/btn_arrow.png" alt="뒤로가기 버튼"></button>
+            <div>
+                <h1 th:text="${member.profile.profileNickname}">닉네임</h1>
+                <p><span th:text="${postView.postCount}">0000</span> 게시물</p>
             </div>
-        </aside>
-        <main>
-            <form class="title">
-                <button class="backBtn"><img src="/image/btn_arrow.png" alt="뒤로가기 버튼"></button>
-                <div>
-                    <h1 th:text="${member.profile.profileNickname}">닉네임</h1>
-                    <p><span th:text="${postView.postCount}">0000</span> 게시물</p>
+            <input class="search_input" type="text" placeholder="검색어를 입력하세요">
+            <button class="searchBtn"><img src="/image/btn_search.png" alt="검색 버튼"></button>
+            <button class="closeBtn"><img src="/image/btn_close.png" alt="닫기 버튼"></button>
+        </form>
+        <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
+            <div class="mainProfile">
+                <div class="mprofBackground">
+                    <img th:src="${member.profile.profileBgPath}" alt="사용자 설정 프로필 배경화면 사진">
                 </div>
-                <input class="search_input" type="text" placeholder="검색어를 입력하세요">
-                <button class="searchBtn"><img src="/image/btn_search.png" alt="검색 버튼"></button>
-                <button class="closeBtn"><img src="/image/btn_close.png" alt="닫기 버튼"></button>
-            </form>
-            <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
-                <div class="mainProfile">
-                    <div class="mprofBackground">
-                        <img th:src="${member.profile.profileBgPath}" alt="사용자 설정 프로필 배경화면 사진">
+                <div class="mprofStatus">
+                    <button class="optionBtn"><img src="/image/icon_option.png" alt="프로필 옵션 버튼"></button>
+                    <ul class="optionBox">
+                        <li><a>사용자 차단하기</a></li>
+                        <li><a>블로그 공유하기</a></li>
+                    </ul>
+                    <div class="prof_photo"><img th:src="${member.profile.profileImgPath}" alt="프로필 사진"></div>
+                    <div class="prof_txt">
+                        <strong th:text="${member.profile.profileNickname}">닉네임</strong>
+                        <span th:text="${member.profile.profileStatmsg}">상태메시지</span>
                     </div>
-                    <div class="mprofStatus">
-                        <button class="optionBtn"><img src="/image/icon_option.png" alt="프로필 옵션 버튼"></button>
-                        <ul class="optionBox">
-                            <li><a>사용자 차단하기</a></li>
-                            <li><a>블로그 공유하기</a></li>
-                        </ul>
-                        <div class="prof_photo"><img th:src="${member.profile.profileImgPath}" alt="프로필 사진"></div>
-                        <div class="prof_txt">
-                            <strong th:text="${member.profile.profileNickname}">닉네임</strong>
-                            <span th:text="${member.profile.profileStatmsg}">상태메시지</span>
+                    <div class="prof_info">
+                        <div>
+                            가입일 : <span th:text="${#temporals.format(member.memberSubDate, 'yyyy년 MM월 dd일')}">2020년10월20일</span>
+                            좋아요수 : <span th:text="${postView.likeCount}">1,000</span>
                         </div>
-                        <div class="prof_info">
-                            <div>
-                                가입일 : <span th:text="${#temporals.format(member.memberSubDate, 'yyyy년 MM월 dd일')}">2020년10월20일</span>
-                                좋아요수 : <span th:text="${postView.likeCount}">1,000</span>
-                            </div>
-                            <button th:if="${#strings.equals(param.memberCode, #strings.toString(#authentication.principal.memberCode))}" class="btn" onClick="location.href='/post/write'">글 쓰기</button>
-                        </div>
+                        <button th:if="${#strings.equals(param.memberCode, #strings.toString(#authentication.principal.memberCode))}"
+                                class="btn" onClick="location.href='/post/write'">글 쓰기
+                        </button>
                     </div>
                 </div>
-                <ul class="tabMenu">
-                    <li class="active"><button>고정글</button></li>
-                    <li><button>최신순</button></li>
-                    <li><button>♡</button></li>
-                    <li class="viewBtn"><button><img src="/image/btn_view_type.png" alt="보기타입 선택버튼"></button></li>
-                </ul>
+            </div>
+            <ul class="tabMenu">
+                <li class="active">
+<!--                    <button th:onclick="'location.href=\'/post/main?memberCode=' + ${member.memberCode} + '&amp;tabMenu=고정글\''">고정글</button>-->
+                    <button>고정글</button>
+                </li>
+                <li>
+<!--                    <button th:onclick="'location.href=\'/post/main?memberCode=' + ${member.memberCode} + '&amp;tabMenu=최신순\''">최신순</button>-->
+                    <button>최신순</button>
+                </li>
+                <li>
+<!--                    <button th:onclick="'location.href=\'/post/main?memberCode=' + ${member.memberCode} + '&amp;tabMenu=♡\''">♡</button>-->
+                    <button>♡</button>
+                </li>
+                <li class="viewBtn">
+                    <button><img src="/image/btn_view_type.png" alt="보기타입 선택버튼"></button>
+                </li>
+            </ul>
 
-                <ul class="blogList">
-                    <th:block th:object="${postList}" th:each="post, start : ${postList}">
+            <ul class="blogList">
+                <th:block th:object="${postList}" th:each="post, start : ${postList}">
                     <li>
                         <div class="list_head">
                             <div class="prof_photo">
@@ -77,8 +95,9 @@
                             </div>
                             <div>
                                 <div>
-                                    <strong th:text="${post.profile.profileNickname}" class="blog_user_name">조한결</strong>
-                                    <span th:text="${post.postWriDate}" class="blog_user_birth">2월12일</span>
+                                    <strong th:text="${post.profile.profileNickname}"
+                                            class="blog_user_name">조한결</strong>
+                                    <span th:text="${#temporals.format(post.postWriDate, 'MM월 dd일')}" class="blog_user_birth">2월12일</span>
                                 </div>
                                 <span th:text="${post.profile.profileStatmsg}" class="status_msg">오늘도 나는 눈물을 흘린다 또르륵오늘도 나는 눈물을 흘린다 또르륵오늘도 나는 눈물을 흘린다 또르륵</span>
                             </div>
@@ -90,7 +109,8 @@
                         </div>
                         <div class="list_body">
                             <div>
-                                <strong th:text="${post.postTitle}" class="contentTit">글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목</strong>
+                                <strong th:text="${post.postTitle}"
+                                        class="contentTit">글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목</strong>
                                 <div class="contentsTxt">
                                     <p th:text="${post.postText}">
                                         본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
@@ -112,15 +132,130 @@
                                 </div>
                             </div>
                             <div class="thumbnailPhoto">
-                                <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2F20160310_12%2Flee_h_i2_1457596672049c0vMY_JPEG%2Ftumblr_nxt9emqtjP1uh04bco1_540.jpg&type=sc960_832" alt="썸네일 이미지">
+                                <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2F20160310_12%2Flee_h_i2_1457596672049c0vMY_JPEG%2Ftumblr_nxt9emqtjP1uh04bco1_540.jpg&type=sc960_832"
+                                     alt="썸네일 이미지">
                             </div>
                         </div>
                     </li>
-                    </th:block>
-                </ul>
+                </th:block>
+            </ul>
+            <script>
+                const $tabMenu = document.querySelector(".tabMenu");
+                $tabMenu.addEventListener('click', tabMenuClick);
 
-            </section>
-        </main>
-    </div>
+                function tabMenuClick(e) {
+                    let thisEl = e.target;
+                    let tabMenu = "";
+                    if (thisEl.tagName === 'BUTTON' && !thisEl.parentElement.classList.contains("viewBtn")) {
+                        const $li = $tabMenu.querySelectorAll("li:not(.viewBtn)");
+                        $li.forEach((li) => {
+                            li.classList.remove("active");
+                        })
+                        thisEl.parentElement.classList.add("active");
+                        tabMenu = thisEl.textContent;
+                        tabMenuPostList(tabMenu);
+                    }
+                }
+
+                document.addEventListener('click', function (e) {
+                    // 모든 .optionBtn 요소를 선택
+                    const $optionBtn = document.querySelectorAll(".optionBtn");
+
+                    // 클릭된 요소 또는 그 조상 중 .optionBtn을 찾음
+                    const targetOptionBtn = e.target.closest(".optionBtn");
+
+                    if (targetOptionBtn) {
+                        // .optionBtn 또는 그 내부에서 클릭이 발생한 경우
+                        // 먼저 모든 .optionBtn에서 "active" 클래스 제거
+                        $optionBtn.forEach((option) => {
+                            option.classList.remove("active");
+                        });
+                        // 클릭된 .optionBtn에만 "active" 클래스 추가
+                        targetOptionBtn.classList.add("active");
+                    } else {
+                        // .optionBtn이 아닌 다른 곳을 클릭한 경우
+                        // 모든 .optionBtn에서 "active" 클래스 제거
+                        $optionBtn.forEach((option) => {
+                            option.classList.remove("active");
+                        });
+                    }
+                });
+
+                async function tabMenuPostList(tabMenu) {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const memberCode = urlParams.get('memberCode');
+                    const response = await fetch('/post/load?memberCode='+memberCode+'&tabMenu='+tabMenu);
+                    const result = await response.json();
+
+                    const listContainer = document.querySelector(".blogList"); // 가정: 이 ID를 가진 요소가 게시물을 담을 컨테이너
+                    listContainer.innerHTML = ''; // 컨테이너 초기화
+
+                    result.forEach(post => {
+                        // 'post.postWriDate'를 Date 객체로 변환
+                        const date = new Date(post.postWriDate);
+                        const $li = document.createElement('li');
+                        const $fragment = document.createDocumentFragment();
+
+                        // 날짜 형식을 "MM월 dd일"로 지정
+                        const formattedDate = date.toLocaleDateString("ko-KR", {
+                            month: '2-digit', // '2-digit' 옵션으로 월을 MM 형식으로 표시
+                            day: '2-digit', // '2-digit' 옵션으로 일을 dd 형식으로 표시
+                        }).replace('. ', '월 ').replace('.', '일'); // 'MM. dd.' 형식을 'MM월 dd일' 형식으로 변환
+                        const postElement = `
+                                                <div class="list_head">
+                                                    <div class="prof_photo">
+                                                        <img src="${escapeHTML(post.thumbnailPath ? post.thumbnailPath : '/image/icon_user.png')}" alt="프로필 사진">
+                                                    </div>
+                                                    <div>
+                                                        <div>
+                                                            <strong class="blog_user_name">${escapeHTML(post.profile.profileNickname)}</strong>
+                                                            <span class="blog_user_birth">${escapeHTML(formattedDate)}</span>
+                                                        </div>
+                                                        <span class="status_msg">${escapeHTML(post.profile.profileStatmsg)}</span>
+                                                    </div>
+                                                    <button class="optionBtn"><img src="/image/icon_option.png" alt="글 옵션 버튼"></button>
+                                                    <ul class="optionBox">
+                                                        <li><a>글 신고하기</a></li>
+                                                        <li><a>글 관심없음</a></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="list_body">
+                                                <div>
+                                                    <strong class="contentTit">${escapeHTML(post.postTitle)}</strong>
+                                                    <div class="contentsTxt">
+                                                        <p>${escapeHTML(post.postText)}</p>
+                                                    </div>
+                                                    <div class="showLikeAndComments">
+                                                        <button class="commentsBtn">
+                                                            <img src="/image/icon_comment.png" alt="댓글 버튼 아이콘">
+                                                            <span>${escapeHTML(post.likeCount)}</span>+
+                                                        </button>
+                                                        <button class="likeBtn active">
+                                                            <img src="/image/icon_like.png" alt="좋아요 버튼 아이콘">
+                                                            <span>${escapeHTML(post.cmtCount)}</span>k
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                        `;
+                        $li.insertAdjacentHTML('beforeend', postElement);
+                        $fragment.appendChild($li);
+                        listContainer.appendChild($fragment);
+                    });
+                }
+
+                function escapeHTML(text) {
+                    var map = {
+                        '&': '&amp;',
+                        '<': '&lt;',
+                        '>': '&gt;',
+                        '"': '&quot;',
+                        "'": '&#039;'
+                    };
+                    return String(text).replace(/[&<>"']/g, function(m) { return map[m]; });
+                }
+            </script>
+        </section>
+    </main>
+</div>
 </body>
 </html>
