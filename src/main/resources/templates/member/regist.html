@@ -16,7 +16,7 @@
 <main>
     <div class="title">
         <button class="backBtn" onclick="goToMainPage()">
-            <img src="/image/btn_arrow.png" alt="뒤로가기 버튼">
+            <img src="/image/btn_arrow.png"<!--alt="뒤로가기 버튼"-->>
         </button>
         <script>
             function goToMainPage() {
@@ -69,6 +69,7 @@
             <hr><br><br><br><br><br><br>
             <label class="label">이메일 인증</label>
             <input type="text" name="code" id="code" placeholder="인증번호 입력">
+            <input type="button" value="인증코드 받기" id="verCode" class="registBtn">
             <input type="button" value="인증 확인" name="confirmBtn" id="confirmBtn" class="registBtn"><br>
         </div>
         <input type="text" id="confirm" name="confirm" style="display: none" th:value="${generatedCode}">

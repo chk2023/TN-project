@@ -290,7 +290,7 @@ header, aside {
 
 .title.search input {
     padding-left: 40px;
-    background-image: url("../image/btn_search.png");
+    background-image: url("../images/btn_search.png");
     background-position: left center;
 }
 
@@ -350,7 +350,7 @@ header, aside {
 }
 
 .tissueCount {
-    background-image: url(../image/icon_tissue.png);
+    background-image: url(../images/icon_tissue.png);
     background-position: left center;
     padding-left: 25px;
     margin-left: 15px;

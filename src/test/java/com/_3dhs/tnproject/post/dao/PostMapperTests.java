@@ -6,7 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -22,5 +25,23 @@ public class PostMapperTests {
         System.out.println("memberCode : " + rdCode);
         testList.forEach(System.out::println);
         assertNotNull(testList);
+    }
+
+    @Test
+    void findAllPostListForDoc_테스트() {
+        List<PostDTO> testList = mapper.findAllPostListForDoc();
+        testList.forEach(System.out::println);
+        assertNotNull(testList);
+    }
+
+    @Test
+    void findListByPostCodes_테스트() {
+        Set<Integer> intList = new HashSet<>();
+        for (int i = 0; i < 10; i++) {
+            intList.add(i+1);
+        }
+        List<PostDTO> postDTOList = mapper.findListByPostCodes(intList);
+        postDTOList.forEach(System.out::println);
+        assertNotNull(postDTOList);
     }
 }

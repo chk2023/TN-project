@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Mapper
 public interface PostMapper {
@@ -25,4 +26,8 @@ public interface PostMapper {
     void insertAddDefaultFolder(List<FolderDTO> addDefaultFolders);
 
     PostDTO findPostByPostCode(int postCode);
+
+    List<PostDTO> findAllPostListForDoc();
+
+    List<PostDTO> findListByPostCodes(Set<Integer> postCodes);
 }
