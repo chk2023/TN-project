@@ -66,3 +66,17 @@ input {
 #mail_input.form-group {
     padding-top: 50px;
 }
+
+#registForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.inputBox {
+    align-content: center;
+}
+
+.label {
+    width: 100px; /* 적절한 너비 설정 */
+    margin-right: 10px; /* 라벨과 입력창 사이 간격 설정 */
+}
