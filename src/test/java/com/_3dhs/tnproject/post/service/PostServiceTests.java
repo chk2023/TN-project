@@ -30,4 +30,6 @@ public class PostServiceTests {
         int result = postService.findLikeListPostByMemberCode(12).size();
         assertEquals(result, 18);
     }
+
+
 }

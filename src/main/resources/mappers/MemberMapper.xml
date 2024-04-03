@@ -90,30 +90,6 @@
 
 
 
-    <select id="viewAllMembers" resultType="com._3dhs.tnproject.member.dto.MemberDTO">
-        SELECT
-            member_code,
-            member_id,
-            member_pwd,
-            member_gender,
-            member_age,
-            member_birth,
-            member_subdate,
-            member_status,
-            have_tissue,
-            member_authority,
-            dormant_trans_date,
-            suspend_trans_date,
-            delete_trans_date,
-            is_deleted
-
-        FROM
-            tbl_member
-
-
-    </select>
-
-
     <update id="updateTissue">
         UPDATE
             tbl_member
@@ -149,6 +125,18 @@
         <where>
             <if test="memberCode != null">
                 member_code = #{ memberCode }
+            </if>
+        </where>
+    </update>
+
+    <update id="updatePwd">
+        UPDATE
+            tbl_member
+        SET
+            member_pwd = #{ memberPwd }
+        <where>
+            <if test="memberId != null">
+                member_Id = #{ memberId }
             </if>
         </where>
     </update>

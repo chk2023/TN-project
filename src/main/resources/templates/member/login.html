@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>main page</title>
+    <title>TISSUE NETWORK</title>
+<!--    <link rel="stylesheet" href="/css/common.css">-->
+    <link rel="stylesheet" href="/css/member/login.css">
     <script type="text/javascript" src="/js/memberEvent.js"></script>
     <script>
         const message = `[[${message}]]`;
@@ -15,27 +17,37 @@
     </style>
 </head>
 <body>
-main page
-<hr>
-<p>
-    [관리자]<br>
-    ID : 1 <br>
-    PW : 1 <br>
-    [일반 유저] <br>
-    ID : (DB참고) <br>
-    PW : pass01 <br>
-    <b>머지 시에는 DB테이블이 바뀌었을 수 도 있으니 모든 테이블 드랍 후 다시 구성해주세요</b>
-</p>
-<h1>로그인</h1>
-<h3>테스트용 ID</h3>
+<!--<p>-->
+<!--    [관리자]<br>-->
+<!--    ID : 1 <br>-->
+<!--    PW : 1 <br>-->
+<!--    [일반 유저] <br>-->
+<!--    ID : (DB참고) <br>-->
+<!--    PW : pass01 <br>-->
+<!--    <b>머지 시에는 DB테이블이 바뀌었을 수 도 있으니 모든 테이블 드랍 후 다시 구성해주세요</b>-->
+<!--</p>-->
 
-<form action="/member/login" method="post" id="loginForm" name="loginForm">
-    <label>ID : </label>
-    <input type="text" name="memberId">
-    <label>PWD : </label>
-    <input type="password" name="memberPwd">
-    <input type="submit" value=" 로그인" id="loginSubmit">
-</form>
-    <button id="regist">회원가입</button>
+<div class="container">
+
+    <div id="title">
+        <h1>티슈 인맥</h1>
+    </div>
+    <div class="wrapper">
+    <div id="login">
+        <form action="/member/login" method="post" id="loginForm" name="loginForm">
+            <label>아이디 </label>
+            <input type="text" name="memberId" placeholder="아이디"><br>
+            <label>비밀번호 </label>
+            <input type="password" name="memberPwd" placeholder="비밀번호">
+            <div class="button-group">
+                <a href="/member/findPwd">비밀번호를 잊으셨나요?</a>
+                <input type="submit" value=" 로그인" id="loginSubmit">
+                <input type="button" id="regist" value="회원가입">
+            </div>
+        </form>
+    </div>
+    </div>
+</div>
+
 </body>
 </html>

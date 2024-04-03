@@ -19,14 +19,15 @@
                 <li class="AllList"><a href="#"><img src="/image/icon_folder.png" alt="아이콘">전체목록(<span>56</span>)</a>
                 </li>
                 <th:block th:object="${folderList}" th:each="folder, start : ${folderList}">
-                    <li th:classappend="${folder.folderName == 'NoName'} ? 'hidden'" draggable="true"><input
-                            type="hidden" th:value="${folder.folderCode}"/><img th:src="${folder.folderIconPath}"
-                                                                                alt="폴더 아이콘"> <span
-                            th:text="${folder.folderName}"></span></li>
+                    <li th:classappend="${folder.folderName == 'NoName'} ? 'hidden'" draggable="true">
+                        <input type="hidden" th:value="${folder.folderCode}"/>
+                        <img th:src="${folder.folderIconPath}" alt="폴더 아이콘">
+                        <span th:text="${folder.folderName}"></span>
+                    </li>
                 </th:block>
             </ul>
-            <button class="folderSetBtn" onClick="location.href='/post/folder_edit'"><img
-                    src="/image/icon_folder_setting.png" alt="폴더 편집 버튼"></button>
+            <button class="folderSetBtn" onClick="location.href='/post/folder_edit'">
+            <img src="/image/icon_folder_setting.png" alt="폴더 편집 버튼"></button>
         </div>
     </aside>
     <main>
@@ -95,8 +96,7 @@
                             </div>
                             <div>
                                 <div>
-                                    <strong th:text="${post.profile.profileNickname}"
-                                            class="blog_user_name">조한결</strong>
+                                    <strong th:text="${post.profile.profileNickname}" class="blog_user_name">조한결</strong>
                                     <span th:text="${#temporals.format(post.postWriDate, 'MM월 dd일')}" class="blog_user_birth">2월12일</span>
                                 </div>
                                 <span th:text="${post.profile.profileStatmsg}" class="status_msg">오늘도 나는 눈물을 흘린다 또르륵오늘도 나는 눈물을 흘린다 또르륵오늘도 나는 눈물을 흘린다 또르륵</span>
@@ -109,8 +109,7 @@
                         </div>
                         <div class="list_body">
                             <div>
-                                <strong th:text="${post.postTitle}"
-                                        class="contentTit">글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목</strong>
+                                <strong th:text="${post.postTitle}" class="contentTit">글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목</strong>
                                 <div class="contentsTxt">
                                     <p th:text="${post.postText}">
                                         본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
@@ -132,8 +131,7 @@
                                 </div>
                             </div>
                             <div class="thumbnailPhoto">
-                                <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2F20160310_12%2Flee_h_i2_1457596672049c0vMY_JPEG%2Ftumblr_nxt9emqtjP1uh04bco1_540.jpg&type=sc960_832"
-                                     alt="썸네일 이미지">
+                                <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2F20160310_12%2Flee_h_i2_1457596672049c0vMY_JPEG%2Ftumblr_nxt9emqtjP1uh04bco1_540.jpg&type=sc960_832" alt="썸네일 이미지">
                             </div>
                         </div>
                     </li>
