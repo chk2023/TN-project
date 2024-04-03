@@ -77,9 +77,9 @@
     </aside>
     <main>
         <form class="title">
-            <button class="backBtn"><img src="/image/btn_arrow.png" alt="뒤로가기 버튼"></button>
+            <button class="backBtn" type="button"><a href="/manager/member/list"><img src="/image/btn_arrow.png" alt="뒤로가기 버튼"></a></button>
             <div>
-                <h1>관리 기록 상세</h1>
+                <h1>회원 상세 보기 </h1>
             </div>
             <!--            <input class="search_input" type="text" placeholder="검색어를 입력하세요">-->
             <!--            <button class="searchBtn"><img src="/image/btn_search.png" alt="검색 버튼"></button>-->
@@ -87,14 +87,13 @@
         </form> <br><br>
         <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
             <form id="memberDetail">
-                <label>신고 번호 <input name="reportCode" th:value="${oneMember.reportCode}"></label> <br>
-                <label>신고 구분 코드  <input type="text" th:value='${oneMember.RCategoryCode}'></label> <br>
-                <label>신고 내역  <input type="text" th:value='${oneMember.reportText}'></label> <br>
-                <label>신고 날짜 <input type="text"  th:value='${oneMember.reportDate}'></label> <br>
-                <label>신고 상태  <input type="text"  th:value='${oneMember.reportStatus}'></label> <br>
-                <label>처리 날짜  <input type="text"  th:value='${oneMember.processingDate}'></label> <br>
-                <label>처리 기록  <input type="text"  th:value='${oneMember.processingText}'></label> <br>
-                <label>신고 대상 유저  <input type="text"  th:value='${oneMember.memberId}'></label> <br>
+                <label>회원 코드  <input name="reportCode" th:value="${oneMember.memberCode}"></label> <br>
+                <label>회원 아이디  <input type="text" th:value='${oneMember.memberId}'></label> <br>
+                <label>회원 생년월일  <input type="text" th:value='${oneMember.memberBirth}'></label> <br>
+                <label>계정 상태 <input type="text"  th:value='${oneMember.memberStatus}'></label> <br>
+                <label>계정 등급  <input type="text"  th:value='${oneMember.memberAuthority}'></label> <br>
+                <label>계정 삭제 여부  <input type="text"  th:value='${oneMember.isDeleted}'></label> <br>
+
                 <!-- form 마다 서브밋이 있어야 한다 -->
                 <!--            </form>-->
 
