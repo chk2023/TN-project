@@ -98,12 +98,18 @@
         SELECT
             report_code,
             manager_code,
+            r_category_name,
             report_text,
             report_date,
-            processing_text,
-            processing_date
+            member_id,
+            report_status,
+            processing_date,
+            processing_text
+
         FROM
-            tbl_report
+            tbl_report r
+                JOIN tbl_member m ON r.target_code = m.member_code
+                JOIN  tbl_r_category c ON c.r_category_code = r.r_category_code
 
         WHERE report_code = #{ reportCode }
 

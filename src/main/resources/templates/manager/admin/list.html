@@ -11,26 +11,7 @@
         <div th:replace="~{common/profile.html}"></div>
         <nav th:replace="~{common/navigation.html}"></nav>
     </header>
-    <aside>
-        <div class="folder">
-            <strong class="minTit">폴더</strong>
-            <ul>
-                <li class="AllList"><a href="#"><img src="/images/icon_folder.png" alt="아이콘">전체목록(<span>56</span>)</a>
-                </li>
-                <li><a href="#"><img src="/images/icon_folder.png" alt="아이콘">폴더1의 폴더명</a></li>
-                <li><a href="#"><img src="/images/icon_folder.png" alt="아이콘">폴더2의 폴더명</a></li>
-                <li><a href="#"><img src="/images/icon_folder.png" alt="아이콘">폴더3의 폴더명</a></li>
-                <li><a href="#"><img src="/images/icon_folder.png" alt="아이콘">폴더4의 폴더명</a></li>
-                <li><a href="#"><img src="/images/icon_folder.png" alt="아이콘">폴더5의 폴더명</a></li>
-                <li><a href="#"><img src="/images/icon_folder.png" alt="아이콘">폴더6의 폴더명</a></li>
-                <li><a href="#"><img src="/images/icon_folder.png" alt="아이콘">폴더7의 폴더명</a></li>
-                <li><a href="#"><img src="/images/icon_folder.png" alt="아이콘">폴더8의 폴더명</a></li>
-                <li><a href="#"><img src="/images/icon_folder.png" alt="아이콘">폴더9의 폴더명</a></li>
-                <li><a href="#"><img src="/images/icon_folder.png" alt="아이콘">폴더10의 폴더명</a></li>
-            </ul>
-            <button class="folderSetBtn"><img src="/images/icon_folder_setting.png" alt="폴더 편집 버튼"></button>
-        </div>
-    </aside>
+
     <main>
         <form class="title">
             <button class="backBtn" type="button"><a href="/timeline/list"><img src="/images/btn_arrow.png" alt="뒤로가기 버튼"></a></button>
@@ -50,7 +31,6 @@
                     <th> 관리자 번호 </th>
                     <th> 신고 내용</th>
                     <th> 신고 날짜</th>
-                    <th> 처리 내용</th>
                     <th> 처리 날짜</th>
                 </tr>
 
@@ -61,7 +41,6 @@
                     <td th:text="${ memberDTO.managerCode}"></td>
                     <td th:text="${ memberDTO.reportText}"></td>
                     <td th:text="${ memberDTO.reportDate}"></td>
-                    <td th:text="${ memberDTO.processingText}"></td>
                     <td th:text="${ memberDTO.processingDate}"></td>
                 </tr>
 
