@@ -36,7 +36,7 @@ public class ManagerController {
     }
 
 
-    @GetMapping("/report/detail")
+    @GetMapping("/manager/report/detail")
     public String viewOneReport(Model model1, Integer reportCode) {
         ReportDTO report = reportService.viewOneReport(reportCode);
         model1.addAttribute("detail", report);
@@ -46,7 +46,7 @@ public class ManagerController {
     }
 
 
-    @PostMapping("/report/detail") //getMapping으로 값을 넘길 이유가 없으니까, 포스트 매핑을 시켜도 될 것 같은데..
+    @PostMapping("/manager/report/detail") //getMapping으로 값을 넘길 이유가 없으니까, 포스트 매핑을 시켜도 될 것 같은데..
     public String updateReport(ReportDTO reportDTO, RedirectAttributes rttr) {
 
         // 신고 목록 상세에서 내역을 입력해서 완료 버튼을 누르면 해당 내용이 디비에 저장하는 기능
@@ -71,9 +71,10 @@ public class ManagerController {
 
 
     @GetMapping ("/manager/admin/list")
-    public String viewAllAdmList (ReportDTO reportDTO, Model model) {
-        List<ReportDTO> reports = reportService.viewAllAdmList(reportDTO) ;
-        model.addAttribute("viewAllAdmList", reports);
+    public String viewAllAdmList (Model model) {
+        List<ReportDTO> reports = reportService.viewAllAdmList() ;
+        model.addAttribute("reports", reports);
+
 
         return "/manager/admin/list";
     }
@@ -87,16 +88,20 @@ public class ManagerController {
     }
 
 
+    @GetMapping ("/manager/member/list")
+    public String checkAllMember (Model model) {
+        List<MemberDTO> members = reportService.checkAllMember();
+        model.addAttribute("members", members);
 
-//    @GetMapping ("manager/member/list")
-//    public String viewAllMemebers (MemberDTO memberDTO, Model model) {
-//        List<MemberDTO> members = memberService.viewAllMembers(memberDTO);
-//        model.addAttribute("findAllMember", members);
-//
-//
-//        return "/manager/member/list ";
-//    }
+        return "manager/member/list";
+    }
 
+    @GetMapping("/manager/member/detail")
+    public String checkOneMember (MemberDTO memberDTO, Model model) {
+        MemberDTO oneMember = reportService.checkOneMember(memberDTO);
+        model.addAttribute("oneMember", oneMember);
+        return "manager/member/detail";
+    }
 
 
 
