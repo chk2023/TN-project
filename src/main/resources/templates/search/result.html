@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>검색결과</title>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div th:replace="~{common/profile.html}"></div>
+    <nav th:replace="~{common/navigation.html}"></nav>
+  </header>
+  <main>
+    <form class="title">
+      <button class="backBtn"><img src="/images/btn_arrow.png" alt="뒤로가기 버튼"></button>
+      <div>
+        <h1>닉네임</h1>
+        <p><span>0000</span>게시물</p>
+      </div>
+      <input class="search_input" type="text" placeholder="검색어를 입력하세요">
+      <button class="searchBtn"><img src="/images/btn_search.png" alt="검색 버튼"></button>
+      <button class="closeBtn"><img src="/images/btn_close.png" alt="닫기 버튼"></button>
+    </form>
+    <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
+      <div class="mainProfile">
+        <div class="mprofBackground">
+          <img src="/images/icon_no_image_lg.png" alt="사용자 설정 프로필 배경화면 사진">
+        </div>
+        <div class="mprofStatus">
+          <button class="optionBtn"><img src="/images/icon_option.png" alt="프로필 옵션 버튼"></button>
+          <ul class="optionBox">
+            <li><a>사용자 차단하기</a></li>
+            <li><a>블로그 공유하기</a></li>
+          </ul>
+          <div class="prof_photo"><img src="/images/icon_default_profile.png" alt="프로필 사진"></div>
+          <div class="prof_txt">
+            <strong>닉네임</strong>
+            <span>상태메시지</span>
+          </div>
+          <div class="prof_info">
+            <div>
+              가입일 : <span>2020년10월20일</span>
+              좋아요수 : <span>1,000</span>
+            </div>
+            <button class="btn">글 쓰기</button>
+          </div>
+        </div>
+      </div>
+      <ul class="tabMenu">
+        <li class="active"><button>고정글</button></li>
+        <li><button>최신순</button></li>
+        <li><button>♡</button></li>
+        <li class="viewBtn"><button><img src="/images/btn_view_type.png" alt="보기타입 선택버튼"></button></li>
+      </ul>
+
+      <div style="padding: 20px"> <!-- 레이아웃 사용법을 보여주기 위한 것이니 지우고 시작 하시면 됩니다. -->
+        <h2>폼:input</h2>
+        <input type="text" placeholder="내용을 입력하세요."/><br><br>
+
+        <h2>폼:select</h2>
+        <select name="">
+          <option value="">내용1</option>
+          <option value="">내용2</option>
+          <option value="">내용3</option>
+          <option value="">내용4</option>
+        </select><br><br>
+
+        <h2>폼:input:radio</h2>
+        <label><input type="radio" name="radio"/>라디오1</label>
+        <label><input type="radio" name="radio"/>라디오2</label><br><br>
+
+        <h2>폼:input:checkbox</h2>
+        <label><input type="checkbox" name="check"/>체크박스1</label>
+        <label><input type="checkbox" name="check"/>체크박스2</label><br><br>
+
+        <h2>폼:button</h2>
+        <button class="btn gray">버튼1</button>
+        <button class="btn border">버튼2</button>
+        <button class="btn skyblue">버튼3</button>
+        <button class="btn">버튼4</button><br><br>
+
+        <h2>테이블</h2>
+        <table>
+          <thead>
+          <tr>
+            <th>colum1</th>
+            <th>colum2</th>
+            <th>colum3</th>
+            <th>colum4</th>
+            <th>colum5</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>text1</td>
+            <td>text2</td>
+            <td>text3</td>
+            <td>text4</td>
+            <td>text5</td>
+          </tr>
+          </tbody>
+        </table><br><br>
+
+        <h2>페이징</h2>
+        <div id="paging" class="paging">
+          <!-- 맨 앞으로 이동 -->
+          <button class="pagingFrontBtn arrowBtn"><img src="/images/icon_paging_arrow_front.png" alt="맨 앞으로 이동 버튼"></button>
+          <!-- 이전 페이지로 이동 -->
+          <button class="pagingFrontBtn arrowBtn" disabled="disabled"><img src="/images/icon_paging_arrow_front.png" alt="이전 목록으로 이동 버튼"></button>
+
+          <!-- 숫자 버튼 -->
+          <button class="pagingNumBtn" disabled="disabled">1</button>
+          <button class="pagingNumBtn">2</button>
+          <button class="pagingNumBtn">3</button>
+          <button class="pagingNumBtn">4</button>
+          <button class="pagingNumBtn">5</button>
+
+          <!-- 다음 페이지로 이동 -->
+          <button class="pagingBackBtn arrowBtn"><img src="/images/icon_paging_arrow_back.png" alt="다음 목록으로 이동 버튼"></button>
+          <!-- 맨 끝으로 이동 -->
+          <button class="pagingBackBtn arrowBtn"><img src="/images/icon_paging_arrow_back.png" alt="맨 뒤로 이동 버튼"></button>
+        </div><br><br>
+
+        <h2>탭메뉴</h2>
+        <ul class="tabMenu">
+          <li class="active">
+            <button>메뉴1</button>
+          </li>
+          <li>
+            <button>메뉴2</button>
+          </li>
+          <li>
+            <button>메뉴3</button>
+          </li>
+          <li class="viewBtn">
+            <button><img src="/images/btn_view_type.png" alt="보기 타입 버튼"></button>
+          </li>
+        </ul><br><br>
+
+        <h2>조회(blog)</h2>
+        <ul class="blogList">
+          <li>
+            <div class="list_head">
+              <div class="prof_photo">
+                <!--                    <img src="/image/icon_default_profile.png" alt="프로필 사진">-->
+                <img src="https://cdn.inflearn.com/public/users/thumbnails/759418/09bcc1e5-b03d-46ed-8c6b-4aa283267e28" alt="프로필 사진">
+              </div>
+              <div>
+                <div>
+                  <strong class="blog_user_name">조한결</strong>
+                  <span class="blog_user_birth">2월12일</span>
+                </div>
+                <span class="status_msg">오늘도 나는 눈물을 흘린다 또르륵오늘도 나는 눈물을 흘린다 또르륵오늘도 나는 눈물을 흘린다 또르륵</span>
+              </div>
+              <button class="optionBtn"><img src="/images/icon_option.png" alt="글 옵션 버튼"></button>
+              <ul class="optionBox">
+                <li><a>글 신고하기</a></li>
+                <li><a>글 관심없음</a></li>
+              </ul>
+            </div>
+            <div class="list_body">
+              <div>
+                <strong class="contentTit">글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목</strong>
+                <div class="contentsTxt">
+                  <p>
+                    본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
+                    본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
+                    본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
+                    본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
+                    본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
+                  </p>
+                </div>
+                <div class="showLikeAndComments">
+                  <button class="commentsBtn">
+                    <img src="/images/icon_comment.png" alt="댓글 버튼 아이콘">
+                    <span>300</span>+
+                  </button>
+                  <button class="likeBtn active">
+                    <img src="/images/icon_like.png" alt="좋아요 버튼 아이콘">
+                    <span>200</span>k
+                  </button>
+                </div>
+              </div>
+              <div class="thumbnailPhoto">
+                <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2F20160310_12%2Flee_h_i2_1457596672049c0vMY_JPEG%2Ftumblr_nxt9emqtjP1uh04bco1_540.jpg&type=sc960_832" alt="썸네일 이미지">
+              </div>
+            </div>
+          </li>
+        </ul><br><br>
+
+        <h2>>조회(sns)</h2>
+        <ul class="blogList snsList">
+          <li>
+            <div class="list_head">
+              <div class="prof_photo">
+                <!--                    <img src="/image/icon_default_profile.png" alt="프로필 사진">-->
+                <img src="https://cdn.inflearn.com/public/users/thumbnails/759418/09bcc1e5-b03d-46ed-8c6b-4aa283267e28" alt="프로필 사진">
+              </div>
+              <div>
+                <div>
+                  <strong class="blog_user_name">조한결</strong>
+                  <span class="blog_user_birth">2월12일</span>
+                </div>
+                <span class="status_msg">오늘도 나는 눈물을 흘린다 또르륵오늘도 나는 눈물을 흘린다 또르륵오늘도 나는 눈물을 흘린다 또르륵</span>
+              </div>
+              <button class="optionBtn"><img src="/images/icon_option.png" alt="글 옵션 버튼"></button>
+              <ul class="optionBox">
+                <li><a>글 신고하기</a></li>
+                <li><a>글 관심없음</a></li>
+              </ul>
+            </div>
+            <div class="list_body">
+              <div>
+                <strong class="contentTit">글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목</strong>
+                <div class="contentsTxt">
+                  <p>
+                    본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
+                    본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
+                    본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
+                    본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
+                    본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
+                  </p>
+                </div>
+                <div class="showLikeAndComments">
+                  <button class="commentsBtn">
+                    <img src="/images/icon_comment.png" alt="댓글 버튼 아이콘">
+                    <span>300</span>+
+                  </button>
+                  <button class="likeBtn">
+                    <img src="/images/icon_like.png" alt="좋아요 버튼 아이콘">
+                    <span>200</span>k
+                  </button>
+                </div>
+              </div>
+              <div class="thumbnailPhoto">
+                <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2F20160310_12%2Flee_h_i2_1457596672049c0vMY_JPEG%2Ftumblr_nxt9emqtjP1uh04bco1_540.jpg&type=sc960_832" alt="썸네일 이미지">
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="/js/pathFinder.js"></script>
+</body>
+</html>
