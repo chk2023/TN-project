@@ -28,7 +28,18 @@
 <button onclick="location.href='/payment/payment'">결제</button>
 <hr>
 
-
+<h3>검색</h3>
+<form action="/search/result" method="post">
+    <input type="text" name="searchValue"/>
+    <button type="submit">전체에서 검색하기</button>
+</form>
+<form action="/search/result?searchType=atBlog" method="post">
+    <label>검색값</label>
+    <input type="text" name="searchValue"/><br>
+    <label>맴버코드</label>
+    <input type="number" name="memberCode">
+    <button type="submit">블로그에서 검색하기</button>
+</form>
 <h3>테스트코드</h3>
 <form action="/common/makepassword" method="post">
     <input type="text" name="pass">

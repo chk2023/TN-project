@@ -44,6 +44,17 @@
         <result property="profile.profileImgPath" column="profile_img_path"/>
     </resultMap>
 
+    <select id="findAllPostListForDoc" resultMap="postMap">
+        SELECT post_code,
+               post_title,
+               post_text,
+               po_member_code
+        FROM post_view
+        WHERE post_status = 'PUBLIC'
+          AND post_is_deleted = false
+        ORDER BY post_code;
+    </select>
+
     <select id="findListByParam" resultMap="postMap">
         SELECT post_code,
                post_title,
@@ -116,6 +127,28 @@
         FROM post_view
         WHERE post_code = #{postCode}
           AND post_is_deleted = false
+    </select>
+    <select id="findListByPostCodes" resultMap="postMap">
+        SELECT post_code,
+               post_title,
+               post_text,
+               post_price,
+               po_member_code,
+               folder_code,
+               post_wri_date,
+               post_mod_date,
+               post_status,
+               profile_code,
+               profile_nickname,
+               profile_statmsg,
+               profile_img_path,
+               like_count,
+               cmt_count
+        FROM post_view
+        WHERE post_code IN
+        <foreach collection="postCodes" item="postCode" open="(" separator="," close=")">
+            #{postCode}
+        </foreach>
     </select>
 
     <insert id="updateFolders" parameterType="java.util.List">

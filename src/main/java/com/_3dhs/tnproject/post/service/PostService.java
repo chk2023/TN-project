@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -58,5 +59,13 @@ public class PostService {
 
     public PostDTO findPostByPostCode(Integer postCode) {
         return postMapper.findPostByPostCode(postCode);
+    }
+
+    public List<PostDTO> findAllPostListForDoc() {
+        return postMapper.findAllPostListForDoc();
+    }
+
+    public List<PostDTO> findListByPostCodes(Set<Integer> postCodes) {
+        return postMapper.findListByPostCodes(postCodes);
     }
 }
