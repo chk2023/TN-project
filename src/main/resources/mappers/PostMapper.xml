@@ -219,7 +219,7 @@
         FROM
             tbl_like_list
         WHERE
-            postCode = #{postCode}
+            post_code = #{postCode}
     </select>
 
     <select id="getPrivateLikesByPostCode" resultType="com._3dhs.tnproject.post.dto.LikeListDTO">
@@ -228,9 +228,9 @@
         FROM
             tbl_like_list
         WHERE
-            postCode = #{postCode}
+            post_code = #{postCode}
         AND
-            isPrivate = false
+            is_private = false
     </select>
 
 

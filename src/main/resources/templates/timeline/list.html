@@ -73,6 +73,7 @@
 <script>
 
 
+
     function handleLike(postCode) {
         fetch('/post/like', {
             method: 'POST',
@@ -85,7 +86,14 @@
                 isPrivate: false,
         }),
     })
-            .then(response => response.text())
+            .then(response => {
+                /* 추가 */
+                if (response.ok) {
+                    return response.text(); // 성공 시 텍스트 데이터 반환
+                } else {
+                    throw new Error('서버 응답이 실패했습니다.');
+                }
+            })
             .then(result => {
                 console.log(result); // 서버 응답 확인
                 // 좋아요 아이콘 변경
@@ -95,11 +103,14 @@
                 likeImg.src = isActive ? "/images/icon_like_active.png" : "/images/icon_like.png";
 
                 /* 수정된 부분 */
-                // if (result === "Liked") {
-                //     likeImg.src = "/images/icon_like_active.png";
-                // } else if (result === "Unliked") {
-                //     likeImg.src = "/images/icon_like.png";
-                // }
+                /* Boolean 값을 처리하는 부분 */
+                // result를 파싱하여 Boolean 값으로 변환하여 처리
+                var isLiked = JSON.parse(result);
+                if (isLiked) {
+                    likeImg.src = "/images/icon_like_active.png";
+                } else {
+                    likeImg.src = "/images/icon_like.png";
+                }
             })
             .catch((err) => {
                 console.log(err);

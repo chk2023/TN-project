@@ -119,10 +119,15 @@ public class PostController {
     }
 
     @PostMapping("/like")
-    public String likePost(@RequestBody LikeListDTO likeListDTO) {
-
-        boolean isLiked = postService.hasLiked(likeListDTO.getPostCode(), likeListDTO.getMemberCode());
-        return Boolean.toString(isLiked);
+    public ResponseEntity<String> likePost(@RequestBody LikeListDTO likeListDTO) {
+//        boolean isLiked = postService.hasLiked(likeListDTO.getPostCode(), likeListDTO.getMemberCode());
+//        if (isLiked) {
+//            return new ResponseEntity<>("Liked", HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>("Unliked", HttpStatus.OK);
+//        }
+        boolean isLiked = likeMapper.getHasLiked(likeListDTO.getPostCode(), likeListDTO.getMemberCode());
+        return ResponseEntity.ok(isLiked);
     }
 
     @PostMapping("/folder_edit")

@@ -13,29 +13,32 @@
 
     <insert id="addLike" parameterType="com._3dhs.tnproject.post.dto.LikeListDTO">
         INSERT INTO
-        tbl_like_list (postCode, memberCode, isPrivate)
+        tbl_like_list (post_code, member_code, is_private)
         VALUES
-        (#{postCode}, #{memberCode}, #{isPrivate})
+        (#{postCode}, #{memberCode}, #{isPrivate})s
     </insert>
 
     <delete id="cancelLike">
-        DELETE INTO
-        tbl_like_list
+        DELETE FROM
+          tbl_like_list
         WHERE
-        postCode = #{postCode}
+            post_code = #{postCode}
         AND
-        memberCode = #{memberCode}
+            l_member_code = #{memberCode}
     </delete>
 
-    <select id="hasLiked" resultType="boolean">
-        SELECT
-        COUNT(*) > 0
+    <select id="getHasLiked" resultType="boolean">
+<!--        SELECT-->
+<!--        COUNT(*) > 0-->
+        SELECT EXISTS (
+        SELECT 1
         FROM
         tbl_like_list
         WHERE
-        postCode = #{postCode}
+        post_code = #{postCode}
         AND
-        memberCode = #{memberCode}
+        l_member_code = #{memberCode}
+        )
     </select>
 
 

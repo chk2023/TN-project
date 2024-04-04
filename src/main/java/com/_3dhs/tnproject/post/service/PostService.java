@@ -94,21 +94,27 @@ public class PostService {
     }
 
     /* 해당 글에 좋아요를 눌렀는지 확인 */
-    public boolean hasLiked(int postCode, int memberCode) {
+    public String hasLiked(int postCode, int memberCode) {
+        boolean isLiked = likeMapper.getHasLiked(postCode, memberCode);
+        return isLiked ? "Liked" : "Unliked";
 
-        LikeListDTO likeList =
-                likeMapper.getHasLiked(postCode, memberCode);
+//        LikeListDTO likeList =
+//                likeMapper.getHasLiked(postCode, memberCode);
+//
+//        return likeList != null;
+    }
 
-//        if (likeList != null) {
-//            likeMapper.cancelLike(postCode, memberCode);
+    public boolean toggleLike(LikeListDTO likeListDTO) {
+        boolean isLiked = likeMapper.hasLiked(likeListDTO.getPostCode(), likeListDTO.getMemberCode());
+        if (isLiked) {
+            likeMapper.cancelLike(likeListDTO.getPostCode(), likeListDTO.getMemberCode());
 //            return false;
-//        } else {
-//            LikeListDTO newLike = new LikeListDTO(postCode, memberCode, false);
-//            likeMapper.addLike(newLike);
+        } else {
+            likeMapper.addLike(likeListDTO);
 //            return true;
-//        }
+        }
 
-        return likeList != null;
+        return !isLiked;
     }
 
 
