@@ -3,56 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <title>회원정보</title>
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/member/login.css">
+    <link rel="stylesheet" href="/css/member/regist.css">
+    <link rel="stylesheet" href="/css/member/update.css">
     <script type="text/javascript" src="/js/memberEvent.js"></script>
-    <style>
-        .hidden {
-            display: none;
-        }
-    </style>
 </head>
 <body>
-<form method="post" action="/member/update">
-    <h1>회원정보</h1>
-    <hr>
-    <label>아이디 :</label> <span th:text="${ #authentication.principal.memberId }"></span> <br>
-    <label>성별 :</label>
-    <span th:text="${#authentication.principal.memberGender}" id="genderParagraph"></span>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const $genderParagraph = document.querySelector("#genderParagraph");
-
-            /* DB에서 MALE 값이면 화면에서 남자, FEMALE이면 여자 출력 */
-            if ($genderParagraph.textContent === 'MALE') {
-                $genderParagraph.textContent = '남자';
-            } else {
-                $genderParagraph.textContent = '여자';
+<header>
+    <div th:replace="~{common/profile.html}"></div>
+    <nav th:replace="~{common/navigation.html}"></nav>
+</header>
+<aside>
+<div class="folder">
+    <strong class="minTit">폴더</strong>
+    <ul>
+        <li class="AllList"><a href="#"><img src="/images/icon_folder.png" alt="아이콘">전체목록(<span>56</span>)</a></li>
+        <th:block th:object="${folderList}" th:each="folder, start : ${folderList}">
+            <li th:classappend="${folder.folderName == 'NoName'} ? 'hidden'" draggable="true"><input type="hidden" th:value="${folder.folderCode}"/><img th:src="${folder.folderIconPath}" alt="폴더 아이콘"> <span th:text="${folder.folderName}"></span></li>
+        </th:block>
+    </ul>
+    <button class="folderSetBtn" onClick="location.href='/post/folder_edit'"><img src="/images/icon_folder_setting.png" alt="폴더 편집 버튼"></button>
+</div>
+</aside>
+<main>
+    <div class="title">
+        <button class="backBtn" onclick="goToMainPage()">
+            <img src="/images/btn_arrow.png" alt="뒤로가기 버튼">
+        </button>
+        <script>
+            function goToMainPage() {
+                window.location.href = "/"; // 메인 페이지 URL로 이동
             }
-        });
-    </script>
-    <select id="genderInput" class="hidden" name="memberGender">
-        <option th:value="${T(com._3dhs.tnproject.member.model.MemberGender).MALE}">남자</option>
-        <option th:value="${T(com._3dhs.tnproject.member.model.MemberGender).FEMALE}">여자</option>
-    </select>
-    <br>
-    <label>나이 :</label>
-    <span th:text="${ #authentication.principal.memberAge }" id="ageParagraph"></span>
-    <input type="number" id="ageInput" class="hidden" name="memberAge" min="0" max="100" required>
-    <br>
-    <label>생일 :</label>
-    <span th:text="${ #authentication.principal.memberBirth }" id="birthParagraph"></span>
-    <input type="date" id="birthInput" class="hidden" name="memberBirth" required>
-    <br>
-    <input type="button" value="정보수정" id="updateMemberBtn">
-    <input type="submit" value="수정완료" id="submitUpdateMember" class="hidden">
-</form>
+        </script>
+        <div>
+            <h1>회원정보</h1>
+        </div>
+    </div>
+    <form method="post" action="/member/update">
+        <div class="form-group" id="id_input">
+            <label class="label">아이디</label>
+            <span th:text="${ #authentication.principal.memberId }"></span>
+        </div>
+        <div class="form-group">
+            <label class="label">성별</label>
+            <span th:text="${#authentication.principal.memberGender}" id="genderParagraph"></span>
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const $genderParagraph = document.querySelector("#genderParagraph");
 
+                    /* DB에서 MALE 값이면 화면에서 남자, FEMALE이면 여자 출력 */
+                    if ($genderParagraph.textContent === 'MALE') {
+                        $genderParagraph.textContent = '남자';
+                    } else {
+                        $genderParagraph.textContent = '여자';
+                    }
+                });
+            </script>
+            <select id="genderInput" class="hidden" name="memberGender">
+                <option th:value="${T(com._3dhs.tnproject.member.model.MemberGender).MALE}">남자</option>
+                <option th:value="${T(com._3dhs.tnproject.member.model.MemberGender).FEMALE}">여자</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="label">나이</label>
+            <span th:text="${ #authentication.principal.memberAge }" id="ageParagraph"></span>
+            <input type="number" id="ageInput" class="hidden" name="memberAge" min="0" max="100" required>
+        </div>
+        <div class="form-group">
+            <label class="label">생일</label>
+            <span th:text="${ #authentication.principal.memberBirth }" id="birthParagraph"></span>
+            <input type="date" id="birthInput" class="hidden" name="memberBirth" required>
+        </div>
+        <div class="button-group">
+            <input type="button" value="정보수정" id="updateMemberBtn" class="registBtn">
+            <input type="button" value="탈퇴하기" id="deleteMember" class="blackBtn">
+        </div>
+        <div class="btnWrapper">
+<!--            <div><input type="button" id="modifyPwd" value="비밀번호 재설정" class="hidden"></div>-->
+            <div class="button-group">
+                <input type="submit" value="수정완료" id="submitUpdateMember" class="hidden registBtn" >
+                <input type="button" value="취소" id="cancelBtn" class="hidden blackBtn">
+            </div>
+        </div>
+    </form>
+</main>
 
-<script>
-    /* 회원 정보 수정 버튼을 클릭하면 입력창이 나타나는 로직 */
-    document.addEventListener("DOMContentLoaded", function () {
-
-    });
-</script>
-<input type="button" value="탈퇴하기" id="deleteMember">
 </body>
 </html>
