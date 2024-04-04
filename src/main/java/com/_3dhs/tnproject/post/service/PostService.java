@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -33,9 +34,16 @@ public class PostService {
         return postList;
     }
 
+
     @Transactional(readOnly = true)
     public List<PostDTO> findLikeListPostByMemberCode(int memberCode) {
-        List<PostDTO> postList = postMapper.findLikeListPostByMemberCode(memberCode);
+
+        /* 유료글결제 추가 */
+        Map<String, Integer> params = new HashMap<>();
+        params.put("memberCode", memberCode);
+
+//        List<PostDTO> postList = postMapper.findLikeListPostByMemberCode(memberCode);
+        List<PostDTO> postList = postMapper.findListByParam(params);
         for (int i = 0; i < postList.size(); i++) {
             postList.get(i).setAttachmentList(postMapper.findAttListByPostCode(postList.get(i).getPostCode()));
             postList.get(i).makeThumbnailPath();
@@ -88,19 +96,19 @@ public class PostService {
     /* 해당 글에 좋아요를 눌렀는지 확인 */
     public boolean hasLiked(int postCode, int memberCode) {
 
-        /* likeListDTO로 작성하면 에러 ? */
-        LikeListDTO existLike =
-                postMapper.findLikeListByPostAndMemberCode(postCode, memberCode);
+        LikeListDTO likeList =
+                likeMapper.getHasLiked(postCode, memberCode);
 
-        if (existLike != null) {
-            likeMapper.cancelLike(postCode, memberCode);
-            return false;
-        } else {
-            LikeListDTO newLike = new LikeListDTO(postCode, memberCode, false);
-            likeMapper.addLike(newLike);
-            return true;
-        }
+//        if (likeList != null) {
+//            likeMapper.cancelLike(postCode, memberCode);
+//            return false;
+//        } else {
+//            LikeListDTO newLike = new LikeListDTO(postCode, memberCode, false);
+//            likeMapper.addLike(newLike);
+//            return true;
+//        }
 
+        return likeList != null;
     }
 
 

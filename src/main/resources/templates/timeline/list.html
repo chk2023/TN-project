@@ -68,11 +68,12 @@
     let isTitlePhotoChanged = false;
     let isLoading = false;
     const $viewBtn = document.querySelector(".viewBtn");
+    const memberCode = `[[${#authentication.principal.memberCode}]]`;
 </script>
 <script>
 
 
-    function handleLike(postCode, memberCode) {
+    function handleLike(postCode) {
         fetch('/post/like', {
             method: 'POST',
             headers: {
@@ -91,8 +92,14 @@
                 var likeBtn = document.querySelector(`[data-post-code="${postCode}"]`);
                 var likeImg = likeBtn.querySelector("img");
                 var isActive = likeBtn.classList.toggle("active");
-                likeImg.src = isActive ? "/image/icon_like_active.png" : "/image/icon_like.png";
+                likeImg.src = isActive ? "/images/icon_like_active.png" : "/images/icon_like.png";
 
+                /* 수정된 부분 */
+                // if (result === "Liked") {
+                //     likeImg.src = "/images/icon_like_active.png";
+                // } else if (result === "Unliked") {
+                //     likeImg.src = "/images/icon_like.png";
+                // }
             })
             .catch((err) => {
                 console.log(err);
@@ -134,8 +141,8 @@
                     <img src="/images/icon_comment.png" alt="댓글 버튼 아이콘">
                     <span>{{cmtCount}}</span>
                 </button>
-                <button class="likeBtn" onclick="handleLike('{{postCode}}', '{{memberCode}}')" data-post-code="{{postCode}}">
-                    <img src="/images/icon_like.png" alt="좋아요 버튼 아이콘">
+                <button class="likeBtn" onclick="handleLike('{{postCode}}')" data-post-code="{{postCode}}">
+                    <img src="/images/icon_like.png" alt="좋아요 버튼 아이콘" id="likeBtn-{{postCode}}" class="like-icon">
                     <span>{{likeCount}}</span>
                 </button>
             </div>

@@ -17,4 +17,5 @@ public interface LikeMapper {
 
     List<LikeListDTO> getPrivateLikesByPostCode(@Param("postCode") int postCode);
 
+    LikeListDTO getHasLiked(int postCode, int memberCode);
 }

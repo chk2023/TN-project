@@ -15,11 +15,14 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedCaseInsensitiveMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -97,30 +100,29 @@ public class PostController {
 
         if (authentication != null && authentication.isAuthenticated()) {
             MemberDTO member = (MemberDTO) authentication.getPrincipal();
-            List<PostDTO> likedPostList = postService.findLikeListPostByMemberCode(member.getMemberCode());
+            List<PostDTO> postList = postService.findLikeListPostByMemberCode(member.getMemberCode());
 
-            for (PostDTO post : likedPostList) {
-                int postCode = post.getPostCode();
-                boolean hasLiked = postService.hasLiked(postCode, member.getMemberCode());
+            // 각 게시물의 좋아요 상태를 가져와서 Model에 추가
+            for (PostDTO post : postList) {
+                boolean hasLiked = postService.hasLiked(post.getPostCode(), member.getMemberCode());
+//                model.addAttribute("hasLiked" + post.getPostCode(), hasLiked);
+                post.setLike(member.getMemberCode());
+                model.addAttribute("hasLiked" + post.getPostCode(), hasLiked);
             }
 
-            model.addAttribute("likedPostList",likedPostList);
+            model.addAttribute("postList", postList);
         }
 
-        return "list";
+        return "/post/list";
 
 
     }
 
-    @PostMapping("/post/like")
-    public ResponseEntity<String> likePost(@RequestBody LikeListDTO likeListDTO) {
+    @PostMapping("/like")
+    public String likePost(@RequestBody LikeListDTO likeListDTO) {
 
         boolean isLiked = postService.hasLiked(likeListDTO.getPostCode(), likeListDTO.getMemberCode());
-        if (isLiked) {
-            return new ResponseEntity<>("Liked", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Unliked", HttpStatus.OK);
-        }
+        return Boolean.toString(isLiked);
     }
 
     @PostMapping("/folder_edit")

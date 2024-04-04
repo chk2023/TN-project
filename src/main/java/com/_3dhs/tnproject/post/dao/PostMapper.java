@@ -15,8 +15,6 @@ import java.util.Set;
 @Mapper
 public interface PostMapper {
 
-    LikeListDTO findLikeListByPostAndMemberCode(int postCode, int memberCode);
-
     List<PostDTO> findListByParam(Map<String ,Integer> params);
 
     List<LikeListDTO> findLikeListByCode(int postCode);

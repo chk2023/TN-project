@@ -11,7 +11,7 @@
         <result property="isPrivate" column="is_private"/>
     </resultMap>
 
-    <insert id="addLike" parameterType="com._3dhs.tnproject.post.dao.LikeMapper">
+    <insert id="addLike" parameterType="com._3dhs.tnproject.post.dto.LikeListDTO">
         INSERT INTO
         tbl_like_list (postCode, memberCode, isPrivate)
         VALUES
@@ -37,6 +37,8 @@
         AND
         memberCode = #{memberCode}
     </select>
+
+
 
 
 </mapper>

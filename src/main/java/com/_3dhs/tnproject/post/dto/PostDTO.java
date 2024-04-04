@@ -2,6 +2,7 @@ package com._3dhs.tnproject.post.dto;
 
 import com._3dhs.tnproject.member.dto.ProfileDTO;
 import com._3dhs.tnproject.post.model.PostState;
+import com._3dhs.tnproject.post.service.PostService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -30,8 +31,11 @@ public class PostDTO {
     private int cmtCount;
     private List<TagDTO> tagList;
     private List<AttachmentDTO> attachmentList;
+    private boolean isLiked;
+
     //가공하는 자료
     private String thumbnailPath;
+    private PostService postService;
 
     public String getAttachmentPath(int index) {
         String path = "";
@@ -43,5 +47,12 @@ public class PostDTO {
     }
     public void makeThumbnailPath() {
        thumbnailPath =  getAttachmentPath(0);
+    }
+
+    /* 좋아요 기능 추가 */
+    public void setLike(int memberCode) {
+        // 해당 게시물이 현재 사용자에 의해 좋아요 되었는지 여부를 확인
+        this.isLiked = postService.hasLiked(this.postCode, memberCode);;
+
     }
 }
