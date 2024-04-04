@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>회원 가입</title>
@@ -29,7 +29,7 @@
     </div>
     <form action="/member/regist" method="post" id="registForm">
         <div class="form-group" id="mail_input" name="mail_input">
-            <label for="memberId">아이디</label>
+            <label for="memberId" class="label">아이디</label>
             <input type="text" maxlength="30" name="memberId" id="memberId" placeholder="이메일 입력" required>
             <select id="optionalId" name="optionalId">
                 <option value="default">직접입력</option>
@@ -40,33 +40,35 @@
             <input class="registBtn" type="button" value="중복확인" id="emailCheck">
         </div>
         <div class="form-group">
-            <label for="memberGender">성별</label>
-            <select name="memberGender">
+            <label for="memberGender" class="label">성별</label>
+            <select name="memberGender" id="memberGender">
                 <option value="MALE">남자</option>
                 <option value="FEMALE">여자</option>
             </select>
         </div>
         <div class="form-group">
-            <label for="memberAge">나이</label>
-            <input type="number" name="memberAge" min="0" max="100" required>
+            <label for="memberAge" class="label">나이</label>
+            <input type="number" id="memberAge" name="memberAge" min="0" max="100" required>
         </div>
         <div class="form-group">
-            <label for="memberBirth">생일</label>
+            <label for="memberBirth" class="label">생일</label>
             <input type="date" name="memberBirth" id="memberBirth" required>
         </div>
         <div class="form-group" id="password_input" name="password_input">
-            <label for="memberPwd">비밀번호</label>
+            <label for="memberPwd" class="label">비밀번호</label>
             <input type="password" maxlength="20" id="memberPwd" name="memberPwd" required>
         </div>
         <div class="form-group">
-            <label for="memberPwd2">비밀번호 확인</label>
+            <label for="memberPwd2" class="label">비밀번호 확인</label>
             <input type="password" maxlength="20" id="memberPwd2" name="memberPwd2" required>
         </div>
         <div class="form-group">
-            <hr>
-            <label>이메일 인증</label>
+            <input type="button" value="인증번호 발송" id="verCode" class="registBtn">
+        </div>
+        <div class="form-group">
+            <br><br><br><br><br><br>
+            <label class="label">이메일 인증</label>
             <input type="text" name="code" id="code" placeholder="인증번호 입력">
-            <input type="button" value="인증코드 받기" id="verCode" class="registBtn">
             <input type="button" value="인증 확인" name="confirmBtn" id="confirmBtn" class="registBtn"><br>
         </div>
         <input type="text" id="confirm" name="confirm" style="display: none" th:value="${generatedCode}">
