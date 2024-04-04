@@ -1,8 +1,8 @@
 package com._3dhs.tnproject.member.controller;
 
+import com._3dhs.tnproject.common.exceptionhandler.member.MemberRegistException;
 import com._3dhs.tnproject.common.exceptionhandler.member.MemberRemoveException;
 import com._3dhs.tnproject.common.exceptionhandler.member.MemberUpdateException;
-import com._3dhs.tnproject.common.exceptionhandler.member.MemberRegistException;
 import com._3dhs.tnproject.member.dto.MemberDTO;
 import com._3dhs.tnproject.member.service.AuthService;
 import com._3dhs.tnproject.member.service.MemberService;
@@ -67,8 +67,22 @@ public class MemberController {
         }
 
         return ResponseEntity.ok(result);
-
     }
+
+    @PostMapping("/idCheck")
+    public ResponseEntity<String> checkId(@RequestBody MemberDTO member) {
+
+        log.info("Request Check ID : {}", member.getMemberId());
+
+        String result = "가입되지 않은 회원입니다.";
+
+        if(memberService.selectMemberById(member.getMemberId())) {
+            result = "인증 코드 전송을 눌러.";
+        }
+
+        return ResponseEntity.ok(result);
+    }
+
 
     @PostMapping("/regist")
     public String registMember(MemberDTO member,
@@ -129,4 +143,76 @@ public class MemberController {
 
         return "redirect:/member/logout";
     }
+
+    @GetMapping("/findPwd")
+    public void findPwd(){};
+
+    @PostMapping("/findPwd")
+    public String updatePwd(MemberDTO member,
+                            @RequestParam("memberId") String memberId,
+                            @RequestParam("optionalId") String optionalId,
+                            @RequestParam("memberPwd") String memberPwd,
+                            RedirectAttributes rttr) throws MemberUpdateException {
+
+        // 이메일 도메인 까지 추가하여 db에 입력
+        String fullMemberId = memberId + optionalId;
+        if (!"default".equals(optionalId)) {
+            member.setMemberId(fullMemberId);
+        } else {
+            member.setMemberId(memberId);
+        }
+
+        // 비밀번호 BCrypt 해싱처리하여 db에 입력
+        member.setMemberPwd(passwordEncoder.encode(memberPwd));
+        
+        log.info(member.toString());
+
+        memberService.updatePwd(member);
+
+        rttr.addFlashAttribute("message", messageSourceAccessor.getMessage("member.updatePwd"));
+
+        return "redirect:/member/login";
+    }
+
+
+//    @PostMapping("/regist")
+//    public String registMember(MemberDTO member,
+//                               @RequestParam("optionalId") String optionalId,
+//                               @RequestParam("memberPwd") String memberPwd,
+//                               RedirectAttributes rttr) throws MemberRegistException {
+//        // 이메일 도메인 까지 추가하여 db에 입력
+//        String memberId = member.getMemberId() + optionalId;
+//        if (!"default".equals(optionalId)) member.setMemberId(memberId);
+//
+//        // 비밀번호 BCrypt 해싱처리하여 db에 입력
+//        member.setMemberPwd(passwordEncoder.encode(memberPwd));
+//
+//        log.info("Request regist member : {}", member);
+//
+//        memberService.registMember(member);
+//
+////        rttr.addFlashAttribute("message", messageSourceAccessor.getMessage("member.regist"));
+//
+//        return "redirect:/";
+//    }
+    /* 비밀번호 재설정 */
+//    @PostMapping("/findPwd")
+//    public String updatePwd(@RequestBody Map<String, String> requestBody,
+//                            RedirectAttributes rttr) {
+//        String memberId = requestBody.get("memberId");
+//        String currentPwd = requestBody.get("currentPwd");
+//        String newPwd = requestBody.get("newPwd");
+//        log.info(memberId);
+//
+//        MemberDTO member = memberService.getMemberbyId(memberId);
+//
+//        if (!currentPwd.equals(member.getMemberPwd())) {
+//            rttr.addFlashAttribute("error", messageSourceAccessor.getMessage("현재 비밀번호가 잘못 입력되었습니다."));
+//        } else {
+//            member.setMemberPwd(newPwd);
+//            rttr.addFlashAttribute("message", messageSourceAccessor.getMessage("member.updatePwd"));
+//        }
+//
+//        return "redirect:/member/login";
+//    }
 }

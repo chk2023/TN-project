@@ -1,6 +1,7 @@
 package com._3dhs.tnproject.manager.dao;
 
 import com._3dhs.tnproject.manager.dto.ReportDTO;
+import com._3dhs.tnproject.member.dto.MemberDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -14,5 +15,13 @@ public interface ReportMapper {
 
     ReportDTO updateReport(int reportCode, String processingText);
 
-    List<ReportDTO> viewAllAdmList(ReportDTO reportDTO);
+    List<ReportDTO> viewAllAdmList();
+
+    ReportDTO viewOneAdmReport(Integer reportCode);
+
+
+    List<MemberDTO> checkAllMember();
+
+    MemberDTO checkOneMember(MemberDTO memberDTO);
+
 }

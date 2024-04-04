@@ -17,19 +17,19 @@
 
     <main>
         <form class="title">
-            <button class="backBtn"><img src="/image/btn_arrow.png" alt="뒤로가기 버튼"></button>
+            <button class="backBtn"><img src="/images/btn_arrow.png" alt="뒤로가기 버튼"></button>
             <div>
                 <h1>Timeline - main</h1>
                 <p><span>24. 03. 25</span></p>
             </div>
             <input class="search_input" type="text" placeholder="검색어를 입력하세요">
-            <button class="searchBtn"><img src="/image/btn_search.png" alt="검색 버튼"></button>
-            <button class="closeBtn"><img src="/image/btn_close.png" alt="닫기 버튼"></button>
+            <button class="searchBtn"><img src="/images/btn_search.png" alt="검색 버튼"></button>
+            <button class="closeBtn"><img src="/images/btn_close.png" alt="닫기 버튼"></button>
         </form>
         <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
             <div class="mainProfile">
                 <div class="mprofBackground">
-                    <img src="/image/icon_no_image_lg.png" alt="사용자 설정 프로필 배경화면 사진">
+                    <img src="/images/icon_no_image_lg.png" alt="사용자 설정 프로필 배경화면 사진">
                 </div>
             </div>
             <ul class="tabMenu">
@@ -43,7 +43,7 @@
                     <button>추천글</button>
                 </li>
                 <li class="viewBtn">
-                    <button onclick="viewBtnClicked()"><img src="/image/btn_view_type.png" alt="보기타입 선택버튼"></button>
+                    <button onclick="viewBtnClicked()"><img src="/images/btn_view_type.png" alt="보기타입 선택버튼"></button>
                     <ul class="optionBox optionBoxColor">
                         <li><a onclick="blogViewClicked()">Blog view</a></li>
                         <li><a onclick="snsViewClicked()">SNS view</a></li>
@@ -115,7 +115,7 @@
             </div>
             <span class="status_msg">{{profile.profileStatmsg}}</span>
         </div>
-        <button class="optionBtn"><img src="/image/icon_option.png" alt="글 옵션 버튼"></button>
+        <button class="optionBtn"><img src="/images/icon_option.png" alt="글 옵션 버튼"></button>
         <ul class="optionBox">
             <li><a>글 신고하기</a></li>
             <li><a>글 관심없음</a></li>
@@ -131,11 +131,11 @@
             </div>
             <div class="showLikeAndComments">
                 <button class="commentsBtn">
-                    <img src="/image/icon_comment.png" alt="댓글 버튼 아이콘">
+                    <img src="/images/icon_comment.png" alt="댓글 버튼 아이콘">
                     <span>{{cmtCount}}</span>
                 </button>
                 <button class="likeBtn" onclick="handleLike('{{postCode}}', '{{memberCode}}')" data-post-code="{{postCode}}">
-                    <img src="/image/icon_like.png" alt="좋아요 버튼 아이콘">
+                    <img src="/images/icon_like.png" alt="좋아요 버튼 아이콘">
                     <span>{{likeCount}}</span>
                 </button>
             </div>

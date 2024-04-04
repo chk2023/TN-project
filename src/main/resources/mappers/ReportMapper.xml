@@ -39,16 +39,14 @@
         SELECT r.report_code,
                c.r_category_name,
                r.report_text,
-               r.sub_member_code,
+               r.target_code,
                m.member_code,
                m.member_id,
                r.report_date
 
         FROM tbl_report r
-                 JOIN tbl_member m ON r.sub_member_code = m.member_code
-        JOIN tbl_r_category c ON c.r_category_code = r.r_category_code
-        ORDER BY r.sub_member_code = #{ subMemberCode }
-
+                 JOIN tbl_member m ON r.target_code = m.member_code
+                 JOIN tbl_r_category c ON c.r_category_code = r.r_category_code
     </select>
 
 
@@ -62,7 +60,7 @@
             report_status,
             processing_date,
             processing_text,
-            sub_member_code,
+            target_code,
             manager_code,
             reporter_code,
             report_content,
@@ -94,9 +92,49 @@
             processing_date
         FROM
             tbl_report
-        WHERE
-            report_code = #{ reportCode }
+    </select>
+
+    <select id="viewOneAdmReport" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">
+        SELECT
+            report_code,
+            manager_code,
+            report_text,
+            report_date,
+            processing_text,
+            processing_date
+        FROM
+            tbl_report
+
+        WHERE report_code = #{ reportCode }
+
     </select>
 
 
+    <select id="checkAllMember" resultType="com._3dhs.tnproject.member.dto.MemberDTO">
+        SELECT
+            member_code,
+            member_id,
+            member_birth,
+            member_status,
+            member_Authority,
+            is_deleted
+
+        FROM tbl_member
+
+
+    </select>
+
+    <select id="checkOneMember" resultType="com._3dhs.tnproject.member.dto.MemberDTO">
+        SELECT
+            member_code,
+            member_id,
+            member_birth,
+            member_status,
+            member_Authority,
+            is_deleted
+
+        FROM tbl_member
+
+        WHERE member_code = #{ memberCode }
+    </select>
 </mapper>

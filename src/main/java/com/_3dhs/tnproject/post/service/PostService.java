@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -69,6 +70,19 @@ public class PostService {
     public void addDefaultFolder(List<FolderDTO> addDefaultFolders) {
         postMapper.insertAddDefaultFolder(addDefaultFolders);
         System.out.println("서비스단에 넘어온 addDefaultFolders : " + addDefaultFolders );
+    }
+
+
+    public PostDTO findPostByPostCode(Integer postCode) {
+        return postMapper.findPostByPostCode(postCode);
+    }
+
+    public List<PostDTO> findAllPostListForDoc() {
+        return postMapper.findAllPostListForDoc();
+    }
+
+    public List<PostDTO> findListByPostCodes(Set<Integer> postCodes) {
+        return postMapper.findListByPostCodes(postCodes);
     }
 
     /* 해당 글에 좋아요를 눌렀는지 확인 */

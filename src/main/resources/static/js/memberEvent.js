@@ -35,15 +35,18 @@ window.onload = function () {
         }
     }
 
-    /* 회원가입 이메일 중복확인 */
+    /* 회원가입 이메일 중복확인 및 비밀번호 찾기 이메일 체크 */
     if(document.getElementById("emailCheck")) {
 
         const $duplication = document.getElementById("emailCheck");
-        const $duplicationMessage = document.getElementById("duplicationMessage");
+        const $resultMessage = document.getElementById("resultMessage");
         const $optionalId = document.getElementById("optionalId");
+        const $memberId = document.getElementById("memberId");
+        const $verCode = document.getElementById("verCode");
+        const $currentPageUrl = window.location.href;
 
         $duplication.onclick = function() {
-            let memberId = document.getElementById("memberId").value.trim();
+            memberId = $memberId.value.trim();
             let domain = '';
 
             // 입력된 아이디가 없는 경우
@@ -69,10 +72,16 @@ window.onload = function () {
                 domain = $optionalId.value;
             }
 
+            // 현재 페이지에 따라 다른 URL 선택
+            let url = "/member/idDupCheck";
+            if ($currentPageUrl.includes("/member/findPwd")) {
+                url = "/member/idCheck"
+            }
+
             // 도메인과 아이디 조합해서 fetch로 요청 보내기
             memberId += domain;
 
-            fetch("/member/idDupCheck", {
+            fetch(url, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json;charset=UTF-8'
@@ -81,15 +90,27 @@ window.onload = function () {
             })
                 .then(result => result.text())
                 .then(result => {
-                    if (result === '중복 된 아이디가 존재합니다.') {
-                        $duplicationMessage.textContent = result;
-                    } else {
-                        $duplicationMessage.textContent = result;
+                    if ($currentPageUrl.includes("/member/regist")) {
+                        if (result === '중복 된 아이디가 존재합니다.') {
+                            $resultMessage.textContent = result;
+                        } else {
+                            $resultMessage.textContent = result;
+                        }
+                    } else if ($currentPageUrl.includes("/member/findPwd")){
+                        console.log(result);
+                        if (result === '인증 코드 전송을 눌러.') {
+                            $resultMessage.textContent = result;
+                            $verCode.disabled = false;
+                        } else {
+                            $resultMessage.textContent = result;
+                        }
                     }
                 })
                 .catch((error) => error.text().then((res) => alert(res)));
         }
     }
+    let memberId;
+
     // 이메일 형식인지 검증하는 함수
     function isValidEmail(email) {
         const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -115,13 +136,23 @@ window.onload = function () {
         return true;
     }
 
-    // 폼 submit 이벤트에 대한 리스너 등록
-    const $signupForm = document.querySelector("form");
-    $signupForm.addEventListener("submit", function(event) {
-        if (!checkPasswordMatch()) {
-            event.preventDefault(); // submit 중지
-        }
-    });
+    const $registForm = document.querySelector("#registForm");
+    if ($registForm) {
+        $registForm.addEventListener("submit", function(event) {
+            if (!checkPasswordMatch()) {
+                event.preventDefault(); // submit 중지
+            }
+        });
+    }
+
+    const $pwdResetForm = document.querySelector("#pwdResetForm");
+    if ($pwdResetForm) {
+        $pwdResetForm.addEventListener("submit", function(event) {
+            if (!checkPasswordMatch()) {
+                event.preventDefault(); // submit 중지
+            }
+        });
+    }
 
     /* 이메일 인증 코드 전송 */
     if (document.getElementById("verCode")) {
@@ -162,7 +193,7 @@ window.onload = function () {
 
     if(document.getElementById("confirmBtn")) {
         const $confirmBtn = document.getElementById("confirmBtn");
-        const $signupButton = document.getElementById("signupButton");
+        const $processButton = document.getElementById("processButton");
 
         $confirmBtn.onclick = function() {
             const userInput = document.getElementById("code").value.trim();
@@ -171,14 +202,13 @@ window.onload = function () {
 
             if (userInput === generatedCode) {
                 alert("인증되었습니다.");
-                $signupButton.disabled = false;
+                $processButton.disabled = false;
             } else {
                 alert("인증번호가 일치하지 않습니다.");
-                $signupButton.disabled = true;
+                $processButton.disabled = true;
             }
         }
     }
-
 
 
     /* 회원 정보 수정 비동기 처리 */
@@ -217,6 +247,60 @@ window.onload = function () {
             $updateMemberButton.classList.add("hidden");
         }
     }
+
+    if (document.getElementById("processButton")) {
+        const $processButton = document.getElementById("processButton");
+        const $verification = document.getElementById("verification");
+        const $pwdReset = document.getElementById("pwdReset");
+
+        $processButton.onclick = function (){
+            $verification.style.display = "none";
+            $pwdReset.style.display = "block";
+        }
+    }
+
+    // /* 비밀번호 재설정 */
+    // if (document.getElementById("resetPwdBtn")) {
+    //     const $resetPwdBtn = document.getElementById("resetPwdBtn");
+    //     const $currentPwd = document.getElementById("currentPwd");
+    //     const $newPwd = document.getElementById("newPwd");
+    //
+    //     $resetPwdBtn.onclick = function (){
+    //         let currentPwd = $currentPwd.value;
+    //         let newPwd = $newPwd.value;
+    //
+    //         if (currentPwd === "" || newPwd === "") {
+    //             alert("현재 비밀번호와 새 비밀번호를 입력해주세요.");
+    //             return;
+    //         }
+    //
+    //         if (currentPwd === newPwd) {
+    //             alert("현재 비밀번호와 새 비밀번호가 같습니다.")
+    //             return;
+    //         }
+    //
+    //         fetch("/member/findPwd", {
+    //             method: "POST",
+    //             headers: {
+    //                 'Content-Type': 'application/json;charset=UTF-8'
+    //             },
+    //             body: JSON.stringify({
+    //                 memberId: memberId,
+    //                 currentPwd: currentPwd,
+    //                 newPwd: newPwd
+    //             })
+    //         })
+    //             .then(result => result.text())
+    //             .then(result => {
+    //                 if (result === '중복 된 아이디가 존재합니다.') {
+    //                     $duplicationMessage.textContent = result;
+    //                 } else {
+    //                     $duplicationMessage.textContent = result;
+    //                 }
+    //             })
+    //             .catch((error) => error.text().then((res) => alert(res)));
+    //     }
+    // }
 
 
 }
