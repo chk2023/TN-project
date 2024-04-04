@@ -40,7 +40,7 @@ public class SpringSecurityConfiguration {
                     auth.requestMatchers("/member/findPwd").permitAll();
                     //인가 범위 추가
                     auth.requestMatchers("/timeline").hasAnyRole("ADMIN", "COMMON");
-                    auth.requestMatchers("/manager").hasRole("ADMIN");
+                    auth.requestMatchers("/manager/*/*").hasRole("ADMIN");
                     auth.requestMatchers("/post").hasAnyRole("ADMIN", "COMMON");
 
 
@@ -55,7 +55,7 @@ public class SpringSecurityConfiguration {
 //                    login.loginProcessingUrl("/main");
 //                    login.permitAll();
                     /* 성공 시 랜딩 페이지 설정 */
-                    login.defaultSuccessUrl("/timeline/list?viewType=blog&contentsType=1");
+                    login.defaultSuccessUrl("/");
                     /* 로그인 실패 시 랜딩 페이지 설정 */
                     login.failureForwardUrl("/member/loginfail");
                     /* 파라미터명 변경 */

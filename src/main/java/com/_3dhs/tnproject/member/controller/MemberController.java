@@ -37,12 +37,9 @@ public class MemberController {
         this.messageSourceAccessor = messageSourceAccessor;
     }
 
+
     @GetMapping(value = {"/login"})
-    public String loginPage(Authentication authentication){
-        Object user = authentication;
-        if (user != null) {
-            return "redirect:/timeline/list";
-        }
+    public String loginPage(){
         return "member/login";
     }
 
