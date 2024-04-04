@@ -230,13 +230,11 @@
             <if test='tabMenu == "고정글"'>
                 AND post_is_fixed = 1
             </if>
-            <if test='tabMenu == "최신순"'>
-            </if>
-            <if test='tabMenu == "♡"'>
-            </if>
         </where>
         ORDER BY
-            post_wri_date DESC;
+            <if test='tabMenu == "최신순"'>
+                post_wri_date DESC;
+            </if>
     </select>
 
 </mapper>
