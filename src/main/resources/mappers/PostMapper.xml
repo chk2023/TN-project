@@ -226,15 +226,22 @@
         FROM
             post_view
         <where>
-            po_member_code = #{memberCode}
             <if test='tabMenu == "고정글"'>
+                po_member_code = #{memberCode}
                 AND post_is_fixed = 1
             </if>
-        </where>
-        ORDER BY
             <if test='tabMenu == "최신순"'>
-                post_wri_date DESC;
+                po_member_code = #{memberCode}
             </if>
+            <if test='tabMenu == "♡"'>
+                post_is_deleted = 1 <!-- //지우고 조건 쓰면 됨 -> 조회되지 말라고 의미없이 설정해 놓은거임 ㅠㅠ -->
+            </if>
+        </where>
+            <if test='tabMenu == "최신순"'>
+                ORDER BY
+                post_wri_date DESC
+            </if>
+        LIMIT #{index}, #{range}
     </select>
 
 </mapper>

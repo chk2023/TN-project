@@ -6,6 +6,7 @@ import com._3dhs.tnproject.member.dto.ProfileDTO;
 import com._3dhs.tnproject.post.dao.PostMapper;
 import com._3dhs.tnproject.post.dto.FolderDTO;
 import com._3dhs.tnproject.post.dto.PostDTO;
+import com._3dhs.tnproject.post.dto.TabSearchDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -74,8 +75,8 @@ public class PostService {
     }
 
     @Transactional
-    public List<PostDTO> findPostList(int memberCode, String tabMenu) {
-        return postMapper.findPostList(memberCode, tabMenu);
+    public List<PostDTO> findPostList(TabSearchDTO tabSearchDTO) {
+        return postMapper.findPostList( tabSearchDTO);
     }
 
 }

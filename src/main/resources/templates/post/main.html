@@ -16,8 +16,7 @@
         <div class="folder">
             <strong class="minTit">폴더</strong>
             <ul>
-                <li class="AllList"><a href="#"><img src="/images/icon_folder.png" alt="아이콘">전체목록(<span>56</span>)</a>
-                </li>
+                <li class="AllList"><a onclick="folderAllList()"><img src="/images/icon_folder.png" alt="아이콘">전체목록(<span th:text="${postView.postCount}">56</span>)</a></li>
                 <th:block th:object="${folderList}" th:each="folder, start : ${folderList}">
                     <li th:classappend="${folder.folderName == 'NoName'} ? 'hidden'" draggable="true">
                         <input type="hidden" th:value="${folder.folderCode}"/>
@@ -31,8 +30,8 @@
         </div>
     </aside>
     <main>
-        <form class="title">
-            <button class="backBtn"><img src="/images/btn_arrow.png" alt="뒤로가기 버튼"></button>
+        <div class="title">
+            <button class="backBtn"><img onclick="location.href='/timeline/list'" src="/images/btn_arrow.png" alt="뒤로가기 버튼"></button>
             <div>
                 <h1 th:text="${member.profile.profileNickname}">닉네임</h1>
                 <p><span th:text="${postView.postCount}">0000</span> 게시물</p>
@@ -40,7 +39,7 @@
             <input class="search_input" type="text" placeholder="검색어를 입력하세요">
             <button class="searchBtn"><img src="/images/btn_search.png" alt="검색 버튼"></button>
             <button class="closeBtn"><img src="/images/btn_close.png" alt="닫기 버튼"></button>
-        </form>
+        </div>
         <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
             <div class="mainProfile">
                 <div class="mprofBackground">
@@ -69,20 +68,15 @@
                 </div>
             </div>
             <ul class="tabMenu">
-                <li class="active">
-<!--                    <button th:onclick="'location.href=\'/post/main?memberCode=' + ${member.memberCode} + '&amp;tabMenu=고정글\''">고정글</button>-->
-                    <button>고정글</button>
-                </li>
-                <li>
-<!--                    <button th:onclick="'location.href=\'/post/main?memberCode=' + ${member.memberCode} + '&amp;tabMenu=최신순\''">최신순</button>-->
-                    <button>최신순</button>
-                </li>
-                <li>
-<!--                    <button th:onclick="'location.href=\'/post/main?memberCode=' + ${member.memberCode} + '&amp;tabMenu=♡\''">♡</button>-->
-                    <button>♡</button>
-                </li>
+                <li class="active"><button>고정글</button></li>
+                <li><button>최신순</button></li>
+                <li><button>♡</button></li>
                 <li class="viewBtn">
                     <button><img src="/images/btn_view_type.png" alt="보기타입 선택버튼"></button>
+                    <ul class="optionBox">
+                        <li>블로그식 보기</li>
+                        <li>SNS식 보기</li>
+                    </ul>
                 </li>
             </ul>
 
@@ -137,121 +131,10 @@
                     </li>
                 </th:block>
             </ul>
-            <script>
-                const $tabMenu = document.querySelector(".tabMenu");
-                $tabMenu.addEventListener('click', tabMenuClick);
-
-                function tabMenuClick(e) {
-                    let thisEl = e.target;
-                    let tabMenu = "";
-                    if (thisEl.tagName === 'BUTTON' && !thisEl.parentElement.classList.contains("viewBtn")) {
-                        const $li = $tabMenu.querySelectorAll("li:not(.viewBtn)");
-                        $li.forEach((li) => {
-                            li.classList.remove("active");
-                        })
-                        thisEl.parentElement.classList.add("active");
-                        tabMenu = thisEl.textContent;
-                        tabMenuPostList(tabMenu);
-                    }
-                }
-
-                document.addEventListener('click', function (e) {
-                    // 모든 .optionBtn 요소를 선택
-                    const $optionBtn = document.querySelectorAll(".optionBtn");
-
-                    // 클릭된 요소 또는 그 조상 중 .optionBtn을 찾음
-                    const targetOptionBtn = e.target.closest(".optionBtn");
-
-                    if (targetOptionBtn) {
-                        // .optionBtn 또는 그 내부에서 클릭이 발생한 경우
-                        // 먼저 모든 .optionBtn에서 "active" 클래스 제거
-                        $optionBtn.forEach((option) => {
-                            option.classList.remove("active");
-                        });
-                        // 클릭된 .optionBtn에만 "active" 클래스 추가
-                        targetOptionBtn.classList.add("active");
-                    } else {
-                        // .optionBtn이 아닌 다른 곳을 클릭한 경우
-                        // 모든 .optionBtn에서 "active" 클래스 제거
-                        $optionBtn.forEach((option) => {
-                            option.classList.remove("active");
-                        });
-                    }
-                });
-
-                async function tabMenuPostList(tabMenu) {
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const memberCode = urlParams.get('memberCode');
-                    const response = await fetch('/post/load?memberCode='+memberCode+'&tabMenu='+tabMenu);
-                    const result = await response.json();
-
-                    const listContainer = document.querySelector(".blogList"); // 가정: 이 ID를 가진 요소가 게시물을 담을 컨테이너
-                    listContainer.innerHTML = ''; // 컨테이너 초기화
-
-                    result.forEach(post => {
-                        // 'post.postWriDate'를 Date 객체로 변환
-                        const date = new Date(post.postWriDate);
-                        const $li = document.createElement('li');
-                        const $fragment = document.createDocumentFragment();
-
-                        // 날짜 형식을 "MM월 dd일"로 지정
-                        const formattedDate = date.toLocaleDateString("ko-KR", {
-                            month: '2-digit', // '2-digit' 옵션으로 월을 MM 형식으로 표시
-                            day: '2-digit', // '2-digit' 옵션으로 일을 dd 형식으로 표시
-                        }).replace('. ', '월 ').replace('.', '일'); // 'MM. dd.' 형식을 'MM월 dd일' 형식으로 변환
-                        const postElement = `
-                                                <div class="list_head">
-                                                    <div class="prof_photo">
-                                                        <img src="${escapeHTML(post.thumbnailPath ? post.thumbnailPath : '/images/icon_user.png')}" alt="프로필 사진">
-                                                    </div>
-                                                    <div>
-                                                        <div>
-                                                            <strong class="blog_user_name">${escapeHTML(post.profile.profileNickname)}</strong>
-                                                            <span class="blog_user_birth">${escapeHTML(formattedDate)}</span>
-                                                        </div>
-                                                        <span class="status_msg">${escapeHTML(post.profile.profileStatmsg)}</span>
-                                                    </div>
-                                                    <button class="optionBtn"><img src="/images/icon_option.png" alt="글 옵션 버튼"></button>
-                                                    <ul class="optionBox">
-                                                        <li><a>글 신고하기</a></li>
-                                                        <li><a>글 관심없음</a></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="list_body">
-                                                <div>
-                                                    <strong class="contentTit">${escapeHTML(post.postTitle)}</strong>
-                                                    <div class="contentsTxt">
-                                                        <p>${escapeHTML(post.postText)}</p>
-                                                    </div>
-                                                    <div class="showLikeAndComments">
-                                                        <button class="commentsBtn">
-                                                            <img src="/images/icon_comment.png" alt="댓글 버튼 아이콘">
-                                                            <span>${escapeHTML(post.likeCount)}</span>+
-                                                        </button>
-                                                        <button class="likeBtn active">
-                                                            <img src="/images/icon_like.png" alt="좋아요 버튼 아이콘">
-                                                            <span>${escapeHTML(post.cmtCount)}</span>k
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                        `;
-                        $li.insertAdjacentHTML('beforeend', postElement);
-                        $fragment.appendChild($li);
-                        listContainer.appendChild($fragment);
-                    });
-                }
-
-                function escapeHTML(text) {
-                    var map = {
-                        '&': '&amp;',
-                        '<': '&lt;',
-                        '>': '&gt;',
-                        '"': '&quot;',
-                        "'": '&#039;'
-                    };
-                    return String(text).replace(/[&<>"']/g, function(m) { return map[m]; });
-                }
-            </script>
+            <div id="listEnd"></div>
+            <script src="/js/scrollEvent.js"></script>
+            <script src="/js/blogMain.js"></script>
+            <script src="/js/pathFinder.js"></script>
         </section>
     </main>
 </div>

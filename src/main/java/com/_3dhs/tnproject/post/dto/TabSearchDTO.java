@@ -10,4 +10,6 @@ import lombok.ToString;
 public class TabSearchDTO {
     private int memberCode;
     private String tabMenu;
+    private int index;
+    private int range;
 }
