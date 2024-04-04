@@ -36,6 +36,11 @@ dependencies {
     //검색엔진
     implementation 'org.apache.lucene:lucene-core:8.11.1'
 
+    //페이징..
+//    implementation 'org.springframework.data.domain.Page'
+//    implementation 'org.springframework.data.domain.PageRequest'
+//    implementation 'org.springframework.data.domain.Pageable'
+
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'

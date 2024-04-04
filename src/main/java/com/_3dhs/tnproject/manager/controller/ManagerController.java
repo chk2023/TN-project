@@ -5,13 +5,16 @@ import com._3dhs.tnproject.manager.service.ReportService;
 import com._3dhs.tnproject.member.dto.MemberDTO;
 import com._3dhs.tnproject.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.junit.Test;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -104,7 +107,35 @@ public class ManagerController {
     }
 
 
+    @GetMapping("/list")
+    public String getBoardList(@RequestParam(defaultValue = "1") int page,
+                               @RequestParam(required = false) String searchCondition,
+                               @RequestParam(required = false) String searchValue,
+                               Model model)
+                                {
+     log.info("boardList page : { }", page);
+     log.info("boardList searchCondition : { }", searchCondition);
+     log.info("boardList searchValue : { }", searchValue) ;
 
+     Map<String, String> searchMap = new HashMap<>();
+     searchMap.put("searchCondition", searchCondition);
+     searchMap.put("searchValue", searchValue);
+
+     Map<String, Object> boardListAndPaging = reportService.selectBoardList(searchMap, page);
+     model.addAttribute("paging", boardListAndPaging.get("paging"));
+     model.addAttribute("boardList", boardListAndPaging.get("boardList"));
+
+     return "/manager/**/list";
+    }
+//    @Test //신고내역 가짜 데이터 생성
+//    public void testJpa() {
+//        for(int i=1; i<150; i++) {
+//            this.reportService.create(String.format("%d번째 제목입니다", i), String.format("%d번째 내용입니다."), i);
+//
+//        }
+//
+//
+//    }
 
 
 
