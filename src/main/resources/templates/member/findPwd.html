@@ -3,42 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <title>비밀번호 찾기</title>
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/member/login.css">
+    <link rel="stylesheet" href="/css/member/regist.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
     <script type="text/javascript" src="/js/memberEvent.js"></script>
 </head>
 <body>
-
-<form action="/member/findPwd" method="post" id="pwdResetForm">
-<div id="verification">
-    <div id="mail_input" name="mail_input">
-        아이디
-        <input type="text" maxlength="30" name="memberId" id="memberId" placeholder="이메일 입력" required>
-        <select id="optionalId" name="optionalId">
-            <option value="default">직접입력</option>
-            <option value="@gmail.com">@gmail.com</option>
-            <option value="@naver.com">@naver.com</option>
-            <option value="@daum.net">@daum.net</option>
-        </select>
-        <input type="button" value="아이디 확인" id="emailCheck">
-        <input type="button" value="인증코드 전송" id="verCode" disabled> <br>
-        <span id="resultMessage" style="color: red"></span><hr>
+<header>
+    <div th:replace="~{common/login.html}"></div>
+</header>
+<main>
+    <div class="title">
+        <button class="backBtn" onclick="goToMainPage()">
+            <img src="/images/btn_arrow.png" alt="뒤로가기 버튼">
+        </button>
+        <script>
+            function goToMainPage() {
+                window.location.href = "/"; // 메인 페이지 URL로 이동
+            }
+        </script>
+        <div>
+            <h1>비밀번호 찾기</h1>
+        </div>
     </div>
-
-    <div>
-        <input type="text" name="code" id="code" placeholder="인증번호 입력">
-        <input type="button" value="인증 확인" name="confirmBtn" id="confirmBtn"><br>
-        <input type="button" id="processButton" value="비밀번호 재설정" disabled>
-    </div>
-
-</div>
-
-<div id="pwdReset" style="display: none">
-    새 비밀번호
-    <input type="password" maxlength="20" id="memberPwd" name="memberPwd" required><br>
-    새 비밀번호 확인
-    <input type="password" maxlength="20" id="memberPwd2" name="memberPwd2" required><br>
-    <input type="submit" value="확인" id="resetPwdBtn">
-</div>
-</form>
-
+    <form action="/member/findPwd" method="post" id="pwdResetForm">
+        <div id="verification">
+            <div class="form-group" id="mail_input" name="mail_input">
+                <label for="memberId" class="label">아이디</label>
+                <input type="text" maxlength="30" name="memberId" id="memberId" placeholder="이메일 입력" required>
+                <select id="optionalId" name="optionalId">
+                    <option value="default">직접입력</option>
+                    <option value="@gmail.com">@gmail.com</option>
+                    <option value="@naver.com">@naver.com</option>
+                    <option value="@daum.net">@daum.net</option>
+                </select>
+                <input type="button" class="registBtn" value="아이디 확인" id="emailCheck">
+            </div>
+            <br>
+            <div class="form-group">
+                <input type="button" class="registBtn" value="인증코드 전송" id="verCode" disabled> <br>
+                <span id="resultMessage" style="color: red"></span>
+            </div>
+            <br><br><br>
+            <div class="form-group">
+                <input type="text" name="code" id="code" placeholder="인증번호 입력">
+                <input type="button" class="registBtn" value="인증 확인" name="confirmBtn" id="confirmBtn"><br>
+            </div>
+            <div class="form-group">
+                <input class="blackBtn" type="button" id="processButton" value="비밀번호 재설정" disabled>
+            </div>
+        </div>
+        <div class="form-group" id="pwdReset" style="display: none">
+            <div class="form-group">
+                <label for="memberPwd" class="label">새 비밀번호</label>
+                <input type="password" maxlength="20" id="memberPwd" name="memberPwd" required><br>
+            </div>
+            <div class="form-group">
+                <label for="memberPwd2" class="label">비밀번호 확인</label>
+                <input type="password" maxlength="20" id="memberPwd2" name="memberPwd2" required><br>
+            </div>
+            <div>
+                <input type="submit" class="btn" value="확인" id="resetPwdBtn">
+            </div>
+        </div>
+    </form>
+</main>
 </body>
 </html>
