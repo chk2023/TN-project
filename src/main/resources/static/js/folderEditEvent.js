@@ -22,7 +22,7 @@ function addFolder() {
         console.log("10개이하라 버튼은 먹은거 같은디??" + hiddenLi.item(0))
         lastHiddenLi.classList.remove("hidden");
         lastHiddenLi.querySelector("span").textContent = "폴더";
-        lastHiddenLi.querySelector("img").src = "/image/icon_folder.png";
+        lastHiddenLi.querySelector("img").src = "/images/icon_folder.png";
         lastLi.after(lastHiddenLi);
     } else {
         alert("폴더는 최대 10개 까지만 생성 가능합니다.");
@@ -34,7 +34,7 @@ function deleteFolder() {
     if ($feListActive) {
         //$feListActive.remove();
         $feListActive.querySelector("span").textContent = "NoName";
-        $feListActive.querySelector("img").src = "/image/icon_folder.png";
+        $feListActive.querySelector("img").src = "/images/icon_folder.png";
         $feListActive.classList.add("hidden");
         $feListActive.classList.remove("active");
 

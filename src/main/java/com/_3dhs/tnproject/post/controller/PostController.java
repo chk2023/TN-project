@@ -55,7 +55,7 @@ public class PostController {
             for(int i = 0; i < 10; i++) {
                 FolderDTO folderDTO = new FolderDTO();
                 folderDTO.setFolderName("NoName");
-                folderDTO.setFolderIconPath("/image/icon_folder.png");
+                folderDTO.setFolderIconPath("/images/icon_folder.png");
                 folderDTO.setFolderSequence(10);
                 folderDTO.setFMemberCode(memberDTO.getMemberCode());
                 folderDTO.setFolderStatus("N");
