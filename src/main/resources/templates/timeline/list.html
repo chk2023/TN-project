@@ -21,7 +21,7 @@
             <button class="backBtn" id="backBtn"><img src="/images/btn_arrow.png" alt="뒤로가기 버튼"></button>
             <div>
                 <h1>Timeline - main</h1>
-                <p><span>24. 03. 25</span></p>
+                <p><span th:text="${today}"></span></p>
             </div>
             <input class="search_input" id="search_input" name="searchValue" type="text" placeholder="검색어를 입력하세요">
             <button class="searchBtn" id="searchBtn" type="button"><img src="/images/btn_search.png" alt="검색 버튼"></button>
@@ -129,6 +129,7 @@
     }
 </script>
 <script src="/js/timeline.js"></script>
+<script src="/js/postFormatting.js"></script>
 <script src="/js/scrollEvent.js"></script>
 <script src="/js/pathFinder.js"></script>
 <script src="/js/searchEvent.js"></script>
