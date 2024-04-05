@@ -22,7 +22,7 @@ function addFolder() {
         console.log("10개이하라 버튼은 먹은거 같은디??" + hiddenLi.item(0))
         lastHiddenLi.classList.remove("hidden");
         lastHiddenLi.querySelector("span").textContent = "폴더";
-        lastHiddenLi.querySelector("img").src = "/image/icon_folder.png";
+        lastHiddenLi.querySelector("img").src = "/images/icon_folder.png";
         lastLi.after(lastHiddenLi);
     } else {
         alert("폴더는 최대 10개 까지만 생성 가능합니다.");
@@ -34,7 +34,7 @@ function deleteFolder() {
     if ($feListActive) {
         //$feListActive.remove();
         $feListActive.querySelector("span").textContent = "NoName";
-        $feListActive.querySelector("img").src = "/image/icon_folder.png";
+        $feListActive.querySelector("img").src = "/images/icon_folder.png";
         $feListActive.classList.add("hidden");
         $feListActive.classList.remove("active");
 
@@ -156,7 +156,6 @@ function getDragAfterElement(container, y) {
 }
 
 async function sendFolderData() {
-    console.log("뭐지?? 일단 로그 찍어봐")
     let folderInfoList = [];
     $feList.querySelectorAll("li:not(.fixed)").forEach(function (li, index){
         const folderCode = li.querySelector('input[type="hidden"]').value;
@@ -167,7 +166,7 @@ async function sendFolderData() {
         const folderStatus = li.classList.contains("hidden") ? 'N' : 'Y';
         const folderInfo = {folderCode, folderName, folderIconPath, folderSequence, fMemberCode, folderStatus}
         folderInfoList.push(folderInfo);
-        console.log(folderInfo);
+       // console.log(folderInfo);
     })
     const json = JSON.stringify(folderInfoList);
     const response = await fetch('/post/folder_edit', {
@@ -178,9 +177,11 @@ async function sendFolderData() {
         body : json
     });
     const result = await response.text();
-    console.log("결과 찍어보깅 : " + result)
-    if(result) {
+    //console.log("결과 찍어보깅 : " + result)
+
+    if(result.startsWith("redirect:")) {
+        const memberCode = result.split(":")[1];
         alert("폴더 목록이 저장되었습니다.");
-        window.location.href = "http://localhost:8080/post/main";
+        window.location.href = "http://localhost:8080/post/main?"+memberCode;
     }
 }

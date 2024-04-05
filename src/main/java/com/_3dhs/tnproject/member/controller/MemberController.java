@@ -121,7 +121,7 @@ public class MemberController {
         /* 로그인 시 저장된 Authentication 객체를 변경된 정보로 교체한다. */
         SecurityContextHolder.getContext().setAuthentication(createNewAuthentication(loginMember.getMemberId()));
 
-        return "redirect:/common/testhub";
+        return "redirect:/";
     }
 
     protected Authentication createNewAuthentication(String memberId) {

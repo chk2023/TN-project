@@ -121,47 +121,54 @@
 </script>
 <script id="contentsTemplate" type="text/x-handlebars-template">
     {{#each this}}
-    <div class="list_head">
-        <div class="prof_photo">
+    <li>
+        <div class="list_head">
+            <div class="prof_photo">
 
-            <img src="{{profile.profileImgPath}}" alt="프로필 사진">
-        </div>
-        <div>
+                <img src="{{profile.profileImgPath}}" alt="프로필 사진">
+            </div>
             <div>
-                <strong class="blog_user_name"><a href="/post/main?memberCode={{memberCode}}">{{profile.profileNickname}}</a></strong>
-                <span class="blog_user_birth">{{postWriDate}}</span>
+                <div>
+                    <strong class="blog_user_name"><a href="/post/main?memberCode={{memberCode}}">{{profile.profileNickname}}</a></strong>
+                    <span class="blog_user_birth">{{postWriDate}}</span>
+                </div>
+                <span class="status_msg">{{profile.profileStatmsg}}</span>
             </div>
-            <span class="status_msg">{{profile.profileStatmsg}}</span>
+            <button class="optionBtn"><img src="/images/icon_option.png" alt="글 옵션 버튼"></button>
+            <ul class="optionBox">
+                <li><a>글 신고하기</a></li>
+                <li><a>글 관심없음</a></li>
+            </ul>
         </div>
-        <button class="optionBtn"><img src="/images/icon_option.png" alt="글 옵션 버튼"></button>
-        <ul class="optionBox">
-            <li><a>글 신고하기</a></li>
-            <li><a>글 관심없음</a></li>
-        </ul>
-    </div>
-    <div class="list_body">
-        <div>
-            <strong class="contentTit" onclick="location.href='/post/detail?postCode={{postCode}}'">{{postTitle}}</strong>
-            <div class="contentsTxt" onclick="location.href='/post/detail?postCode={{postCode}}'">
-                <p>
-                    {{postText}}
-                </p>
+        <div class="list_body">
+            <div>
+                <strong class="contentTit"
+                        onclick="location.href='/post/detail?postCode={{postCode}}'">{{postTitle}}</strong>
+                <div class="contentsTxt" onclick="location.href='/post/detail?postCode={{postCode}}'">
+                    <p>
+                        {{postText}}
+                    </p>
+                </div>
+                <div class="showLikeAndComments">
+                    <button class="commentsBtn">
+                        <img src="/images/icon_comment.png" alt="댓글 버튼 아이콘">
+                        <span>{{cmtCount}}</span>
+                    </button>
+                    <button class="{{#if liked}}
+                                        likeBtn active
+                                    {{else}}
+                                        likeBtn
+                                    {{/if}}">
+                        <img src="/images/icon_like.png" alt="좋아요 버튼 아이콘">
+                        <span>{{likeCount}}</span>
+                    </button>
+                </div>
             </div>
-            <div class="showLikeAndComments">
-                <button class="commentsBtn">
-                    <img src="/images/icon_comment.png" alt="댓글 버튼 아이콘">
-                    <span>{{cmtCount}}</span>
-                </button>
-                <button class="likeBtn" onclick="handleLike('{{postCode}}')" data-post-code="{{postCode}}">
-                    <img src="/images/icon_like.png" alt="좋아요 버튼 아이콘" id="likeBtn-{{postCode}}" class="like-icon">
-                    <span>{{likeCount}}</span>
-                </button>
+            <div class="thumbnailPhoto" onclick="location.href='/post/detail?postCode={{postCode}}'">
+                <img src="{{thumbnailPath}}" alt="썸네일 이미지">
             </div>
         </div>
-        <div class="thumbnailPhoto" onclick="location.href='/post/detail?postCode={{postCode}}'">
-            <img src="{{thumbnailPath}}" alt="썸네일 이미지">
-        </div>
-    </div>
+    </li>
     {{/each}}
 </script>
 <script src="/js/timeline.js"></script>

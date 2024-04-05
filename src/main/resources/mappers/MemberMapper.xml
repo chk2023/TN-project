@@ -140,4 +140,21 @@
             </if>
         </where>
     </update>
+
+
+    <select id="findMainBlogMemberInfo" resultMap="memberWithProfileMap">
+        SELECT
+            m.member_subdate,
+            p.profile_nickname,
+            p.profile_statmsg,
+            p.profile_img_path,
+            p.profile_bg_path
+        FROM
+            tbl_member m
+        JOIN
+            tbl_profile p ON (m.member_code = p.pr_member_code)
+        WHERE
+            m.member_code = #{memberCode}
+    </select>
+
 </mapper>

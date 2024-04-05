@@ -47,7 +47,7 @@ CREATE TABLE `tbl_folder`
 (
     `folder_code`    INT NOT NULL AUTO_INCREMENT COMMENT '폴더번호',
     `folder_name`    VARCHAR(20) NOT NULL COMMENT '폴더이름',
-    `folder_icon_path`    VARCHAR(50) DEFAULT '/image/icon_folder.png' NOT NULL COMMENT '폴더아이콘',
+    `folder_icon_path`    VARCHAR(50) DEFAULT '/images/icon_folder.png' NOT NULL COMMENT '폴더아이콘',
     `folder_sequence`    INT NOT NULL COMMENT '폴더순서',
     `f_member_code`    INT NOT NULL COMMENT '회원번호',
     `folder_status`    VARCHAR(10) DEFAULT 'N' NOT NULL COMMENT '폴더상태',
@@ -133,6 +133,7 @@ CREATE TABLE `tbl_post`
     `post_mod_date`    DATETIME COMMENT '글수정시간',
     `post_dele_date`    DATETIME COMMENT '글삭제시간',
     `post_is_deleted`    BOOLEAN DEFAULT FALSE NOT NULL COMMENT '삭제여부',
+    `post_is_fixed`    BOOLEAN DEFAULT FALSE NOT NULL COMMENT '고정여부',
     `folder_code`    INT DEFAULT 0 NOT NULL COMMENT '폴더번호',
     PRIMARY KEY ( `post_code` )
 ) COMMENT = '글';
@@ -159,8 +160,8 @@ CREATE TABLE `tbl_profile`
         COMMENT '프로필번호',
     `profile_nickname`    VARCHAR(20) NOT NULL COMMENT '프로필닉네임',
     `profile_statmsg`    VARCHAR(50) COMMENT '프로필상태메세지',
-    `profile_img_path`    VARCHAR(50) DEFAULT '/image/icon_user.png' NOT NULL COMMENT '프로필사진',
-    `profile_bg_path`    VARCHAR(50) DEFAULT '/image/icon_no_image_lg.png' NOT NULL
+    `profile_img_path`    VARCHAR(50) DEFAULT '/images/icon_user.png' NOT NULL COMMENT '프로필사진',
+    `profile_bg_path`    VARCHAR(50) DEFAULT '/images/icon_no_image_lg.png' NOT NULL
         COMMENT '블로그배경사진',
     PRIMARY KEY ( `profile_code`,`pr_member_code` )
 ) COMMENT = '프로필';
@@ -245,6 +246,7 @@ SELECT po.post_code,
        po.post_mod_date,
        po.post_status,
        po.post_is_deleted,
+       po.post_is_fixed,
        pr.profile_code,
        pr.profile_nickname,
        pr.profile_statmsg,
