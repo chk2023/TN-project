@@ -19,7 +19,7 @@
                r.target_code,
                m.member_code,
                m.member_id,
-               r.report_date
+               r.report_content
 
         FROM tbl_report r
                  JOIN tbl_member m ON r.target_code = m.member_code

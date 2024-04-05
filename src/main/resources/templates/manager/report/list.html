@@ -4,19 +4,17 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="/css/common.css">
+
 </head>
 <body>
 <div class="wrap">
     <header>
         <div th:replace="~{common/profile.html}"></div>
         <nav th:replace="~{common/navigation.html}"></nav>
-
     </header>
-
     <main>
         <form class="title">
-            <button class="backBtn" type="button"><a href="/timeline/list"><img src="/images/btn_arrow.png"
-                                                                                alt="뒤로가기 버튼"></a></button>
+            <button class="backBtn" type="button"><a href="/timeline/list"><img src="/images/btn_arrow.png" alt="뒤로가기 버튼"></a></button>
             <div>
                 <h1>신고 목록</h1>
             </div>
@@ -27,13 +25,14 @@
         <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
 
 
+
             <table id="reportList" style="text-align:center">
                 <tr>
                     <th> 신고 번호</th>
                     <th> 신고 구분</th>
                     <th> 신고 내용</th>
                     <th> 유저 ID</th>
-                    <th> 신고 날짜</th>
+                    <th> 신고 콘텐츠</th>
                 </tr>
 
 
@@ -43,13 +42,13 @@
                     <td th:text="${ reportDTO.RCategoryName }"></td>
                     <td th:text="${ reportDTO.reportText }"></td>
                     <td th:text="${ reportDTO.memberId }"></td>
-                    <td th:text="${ reportDTO.formattingReportDate }"></td>
+                    <td th:text="${ reportDTO.reportContent }"></td>
                 </tr>
 
 
             </table>
 
-
+            <!--페이징-->
             <div id="paging" class="paging">
 
                 <th:block th:if="${ paging.searchCondition == null  || paging.searchValue == null }">
