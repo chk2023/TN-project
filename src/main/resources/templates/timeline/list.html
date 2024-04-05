@@ -68,13 +68,16 @@
     let isTitlePhotoChanged = false;
     let isLoading = false;
     const $viewBtn = document.querySelector(".viewBtn");
-    const memberCode = `[[${#authentication.principal.memberCode}]]`;
+
 </script>
 <script>
 
 
-
+    const loginMemberCode = `[[${#authentication.principal.memberCode}]]`;
     function handleLike(postCode) {
+
+
+
         fetch('/post/like', {
             method: 'POST',
             headers: {
@@ -82,7 +85,7 @@
             },
             body: JSON.stringify({
                 postCode: postCode,
-                memberCode: memberCode,
+                memberCode: loginMemberCode,
                 isPrivate: false,
         }),
     })
@@ -112,10 +115,10 @@
                             likeBtn.classList.remove("active");
                         }
                     } else {
-                        console.error("이미지 요소를 찾을 수 없습니다.");
+                        console.error("이미지를 찾을 수 없습니다.");
                     }
                 } else {
-                    console.error("좋아요 버튼을 찾을 수 없습니다.");
+                    console.error("버튼을 찾을 수 없습니다.");
                     console.log(result);
                 }
                 //================

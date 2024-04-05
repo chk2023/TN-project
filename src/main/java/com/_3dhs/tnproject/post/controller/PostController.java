@@ -150,11 +150,12 @@ public class PostController {
 
     @PostMapping("/like")
     @ResponseBody
-    public ResponseEntity<String> likePost(@RequestBody LikeListDTO likeListDTO, Authentication authentication, Model model) {
-        MemberDTO member = (MemberDTO) authentication.getPrincipal();
-        model.addAttribute("loginMemberCode", member.getMemberCode());
+    public ResponseEntity<String> likePost(@RequestBody LikeListDTO likeListDTO ,Authentication authentication, Model model) {
+        MemberDTO memberDTO = (MemberDTO) authentication.getPrincipal();
+        int memberCode = memberDTO.getMemberCode();
+        model.addAttribute("loginMemberCode", memberCode);
         try {
-            boolean isLiked = postService.toggleLike(likeListDTO.getPostCode(), likeListDTO.getMemberCode());
+            boolean isLiked = postService.toggleLike(likeListDTO.getPostCode(), memberCode);
             String result = isLiked ? "true" : "false";
             return ResponseEntity.ok(result);
         } catch (Exception e) {
