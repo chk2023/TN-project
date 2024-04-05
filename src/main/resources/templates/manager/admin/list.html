@@ -35,42 +35,53 @@
                 </tr>
 
 
-                <tr th:each=" memberDTO: ${ reports }"
-                    th:onclick="|location.href='/manager/admin/detail?reportCode=${memberDTO.reportCode}'|">
-                    <td th:text="${ memberDTO.reportCode }"></td>
-                    <td th:text="${ memberDTO.managerCode}"></td>
-                    <td th:text="${ memberDTO.reportText}"></td>
-                    <td th:text="${ memberDTO.reportDate}"></td>
-                    <td th:text="${ memberDTO.processingDate}"></td>
+                <tr th:each=" adminDTO: ${ adminList }"
+                    th:onclick="|location.href='/manager/admin/detail?reportCode=${adminDTO.reportCode}'|">
+                    <td th:text="${ adminDTO.reportCode }"></td>
+                    <td th:text="${ adminDTO.managerCode}"></td>
+                    <td th:text="${ adminDTO.reportText}"></td>
+                    <td th:text="${ adminDTO.reportDate}"></td>
+                    <td th:text="${ adminDTO.processingDate}"></td>
                 </tr>
+
+
 
             </table>
 
             <!--페이징-->
             <div id="paging" class="paging">
-                <!-- 맨 앞으로 이동 -->
-                <button class="pagingFrontBtn arrowBtn"><img src="/images/icon_paging_arrow_front.png" alt="맨 앞으로 이동 버튼">
-                </button>
-                <!-- 이전 페이지로 이동 -->
-                <button class="pagingFrontBtn arrowBtn" disabled="disabled"><img
-                        src="/images/icon_paging_arrow_front.png" alt="이전 목록으로 이동 버튼"></button>
+                <th:block th:if="${ paging.searchCondition == null  || paging.searchValue == null }">
 
-                <!-- 숫자 버튼 -->
-                <button class="pagingNumBtn" disabled="disabled">1</button>
-                <button class="pagingNumBtn">2</button>
-                <button class="pagingNumBtn">3</button>
-                <button class="pagingNumBtn">4</button>
-                <button class="pagingNumBtn">5</button>
+                    <!-- 맨 앞으로 이동 -->
+                    <button class="pagingFrontBtn arrowBtn"
+                            th:onclick="'location.href=\'/manager/admin/list?page=1\''">
+                        <img src="/images/icon_paging_arrow_front.png" alt="맨 앞으로 이동 버튼"></button>
 
-                <!-- 다음 페이지로 이동 -->
-                <button class="pagingBackBtn arrowBtn"><img src="/images/icon_paging_arrow_back.png" alt="다음 목록으로 이동 버튼">
-                </button>
-                <!-- 맨 끝으로 이동 -->
-                <button class="pagingBackBtn arrowBtn"><img src="/images/icon_paging_arrow_back.png" alt="맨 뒤로 이동 버튼">
-                </button>
+                    <!-- 이전 페이지로 이동 -->
+                    <button class="pagingFrontBtn arrowBtn"
+                            th:onclick="'location.href=\'/manager/admin/list?page=' + '@{'${paging.page - 1}'}' + '\''"p
+                            th:disabled="${ paging.page <= 1 }">
+                        <img src="/images/icon_paging_arrow_front.png" alt="이전 목록으로 이동 버튼"></button>
+
+                    <!-- 숫자 버튼 -->
+                    <th:block
+                            th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+                        <button class="pagingNumBtn" disabled="disabled"
+                                th:onclick="'location.href=\'/manager/admin/list?page=' + '@{'${page}'}' + '\''"
+                                th:text="${ page }" th:disabled="${ paging.page eq page }"></button>
+                    </th:block>
+                    <!-- 다음 페이지로 이동 -->
+                    <button class="pagingBackBtn arrowBtn"
+                            th:onclick="'location.href=\'/manager/admin/list?page=' + '@{'${paging.page + 1}'}' + '\''"
+                            th:disabled="${ paging.page >= paging.maxPage }">
+                        <img src="/images/icon_paging_arrow_back.png" alt="다음 목록으로 이동 버튼"></button>
+                    <!-- 맨 끝으로 이동 -->
+                    <button class="pagingBackBtn arrowBtn"
+                            th:onclick="'location.href=\'/manager/admin/list?page=' + '@{'${paging.maxPage}'}' + '\''">
+                        <img src="/images/icon_paging_arrow_back.png" alt="맨 뒤로 이동 버튼"></button>
+
+                </th:block>
             </div>
-            <br><br>
-
 
         </section>
     </main>

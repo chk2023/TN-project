@@ -15,18 +15,18 @@ public interface ReportMapper {
 
     ReportDTO selectReportDetail(Integer reportCode);
 
+    List<ReportDTO> selectAdminList(SelectCriteria selectCriteria);
+
     ReportDTO updateReport(int reportCode, String processingText);
 
-    List<ReportDTO> viewAllAdmList();
-
-    ReportDTO viewOneAdmReport(Integer reportCode);
-
+    ReportDTO selectAdminDetail(Integer reportCode);
 
     List<MemberDTO> checkAllMember();
 
     MemberDTO checkOneMember(MemberDTO memberDTO);
 
     int selectTotalCount(Map<String, String> searchMap);
+
 
 
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="/css/admindetail.css">
+    <link rel="stylesheet" href="/css/common.css">
     <script>
         function admUpdate()   {
             document.getElementById(reportDetail).attr('action', '/detail');
@@ -41,15 +41,16 @@
         </form> <br><br>
         <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
             <form id="adminDetail">
-                <label>신고 번호 <input name="reportCode" th:value="${report.reportCode}"></label> <br>
-                <label>매니저 코드 <input name="reportCode" th:value="${report.managerCode}"></label> <br>
-                <label>신고 구분  <input type="text" th:value='${report.RCategoryName}'></label> <br>
-                <label>신고 내역  <input type="text" th:value='${report.reportText}'></label> <br>
-                <label>신고 날짜 <input type="text"  th:value='${report.reportDate}'></label> <br>
-                <label>신고 대상 유저  <input type="text"  th:value='${report.memberId}'></label> <br>
-                <label>신고 상태  <input type="text"  th:value='${report.reportStatus}'></label> <br>
-                <label>처리 날짜  <input type="text"  th:value='${report.processingDate}'></label> <br>
-                <label>처리 기록  <input type="text"  th:value='${report.processingText}'></label> <br>
+                <label>신고 번호 <input name="reportCode" th:value='${admDet.reportCode}'></label> <br>
+                <label>매니저 코드 <input name="managerCode" th:value='${admDet.managerCode}'></label> <br>
+                <label>신고 구분  <input th:value='${admDet.RCategoryName}'></label> <br>
+                <label>신고 내역  <input th:value='${admDet.reportText}'></label> <br>
+                <label>신고 날짜 <input  th:value='${admDet.reportDate}'></label> <br>
+                <label>신고 대상 유저  <input th:value='${admDet.memberId}'></label> <br>
+                <label>신고 상태  <input th:value='${admDet.reportStatus}'></label> <br>
+                <label>처리 날짜  <input th:value='${admDet.processingDate}'></label> <br>
+                <label>처리 기록  <input th:value='${admDet.processingText}'></label> <br>
+
 
                 <br><br>
                 <!--            <form class="reportBtn" action="/">-- css 문재 해결 방안 찾아보기 -->

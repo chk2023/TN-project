@@ -41,17 +41,16 @@
             r.report_date,
             r.post_code,
             r.cmt_code
-
-
         FROM
             tbl_report r
                 JOIN tbl_member m ON r.target_code = m.member_code
                 JOIN tbl_r_category c ON c.r_category_code = r.r_category_code
-
-
         WHERE
             report_code = #{ reportCode }
     </select>
+
+
+
 
     <update id="insertRecord" >
         UPDATE
@@ -63,7 +62,7 @@
     </update>
 
 
-    <select id="viewAllAdmList" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">
+    <select id="selectAdminList" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">
         SELECT
             report_code,
             manager_code,
@@ -73,19 +72,23 @@
             processing_date
         FROM
             tbl_report
+
+        ORDER BY
+            report_code DESC
+            LIMIT #{offset}, #{limit}
     </select>
 
-    <select id="viewOneAdmReport" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">
+    <select id="selectAdminDetail" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">
         SELECT
-            report_code,
-            manager_code,
-            r_category_name,
-            report_text,
-            report_date,
-            member_id,
-            report_status,
-            processing_date,
-            processing_text
+            r.report_code,
+            r.manager_code,
+            c.r_category_name,
+            r.report_text,
+            r.report_date,
+            m.member_id,
+            r.report_status,
+            r.processing_date,
+            r.processing_text
 
         FROM
             tbl_report r

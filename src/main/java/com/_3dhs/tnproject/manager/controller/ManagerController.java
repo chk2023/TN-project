@@ -56,16 +56,6 @@ public class ManagerController {
 
     }
 
-//    @GetMapping("/manager/report/detail")
-//    public String viewOneReport(Model model1, Integer reportCode) {
-//        ReportDTO report = reportService.viewOneReport(reportCode);
-//        model1.addAttribute("detail", report);
-//
-//
-//        return "manager/report/detail";
-//    }
-
-
     @PostMapping("/manager/report/detail") //getMapping으로 값을 넘길 이유가 없으니까, 포스트 매핑을 시켜도 될 것 같은데..
     public String updateReport(ReportDTO reportDTO, RedirectAttributes rttr) {
 
@@ -90,21 +80,31 @@ public class ManagerController {
     }
 
 
-    @GetMapping ("/manager/admin/list")
-    public String viewAllAdmList (Model model) {
-        List<ReportDTO> reports = reportService.viewAllAdmList() ;
-        model.addAttribute("reports", reports);
 
+
+    @GetMapping ("/manager/admin/list")
+    public String getAdminList(@RequestParam(defaultValue = "1") int page,
+                                @RequestParam(required = false) String searchCondition,
+                                @RequestParam(required = false) String searchValue,
+                                Model model) {
+
+        Map<String, String> searchMap = new HashMap<>();
+        searchMap.put("searchCondition", searchCondition);
+        searchMap.put("searchValue", searchValue);
+
+        Map<String, Object> boardListAndPaging = reportService.selectAdminList(searchMap, page);
+        model.addAttribute("paging", boardListAndPaging.get("paging"));
+        model.addAttribute("adminList", boardListAndPaging.get("adminList"));
 
         return "/manager/admin/list";
     }
 
 
     @GetMapping("/manager/admin/detail")
-    public String viewOneAdmReport ( Integer reportCode, Model model) {
-        ReportDTO admReport = reportService.findOneReportCord(reportCode);
-        model.addAttribute("report", admReport);
-        return "/manager/admin/detail";
+    public String selectAdminDetail ( Integer reportCode, Model model) {
+        ReportDTO admReport = reportService.selectAdminDetail(reportCode);
+        model.addAttribute("admDet", admReport);
+        return "manager/admin/detail";
     }
 
 
