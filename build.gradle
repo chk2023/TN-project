@@ -36,6 +36,9 @@ dependencies {
     //검색엔진
     implementation 'org.apache.lucene:lucene-core:8.11.1'
 
+    //후처리
+    implementation 'org.aspectj:aspectjweaver'
+
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'

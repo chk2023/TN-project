@@ -10,6 +10,7 @@ const $testHubBtn = document.getElementById("testHubBtn");
 
 if ($homeBtn) {
     $homeBtn.onclick = function () {
+        alert(`홈으로이동합니다`)
         location.href = "/timeline/list";
     };
 }

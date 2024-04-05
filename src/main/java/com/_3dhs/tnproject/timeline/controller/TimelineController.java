@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,11 +31,14 @@ public class TimelineController {
     public String findTrendList(Model model, String viewType, Integer contentsType, Authentication authentication) {
         Integer index = 0;
         Integer range = 10;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String today = sdf.format(new Date());
 
         model.addAttribute("index", index);
         model.addAttribute("range", range);
         model.addAttribute("viewType", viewType);
         model.addAttribute("contentsType", contentsType);
+        model.addAttribute("today", today);
 
         return "timeline/list";
     }
@@ -45,10 +50,6 @@ public class TimelineController {
         params.put("index",index);
         params.put("range", range);
         params.put("contentsType", contentsType);
-        List<PostDTO> list = postService.findListByParam(params);
-        list.forEach(dto -> {
-            dto.setLiked(likeListService.getHasLiked(dto.getPostCode(),member.getMemberCode()));
-        });
-        return list;
+        return postService.findListByParam(params);
     }
 }

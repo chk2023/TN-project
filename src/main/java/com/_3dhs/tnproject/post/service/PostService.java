@@ -4,6 +4,7 @@ package com._3dhs.tnproject.post.service;
 import com._3dhs.tnproject.comments.dao.CommentsMapper;
 import com._3dhs.tnproject.member.dto.ProfileDTO;
 import com._3dhs.tnproject.post.dao.PostMapper;
+import com._3dhs.tnproject.post.dto.AttachmentDTO;
 import com._3dhs.tnproject.post.dto.FolderDTO;
 import com._3dhs.tnproject.post.dto.PostDTO;
 import com._3dhs.tnproject.post.dto.TabSearchDTO;
@@ -23,23 +24,12 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public List<PostDTO> findListByParam(Map<String,Integer> params) {
-        List<PostDTO> postList = postMapper.findListByParam(params);
-        for (int i = 0; i < postList.size(); i++) {
-            postList.get(i).setAttachmentList(postMapper.findAttListByPostCode(postList.get(i).getPostCode()));
-            postList.get(i).makeThumbnailPath();
-
-        }
-        return postList;
+        return postMapper.findListByParam(params);
     }
 
     @Transactional(readOnly = true)
     public List<PostDTO> findLikeListPostByMemberCode(int memberCode) {
-        List<PostDTO> postList = postMapper.findLikeListPostByMemberCode(memberCode);
-        for (int i = 0; i < postList.size(); i++) {
-            postList.get(i).setAttachmentList(postMapper.findAttListByPostCode(postList.get(i).getPostCode()));
-            postList.get(i).makeThumbnailPath();
-        }
-        return postList;
+        return postMapper.findLikeListPostByMemberCode(memberCode);
     }
 
     @Transactional()
@@ -80,4 +70,7 @@ public class PostService {
         return postMapper.findPostList( tabSearchDTO);
     }
 
+    public List<AttachmentDTO> findAttListByPostCode(int postCode) {
+        return postMapper.findAttListByPostCode(postCode);
+    }
 }

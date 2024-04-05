@@ -24,6 +24,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Controller
@@ -138,7 +140,8 @@ public class SearchController {
         }
         log.info("검색완료");
         model.addAttribute("postList", postList);
-        return "/common/search_result"; //TODO : 테스트용 화면으로 연결중 수정바람
+        model.addAttribute("searchValue", searchValue);
+        return "/search/result";
     }
 
     @PostConstruct
@@ -154,5 +157,9 @@ public class SearchController {
                 }
             }
         }
+    }
+    public String formatLocalDateTime(LocalDateTime dateTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM월 dd일");
+        return dateTime.format(formatter);
     }
 }
