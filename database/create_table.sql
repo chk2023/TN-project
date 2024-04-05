@@ -158,10 +158,10 @@ CREATE TABLE `tbl_profile`
     `pr_member_code`    INT NOT NULL COMMENT '회원번호',
     `profile_code`    INT NOT NULL AUTO_INCREMENT
         COMMENT '프로필번호',
-    `profile_nickname`    VARCHAR(20) NOT NULL COMMENT '프로필닉네임',
+    `profile_nickname`    VARCHAR(50) NOT NULL COMMENT '프로필닉네임',
     `profile_statmsg`    VARCHAR(50) COMMENT '프로필상태메세지',
-    `profile_img_path`    VARCHAR(50) DEFAULT '/images/icon_user.png' NOT NULL COMMENT '프로필사진',
-    `profile_bg_path`    VARCHAR(50) DEFAULT '/images/icon_no_image_lg.png' NOT NULL
+    `profile_img_path`    VARCHAR(200) DEFAULT '/images/icon_user.png' NOT NULL COMMENT '프로필사진',
+    `profile_bg_path`    VARCHAR(200) DEFAULT '/images/icon_no_image_lg.png' NOT NULL
         COMMENT '블로그배경사진',
     PRIMARY KEY ( `profile_code`,`pr_member_code` )
 ) COMMENT = '프로필';

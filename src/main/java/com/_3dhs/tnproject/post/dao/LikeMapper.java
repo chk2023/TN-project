@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+import java.util.List;
+
 @Mapper
 public interface LikeMapper {
 
@@ -18,4 +20,6 @@ public interface LikeMapper {
 
 
     boolean getHasLiked(int postCode, int memberCode);
+
+    List<LikeListDTO> getAllList();
 }

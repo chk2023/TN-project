@@ -14,26 +14,14 @@
     <div th:replace="~{common/profile.html}"></div>
     <nav th:replace="~{common/navigation.html}"></nav>
 </header>
-<aside>
-<div class="folder">
-    <strong class="minTit">폴더</strong>
-    <ul>
-        <li class="AllList"><a href="#"><img src="/images/icon_folder.png" alt="아이콘">전체목록(<span>56</span>)</a></li>
-        <th:block th:object="${folderList}" th:each="folder, start : ${folderList}">
-            <li th:classappend="${folder.folderName == 'NoName'} ? 'hidden'" draggable="true"><input type="hidden" th:value="${folder.folderCode}"/><img th:src="${folder.folderIconPath}" alt="폴더 아이콘"> <span th:text="${folder.folderName}"></span></li>
-        </th:block>
-    </ul>
-    <button class="folderSetBtn" onClick="location.href='/post/folder_edit'"><img src="/images/icon_folder_setting.png" alt="폴더 편집 버튼"></button>
-</div>
-</aside>
 <main>
     <div class="title">
-        <button class="backBtn" onclick="goToMainPage()">
+        <button class="backBtn" onclick="goBack()">
             <img src="/images/btn_arrow.png" alt="뒤로가기 버튼">
         </button>
         <script>
-            function goToMainPage() {
-                window.location.href = "/"; // 메인 페이지 URL로 이동
+            function goBack() {
+                window.history.back();
             }
         </script>
         <div>
