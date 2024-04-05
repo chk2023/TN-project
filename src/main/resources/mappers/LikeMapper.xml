@@ -13,9 +13,9 @@
 
     <insert id="addLike" parameterType="com._3dhs.tnproject.post.dto.LikeListDTO">
         INSERT INTO
-        tbl_like_list (post_code, member_code, is_private)
+        tbl_like_list (post_code, l_member_code, is_private)
         VALUES
-        (#{postCode}, #{memberCode}, #{isPrivate})s
+        (#{postCode}, #{memberCode}, #{isPrivate})
     </insert>
 
     <delete id="cancelLike">

@@ -68,85 +68,8 @@
     let isTitlePhotoChanged = false;
     let isLoading = false;
     const $viewBtn = document.querySelector(".viewBtn");
-
 </script>
-<script>
 
-
-    const loginMemberCode = `[[${#authentication.principal.memberCode}]]`;
-    function handleLike(postCode) {
-
-
-
-        fetch('/post/like', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                postCode: postCode,
-                memberCode: loginMemberCode,
-                isPrivate: false,
-        }),
-    })
-            .then(response => {
-                /* 추가 */
-                if (response.ok) {
-                    return response.json(); // JSON 데이터로 파싱하여 반환
-                } else {
-                    throw new Error('서버 응답이 실패했습니다.1');
-                }
-            })
-            .then(result => {
-                console.log(result); // 서버 응답 확인
-                // 좋아요 아이콘 변경
-                var likeBtn = document.querySelector(`[data-post-code="${postCode}"]`);
-
-                // ==============
-                if (likeBtn) {
-                    var likeImg = likeBtn.querySelector("img");
-                    if (likeImg) {
-                        if (result) {
-                            likeImg.src = "/images/icon_like_active.png";
-                            likeBtn.classList.add("active");
-
-                        } else {
-                            likeImg.src = "/images/icon_like.png";
-                            likeBtn.classList.remove("active");
-                        }
-                    } else {
-                        console.error("이미지를 찾을 수 없습니다.");
-                    }
-                } else {
-                    console.error("버튼을 찾을 수 없습니다.");
-                    console.log(result);
-                }
-                //================
-
-                // var likeImg = likeBtn.querySelector("img");
-
-                // var isActive = likeBtn.classList.toggle("active");
-                // likeImg.src = isActive ? "/images/icon_like_active.png" : "/images/icon_like.png";
-
-
-
-                // if (result === "Liked") {
-                //     likeImg.src = "/images/icon_like_active.png";
-                //     likeBtn.classList.add("active");
-                // } else if (result === "Unliked") {
-                //     likeImg.src = "/images/icon_like.png";
-                //     likeBtn.classList.remove("active");
-                // } else {
-                //     throw new Error('올바르지 않은 서버 응답입니다.');
-                // }
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }
-
-
-</script>
 <script id="contentsTemplate" type="text/x-handlebars-template">
     {{#each this}}
     <li>
@@ -182,15 +105,12 @@
                         <img src="/images/icon_comment.png" alt="댓글 버튼 아이콘">
                         <span>{{cmtCount}}</span>
                     </button>
-                    <button class="{{#if liked}}
-                                        likeBtn active
-                                    {{else}}
-                                        likeBtn
-                                    {{/if}}"
-                            onclick="handleLike('{{postCode}}')">
+                    <button class="{{#if liked}}likeBtn active{{else}}likeBtn{{/if}}"
+                            data-post-code="{{postCode}}">
                         <img src="/images/icon_like.png" alt="좋아요 버튼 아이콘">
                         <span>{{likeCount}}</span>
                     </button>
+
                 </div>
             </div>
             <div class="thumbnailPhoto" onclick="location.href='/post/detail?postCode={{postCode}}'">
@@ -200,9 +120,10 @@
     </li>
     {{/each}}
 </script>
+
+<script src="/js/like.js"></script>
 <script src="/js/timeline.js"></script>
 <script src="/js/scrollEvent.js"></script>
 <script src="/js/pathFinder.js"></script>
-
 </body>
 </html>
