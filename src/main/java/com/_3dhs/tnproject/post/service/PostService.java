@@ -102,10 +102,6 @@ public class PostService {
 
     /* 해당 글에 좋아요를 눌렀는지 확인 */
     public boolean getHasLiked(int postCode, int memberCode) {
-//        LikeListDTO likeList =
-//                likeMapper.getHasLiked(postCode, memberCode);
-//
-//        return likeList != null;
 
         return likeMapper.getHasLiked(postCode, memberCode);
     }

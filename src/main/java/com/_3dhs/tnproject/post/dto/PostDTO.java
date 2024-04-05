@@ -51,10 +51,4 @@ public class PostDTO {
        thumbnailPath =  getAttachmentPath(0);
     }
 
-    /* 좋아요 기능 추가 */
-//    public void setLike(int memberCode) {
-//        // 해당 게시물이 현재 사용자에 의해 좋아요 되었는지 여부를 확인
-//        this.isLiked = postService.getHasLiked(this.postCode, memberCode);;
-//
-//    }
 }

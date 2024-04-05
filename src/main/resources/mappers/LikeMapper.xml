@@ -28,8 +28,6 @@
     </delete>
 
     <select id="getHasLiked" resultType="boolean">
-<!--        SELECT-->
-<!--        COUNT(*) > 0-->
         SELECT EXISTS (
         SELECT 1
         FROM

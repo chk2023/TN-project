@@ -125,35 +125,12 @@ public class PostController {
         model.addAttribute("likeList", likeList);
     }
 
-//    @GetMapping("/list")
-//    public String blogListPage(Model model, Authentication authentication) {
-//
-//        if (authentication != null && authentication.isAuthenticated()) {
-//            MemberDTO member = (MemberDTO) authentication.getPrincipal();
-//            List<PostDTO> postList = postService.findLikeListPostByMemberCode(member.getMemberCode());
-//
-//            // 각 게시물의 좋아요 상태를 가져와서 Model에 추가
-//            for (PostDTO post : postList) {
-//                boolean hasLiked = postService.getHasLiked(post.getPostCode(), member.getMemberCode());
-////                model.addAttribute("hasLiked" + post.getPostCode(), hasLiked);
-//                post.setLike(member.getMemberCode());
-//                model.addAttribute("hasLiked" + post.getPostCode(), hasLiked);
-//            }
-//
-//            model.addAttribute("postList", postList);
-//        }
-//
-//        return "/post/list";
-//
-//
-//    }
+
 
     @PostMapping("/like")
     @ResponseBody
     public ResponseEntity<String> likePost(@RequestBody LikeListDTO likeListDTO ,@AuthenticationPrincipal MemberDTO memberDTO, Model model) {
-//        MemberDTO memberDTO = (MemberDTO) authentication.getPrincipal();
         int memberCode = memberDTO.getMemberCode();
-//        model.addAttribute("loginMemberCode", memberCode);
         try {
             boolean isLiked = postService.toggleLike(likeListDTO.getPostCode(), memberCode);
             String result = isLiked ? "true" : "false";
