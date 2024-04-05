@@ -1,11 +1,31 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <div class="profile">
-    <button class="optionBtn"><img src="/images/icon_option.png" alt="프로필 옵션 버튼"></button>
-    <ul class="optionBox">
-        <li><a>프로필 수정</a></li>
+    <button class="optionBtn" id="optionBtn" onclick="toggle()"><img src="/images/icon_option.png" alt="프로필 옵션 버튼"></button>
+    <ul class="optionBox" id="optionBox">
+        <li><a href="/member/profile">프로필 수정</a></li>
         <li><a>공유</a></li>
     </ul>
+    <script>
+        /* 옵션 버튼 클릭시 옵션 박스 활성화 */
+        function toggle() {
+            const $optionBtn = document.getElementById("optionBtn");
+            const $optionBox = document.getElementById("optionBox");
+
+            $optionBtn.classList.toggle("active");
+
+            /* 이벤트 전파 방지 */
+            event.stopPropagation();
+
+            /* 옵션 상자 이외의 영역 클릭 시 옵션 상자 숨김 */
+            document.addEventListener("click", function closeOptions(event) {
+                if (event.target !== $optionBtn && event.target !== $optionBox) {
+                    $optionBtn.classList.remove("active");
+                    document.removeEventListener("click", closeOptions);
+                }
+            });
+        }
+    </script>
     <div class="profileStatus">
         <div class="prof_photo"><img th:src="${#authentication.principal.profile.profileImgPath}" alt="프로필 사진"></div>
         <div class="prof_txt">

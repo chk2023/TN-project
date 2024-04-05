@@ -3,18 +3,12 @@ package com._3dhs.tnproject.member.service;
 import com._3dhs.tnproject.common.exceptionhandler.member.MemberRegistException;
 import com._3dhs.tnproject.common.exceptionhandler.member.MemberRemoveException;
 import com._3dhs.tnproject.common.exceptionhandler.member.MemberUpdateException;
-import com._3dhs.tnproject.common.exceptionhandler.member.MemberRegistException;
 import com._3dhs.tnproject.member.dao.MemberMapper;
 import com._3dhs.tnproject.member.dto.MemberDTO;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -86,5 +80,11 @@ public class MemberService {
     public MemberDTO findMainBlogMemberInfo(int memberCode) {
         MemberDTO memberDTO = memberMapper.findMainBlogMemberInfo(memberCode);
         return memberDTO;
+    }
+
+    public void updateProfile(MemberDTO member) throws MemberUpdateException {
+        int result = memberMapper.updateProfile(member);
+
+        if (!(result > 0)) throw new MemberUpdateException("회원 정보 수정에 실패하였습니다.");
     }
 }
