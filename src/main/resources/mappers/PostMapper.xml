@@ -151,6 +151,7 @@
         </foreach>
     </select>
 
+
     <insert id="updateFolders" parameterType="java.util.List">
         INSERT INTO
             tbl_folder (folder_code, folder_name, folder_icon_path, folder_sequence, f_member_code, folder_status)
@@ -193,4 +194,54 @@
         ORDER BY
             folder_sequence ASC
     </select>
+
+    <select id="findPostLikeCount">
+        SELECT
+            SUM(like_count) AS like_count,
+            COUNT(*) AS post_count
+        FROM
+            post_view
+        WHERE
+            po_member_code = #{memberCode}
+    </select>
+
+    <select id="findPostList" resultMap="postMap">
+        SELECT
+            post_code,
+            post_title,
+            post_text,
+            post_price,
+            po_member_code,
+            folder_code,
+            post_wri_date,
+            post_status,
+            post_is_deleted,
+            post_is_fixed,
+            profile_code,
+            profile_nickname,
+            profile_statmsg,
+            profile_img_path,
+            like_count,
+            cmt_count
+        FROM
+            post_view
+        <where>
+            <if test='tabMenu == "고정글"'>
+                po_member_code = #{memberCode}
+                AND post_is_fixed = 1
+            </if>
+            <if test='tabMenu == "최신순"'>
+                po_member_code = #{memberCode}
+            </if>
+            <if test='tabMenu == "♡"'>
+                post_is_deleted = 1 <!-- //지우고 조건 쓰면 됨 -> 조회되지 말라고 의미없이 설정해 놓은거임 ㅠㅠ -->
+            </if>
+        </where>
+            <if test='tabMenu == "최신순"'>
+                ORDER BY
+                post_wri_date DESC
+            </if>
+        LIMIT #{index}, #{range}
+    </select>
+
 </mapper>

@@ -2,9 +2,11 @@ package com._3dhs.tnproject.post.service;
 
 
 import com._3dhs.tnproject.comments.dao.CommentsMapper;
+import com._3dhs.tnproject.member.dto.ProfileDTO;
 import com._3dhs.tnproject.post.dao.PostMapper;
 import com._3dhs.tnproject.post.dto.FolderDTO;
 import com._3dhs.tnproject.post.dto.PostDTO;
+import com._3dhs.tnproject.post.dto.TabSearchDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,14 +49,17 @@ public class PostService {
 
     @Transactional
     public List<FolderDTO> findFolderList(int memberCode) {
-        //System.out.println("코드 잘 넘어옴? : " + memberCode);
         return postMapper.findFolderList(memberCode);
     }
 
     @Transactional
     public void addDefaultFolder(List<FolderDTO> addDefaultFolders) {
         postMapper.insertAddDefaultFolder(addDefaultFolders);
-        System.out.println("서비스단에 넘어온 addDefaultFolders : " + addDefaultFolders );
+    }
+
+    @Transactional
+    public PostDTO findPostLikeCount(int memberCode) {
+        return postMapper.findPostLikeCount(memberCode);
     }
 
     public PostDTO findPostByPostCode(Integer postCode) {
@@ -68,4 +73,10 @@ public class PostService {
     public List<PostDTO> findListByPostCodes(Set<Integer> postCodes) {
         return postMapper.findListByPostCodes(postCodes);
     }
+
+    @Transactional
+    public List<PostDTO> findPostList(TabSearchDTO tabSearchDTO) {
+        return postMapper.findPostList( tabSearchDTO);
+    }
+
 }

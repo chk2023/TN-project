@@ -2,6 +2,7 @@ package com._3dhs.tnproject.post.dao;
 
 import com._3dhs.tnproject.post.dto.LikeListDTO;
 import com._3dhs.tnproject.post.dto.PostDTO;
+import com._3dhs.tnproject.post.dto.TabSearchDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -43,5 +44,19 @@ public class PostMapperTests {
         List<PostDTO> postDTOList = mapper.findListByPostCodes(intList);
         postDTOList.forEach(System.out::println);
         assertNotNull(postDTOList);
+    }
+
+    @Test
+    void 메인비동기테스트() {
+        TabSearchDTO dto = new TabSearchDTO();
+        dto.setIndex(0);
+        dto.setRange(10);
+        dto.setMemberCode(1);
+        dto.setTabMenu("최신순");
+
+       List<PostDTO> list = mapper.findPostList(dto);
+
+        list.forEach(System.out::println);
+        assertNotNull(list);
     }
 }
