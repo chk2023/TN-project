@@ -156,5 +156,20 @@
         WHERE
             m.member_code = #{memberCode}
     </select>
+    
+    <update id="updateProfile">
+        UPDATE
+            tbl_profile
+        SET
+            profile_nickname = #{ profile.profileNickname },
+            profile_statmsg = #{ profile.profileStatmsg },
+            profile_img_path = #{ profile.profileImgPath },
+            profile_bg_path = #{ profile.profileBgPath }
+        <where>
+            <if test="memberCode != 0">
+                pr_member_code = #{ memberCode }
+            </if>
+        </where>
+    </update>
 
 </mapper>
