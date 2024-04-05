@@ -224,13 +224,18 @@ window.onload = function () {
             const $genderInput = document.getElementById("genderInput");
             const $ageInput = document.getElementById("ageInput");
             const $birthInput = document.getElementById("birthInput");
+            const $cancelBtn = document.getElementById("cancelBtn");
+            const $deleteMember = document.getElementById("deleteMember");
+            // const $modifyPwd = document.getElementById("modifyPwd");
 
             $genderParagraph.classList.add("hidden");
             $ageParagraph.classList.add("hidden");
             $birthParagraph.classList.add("hidden");
+            $deleteMember.classList.add("hidden");
             $genderInput.classList.remove("hidden");
             $ageInput.classList.remove("hidden");
             $birthInput.classList.remove("hidden");
+            // $modifyPwd.classList.remove("hidden");
 
             $genderInput.value = $genderParagraph.textContent;
             $ageInput.value = $ageParagraph.textContent;
@@ -242,11 +247,52 @@ window.onload = function () {
                 $genderInput.selectedIndex = 1;
             }
 
-            // 수정완료 버튼 보이기
+            // 수정완료 버튼, 취소 보이기
             $submitUpdateMemberButton.classList.remove("hidden");
+            $cancelBtn.classList.remove("hidden");
             $updateMemberButton.classList.add("hidden");
+
+
+
         }
     }
+
+    // 회원 정보 수정 취소 버튼 기능
+    if (document.getElementById("cancelBtn")) {
+        const $cancelBtn = document.getElementById("cancelBtn");
+
+        $cancelBtn.onclick = function () {
+            const $submitUpdateMemberButton = document.getElementById("submitUpdateMember");
+            const $updateMemberButton = document.getElementById("updateMemberBtn");
+            const $genderParagraph = document.querySelector("#genderParagraph");
+            const $ageParagraph = document.querySelector("#ageParagraph");
+            const $birthParagraph = document.querySelector("#birthParagraph");
+            const $genderInput = document.getElementById("genderInput");
+            const $ageInput = document.getElementById("ageInput");
+            const $birthInput = document.getElementById("birthInput");
+            const $deleteMember = document.getElementById("deleteMember");
+            // const $modifyPwd = document.getElementById("modifyPwd");
+
+            $genderInput.classList.add("hidden");
+            $ageInput.classList.add("hidden");
+            $birthInput.classList.add("hidden");
+            // $modifyPwd.classList.add("hidden");
+            $genderParagraph.classList.remove("hidden");
+            $ageParagraph.classList.remove("hidden");
+            $birthParagraph.classList.remove("hidden");
+            $deleteMember.classList.remove("hidden");
+
+            $submitUpdateMemberButton.classList.add("hidden");
+            $cancelBtn.classList.add("hidden");
+            $updateMemberButton.classList.remove("hidden");
+
+            // 수정된 입력 내용을 원래 상태로 되돌림
+            $genderInput.value = $genderParagraph.textContent;
+            $ageInput.value = $ageParagraph.textContent;
+            $birthInput.value = $birthParagraph.textContent;
+        }
+    }
+
 
     if (document.getElementById("processButton")) {
         const $processButton = document.getElementById("processButton");
@@ -258,6 +304,7 @@ window.onload = function () {
             $pwdReset.style.display = "block";
         }
     }
+
 
     // /* 비밀번호 재설정 */
     // if (document.getElementById("resetPwdBtn")) {
