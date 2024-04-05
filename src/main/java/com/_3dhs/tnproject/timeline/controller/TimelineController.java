@@ -50,10 +50,6 @@ public class TimelineController {
         params.put("index",index);
         params.put("range", range);
         params.put("contentsType", contentsType);
-        List<PostDTO> list = postService.findListByParam(params);
-        list.forEach(dto -> {
-            dto.setLiked(likeListService.getHasLiked(dto.getPostCode(),member.getMemberCode()));
-        });
-        return list;
+        return postService.findListByParam(params);
     }
 }
