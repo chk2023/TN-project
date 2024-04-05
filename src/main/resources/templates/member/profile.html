@@ -41,44 +41,44 @@
         <form action="/member/profile" method="post" enctype="multipart/form-data">
         <div class="mainProfile">
             <div class="mprofBackground">
-                <img id="profileBgPreview" src="/images/icon_no_image_lg.png" alt="사용자 설정 프로필 배경화면 사진">
+                <img id="profileBgPreview" th:src="${#authentication.principal.profile.profileBgPath}"
+                     alt="사용자 설정 프로필 배경화면 사진">
             </div>
-            <div class="mprofStatus">
-                <label for="profileImage">
-                    <input type="file" id="profileImage" name="profileImage"
-                           style="display: none" accept="image/*" onchange="displayImage('profileImage', 'profileImagePreview');">
-                    <input type="button" value="프로필 사진 변경" onclick="document.getElementById('profileImage').click();">
-                </label>
-                <label for="profileBg">
-                    <input type="file" id="profileBg" name="profileBg"
-                           style="display: none" accept="image/*" onchange="displayImage('profileBg', 'profileBgPreview')">
-                    <input type="button" value="배경 사진 변경" onclick="document.getElementById('profileBg').click();">
-                </label>
+            <div class="mprofStatus" style="display: flex;">
+                <div class="button-container">
+                    <label for="profileImage">
+                        <input type="file" id="profileImage" name="profileImage"
+                               style="display: none" accept="image/*" onchange="displayImage('profileImage', 'profileImagePreview');">
+                        <input type="button" value="프로필 사진 변경" onclick="document.getElementById('profileImage').click();">
+                    </label>
+                    <label for="profileBg">
+                        <input type="file" id="profileBg" name="profileBg"
+                               style="display: none" accept="image/*" onchange="displayImage('profileBg', 'profileBgPreview')">
+                        <input type="button" value="배경 사진 변경" onclick="document.getElementById('profileBg').click();">
+                    </label>
+                </div>
                 <button class="optionBtn" style="display: none">
                     <img src="/images/icon_option.png" alt="프로필 옵션 버튼"></button>
                 <ul class="optionBox">
 <!--                    <li><a>사용자 차단하기</a></li>-->
 <!--                    <li><a>블로그 공유하기</a></li>-->
                 </ul>
-                <div class="prof_photo"><img id="profileImagePreview" src="/images/icon_default_profile.png" alt="프로필 사진"></div>
-                <div class="prof_txt">
-                    <strong>닉네임</strong>
-                    <span>상태메시지</span>
-                </div>
-                <div class="prof_info">
-                    <div>
-                        가입일 : <span>2020년10월20일</span>
-                        좋아요수 : <span>1,000</span>
-                    </div>
-                </div>
+                <div class="prof_photo"><img id="profileImagePreview" th:src="${#authentication.principal.profile.profileImgPath}"
+                                             alt="프로필 사진"></div>
             </div>
         </div>
         <div>
-            <label for="updateNickname">닉네임</label>
-            <input type="text" name="updateNickname" id="updateNickname" value="닉네임">
-            <label for="updateMessage">상태메시지</label>
-            <input type="text" name="updateMessage" id="updateMessage" value="상태메시지">
-            <input type="submit" value="프로필 저장">
+            <div class="form-group">
+                <label for="updateNickname" class="label">닉네임</label>
+                <input type="text" name="updateNickname" id="updateNickname" value="닉네임">
+            </div>
+            <div class="form-group">
+                <label for="updateMessage" class="label">상태메시지</label>
+                <input type="text" name="updateMessage" id="updateMessage" value="상태메시지">
+            </div>
+            <div class="form-group">
+                <input class="saveBtn" type="submit" value="프로필 저장">
+            </div>
         </div>
         </form>
     </section>

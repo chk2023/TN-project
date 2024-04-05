@@ -212,9 +212,10 @@ public class MemberController {
             member.getProfile().setProfileBgPath(profileBgPath);
         }
 
-        log.info(updateNickname);
-        log.info(updateMessage);
-        log.info(member.toString());
+        log.info(profileBg.toString());
+        log.info(profileImage.toString());
+        log.info(pfUploadDir);
+        log.info(bgUploadDir);
 
         memberService.updateProfile(member);
 
@@ -231,7 +232,9 @@ public class MemberController {
 
         Files.write(filePath, file.getBytes());
 
-        return filePath.toString();
+        String path = "/userUploadFiles/profile/" + fileName;
+
+        return path;
     }
 
     private String savePfBg(MultipartFile file) throws IOException {
@@ -242,7 +245,9 @@ public class MemberController {
 
         Files.write(filePath, file.getBytes());
 
-        return filePath.toString();
+        String path = "/userUploadFiles/background/" + fileName;
+
+        return path;
     }
 
 
