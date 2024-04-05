@@ -19,6 +19,7 @@ function update() {
                 item.cmtCount = formatCount(item.cmtCount);
                 item.likeCount = formatCount(item.likeCount);
                 item.postWriDate = formatWriDate(item.postWriDate);
+                console.log(item.liked);
                 if (!isTitlePhotoChanged && item.thumbnailPath !== `/images/icon_default_photo.png`) {
                     //이미지가 있는 가장 첫번째 사진으로 타이틀사진을 변경
                     setTitlePhoto(item.thumbnailPath);
@@ -38,27 +39,6 @@ function update() {
         });
 }
 
-//------------------------------------------------------------------------------------format관련코드
-function setTitlePhoto(path) {
-    $img = document.querySelector(".mainProfile img");
-    $img.src = path;
-}
-
-function formatWriDate(postWriDate) {
-    let time = new Date(postWriDate);
-    return time.toLocaleDateString("ko-KR", {
-        month: 'long',
-        day: 'numeric',
-    });
-}
-
-function formatCount(count) {
-    if (count > 1000) {
-        return count = (count / 1000).toFixed(1) + 'k';
-    } else {
-        return count.toString();
-    }
-}
 
 //------------------------------------------------------------------------------------tabMenu관련코드
 function trendBtnClicked() {
