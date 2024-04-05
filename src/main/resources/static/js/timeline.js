@@ -19,13 +19,14 @@ function update() {
                 item.cmtCount = formatCount(item.cmtCount);
                 item.likeCount = formatCount(item.likeCount);
                 item.postWriDate = formatWriDate(item.postWriDate);
-                if (!isTitlePhotoChanged && item.thumbnailPath !== `/image/icon_default_photo.png`) {
+                console.log(item.liked);
+                if (!isTitlePhotoChanged && item.thumbnailPath !== `/images/icon_default_photo.png`) {
                     //이미지가 있는 가장 첫번째 사진으로 타이틀사진을 변경
                     setTitlePhoto(item.thumbnailPath);
                     isTitlePhotoChanged = true;
                 }
             });
-            var element = document.createElement("li");
+             var element = document.createElement("div");
             element.innerHTML = template(data, {data: {handlebars: Handlebars.create()}});
             fragment.appendChild(element); // DocumentFragment에 요소 추가
             // DocumentFragment를 한 번에 추가하여 DOM 조작 효율성 향상
@@ -38,27 +39,6 @@ function update() {
         });
 }
 
-//------------------------------------------------------------------------------------format관련코드
-function setTitlePhoto(path) {
-    $img = document.querySelector(".mainProfile img");
-    $img.src = path;
-}
-
-function formatWriDate(postWriDate) {
-    let time = new Date(postWriDate);
-    return time.toLocaleDateString("ko-KR", {
-        month: 'long',
-        day: 'numeric',
-    });
-}
-
-function formatCount(count) {
-    if (count > 1000) {
-        return count = (count / 1000).toFixed(1) + 'k';
-    } else {
-        return count.toString();
-    }
-}
 
 //------------------------------------------------------------------------------------tabMenu관련코드
 function trendBtnClicked() {

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>검색결과</title>
+    <link rel="stylesheet" href="/css/common.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="wrap">
+    <header>
+        <div th:replace="~{common/profile.html}"></div>
+        <nav th:replace="~{common/navigation.html}"></nav>
+    </header>
+    <main>
+        <form class="title" id="title" action="/search/result" method="post">
+            <button class="backBtn" id="backBtn"><img src="/images/btn_arrow.png" alt="뒤로가기 버튼"></button>
+            <div>
+                <h1 th:text="${searchValue}"></h1>
+                <p><span>검색 결과</span></p>
+            </div>
+            <input class="search_input" id="search_input" name="searchValue" type="text" placeholder="검색어를 입력하세요">
+            <button class="searchBtn" id="searchBtn" type="button"><img src="/images/btn_search.png" alt="검색 버튼">
+            </button>
+            <button class="closeBtn" id="closeBtn" type="button"><img src="/images/btn_close.png" alt="닫기 버튼"></button>
+        </form>
+        <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
+            <ul class="blogList">
+              <li th:each="post : ${postList}">
+                <div class="list_head">
+                  <div class="prof_photo" th:onclick="|location.href='/post/main?memberCode=' + ${post.memberCode}|">
+                    <!--                    <img src="/image/icon_default_profile.png" alt="프로필 사진">-->
+                    <img th:src="${post.profile.profileImgPath}" alt="프로필 사진">
+                  </div>
+                  <div th:onclick="|location.href='/post/main?memberCode=' + ${post.memberCode}|">
+                    <div>
+                      <strong class="blog_user_name" th:text="${post.profile.profileNickname}"></strong>
+                      <span class="blog_user_birth"></span>
+                    </div>
+                    <span class="status_msg" th:text="${post.profile.profileStatmsg}"></span>
+                  </div>
+                  <button class="optionBtn"><img src="/images/icon_option.png" alt="글 옵션 버튼"></button>
+                  <ul class="optionBox">
+                    <li><a>글 신고하기</a></li>
+                    <li><a>글 관심없음</a></li>
+                  </ul>
+                </div>
+                <div class="list_body">
+                  <div>
+                      <strong class="contentTit" th:text="${post.postTitle}" th:onclick="|location.href='/post/detail?postCode=' + ${post.postCode}|"></strong>
+                      <div class="contentsTxt" th:onclick="|location.href='/post/detail?postCode=' + ${post.postCode}|">
+                      <p th:text="${post.postText}"></p>
+                    </div>
+                    <div class="showLikeAndComments">
+                      <button class="commentsBtn">
+                        <img src="/images/icon_comment.png" alt="댓글 버튼 아이콘">
+                        <span th:text="${post.cmtCount}">300</span>
+                      </button>
+                      <button class="likeBtn" th:class="${post.isLiked} ? 'likeBtn active' : 'likeBtn'">
+                        <img src="/images/icon_like.png" alt="좋아요 버튼 아이콘">
+                        <span th:text="${post.likeCount}"></span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="thumbnailPhoto" th:onclick="|location.href='/post/detail?postCode=' + ${post.postCode}|">
+                    <img th:src="${post.thumbnailPath}" alt="썸네일 이미지">
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <br><br>
+        </section>
+    </main>
+</div>
+<script>
+    const message = '[[${message}]]';
+    if (message) {
+        alert(message);
+    }
+</script>
+<script src="/js/pathFinder.js"></script>
+<script src="/js/postFormatting.js"></script>
+<script src="/js/searchEvent.js"></script>
+<script src="/js/optionBtnEvent.js"></script>
+</body>
+</html>

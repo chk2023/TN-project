@@ -16,6 +16,25 @@ update : 2024-03-25
     display: none;
 }
 
+.viewBtn > .active + .optionBox {
+    display: flex;
+}
+
+.viewBtn > .active + .optionBox li {
+    height: auto;
+    flex-grow: 0;
+    justify-content: flex-end;
+    cursor: pointer;
+}
+
+.viewBtn > .active + .optionBox li:hover {
+    color: #779289;
+}
+
+.viewBtn > .active + .optionBox li:hover:after {
+    width: 0;
+}
+
 /*------------------------------------------
     2.0     Folder Edit Page
  ------------------------------------------*/
@@ -238,7 +257,7 @@ section:has(.tbl_list, h2) h2 * {
 }
 
 .tbl_list input[type="checkbox"]:checked {
-    background-image: url(../image/icon_check_checked.png);
+    background-image: url(../images/icon_check_checked.png);
     background-size: 15px;
     background-color: #85BFE2;
 }

@@ -14,7 +14,7 @@ public class PaymentDTO {
     private int tissueCode;
     private String impUid;
     private String merchantUid;
-    private String orderClass; //TODO : enum으로 대체할지 작업자가 설정하기
+    private String orderClass;
     private LocalDateTime orderDate;
     private int tissuePrice;
     private int tMemberCode;

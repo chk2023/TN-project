@@ -44,6 +44,17 @@
         <result property="profile.profileImgPath" column="profile_img_path"/>
     </resultMap>
 
+    <select id="findAllPostListForDoc" resultMap="postMap">
+        SELECT post_code,
+               post_title,
+               post_text,
+               po_member_code
+        FROM post_view
+        WHERE post_status = 'PUBLIC'
+          AND post_is_deleted = false
+        ORDER BY post_code;
+    </select>
+
     <select id="findListByParam" resultMap="postMap">
         SELECT post_code,
                post_title,
@@ -68,15 +79,6 @@
             ORDER BY post_wri_date DESC, post_code DESC
         </if>
         LIMIT #{index}, #{range}
-    </select>
-    <select id="findLikeListByPostCode" parameterType="int" resultMap="likeListMap">
-        SELECT
-            post_code,
-            l_member_code,
-            is_private
-        FROM
-            tbl_like_list
-        WHERE post_code = #{postCode}
     </select>
     <select id="findAttListByPostCode">
         SELECT
@@ -106,6 +108,49 @@
         WHERE li.l_member_code = #{memberCode}
         ORDER BY li.post_code DESC
     </select>
+    <select id="findPostByPostCode" resultMap="postMap">
+        SELECT post_code,
+               post_title,
+               post_text,
+               post_price,
+               po_member_code,
+               folder_code,
+               post_wri_date,
+               post_mod_date,
+               post_status,
+               profile_code,
+               profile_nickname,
+               profile_statmsg,
+               profile_img_path,
+               like_count,
+               cmt_count
+        FROM post_view
+        WHERE post_code = #{postCode}
+          AND post_is_deleted = false
+    </select>
+    <select id="findListByPostCodes" resultMap="postMap">
+        SELECT post_code,
+               post_title,
+               post_text,
+               post_price,
+               po_member_code,
+               folder_code,
+               post_wri_date,
+               post_mod_date,
+               post_status,
+               profile_code,
+               profile_nickname,
+               profile_statmsg,
+               profile_img_path,
+               like_count,
+               cmt_count
+        FROM post_view
+        WHERE post_code IN
+        <foreach collection="postCodes" item="postCode" open="(" separator="," close=")">
+            #{postCode}
+        </foreach>
+    </select>
+
 
     <select id="getPostByPostCode" resultType="com._3dhs.tnproject.post.dto.PostDTO">
         SELECT
@@ -159,4 +204,54 @@
         ORDER BY
             folder_sequence ASC
     </select>
+
+    <select id="findPostLikeCount">
+        SELECT
+            SUM(like_count) AS like_count,
+            COUNT(*) AS post_count
+        FROM
+            post_view
+        WHERE
+            po_member_code = #{memberCode}
+    </select>
+
+    <select id="findPostList" resultMap="postMap">
+        SELECT
+            post_code,
+            post_title,
+            post_text,
+            post_price,
+            po_member_code,
+            folder_code,
+            post_wri_date,
+            post_status,
+            post_is_deleted,
+            post_is_fixed,
+            profile_code,
+            profile_nickname,
+            profile_statmsg,
+            profile_img_path,
+            like_count,
+            cmt_count
+        FROM
+            post_view
+        <where>
+            <if test='tabMenu == "고정글"'>
+                po_member_code = #{memberCode}
+                AND post_is_fixed = 1
+            </if>
+            <if test='tabMenu == "최신순"'>
+                po_member_code = #{memberCode}
+            </if>
+            <if test='tabMenu == "♡"'>
+                post_is_deleted = 1 <!-- //지우고 조건 쓰면 됨 -> 조회되지 말라고 의미없이 설정해 놓은거임 ㅠㅠ -->
+            </if>
+        </where>
+            <if test='tabMenu == "최신순"'>
+                ORDER BY
+                post_wri_date DESC
+            </if>
+        LIMIT #{index}, #{range}
+    </select>
+
 </mapper>
