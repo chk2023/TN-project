@@ -11,6 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -77,5 +81,10 @@ public class MemberService {
         int result = memberMapper.updatePwd(member);
 
         if (!(result > 0)) throw new MemberUpdateException("회원 정보 수정에 실패하였습니다.");
+    }
+
+    public MemberDTO findMainBlogMemberInfo(int memberCode) {
+        MemberDTO memberDTO = memberMapper.findMainBlogMemberInfo(memberCode);
+        return memberDTO;
     }
 }

@@ -24,14 +24,18 @@ public class PostDTO {
     private LocalDateTime postModDate;
     private LocalDateTime postDeleDate;
     private boolean isDeleted;
+    private boolean postIsFixed;
     private int folderCode;
     private ProfileDTO profile;
     private int likeCount;
     private int cmtCount;
     private List<TagDTO> tagList;
     private List<AttachmentDTO> attachmentList;
+    private boolean isLiked;
     //가공하는 자료
     private String thumbnailPath;
+    private int postCount;
+
 
     public String getAttachmentPath(int index) {
         String path = "";
@@ -44,4 +48,7 @@ public class PostDTO {
     public void makeThumbnailPath() {
        thumbnailPath =  getAttachmentPath(0);
     }
+
+
+
 }

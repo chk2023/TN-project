@@ -7,79 +7,94 @@
     <link rel="stylesheet" href="/css/post.css">
 </head>
 <body>
-    <div class="wrap">
-        <header>
-            <div th:replace="~{common/profile.html}"></div>
-            <nav th:replace="~{common/navigation.html}"></nav>
-        </header>
-        <aside>
-            <div class="folder">
-                <strong class="minTit">폴더</strong>
-                <ul>
-                    <li class="AllList"><a href="#"><img src="/images/icon_folder.png" alt="아이콘">전체목록(<span>56</span>)</a></li>
-                    <th:block th:object="${folderList}" th:each="folder, start : ${folderList}">
-                        <li th:classappend="${folder.folderName == 'NoName'} ? 'hidden'" draggable="true"><input type="hidden" th:value="${folder.folderCode}"/><img th:src="${folder.folderIconPath}" alt="폴더 아이콘"> <span th:text="${folder.folderName}"></span></li>
-                    </th:block>
-                </ul>
-                <button class="folderSetBtn" onClick="location.href='/post/folder_edit'"><img src="/images/icon_folder_setting.png" alt="폴더 편집 버튼"></button>
+<div class="wrap">
+    <header>
+        <div th:replace="~{common/profile.html}"></div>
+        <nav th:replace="~{common/navigation.html}"></nav>
+    </header>
+    <aside>
+        <div class="folder">
+            <strong class="minTit">폴더</strong>
+            <ul>
+                <li class="AllList"><a onclick="folderAllList()"><img src="/images/icon_folder.png" alt="아이콘">전체목록(<span th:text="${postView.postCount}">56</span>)</a></li>
+                <th:block th:object="${folderList}" th:each="folder, start : ${folderList}">
+                    <li th:classappend="${folder.folderName == 'NoName'} ? 'hidden'" draggable="true">
+                        <input type="hidden" th:value="${folder.folderCode}"/>
+                        <img th:src="${folder.folderIconPath}" alt="폴더 아이콘">
+                        <span th:text="${folder.folderName}"></span>
+                    </li>
+                </th:block>
+            </ul>
+            <button th:if="${#strings.equals(param.memberCode, #strings.toString(#authentication.principal.memberCode))}" class="folderSetBtn" onClick="location.href='/post/folder_edit'">
+                <img src="/images/icon_folder_setting.png" alt="폴더 편집 버튼">
+            </button>
+        </div>
+    </aside>
+    <main>
+        <div class="title">
+            <button class="backBtn"><img onclick="location.href='/timeline/list'" src="/images/btn_arrow.png" alt="뒤로가기 버튼"></button>
+            <div>
+                <h1 th:text="${member.profile.profileNickname}">닉네임</h1>
+                <p><span th:text="${postView.postCount}">0000</span> 게시물</p>
             </div>
-        </aside>
-        <main>
-            <form class="title">
-                <button class="backBtn"><img src="/images/btn_arrow.png" alt="뒤로가기 버튼"></button>
-                <div>
-                    <h1>닉네임</h1>
-                    <p><span>0000</span>게시물</p>
+            <input class="search_input" type="text" placeholder="검색어를 입력하세요">
+            <button class="searchBtn"><img src="/images/btn_search.png" alt="검색 버튼"></button>
+            <button class="closeBtn"><img src="/images/btn_close.png" alt="닫기 버튼"></button>
+        </div>
+        <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
+            <div class="mainProfile">
+                <div class="mprofBackground">
+                    <img th:src="${member.profile.profileBgPath}" alt="사용자 설정 프로필 배경화면 사진">
                 </div>
-                <input class="search_input" type="text" placeholder="검색어를 입력하세요">
-                <button class="searchBtn"><img src="/images/btn_search.png" alt="검색 버튼"></button>
-                <button class="closeBtn"><img src="/images/btn_close.png" alt="닫기 버튼"></button>
-            </form>
-            <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
-                <div class="mainProfile">
-                    <div class="mprofBackground">
-                        <img src="/images/icon_no_image_lg.png" alt="사용자 설정 프로필 배경화면 사진">
+                <div class="mprofStatus">
+                    <button class="optionBtn"><img src="/images/icon_option.png" alt="프로필 옵션 버튼"></button>
+                    <ul class="optionBox">
+                        <li><a>사용자 차단하기</a></li>
+                        <li><a>블로그 공유하기</a></li>
+                    </ul>
+                    <div class="prof_photo"><img th:src="${member.profile.profileImgPath}" alt="프로필 사진"></div>
+                    <div class="prof_txt">
+                        <strong th:text="${member.profile.profileNickname}">닉네임</strong>
+                        <span th:text="${member.profile.profileStatmsg}">상태메시지</span>
                     </div>
-                    <div class="mprofStatus">
-                        <button class="optionBtn"><img src="/images/icon_option.png" alt="프로필 옵션 버튼"></button>
-                        <ul class="optionBox">
-                            <li><a>사용자 차단하기</a></li>
-                            <li><a>블로그 공유하기</a></li>
-                        </ul>
-                        <div class="prof_photo"><img src="/images/icon_default_profile.png" alt="프로필 사진"></div>
-                        <div class="prof_txt">
-                            <strong>닉네임</strong>
-                            <span>상태메시지</span>
+                    <div class="prof_info">
+                        <div>
+                            가입일 : <span th:text="${#temporals.format(member.memberSubDate, 'yyyy년 MM월 dd일')}">2020년10월20일</span>
+                            좋아요수 : <span th:text="${postView.likeCount}">1,000</span>
                         </div>
-                        <div class="prof_info">
-                            <div>
-                                가입일 : <span>2020년10월20일</span>
-                                좋아요수 : <span>1,000</span>
-                            </div>
-                            <button class="btn" onClick="location.href='/post/write'">글 쓰기</button>
-                        </div>
+                        <button th:if="${#strings.equals(param.memberCode, #strings.toString(#authentication.principal.memberCode))}"
+                                class="btn" onClick="location.href='/post/write'">글 쓰기
+                        </button>
                     </div>
                 </div>
-                <ul class="tabMenu">
-                    <li class="active"><button>고정글</button></li>
-                    <li><button>최신순</button></li>
-                    <li><button>♡</button></li>
-                    <li class="viewBtn"><button><img src="/images/btn_view_type.png" alt="보기타입 선택버튼"></button></li>
-                </ul>
+            </div>
+            <ul class="tabMenu">
+                <li class="active"><button>고정글</button></li>
+                <li><button>최신순</button></li>
+                <li><button>♡</button></li>
+                <li class="viewBtn">
+                    <button><img src="/images/btn_view_type.png" alt="보기타입 선택버튼"></button>
+                    <ul class="optionBox">
+                        <li>블로그식 보기</li>
+                        <li>SNS식 보기</li>
+                    </ul>
+                </li>
+            </ul>
 
-                <ul class="blogList">
+            <ul class="blogList">
+                <th:block th:object="${postList}" th:each="post, start : ${postList}">
                     <li>
                         <div class="list_head">
                             <div class="prof_photo">
-                                <!--                    <img src="/image/icon_default_profile.png" alt="프로필 사진">-->
-                                <img src="https://cdn.inflearn.com/public/users/thumbnails/759418/09bcc1e5-b03d-46ed-8c6b-4aa283267e28" alt="프로필 사진">
+                                <!--                    <img src="/images/icon_default_profile.png" alt="프로필 사진">-->
+                                <img th:src="${post.profile.profileImgPath}" alt="프로필 사진">
                             </div>
                             <div>
                                 <div>
-                                    <strong class="blog_user_name">조한결</strong>
-                                    <span class="blog_user_birth">2월12일</span>
+                                    <strong th:text="${post.profile.profileNickname}" class="blog_user_name">조한결</strong>
+                                    <span th:text="${#temporals.format(post.postWriDate, 'MM월 dd일')}" class="blog_user_birth">2월12일</span>
                                 </div>
-                                <span class="status_msg">오늘도 나는 눈물을 흘린다 또르륵오늘도 나는 눈물을 흘린다 또르륵오늘도 나는 눈물을 흘린다 또르륵</span>
+                                <span th:text="${post.profile.profileStatmsg}" class="status_msg">오늘도 나는 눈물을 흘린다 또르륵오늘도 나는 눈물을 흘린다 또르륵오늘도 나는 눈물을 흘린다 또르륵</span>
                             </div>
                             <button class="optionBtn"><img src="/images/icon_option.png" alt="글 옵션 버튼"></button>
                             <ul class="optionBox">
@@ -89,9 +104,9 @@
                         </div>
                         <div class="list_body">
                             <div>
-                                <strong class="contentTit">글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목</strong>
+                                <strong th:text="${post.postTitle}" class="contentTit">글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목</strong>
                                 <div class="contentsTxt">
-                                    <p>
+                                    <p th:text="${post.postText}">
                                         본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
                                         본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
                                         본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
@@ -102,11 +117,11 @@
                                 <div class="showLikeAndComments">
                                     <button class="commentsBtn">
                                         <img src="/images/icon_comment.png" alt="댓글 버튼 아이콘">
-                                        <span>300</span>+
+                                        <span th:text="${post.likeCount}">300</span>+
                                     </button>
                                     <button class="likeBtn active">
                                         <img src="/images/icon_like.png" alt="좋아요 버튼 아이콘">
-                                        <span>200</span>k
+                                        <span th:text="${post.cmtCount}">200</span>k
                                     </button>
                                 </div>
                             </div>
@@ -115,10 +130,14 @@
                             </div>
                         </div>
                     </li>
-                </ul>
-
-            </section>
-        </main>
-    </div>
+                </th:block>
+            </ul>
+            <div id="listEnd"></div>
+            <script src="/js/scrollEvent.js"></script>
+            <script src="/js/blogMain.js"></script>
+            <script src="/js/pathFinder.js"></script>
+        </section>
+    </main>
+</div>
 </body>
 </html>
