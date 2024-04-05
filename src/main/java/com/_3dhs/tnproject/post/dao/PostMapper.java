@@ -1,10 +1,8 @@
 package com._3dhs.tnproject.post.dao;
 
 
-import com._3dhs.tnproject.post.dto.AttachmentDTO;
-import com._3dhs.tnproject.post.dto.FolderDTO;
-import com._3dhs.tnproject.post.dto.LikeListDTO;
-import com._3dhs.tnproject.post.dto.PostDTO;
+import com._3dhs.tnproject.member.dto.ProfileDTO;
+import com._3dhs.tnproject.post.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -30,4 +28,9 @@ public interface PostMapper {
     List<PostDTO> findAllPostListForDoc();
 
     List<PostDTO> findListByPostCodes(Set<Integer> postCodes);
+
+
+    PostDTO findPostLikeCount(int memberCode);
+
+    List<PostDTO> findPostList(TabSearchDTO tabSearchDTO);
 }

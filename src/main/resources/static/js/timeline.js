@@ -25,7 +25,7 @@ function update() {
                     isTitlePhotoChanged = true;
                 }
             });
-            var element = document.createElement("li");
+             var element = document.createElement("div");
             element.innerHTML = template(data, {data: {handlebars: Handlebars.create()}});
             fragment.appendChild(element); // DocumentFragment에 요소 추가
             // DocumentFragment를 한 번에 추가하여 DOM 조작 효율성 향상

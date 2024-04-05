@@ -51,7 +51,7 @@
                     </ul>
                 </li>
             </ul>
-            <div style="padding: 20px">
+            <div>
                 <ul class="blogList">
                 </ul>
                 <br><br>
@@ -72,6 +72,7 @@
 </script>
 <script id="contentsTemplate" type="text/x-handlebars-template">
     {{#each this}}
+    <li>
     <div class="list_head">
         <div class="prof_photo">
 
@@ -113,6 +114,7 @@
             <img src="{{thumbnailPath}}" alt="썸네일 이미지">
         </div>
     </div>
+    </li>
     {{/each}}
 </script>
 <script>

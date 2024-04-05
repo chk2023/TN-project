@@ -1,13 +1,17 @@
 package com._3dhs.tnproject.post.controller;
 
 import com._3dhs.tnproject.member.dto.MemberDTO;
+import com._3dhs.tnproject.member.dto.ProfileDTO;
+import com._3dhs.tnproject.member.service.MemberService;
 import com._3dhs.tnproject.post.dto.FolderDTO;
 import com._3dhs.tnproject.post.dto.PostDTO;
 import com._3dhs.tnproject.post.model.PostState;
+import com._3dhs.tnproject.post.dto.TabSearchDTO;
 import com._3dhs.tnproject.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -21,12 +25,23 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/post")
 public class PostController {
+
     private final PostService postService;
     private final MessageSourceAccessor accessor;
+    private final MemberService memberService;
+
     @GetMapping("/main")
-    public void blogMainPage(@AuthenticationPrincipal MemberDTO memberDTO, Model model) {
-        List<FolderDTO> folderList = postService.findFolderList(memberDTO.getMemberCode());
+    public void blogMainPage(@ModelAttribute TabSearchDTO tabSearchDTO, Model model) {
+        List<FolderDTO> folderList = postService.findFolderList(tabSearchDTO.getMemberCode());
+        MemberDTO memberDTO = memberService.findMainBlogMemberInfo(tabSearchDTO.getMemberCode());
+        PostDTO postViewLikeCount =  postService.findPostLikeCount(tabSearchDTO.getMemberCode());
+        List<PostDTO> postList =  postService.findPostList(tabSearchDTO); //TODO 수정필
+        memberDTO.setMemberCode(tabSearchDTO.getMemberCode());
+
         model.addAttribute("folderList", folderList);
+        model.addAttribute("member", memberDTO);
+        model.addAttribute("postView", postViewLikeCount);
+        model.addAttribute("postList", postList);
     }
     @Transactional
     @GetMapping("/folder_edit")
@@ -40,7 +55,7 @@ public class PostController {
             for(int i = 0; i < 10; i++) {
                 FolderDTO folderDTO = new FolderDTO();
                 folderDTO.setFolderName("NoName");
-                folderDTO.setFolderIconPath("/image/icon_folder.png");
+                folderDTO.setFolderIconPath("/images/icon_folder.png");
                 folderDTO.setFolderSequence(10);
                 folderDTO.setFMemberCode(memberDTO.getMemberCode());
                 folderDTO.setFolderStatus("N");
@@ -60,10 +75,20 @@ public class PostController {
     @GetMapping("/temporary_storage/list")
     public void temporaryStorageListPage() {}
     @GetMapping("/list")
-    public void blogListPage() {}
+    public void blogListPage(@ModelAttribute TabSearchDTO tabSearchDTO, Model model) {
+        List<FolderDTO> folderList = postService.findFolderList(tabSearchDTO.getMemberCode());
+        MemberDTO memberDTO = memberService.findMainBlogMemberInfo(tabSearchDTO.getMemberCode());
+        PostDTO postViewLikeCount =  postService.findPostLikeCount(tabSearchDTO.getMemberCode());
+        List<PostDTO> postList =  postService.findPostList(tabSearchDTO); //TODO 수정필
+        memberDTO.setMemberCode(tabSearchDTO.getMemberCode());
+
+        model.addAttribute("folderList", folderList);
+        model.addAttribute("member", memberDTO);
+        model.addAttribute("postView", postViewLikeCount);
+        model.addAttribute("postList", postList);
+    }
     @GetMapping("/detail")
     public String blogDetailPage(@AuthenticationPrincipal MemberDTO memberDTO, Integer postCode, Model model) {
-
         //1. 해당하는 코드의 post정보를 불러오기
         PostDTO targetPost = postService.findPostByPostCode(postCode);
         //2. post 상태가 비공개라면 열람자가 일치하는지 확인
@@ -89,6 +114,11 @@ public class PostController {
         List<PostDTO> likeList = postService.findLikeListPostByMemberCode(memberCode);
         model.addAttribute("likeList", likeList);
     }
+    @GetMapping("/load")
+    public @ResponseBody List<PostDTO> findTabMenuPostList(@ModelAttribute TabSearchDTO tabSearchDTO) {
+        List<PostDTO> postList =  postService.findPostList(tabSearchDTO);
+        return postList;
+    }
     @PostMapping("/folder_edit")
     public @ResponseBody String folderEditList(@AuthenticationPrincipal MemberDTO memberDTO, @RequestBody List<FolderDTO> requestBody){
         for(FolderDTO folderDTO : requestBody) {
@@ -96,7 +126,6 @@ public class PostController {
         }
         postService.updateFolders(requestBody);
 
-        //System.out.println("처리후 requestBody : " + requestBody);
         return "redirect:/post/main";
     }
 }
