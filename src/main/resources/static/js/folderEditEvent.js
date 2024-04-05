@@ -166,7 +166,7 @@ async function sendFolderData() {
         const folderStatus = li.classList.contains("hidden") ? 'N' : 'Y';
         const folderInfo = {folderCode, folderName, folderIconPath, folderSequence, fMemberCode, folderStatus}
         folderInfoList.push(folderInfo);
-        console.log(folderInfo);
+       // console.log(folderInfo);
     })
     const json = JSON.stringify(folderInfoList);
     const response = await fetch('/post/folder_edit', {
@@ -177,9 +177,11 @@ async function sendFolderData() {
         body : json
     });
     const result = await response.text();
-    console.log("결과 찍어보깅 : " + result)
-    if(result) {
+    //console.log("결과 찍어보깅 : " + result)
+
+    if(result.startsWith("redirect:")) {
+        const memberCode = result.split(":")[1];
         alert("폴더 목록이 저장되었습니다.");
-        window.location.href = "http://localhost:8080/post/main";
+        window.location.href = "http://localhost:8080/post/main?"+memberCode;
     }
 }

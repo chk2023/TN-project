@@ -27,6 +27,7 @@ public class PostService {
         for (int i = 0; i < postList.size(); i++) {
             postList.get(i).setAttachmentList(postMapper.findAttListByPostCode(postList.get(i).getPostCode()));
             postList.get(i).makeThumbnailPath();
+
         }
         return postList;
     }
