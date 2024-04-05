@@ -50,6 +50,11 @@ function latestBtnClicked() {
     contentsType = 2;
     btnProcess();
 }
+
+function recomendedBtnClicked() {
+    contentsType = 3;
+    btnProcess();
+}
 function btnProcess() {
     $blogList.innerHTML = "";
     index = 0;
