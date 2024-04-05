@@ -1,66 +1,68 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+>
 <head>
     <meta charset="UTF-8">
     <title>Folder Edit Page</title>
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/post.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
-    <div class="wrap">
-        <header>
-            <div th:replace="~{common/profile.html}"></div>
-            <nav th:replace="~{common/navigation.html}"></nav>
-        </header>
-        <main>
-            <div class="title">
-                <button class="backBtn"><img src="/images/btn_arrow.png" alt="뒤로가기 버튼"></button>
-                <div>
-                    <h1>폴더 편집</h1>
-                </div>
-                <input class="search_input" type="text" placeholder="검색어를 입력하세요"/>
-                <button class="searchBtn"><img src="/images/btn_search.png" alt="검색 버튼"></button>
-                <button class="closeBtn"><img src="/images/btn_close.png" alt="닫기 버튼"></button>
-                <div class="btnWrap">
-                    <button class="btn" onclick="sendFolderData();">완료</button>
-                </div>
+<div class="wrap">
+    <header>
+        <div th:replace="~{common/profile.html}"></div>
+        <nav th:replace="~{common/navigation.html}"></nav>
+    </header>
+    <main>
+        <div class="title">
+            <button class="backBtn"><img src="/images/btn_arrow.png" alt="뒤로가기 버튼"></button>
+            <div>
+                <h1>폴더 편집</h1>
             </div>
-            <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
-                <div class="btnWrap">
-                    <button class="addBtn btn gray">추가</button>
-                    <button class="deleteBtn btn gray">삭제</button>
-                </div>
-                <ul class="fEditList" id="fEditList">
-                    <li class="fixed">전체목록 (<span>56</span>)</li>
-                    <th:block th:object="${folderList}" th:each="folder, start : ${folderList}">
-                        <li th:classappend="${folder.folderName == 'NoName'} ? 'hidden'" draggable="true"><input type="hidden" th:value="${folder.folderCode}"/><img th:src="${folder.folderIconPath}" alt="폴더 아이콘"> <span th:text="${folder.folderName}"></span></li>
-                    </th:block>
-                </ul>
-                <dl>
-                    <dt>폴더명</dt>
-                    <dd>
-                        <div class="txt">
-                            <input id="folderName" type="text" readonly/>
-                            <em>* 폴더는 최대 10개 까지 추가 가능합니다.</em>
-                        </div>
-                    </dd>
-                    <dt class="iconDt">아이콘 설정</dt>
-                    <dd>
-                        <div class="iconBox">
-                            <img src="/images/icon_folder.png" alt=""/>
-                            <img src="/images/icon_star.png" alt=""/>
-                            <img src="/images/icon_heart.png" alt=""/>
-                            <img src="/images/icon_lamp.png" alt=""/>
-                            <img src="/images/icon_note.png" alt=""/>
-                        </div>
-                    </dd>
-                </dl>
-            </section>
-        </main>
-    </div>
-    <script src="/js/folderEditEvent.js"></script>
-    <script src="/js/pathFinder.js"></script>
+            <input class="search_input" type="text" placeholder="검색어를 입력하세요"/>
+            <button class="searchBtn"><img src="/images/btn_search.png" alt="검색 버튼"></button>
+            <button class="closeBtn"><img src="/images/btn_close.png" alt="닫기 버튼"></button>
+            <div class="btnWrap">
+                <button class="btn" onclick="sendFolderData();">완료</button>
+            </div>
+        </div>
+        <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
+            <div class="btnWrap">
+                <button class="addBtn btn gray">추가</button>
+                <button class="deleteBtn btn gray">삭제</button>
+            </div>
+            <ul class="fEditList" id="fEditList">
+                <li class="fixed">전체목록 (<span>56</span>)</li>
+                <th:block th:object="${folderList}" th:each="folder, start : ${folderList}">
+                    <li th:classappend="${folder.folderName == 'NoName'} ? 'hidden'" draggable="true"><input
+                            type="hidden" th:value="${folder.folderCode}"/><img th:src="${folder.folderIconPath}"
+                                                                                alt="폴더 아이콘"> <span
+                            th:text="${folder.folderName}"></span></li>
+                </th:block>
+            </ul>
+            <dl>
+                <dt>폴더명</dt>
+                <dd>
+                    <div class="txt">
+                        <input id="folderName" type="text" readonly/>
+                        <em>* 폴더는 최대 10개 까지 추가 가능합니다.</em>
+                    </div>
+                </dd>
+                <dt class="iconDt">아이콘 설정</dt>
+                <dd>
+                    <div class="iconBox">
+                        <img src="/images/icon_folder.png" alt=""/>
+                        <img src="/images/icon_star.png" alt=""/>
+                        <img src="/images/icon_heart.png" alt=""/>
+                        <img src="/images/icon_lamp.png" alt=""/>
+                        <img src="/images/icon_note.png" alt=""/>
+                    </div>
+                </dd>
+            </dl>
+        </section>
+    </main>
+</div>
+<script src="/js/folderEditEvent.js"></script>
+<script src="/js/pathFinder.js"></script>
 </body>
 </html>
