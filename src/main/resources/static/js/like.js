@@ -29,18 +29,25 @@ document.querySelectorAll(".likeBtn").forEach(btn => btn.addEventListener('click
             // var likeBtn = document.querySelector('[data-post-code=' + postCode +']');
 
             var likeImg = likeBtn.querySelector("img");
-            if (likeImg) {
+
+            var handleLikeCount = likeBtn.querySelector(".likeCount");
+
+
+            if (likeImg && handleLikeCount) {
                 if (result) {
                     likeImg.src = "/images/icon_like_active.png";
                     likeBtn.classList.add("active");
-
+                    handleLikeCount.textContent = parseInt(handleLikeCount.textContent) + 1;
                 } else {
                     likeImg.src = "/images/icon_like.png";
                     likeBtn.classList.remove("active");
+                    handleLikeCount.textContent = parseInt(handleLikeCount.textContent) - 1;
                 }
+
             } else {
                 console.error("이미지를 찾을 수 없습니다.");
             }
+
 
         })
         .catch((err) => {
