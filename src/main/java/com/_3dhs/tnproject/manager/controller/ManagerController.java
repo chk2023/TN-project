@@ -29,27 +29,41 @@ public class ManagerController {
     private final MessageSourceAccessor messageSourceAccessor;
 
 
-//    @GetMapping("/manager/report/list")
-//    public String viewAllReportList(Model model) {
-//
-//        List<ReportDTO> reportList = reportService.viewAllReport();
-//        System.out.println(reportList.size());
-//        model.addAttribute("reportList", reportList);
-//
-//        return "manager/report/list";
-//
-//
-//    }
 
+    @GetMapping("/manager/report/list")
+    public String getReportList(@RequestParam(defaultValue = "1") int page,
+                                @RequestParam(required = false) String searchCondition,
+                                @RequestParam(required = false) String searchValue,
+                                Model model) {
+
+        Map<String, String> searchMap = new HashMap<>();
+        searchMap.put("searchCondition", searchCondition);
+        searchMap.put("searchValue", searchValue);
+
+        Map<String, Object> boardListAndPaging = reportService.selectReportList(searchMap, page);
+        model.addAttribute("paging", boardListAndPaging.get("paging"));
+        model.addAttribute("reportList", boardListAndPaging.get("reportList"));
+
+        return "/manager/report/list";
+    }
 
     @GetMapping("/manager/report/detail")
-    public String viewOneReport(Model model1, Integer reportCode) {
-        ReportDTO report = reportService.viewOneReport(reportCode);
-        model1.addAttribute("detail", report);
-
+    public String getReportDetail(@RequestParam Integer reportCode, Model model) {
+        ReportDTO reportDet = reportService.selectReportDetail(reportCode);
+        model.addAttribute("detail", reportDet) ;
 
         return "manager/report/detail";
+
     }
+
+//    @GetMapping("/manager/report/detail")
+//    public String viewOneReport(Model model1, Integer reportCode) {
+//        ReportDTO report = reportService.viewOneReport(reportCode);
+//        model1.addAttribute("detail", report);
+//
+//
+//        return "manager/report/detail";
+//    }
 
 
     @PostMapping("/manager/report/detail") //getMapping으로 값을 넘길 이유가 없으니까, 포스트 매핑을 시켜도 될 것 같은데..
@@ -110,26 +124,7 @@ public class ManagerController {
     }
 
 
-    @GetMapping("/manager/report/list")
-    public String getReportList(@RequestParam(defaultValue = "1") int page,
-                               @RequestParam(required = false) String searchCondition,
-                               @RequestParam(required = false) String searchValue,
-                               Model model) {
 
-//     log.info("boardList page : { }", page);
-//     log.info("boardList searchCondition : { }", searchCondition);
-//     log.info("boardList searchValue : { }", searchValue) ;
-
-     Map<String, String> searchMap = new HashMap<>();
-     searchMap.put("searchCondition", searchCondition);
-     searchMap.put("searchValue", searchValue);
-
-     Map<String, Object> boardListAndPaging = reportService.selectReportList(searchMap, page);
-     model.addAttribute("paging", boardListAndPaging.get("paging"));
-     model.addAttribute("reportList", boardListAndPaging.get("reportList"));
-
-     return "/manager/report/list";
-    }
 
 //    @PostMapping("/report/list")
 //    public ResponseEntity<String> checkDuplication (@RequestBody ReportDTO report) {

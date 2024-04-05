@@ -10,10 +10,10 @@ import java.util.Map;
 
 @Mapper
 public interface ReportMapper {
-    List<ReportDTO> viewAllReport();
 
-    ReportDTO viewOneReport(Integer reportCode);
+    List<ReportDTO> selectReportList(SelectCriteria selectCriteria);
 
+    ReportDTO selectReportDetail(Integer reportCode);
 
     ReportDTO updateReport(int reportCode, String processingText);
 
@@ -28,5 +28,5 @@ public interface ReportMapper {
 
     int selectTotalCount(Map<String, String> searchMap);
 
-    List<ReportDTO> selectReportList(SelectCriteria selectCriteria);
+
 }

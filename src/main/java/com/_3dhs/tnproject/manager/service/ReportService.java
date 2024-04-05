@@ -18,18 +18,34 @@ import java.util.Map;
 public class ReportService {
     private final ReportMapper reportMapper;
 
+    public Map<String, Object> selectReportList(Map<String, String> searchMap, int page) {
 
-    public List<ReportDTO> viewAllReport() {
-        List<ReportDTO> list = reportMapper.viewAllReport();
-        for (ReportDTO reportDTO : list) {
-            reportDTO.makeFormattingReportDate();
-        }
-        return list;
+        // 1. 전체 게시글 수 확인 ( 검색어가 있는 경우 포함) => 페이징 처리를 위해
+        int totalCount = reportMapper.selectTotalCount(searchMap);
+        log.info("boardList totalCount : {}", totalCount );
+
+        //2. 페이징 처리와 연관된 값을 계산하여 SelectCriteria 타입의 객체에 담는다.
+        int limit = 10; // 한 페이지에 보여줄 게시물의 수
+        int buttonAmount = 10 ; //한 번에 보여질 페이징 버튼 수(하단에 노출시킬 페이징 버튼 수)
+
+        SelectCriteria selectCriteria = Pagenation.getSelectCriteria(page, totalCount, limit, buttonAmount,searchMap);
+        log.info("boardList selectCriteria : {}", selectCriteria);
+
+        // 3. 요청 페이지와 검색 기준에 맞는 게시글을 조회해온다.
+        List<ReportDTO> reportList = reportMapper.selectReportList(selectCriteria);
+        log.info("boardList : {}", reportList );
+
+        Map<String, Object> boardListAndPaging = new HashMap<>();
+        boardListAndPaging.put("paging", selectCriteria);
+        boardListAndPaging.put("reportList", reportList);
+
+        return boardListAndPaging;
+
     }
 
-    public ReportDTO viewOneReport(Integer reportCode) {
 
-        return reportMapper.viewOneReport(reportCode);
+    public ReportDTO selectReportDetail(Integer reportCode) {
+        return reportMapper.selectReportDetail(reportCode);
     }
 
 
@@ -62,34 +78,6 @@ public class ReportService {
 
     public MemberDTO checkOneMember(MemberDTO memberDTO) {
         return reportMapper.checkOneMember(memberDTO);
-    }
-
-    public Map<String, Object> selectReportList(Map<String, String> searchMap, int page) {
-
-        // 1. 전체 게시글 수 확인 ( 검색어가 있는 경우 포함) => 페이징 처리를 위해
-        int totalCount = reportMapper.selectTotalCount(searchMap);
-        log.info("boardList totalCount : {}", totalCount );
-
-        //2. 페이징 처리와 연관된 값을 계산하여 SelectCriteria 타입의 객체에 담는다.
-        int limit = 10; // 한 페이지에 보여줄 게시물의 수
-        int buttonAmount = 10 ; //한 번에 보여질 페이징 버튼 수(하단에 노출시킬 페이징 버튼 수)
-
-        SelectCriteria selectCriteria = Pagenation.getSelectCriteria(page, totalCount, limit, buttonAmount,searchMap);
-        log.info("boardList selectCriteria : {}", selectCriteria);
-
-        // 3. 요청 페이지와 검색 기준에 맞는 게시글을 조회해온다.
-        List<ReportDTO> reportList = reportMapper.selectReportList(selectCriteria);
-        log.info("boardList : {}", reportList );
-
-        Map<String, Object> boardListAndPaging = new HashMap<>();
-        boardListAndPaging.put("paging", selectCriteria);
-        boardListAndPaging.put("reportList", reportList);
-
-        return boardListAndPaging;
-
-
-
-
     }
 
 
