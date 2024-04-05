@@ -49,39 +49,39 @@
 
             <!--페이징-->
             <div id="paging" class="paging">
-                <!-- 맨 앞으로 이동 -->
-                <button class="pagingFrontBtn arrowBtn"><img src="/images/icon_paging_arrow_front.png" alt="맨 앞으로 이동 버튼">
-                </button>
-                <!-- 이전 페이지로 이동 -->
-                <button class="pagingFrontBtn arrowBtn" disabled="disabled"><img
-                        src="/images/icon_paging_arrow_front.png" alt="이전 목록으로 이동 버튼"></button>
+                <th:block th:if="${ paging.searchCondition == null  || paging.searchValue == null }">
 
-                <!-- 숫자 버튼 -->
-                <button class="pagingNumBtn" disabled="disabled">1</button>
-                <button class="pagingNumBtn">2</button>
-                <button class="pagingNumBtn">3</button>
-                <button class="pagingNumBtn">4</button>
-                <button class="pagingNumBtn">5</button>
+                    <!-- 맨 앞으로 이동 -->
+                    <button class="pagingFrontBtn arrowBtn"
+                            th:onclick="'location.href=\'/manager/admin/list?page=1\''">
+                        <img src="/images/icon_paging_arrow_front.png" alt="맨 앞으로 이동 버튼"></button>
 
-                <!-- 다음 페이지로 이동 -->
-                <button class="pagingBackBtn arrowBtn"><img src="/images/icon_paging_arrow_back.png" alt="다음 목록으로 이동 버튼">
-                </button>
-                <!-- 맨 끝으로 이동 -->
-                <button class="pagingBackBtn arrowBtn"><img src="/images/icon_paging_arrow_back.png" alt="맨 뒤로 이동 버튼">
-                </button>
+                    <!-- 이전 페이지로 이동 -->
+                    <button class="pagingFrontBtn arrowBtn"
+                            th:onclick="'location.href=\'/manager/admin/list?page=' + '@{'${paging.page - 1}'}' + '\''"p
+                            th:disabled="${ paging.page <= 1 }">
+                        <img src="/images/icon_paging_arrow_front.png" alt="이전 목록으로 이동 버튼"></button>
+
+                    <!-- 숫자 버튼 -->
+                    <th:block
+                            th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+                        <button class="pagingNumBtn" disabled="disabled"
+                                th:onclick="'location.href=\'/manager/admin/list?page=' + '@{'${page}'}' + '\''"
+                                th:text="${ page }" th:disabled="${ paging.page eq page }"></button>
+                    </th:block>
+                    <!-- 다음 페이지로 이동 -->
+                    <button class="pagingBackBtn arrowBtn"
+                            th:onclick="'location.href=\'/manager/admin/list?page=' + '@{'${paging.page + 1}'}' + '\''"
+                            th:disabled="${ paging.page >= paging.maxPage }">
+                        <img src="/images/icon_paging_arrow_back.png" alt="다음 목록으로 이동 버튼"></button>
+                    <!-- 맨 끝으로 이동 -->
+                    <button class="pagingBackBtn arrowBtn"
+                            th:onclick="'location.href=\'/manager/admin/list?page=' + '@{'${paging.maxPage}'}' + '\''">
+                        <img src="/images/icon_paging_arrow_back.png" alt="맨 뒤로 이동 버튼"></button>
+
+                </th:block>
             </div>
-            <br><br>
 
-            <div id="searchBar">
-                <select name="">
-                    <option value="1">포스팅 번호</option>
-                    <option value="2">댓글 번호</option>
-                    <option value="3">관리자 번호</option>
-                    <option value="4">처리 상태</option>
-                </select><br><br>
-                <input class="search_input" type="text" placeholder="검색어를 입력하세요">
-                <button class="searchBtn"><img src="/images/btn_search.png" alt="검색 버튼"></button>
-            </div>
 
         </section>
     </main>

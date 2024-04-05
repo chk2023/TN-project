@@ -63,18 +63,6 @@ public class ReportService {
 
 
 
-
-
-    public List<MemberDTO> checkAllMember() {
-        return reportMapper.checkAllMember();
-    }
-
-
-    public MemberDTO checkOneMember(MemberDTO memberDTO) {
-        return reportMapper.checkOneMember(memberDTO);
-    }
-
-
     public Map<String, Object> selectAdminList(Map<String, String> searchMap, int page) {
 
         int totalCount = reportMapper.selectTotalCount(searchMap);
@@ -98,6 +86,27 @@ public class ReportService {
 
     }
 
+    public Map<String, Object> selectMemberList(Map<String, String> searchMap, int page) {
+
+        int totalCount = reportMapper.selectTotalCount(searchMap);
+
+        int limit = 10;
+        int buttonAmount = 10;
+
+        SelectCriteria selectCriteria = Pagenation.getSelectCriteria(page, totalCount, limit, buttonAmount,searchMap);
+        List<ReportDTO> memberList = reportMapper.selectMemberList(selectCriteria);
+
+        Map<String, Object> boardListAndPaging = new HashMap<>();
+        boardListAndPaging.put("paging", selectCriteria);
+        boardListAndPaging.put("memberList", memberList);
+
+        return boardListAndPaging;
+    }
+
+    public MemberDTO selectOneMember(MemberDTO memberDTO) {
+        return reportMapper.selectOneMember(memberDTO);
+
+    }
 }
 
 

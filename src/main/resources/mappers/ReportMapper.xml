@@ -100,7 +100,7 @@
     </select>
 
 
-    <select id="checkAllMember" resultType="com._3dhs.tnproject.member.dto.MemberDTO">
+    <select id="selectMemberList" resultType="com._3dhs.tnproject.member.dto.MemberDTO">
         SELECT
             member_code,
             member_id,
@@ -111,10 +111,14 @@
 
         FROM tbl_member
 
+        ORDER BY
+            member_code ASC
+            LIMIT #{offset}, #{limit}
+
 
     </select>
 
-    <select id="checkOneMember" resultType="com._3dhs.tnproject.member.dto.MemberDTO">
+    <select id="selectOneMember" resultType="com._3dhs.tnproject.member.dto.MemberDTO">
         SELECT
             member_code,
             member_id,

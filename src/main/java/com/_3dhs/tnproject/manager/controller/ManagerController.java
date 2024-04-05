@@ -104,21 +104,33 @@ public class ManagerController {
     public String selectAdminDetail ( Integer reportCode, Model model) {
         ReportDTO admReport = reportService.selectAdminDetail(reportCode);
         model.addAttribute("admDet", admReport);
+      log.info(String.valueOf(reportCode));
+      log.info("{}",admReport);
         return "manager/admin/detail";
     }
 
 
     @GetMapping ("/manager/member/list")
-    public String checkAllMember (Model model) {
-        List<MemberDTO> members = reportService.checkAllMember();
-        model.addAttribute("members", members);
+    public String getMemberList(@RequestParam(defaultValue = "1") int page,
+                               @RequestParam(required = false) String searchCondition,
+                               @RequestParam(required = false) String searchValue,
+                               Model model) {
 
-        return "manager/member/list";
+        Map<String, String> searchMap = new HashMap<>();
+        searchMap.put("searchCondition", searchCondition);
+        searchMap.put("searchValue", searchValue);
+
+        Map<String, Object> boardListAndPaging = reportService.selectMemberList(searchMap, page);
+        model.addAttribute("paging", boardListAndPaging.get("paging"));
+        model.addAttribute("members", boardListAndPaging.get("memberList"));
+
+        return "/manager/member/list";
     }
 
+
     @GetMapping("/manager/member/detail")
-    public String checkOneMember (MemberDTO memberDTO, Model model) {
-        MemberDTO oneMember = reportService.checkOneMember(memberDTO);
+    public String selectOneMember (MemberDTO memberDTO, Model model) {
+        MemberDTO oneMember = reportService.selectOneMember(memberDTO);
         model.addAttribute("oneMember", oneMember);
         return "manager/member/detail";
     }

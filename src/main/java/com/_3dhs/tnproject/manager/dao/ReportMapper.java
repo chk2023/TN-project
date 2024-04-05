@@ -21,9 +21,10 @@ public interface ReportMapper {
 
     ReportDTO selectAdminDetail(Integer reportCode);
 
-    List<MemberDTO> checkAllMember();
+    List<ReportDTO> selectMemberList(SelectCriteria selectCriteria);
 
-    MemberDTO checkOneMember(MemberDTO memberDTO);
+    MemberDTO selectOneMember(MemberDTO memberDTO);
+
 
     int selectTotalCount(Map<String, String> searchMap);
 
