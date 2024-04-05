@@ -107,6 +107,7 @@ public class PostController {
         }
         //4. 모든 조건이 성립한다면 view로 전달
         model.addAttribute("postDetail", targetPost);
+
         return "/post/detail";
     }
     @GetMapping("/likelist")
