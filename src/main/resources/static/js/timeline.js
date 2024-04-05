@@ -19,6 +19,7 @@ function update() {
                 item.cmtCount = formatCount(item.cmtCount);
                 item.likeCount = formatCount(item.likeCount);
                 item.postWriDate = formatWriDate(item.postWriDate);
+                console.log(item.liked);
                 if (!isTitlePhotoChanged && item.thumbnailPath !== `/images/icon_default_photo.png`) {
                     //이미지가 있는 가장 첫번째 사진으로 타이틀사진을 변경
                     setTitlePhoto(item.thumbnailPath);

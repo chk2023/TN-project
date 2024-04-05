@@ -85,6 +85,7 @@ async function update() {
                 // 'post.postWriDate'를 Date 객체로 변환
                 const postWriDate = new Date(post.postWriDate);
                 const formattedDate = `${(postWriDate.getMonth() + 1).toString().padStart(2, '0')}월 ${postWriDate.getDate().toString().padStart(2, '0')}일`; // 간단한 날짜 형식 MM월 dd일 변경
+                const likeBtnStr = post.liked ? "likeBtn active" : "likeBtn";
 
                 const formattedLikeCount = formatCount(post.likeCount);
                 const formattedCmtCount = formatCount(post.cmtCount);
@@ -117,7 +118,7 @@ async function update() {
                                                             <img src="/images/icon_comment.png" alt="댓글 버튼 아이콘">
                                                             <span>${escapeHTML(formattedCmtCount)}</span>
                                                         </button>
-                                                        <button class="likeBtn">
+                                                        <button class="${escapeHTML(likeBtnStr)}">
                                                             <img src="/images/icon_like.png" alt="좋아요 버튼 아이콘">
                                                             <span>${escapeHTML(formattedLikeCount)}</span>
                                                         </button>

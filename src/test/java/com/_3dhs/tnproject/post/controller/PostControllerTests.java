@@ -11,6 +11,12 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @SpringBootTest
 @ContextConfiguration(classes = {TnProjectApplication.class})
@@ -29,7 +35,17 @@ public class PostControllerTests {
         mockMvc.perform(MockMvcRequestBuilders.get("/post/likelist?memberCode=12"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.forwardedUrl("post/likelist"))
-                .andDo(MockMvcResultHandlers.print());
+                .andDo(print());
+
+    }
+
+    @Test
+    void 비동기전송테스트() throws Exception {
+        mockMvc.perform(get("/timeline/updateList")
+                        .param("index", "0")
+                        .param("range", "2")
+                        .param("contentsType", "2"))
+                .andExpect(result -> System.out.println());
 
     }
 }
