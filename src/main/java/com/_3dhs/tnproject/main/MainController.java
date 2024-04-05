@@ -22,7 +22,7 @@ public class MainController {
             log.info("nickname : " + nickname);
 
             if (id.equals(nickname)) {
-                return "redirect:/common/testhub";
+                return "redirect:/timeline/list";
             } else {
                 return "redirect:/timeline/list";
             }

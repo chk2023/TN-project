@@ -17,8 +17,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
 
 @Controller
 @Slf4j
@@ -28,9 +37,13 @@ public class MemberController {
     private final AuthService authenticationService;
     private final PasswordEncoder passwordEncoder;
     private final MessageSourceAccessor messageSourceAccessor;
+    private final String defaultPfPath = "/images/icon_user.png";
+    private final String defaultBgPath = "/images/icon_no_image_lg.png";
+    private final String pfUploadDir = ResourceUtils.getFile("classpath:static/userUploadFiles/profile").getAbsolutePath();
+    private final String bgUploadDir = ResourceUtils.getFile("classpath:static/userUploadFiles/background").getAbsolutePath();
 
     @Autowired
-    public MemberController(MemberService memberService, AuthService authenticationService, PasswordEncoder passwordEncoder, MessageSourceAccessor messageSourceAccessor) {
+    public MemberController(MemberService memberService, AuthService authenticationService, PasswordEncoder passwordEncoder, MessageSourceAccessor messageSourceAccessor) throws FileNotFoundException {
         this.memberService = memberService;
         this.authenticationService = authenticationService;
         this.passwordEncoder = passwordEncoder;
@@ -171,45 +184,73 @@ public class MemberController {
         return "redirect:/member/login";
     }
 
+    @GetMapping("/profile")
+    public void profileP (){}
 
-//    @PostMapping("/regist")
-//    public String registMember(MemberDTO member,
-//                               @RequestParam("optionalId") String optionalId,
-//                               @RequestParam("memberPwd") String memberPwd,
-//                               RedirectAttributes rttr) throws MemberRegistException {
-//        // 이메일 도메인 까지 추가하여 db에 입력
-//        String memberId = member.getMemberId() + optionalId;
-//        if (!"default".equals(optionalId)) member.setMemberId(memberId);
-//
-//        // 비밀번호 BCrypt 해싱처리하여 db에 입력
-//        member.setMemberPwd(passwordEncoder.encode(memberPwd));
-//
-//        log.info("Request regist member : {}", member);
-//
-//        memberService.registMember(member);
-//
-////        rttr.addFlashAttribute("message", messageSourceAccessor.getMessage("member.regist"));
-//
-//        return "redirect:/";
-//    }
-    /* 비밀번호 재설정 */
-//    @PostMapping("/findPwd")
-//    public String updatePwd(@RequestBody Map<String, String> requestBody,
-//                            RedirectAttributes rttr) {
-//        String memberId = requestBody.get("memberId");
-//        String currentPwd = requestBody.get("currentPwd");
-//        String newPwd = requestBody.get("newPwd");
-//        log.info(memberId);
-//
-//        MemberDTO member = memberService.getMemberbyId(memberId);
-//
-//        if (!currentPwd.equals(member.getMemberPwd())) {
-//            rttr.addFlashAttribute("error", messageSourceAccessor.getMessage("현재 비밀번호가 잘못 입력되었습니다."));
-//        } else {
-//            member.setMemberPwd(newPwd);
-//            rttr.addFlashAttribute("message", messageSourceAccessor.getMessage("member.updatePwd"));
-//        }
-//
-//        return "redirect:/member/login";
-//    }
+    @PostMapping("/profile")
+    public String updateProfile (@RequestParam("profileImage") MultipartFile profileImage,
+                                 @RequestParam("profileBg") MultipartFile profileBg,
+                                 @AuthenticationPrincipal MemberDTO member,
+                                 @RequestParam String updateNickname,
+                                 @RequestParam String updateMessage,
+                                 RedirectAttributes rttr) throws IOException, MemberUpdateException {
+
+        member.getProfile().setProfileNickname(updateNickname);
+        member.getProfile().setProfileStatmsg(updateMessage);
+
+        if (profileImage.isEmpty()) {
+            member.getProfile().setProfileImgPath(defaultPfPath);
+        } else {
+            String profileImgPath = savePfImg(profileImage);
+            member.getProfile().setProfileImgPath(profileImgPath);
+        }
+
+        if (profileBg.isEmpty()) {
+            member.getProfile().setProfileBgPath(defaultBgPath);
+        } else {
+            String profileBgPath = savePfBg(profileBg);
+            member.getProfile().setProfileBgPath(profileBgPath);
+        }
+
+        log.info(updateNickname);
+        log.info(updateMessage);
+        log.info(member.toString());
+
+        memberService.updateProfile(member);
+
+        rttr.addFlashAttribute("message", messageSourceAccessor.getMessage("member.updatePwd"));
+
+      return "redirect:/";
+    }
+
+    private String savePfImg(MultipartFile file) throws IOException {
+
+        String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+
+        Path filePath = Paths.get(pfUploadDir, fileName);
+
+        Files.write(filePath, file.getBytes());
+
+        return filePath.toString();
+    }
+
+    private String savePfBg(MultipartFile file) throws IOException {
+
+        String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+
+        Path filePath = Paths.get(bgUploadDir, fileName);
+
+        Files.write(filePath, file.getBytes());
+
+        return filePath.toString();
+    }
+
+
+
+
+
+
+
+
+
 }

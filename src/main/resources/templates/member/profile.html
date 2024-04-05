@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>프로필 수정</title>
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/member/regist.css">
+</head>
+<body>
+<header>
+    <div th:replace="~{common/profile.html}"></div>
+    <nav th:replace="~{common/navigation.html}"></nav>
+</header>
+<aside>
+    <div class="folder">
+        <strong class="minTit">폴더</strong>
+        <ul>
+            <li class="AllList"><a href="#"><img src="/images/icon_folder.png" alt="아이콘">전체목록(<span>56</span>)</a></li>
+            <th:block th:object="${folderList}" th:each="folder, start : ${folderList}">
+                <li th:classappend="${folder.folderName == 'NoName'} ? 'hidden'" draggable="true"><input type="hidden" th:value="${folder.folderCode}"/><img th:src="${folder.folderIconPath}" alt="폴더 아이콘"> <span th:text="${folder.folderName}"></span></li>
+            </th:block>
+        </ul>
+        <button class="folderSetBtn" onClick="location.href='/post/folder_edit'"><img src="/images/icon_folder_setting.png" alt="폴더 편집 버튼"></button>
+    </div>
+</aside>
+<main>
+    <div class="title">
+        <button class="backBtn" onclick="goBack()">
+            <img src="/images/btn_arrow.png" alt="뒤로가기 버튼">
+        </button>
+        <script>
+            function goBack() {
+                window.history.back();
+            }
+        </script>
+        <div>
+            <h1>프로필 수정</h1>
+        </div>
+    </div>
+    <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
+        <form action="/member/profile" method="post" enctype="multipart/form-data">
+        <div class="mainProfile">
+            <div class="mprofBackground">
+                <img id="profileBgPreview" src="/images/icon_no_image_lg.png" alt="사용자 설정 프로필 배경화면 사진">
+            </div>
+            <div class="mprofStatus">
+                <label for="profileImage">
+                    <input type="file" id="profileImage" name="profileImage"
+                           style="display: none" accept="image/*" onchange="displayImage('profileImage', 'profileImagePreview');">
+                    <input type="button" value="프로필 사진 변경" onclick="document.getElementById('profileImage').click();">
+                </label>
+                <label for="profileBg">
+                    <input type="file" id="profileBg" name="profileBg"
+                           style="display: none" accept="image/*" onchange="displayImage('profileBg', 'profileBgPreview')">
+                    <input type="button" value="배경 사진 변경" onclick="document.getElementById('profileBg').click();">
+                </label>
+                <button class="optionBtn" style="display: none">
+                    <img src="/images/icon_option.png" alt="프로필 옵션 버튼"></button>
+                <ul class="optionBox">
+<!--                    <li><a>사용자 차단하기</a></li>-->
+<!--                    <li><a>블로그 공유하기</a></li>-->
+                </ul>
+                <div class="prof_photo"><img id="profileImagePreview" src="/images/icon_default_profile.png" alt="프로필 사진"></div>
+                <div class="prof_txt">
+                    <strong>닉네임</strong>
+                    <span>상태메시지</span>
+                </div>
+                <div class="prof_info">
+                    <div>
+                        가입일 : <span>2020년10월20일</span>
+                        좋아요수 : <span>1,000</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <label for="updateNickname">닉네임</label>
+            <input type="text" name="updateNickname" id="updateNickname" value="닉네임">
+            <label for="updateMessage">상태메시지</label>
+            <input type="text" name="updateMessage" id="updateMessage" value="상태메시지">
+            <input type="submit" value="프로필 저장">
+        </div>
+        </form>
+    </section>
+
+    <!-- 이미지 선택 시 미리보기 -->
+    <script>
+        function displayImage(inputId, imgId) {
+            const $input = document.getElementById(inputId);
+            const $img = document.getElementById(imgId);
+            if ($input.files && $input.files[0]) {
+                const $reader = new FileReader();
+                $reader.onload = function (e) {
+                    $img.src = e.target.result;
+                }
+                $reader.readAsDataURL($input.files[0]);
+            }
+        }
+    </script>
+</main>
+</body>
+</html>
