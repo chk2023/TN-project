@@ -126,6 +126,7 @@ public class PostController {
         }
         postService.updateFolders(requestBody);
 
-        return "redirect:/post/main";
+        //return "redirect:/post/main?memberCode="+memberDTO.getMemberCode()+"";
+        return "redirect:memberCode="+memberDTO.getMemberCode()+"";
     }
 }
