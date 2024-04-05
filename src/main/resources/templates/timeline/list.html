@@ -89,28 +89,53 @@
             .then(response => {
                 /* 추가 */
                 if (response.ok) {
-                    return response.text(); // 성공 시 텍스트 데이터 반환
+                    return response.json(); // JSON 데이터로 파싱하여 반환
                 } else {
-                    throw new Error('서버 응답이 실패했습니다.');
+                    throw new Error('서버 응답이 실패했습니다.1');
                 }
             })
             .then(result => {
                 console.log(result); // 서버 응답 확인
                 // 좋아요 아이콘 변경
                 var likeBtn = document.querySelector(`[data-post-code="${postCode}"]`);
-                var likeImg = likeBtn.querySelector("img");
-                var isActive = likeBtn.classList.toggle("active");
-                likeImg.src = isActive ? "/images/icon_like_active.png" : "/images/icon_like.png";
 
-                /* 수정된 부분 */
-                /* Boolean 값을 처리하는 부분 */
-                // result를 파싱하여 Boolean 값으로 변환하여 처리
-                var isLiked = JSON.parse(result);
-                if (isLiked) {
-                    likeImg.src = "/images/icon_like_active.png";
+                // ==============
+                if (likeBtn) {
+                    var likeImg = likeBtn.querySelector("img");
+                    if (likeImg) {
+                        if (result) {
+                            likeImg.src = "/images/icon_like_active.png";
+                            likeBtn.classList.add("active");
+
+                        } else {
+                            likeImg.src = "/images/icon_like.png";
+                            likeBtn.classList.remove("active");
+                        }
+                    } else {
+                        console.error("이미지 요소를 찾을 수 없습니다.");
+                    }
                 } else {
-                    likeImg.src = "/images/icon_like.png";
+                    console.error("좋아요 버튼을 찾을 수 없습니다.");
+                    console.log(result);
                 }
+                //================
+
+                // var likeImg = likeBtn.querySelector("img");
+
+                // var isActive = likeBtn.classList.toggle("active");
+                // likeImg.src = isActive ? "/images/icon_like_active.png" : "/images/icon_like.png";
+
+
+
+                // if (result === "Liked") {
+                //     likeImg.src = "/images/icon_like_active.png";
+                //     likeBtn.classList.add("active");
+                // } else if (result === "Unliked") {
+                //     likeImg.src = "/images/icon_like.png";
+                //     likeBtn.classList.remove("active");
+                // } else {
+                //     throw new Error('올바르지 않은 서버 응답입니다.');
+                // }
             })
             .catch((err) => {
                 console.log(err);
@@ -158,7 +183,8 @@
                                         likeBtn active
                                     {{else}}
                                         likeBtn
-                                    {{/if}}">
+                                    {{/if}}"
+                            onclick="handleLike('{{postCode}}')">
                         <img src="/images/icon_like.png" alt="좋아요 버튼 아이콘">
                         <span>{{likeCount}}</span>
                     </button>

@@ -101,27 +101,30 @@ public class PostService {
     }
 
     /* 해당 글에 좋아요를 눌렀는지 확인 */
-    public String hasLiked(int postCode, int memberCode) {
-        boolean isLiked = likeMapper.getHasLiked(postCode, memberCode);
-        return isLiked ? "Liked" : "Unliked";
-
+    public boolean getHasLiked(int postCode, int memberCode) {
 //        LikeListDTO likeList =
 //                likeMapper.getHasLiked(postCode, memberCode);
 //
 //        return likeList != null;
+
+        return likeMapper.getHasLiked(postCode, memberCode);
     }
 
-    public boolean toggleLike(LikeListDTO likeListDTO) {
-        boolean isLiked = likeMapper.hasLiked(likeListDTO.getPostCode(), likeListDTO.getMemberCode());
-        if (isLiked) {
-            likeMapper.cancelLike(likeListDTO.getPostCode(), likeListDTO.getMemberCode());
-//            return false;
-        } else {
-            likeMapper.addLike(likeListDTO);
-//            return true;
+    public boolean toggleLike(int postCode, int memberCode) {
+        try {
+            boolean isLiked = likeMapper.getHasLiked(postCode, memberCode);
+            if (isLiked) {
+                likeMapper.cancelLike(postCode, memberCode);
+            } else {
+                LikeListDTO likeListDTO = new LikeListDTO(postCode, memberCode, false);
+                likeMapper.addLike(likeListDTO);
+            }
+            return !isLiked;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
 
-        return !isLiked;
     }
 
     @Transactional

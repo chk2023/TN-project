@@ -11,11 +11,11 @@ public interface LikeMapper {
 
     int addLike(LikeListDTO likeListDTO);
     void cancelLike(@Param("postCode") int postCode, @Param("memberCode") int memberCode);
-    boolean hasLiked(@Param("postCode") int postCode, @Param("memberCode") int memberCode);
 
     List<LikeListDTO> getLikeListByPostCode(@Param("postCode") int postCode);
 
     List<LikeListDTO> getPrivateLikesByPostCode(@Param("postCode") int postCode);
+
 
     boolean getHasLiked(int postCode, int memberCode);
 }

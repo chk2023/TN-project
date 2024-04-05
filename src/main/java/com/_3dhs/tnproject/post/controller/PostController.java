@@ -38,7 +38,7 @@ public class PostController {
     private final LikeService likeService;
 
     @GetMapping("/main")
-    public void blogMainPage(@ModelAttribute TabSearchDTO tabSearchDTO, Model model) {
+    public void blogMainPage(@ModelAttribute TabSearchDTO tabSearchDTO, Authentication authentication, Model model) {
         List<FolderDTO> folderList = postService.findFolderList(tabSearchDTO.getMemberCode());
         MemberDTO memberDTO = memberService.findMainBlogMemberInfo(tabSearchDTO.getMemberCode());
         PostDTO postViewLikeCount =  postService.findPostLikeCount(tabSearchDTO.getMemberCode());
@@ -49,6 +49,9 @@ public class PostController {
         model.addAttribute("member", memberDTO);
         model.addAttribute("postView", postViewLikeCount);
 //        model.addAttribute("postList", postList);
+
+        MemberDTO member = (MemberDTO) authentication.getPrincipal();
+        model.addAttribute("loginMemberCode", member.getMemberCode());
     }
     @Transactional
     @GetMapping("/folder_edit")
@@ -122,39 +125,42 @@ public class PostController {
         model.addAttribute("likeList", likeList);
     }
 
-    @GetMapping("/list")
-    public String blogListPage(Model model, Authentication authentication) {
-
-        if (authentication != null && authentication.isAuthenticated()) {
-            MemberDTO member = (MemberDTO) authentication.getPrincipal();
-            List<PostDTO> postList = postService.findLikeListPostByMemberCode(member.getMemberCode());
-
-            // 각 게시물의 좋아요 상태를 가져와서 Model에 추가
-            for (PostDTO post : postList) {
-                boolean hasLiked = postService.hasLiked(post.getPostCode(), member.getMemberCode());
+//    @GetMapping("/list")
+//    public String blogListPage(Model model, Authentication authentication) {
+//
+//        if (authentication != null && authentication.isAuthenticated()) {
+//            MemberDTO member = (MemberDTO) authentication.getPrincipal();
+//            List<PostDTO> postList = postService.findLikeListPostByMemberCode(member.getMemberCode());
+//
+//            // 각 게시물의 좋아요 상태를 가져와서 Model에 추가
+//            for (PostDTO post : postList) {
+//                boolean hasLiked = postService.getHasLiked(post.getPostCode(), member.getMemberCode());
+////                model.addAttribute("hasLiked" + post.getPostCode(), hasLiked);
+//                post.setLike(member.getMemberCode());
 //                model.addAttribute("hasLiked" + post.getPostCode(), hasLiked);
-                post.setLike(member.getMemberCode());
-                model.addAttribute("hasLiked" + post.getPostCode(), hasLiked);
-            }
-
-            model.addAttribute("postList", postList);
-        }
-
-        return "/post/list";
-
-
-    }
+//            }
+//
+//            model.addAttribute("postList", postList);
+//        }
+//
+//        return "/post/list";
+//
+//
+//    }
 
     @PostMapping("/like")
-    public ResponseEntity<String> likePost(@RequestBody LikeListDTO likeListDTO) {
-//        boolean isLiked = postService.hasLiked(likeListDTO.getPostCode(), likeListDTO.getMemberCode());
-//        if (isLiked) {
-//            return new ResponseEntity<>("Liked", HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<>("Unliked", HttpStatus.OK);
-//        }
-        boolean isLiked = likeMapper.getHasLiked(likeListDTO.getPostCode(), likeListDTO.getMemberCode());
-        return ResponseEntity.ok(isLiked);
+    @ResponseBody
+    public ResponseEntity<String> likePost(@RequestBody LikeListDTO likeListDTO, Authentication authentication, Model model) {
+        MemberDTO member = (MemberDTO) authentication.getPrincipal();
+        model.addAttribute("loginMemberCode", member.getMemberCode());
+        try {
+            boolean isLiked = postService.toggleLike(likeListDTO.getPostCode(), likeListDTO.getMemberCode());
+            String result = isLiked ? "true" : "false";
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("error");
+        }
     }
 
     @GetMapping("/load")
