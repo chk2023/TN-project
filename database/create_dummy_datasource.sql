@@ -212,4 +212,4 @@ values
     (1, '불편하네요.', NOW(), 'WAITING', NOW(), null, 4, 2, 8, 'BLOG', 7, null),
     (1, '이런 헛소리를 허용가능한 부분?!', NOW(), 'IN_PROGRESS', NOW(), null, 4, 1, 6, 'COMMENT', 8, null),
     (1, '여기 정치 커뮤니티인가염..?', NOW(), 'WAITING', NOW(), null, 4, 3,4 , 'COMMENT', 9, null),
-    (1, '친목질 안하려고 여기 왔는데 도대체..', NOW(), 'IN_PROGRESS', NOW(), null, 6, 2,7 , 'BLOG', 9, null) ;
+    (1, '친목질 안하려고 여기 왔는데 도대체..', NOW(), 'IN_PROGRESS', NOW(), null, 6, 2,7 , 'BLOG', 9, null);
