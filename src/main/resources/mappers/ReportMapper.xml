@@ -5,19 +5,19 @@
 
 <mapper namespace="com._3dhs.tnproject.manager.dao.ReportMapper">
 
-    <select id="viewAllReport" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">
-        SELECT r.report_code,
-               c.r_category_name,
-               r.report_text,
-               r.target_code,
-               m.member_code,
-               m.member_id,
-               r.report_date
+<!--    <select id="viewAllReport" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">-->
+<!--        SELECT r.report_code,-->
+<!--               c.r_category_name,-->
+<!--               r.report_text,-->
+<!--               r.target_code,-->
+<!--               m.member_code,-->
+<!--               m.member_id,-->
+<!--               r.report_date-->
 
-        FROM tbl_report r
-                 JOIN tbl_member m ON r.target_code = m.member_code
-                 JOIN tbl_r_category c ON c.r_category_code = r.r_category_code
-    </select>
+<!--        FROM tbl_report r-->
+<!--                 JOIN tbl_member m ON r.target_code = m.member_code-->
+<!--                 JOIN tbl_r_category c ON c.r_category_code = r.r_category_code-->
+<!--    </select>-->
 
 
 
@@ -114,27 +114,27 @@
         WHERE member_code = #{ memberCode }
     </select>
 
-<!--    <select id="selectTotalCount" resultType="_int" parameterType = "hashMap">-->
-<!--        SELECT-->
-<!--            COUNT(*)-->
-<!--        FROM tbl_report r-->
-<!--        <if test="searchCondition == 'memberId'" >-->
-<!--            JOIN-->
-<!--                    tbl_member m ON(r.target_code = m.member_code)-->
-<!--        </if>  타깃코드랑 멤버코드랑 일치하면 아이디가 보이게 해야하는데에에에에에에에에에에-->
-<!--            <if test = "searchCondition == 'RCategoryName'">-->
-<!--                JOIN-->
-<!--                tbl_r_category c ON (c.r_category_code = r.r_category_code)-->
-<!--            </if>-->
-<!--        <where>-->
-<!--            <if test = "searchCondition == 'memberId'">-->
-<!--                b.member_id = #{ searchValue }-->
-<!--            </if>-->
-<!--            <if test = "searchCondition == 'RCategoryName'">-->
-<!--                c.r_category_code = #{ searchValue }-->
-<!--                a.board_title LIKE CONCAT('%', #{ searchValue }, '%')-->
-<!--            </if>-->
-<!--        </where>-->
+    <select id="selectTotalCount" resultType="_int" parameterType = "hashMap">
+        SELECT
+            COUNT(*)
+        FROM
+            tbl_report r
+    </select>
 
-<!--    </select>-->
+    <select id="selectReportList" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">
+        SELECT r.report_code,
+               c.r_category_name,
+               r.report_text,
+               r.target_code,
+               m.member_code,
+               m.member_id,
+               r.report_date
+
+        FROM tbl_report r
+             JOIN tbl_member m ON r.target_code = m.member_code
+             JOIN tbl_r_category c ON c.r_category_code = r.r_category_code
+        ORDER BY
+             r.report_code DESC
+        LIMIT #{offset}, #{limit}
+    </select>
 </mapper>

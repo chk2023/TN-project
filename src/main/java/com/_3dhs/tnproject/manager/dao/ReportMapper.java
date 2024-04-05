@@ -28,5 +28,5 @@ public interface ReportMapper {
 
     int selectTotalCount(Map<String, String> searchMap);
 
-    List<ReportDTO> selectBoardList(SelectCriteria selectCriteria);
+    List<ReportDTO> selectReportList(SelectCriteria selectCriteria);
 }

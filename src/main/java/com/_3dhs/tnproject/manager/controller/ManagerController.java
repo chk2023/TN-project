@@ -1,12 +1,15 @@
 package com._3dhs.tnproject.manager.controller;
 
+import com._3dhs.tnproject.common.paging.Pagenation;
 import com._3dhs.tnproject.manager.dto.ReportDTO;
 import com._3dhs.tnproject.manager.service.ReportService;
 import com._3dhs.tnproject.member.dto.MemberDTO;
 import com._3dhs.tnproject.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.context.support.MessageSourceAccessor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
@@ -17,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 
-@Controller
+@Controller @Slf4j
 @RequiredArgsConstructor
 public class ManagerController {
 
@@ -26,17 +29,17 @@ public class ManagerController {
     private final MessageSourceAccessor messageSourceAccessor;
 
 
-    @GetMapping("/manager/report/list")
-    public String viewAllReportList(Model model) {
-
-        List<ReportDTO> reportList = reportService.viewAllReport();
-        System.out.println(reportList.size());
-        model.addAttribute("reportList", reportList);
-
-        return "manager/report/list";
-
-
-    }
+//    @GetMapping("/manager/report/list")
+//    public String viewAllReportList(Model model) {
+//
+//        List<ReportDTO> reportList = reportService.viewAllReport();
+//        System.out.println(reportList.size());
+//        model.addAttribute("reportList", reportList);
+//
+//        return "manager/report/list";
+//
+//
+//    }
 
 
     @GetMapping("/manager/report/detail")
@@ -107,26 +110,35 @@ public class ManagerController {
     }
 
 
-    @GetMapping("/list")
-    public String getBoardList(@RequestParam(defaultValue = "1") int page,
+    @GetMapping("/manager/report/list")
+    public String getReportList(@RequestParam(defaultValue = "1") int page,
                                @RequestParam(required = false) String searchCondition,
                                @RequestParam(required = false) String searchValue,
-                               Model model)
-                                {
-     log.info("boardList page : { }", page);
-     log.info("boardList searchCondition : { }", searchCondition);
-     log.info("boardList searchValue : { }", searchValue) ;
+                               Model model) {
+
+//     log.info("boardList page : { }", page);
+//     log.info("boardList searchCondition : { }", searchCondition);
+//     log.info("boardList searchValue : { }", searchValue) ;
 
      Map<String, String> searchMap = new HashMap<>();
      searchMap.put("searchCondition", searchCondition);
      searchMap.put("searchValue", searchValue);
 
-     Map<String, Object> boardListAndPaging = reportService.selectBoardList(searchMap, page);
+     Map<String, Object> boardListAndPaging = reportService.selectReportList(searchMap, page);
      model.addAttribute("paging", boardListAndPaging.get("paging"));
-     model.addAttribute("boardList", boardListAndPaging.get("boardList"));
+     model.addAttribute("reportList", boardListAndPaging.get("reportList"));
 
-     return "/manager/**/list";
+     return "/manager/report/list";
     }
+
+//    @PostMapping("/report/list")
+//    public ResponseEntity<String> checkDuplication (@RequestBody ReportDTO report) {
+//        log.info("Request Check Id : { } ", report.getReportCode());
+//        String result = ""
+    // 자바단에서 만들어야 알럿을 이걸로 만들 수 있지 않을까..? 생각해보기
+//    }
+
+
 //    @Test //신고내역 가짜 데이터 생성
 //    public void testJpa() {
 //        for(int i=1; i<150; i++) {

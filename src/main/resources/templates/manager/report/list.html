@@ -36,13 +36,13 @@
                 </tr>
 
 
-                <tr th:each=" memberDTO: ${ reportList }"
-                    th:onclick="|location.href='/manager/report/detail?reportCode=${memberDTO.reportCode}'|">
-                    <td th:text="${ memberDTO.reportCode }"></td>
-                    <td th:text="${ memberDTO.RCategoryName }"></td>
-                    <td th:text="${ memberDTO.reportText }"></td>
-                    <td th:text="${ memberDTO.memberId }"></td>
-                    <td th:text="${ memberDTO.formattingReportDate }"></td>
+                <tr th:each=" reportDTO: ${ reportList }"
+                    th:onclick="|location.href='/manager/report/detail?reportCode=${reportDTO.reportCode}'|">
+                    <td th:text="${ reportDTO.reportCode }"></td>
+                    <td th:text="${ reportDTO.RCategoryName }"></td>
+                    <td th:text="${ reportDTO.reportText }"></td>
+                    <td th:text="${ reportDTO.memberId }"></td>
+                    <td th:text="${ reportDTO.formattingReportDate }"></td>
                 </tr>
 
 
