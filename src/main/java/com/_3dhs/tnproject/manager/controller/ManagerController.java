@@ -44,6 +44,10 @@ public class ManagerController {
         model.addAttribute("paging", boardListAndPaging.get("paging"));
         model.addAttribute("reportList", boardListAndPaging.get("reportList"));
 
+
+
+
+
         return "/manager/report/list";
     }
 

@@ -17,6 +17,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ReportService {
     private final ReportMapper reportMapper;
+    private final MemberDTO memberDTO;
 
     public Map<String, Object> selectReportList(Map<String, String> searchMap, int page) {
 
@@ -38,6 +39,9 @@ public class ReportService {
         Map<String, Object> boardListAndPaging = new HashMap<>();
         boardListAndPaging.put("paging", selectCriteria);
         boardListAndPaging.put("reportList", reportList);
+
+
+
 
         return boardListAndPaging;
 
