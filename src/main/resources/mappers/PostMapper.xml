@@ -80,9 +80,12 @@
         </if>
         LIMIT #{index}, #{range}
     </select>
+
+
+
     <select id="findAttListByPostCode">
         SELECT
-            *
+        *
         FROM tbl_attachment
         WHERE post_code = #{postCode}
     </select>
@@ -150,6 +153,19 @@
             #{postCode}
         </foreach>
     </select>
+
+    <select id="findLikeListByPostCode" parameterType="int" resultMap="likeListMap">
+        SELECT
+            post_code,
+            l_member_code,
+            is_private
+        FROM
+            tbl_like_list
+        WHERE post_code = #{postCode}
+    </select>
+
+
+
 
 
     <select id="getPostByPostCode" resultType="com._3dhs.tnproject.post.dto.PostDTO">
@@ -254,4 +270,23 @@
         LIMIT #{index}, #{range}
     </select>
 
+    <select id="getLikeListByPostCode" resultType="com._3dhs.tnproject.post.dto.LikeListDTO">
+        SELECT
+        *
+        FROM
+        tbl_like_list
+        WHERE
+        post_code = #{postCode}
+    </select>
+
+    <select id="getPrivateLikesByPostCode" resultType="com._3dhs.tnproject.post.dto.LikeListDTO">
+        SELECT
+        *
+        FROM
+        tbl_like_list
+        WHERE
+        post_code = #{postCode}
+        AND
+        is_private = false
+    </select>
 </mapper>

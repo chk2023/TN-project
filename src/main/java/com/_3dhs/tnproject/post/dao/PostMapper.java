@@ -4,6 +4,7 @@ package com._3dhs.tnproject.post.dao;
 import com._3dhs.tnproject.member.dto.ProfileDTO;
 import com._3dhs.tnproject.post.dto.*;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -11,7 +12,10 @@ import java.util.Set;
 
 @Mapper
 public interface PostMapper {
-    List<PostDTO> findListByParam(Map<String ,Integer> params); //TODO params 값 String으로 가독성 좋게 리펙터링 할것
+
+    List<PostDTO> findListByParam(Map<String ,Integer> params);
+
+    List<LikeListDTO> findLikeListByCode(int postCode);
 
     List<AttachmentDTO> findAttListByPostCode(int postCode);
 
