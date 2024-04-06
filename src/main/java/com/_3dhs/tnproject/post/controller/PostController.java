@@ -5,21 +5,34 @@ import com._3dhs.tnproject.member.service.MemberService;
 import com._3dhs.tnproject.post.dto.FolderDTO;
 import com._3dhs.tnproject.post.dto.PostDTO;
 import com._3dhs.tnproject.post.dto.TabSearchDTO;
-import com._3dhs.tnproject.post.service.LikeService;
 import com._3dhs.tnproject.post.model.PostState;
+import com._3dhs.tnproject.post.service.LikeService;
 import com._3dhs.tnproject.post.service.PostService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.MessageSourceAccessor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Controller
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/post")
 public class PostController {
@@ -33,7 +46,7 @@ public class PostController {
     public void blogMainPage(@ModelAttribute TabSearchDTO tabSearchDTO, Model model) {
         List<FolderDTO> folderList = postService.findFolderList(tabSearchDTO.getMemberCode());
         MemberDTO memberDTO = memberService.findMainBlogMemberInfo(tabSearchDTO.getMemberCode());
-        PostDTO postViewLikeCount =  postService.findPostLikeCount(tabSearchDTO.getMemberCode());
+        PostDTO postViewLikeCount = postService.findPostLikeCount(tabSearchDTO.getMemberCode());
 //        List<PostDTO> postList =  postService.findPostList(tabSearchDTO); //TODO 수정필
         memberDTO.setMemberCode(tabSearchDTO.getMemberCode());
 
@@ -42,6 +55,7 @@ public class PostController {
         model.addAttribute("postView", postViewLikeCount);
 //        model.addAttribute("postList", postList);
     }
+
     @Transactional
     @GetMapping("/folder_edit")
     public void folderEditPage(@AuthenticationPrincipal MemberDTO memberDTO, Model model) {
@@ -69,6 +83,7 @@ public class PostController {
         }
         model.addAttribute("folderList", folderList);
     }
+
     @GetMapping("/write")
     public void blogWritePage(@AuthenticationPrincipal MemberDTO memberDTO, Model model) {
         List<FolderDTO> folderList = postService.findFolderList(memberDTO.getMemberCode());
@@ -79,7 +94,9 @@ public class PostController {
     }
 
     @GetMapping("/temporary_storage/list")
-    public void temporaryStorageListPage() {}
+    public void temporaryStorageListPage() {
+    }
+
     @GetMapping("/list")
     public void blogListPage(@ModelAttribute TabSearchDTO tabSearchDTO, Model model) {
         List<FolderDTO> folderList = postService.findFolderList(tabSearchDTO.getMemberCode());
@@ -93,6 +110,7 @@ public class PostController {
         model.addAttribute("postView", postViewLikeCount);
         model.addAttribute("postList", postList);
     }
+
     @GetMapping("/detail")
     public String blogDetailPage(@AuthenticationPrincipal MemberDTO memberDTO, Integer postCode, Model model) {
         //1. 해당하는 코드의 post정보를 불러오기
@@ -115,19 +133,22 @@ public class PostController {
         model.addAttribute("postDetail", targetPost);
         return "/post/detail";
     }
+
     @GetMapping("/likelist")
     public void blogLikeListPage(int memberCode, Model model) {
         List<PostDTO> likeList = postService.findLikeListPostByMemberCode(memberCode);
         model.addAttribute("likeList", likeList);
     }
+
     @GetMapping("/load")
     public @ResponseBody List<PostDTO> findTabMenuPostList(@ModelAttribute TabSearchDTO tabSearchDTO, @AuthenticationPrincipal MemberDTO member) {
-        List<PostDTO> postList =  postService.findPostList(tabSearchDTO);
+        List<PostDTO> postList = postService.findPostList(tabSearchDTO);
         postList.forEach(dto -> {
-            dto.setLiked(likeService.getHasLiked(dto.getPostCode(),member.getMemberCode()));
+            dto.setLiked(likeService.getHasLiked(dto.getPostCode(), member.getMemberCode()));
         });
         return postList;
     }
+
     @PostMapping("/folder_edit")
     public @ResponseBody String folderEditList(@AuthenticationPrincipal MemberDTO memberDTO, @RequestBody List<FolderDTO> requestBody) {
         for (FolderDTO folderDTO : requestBody) {
@@ -137,5 +158,98 @@ public class PostController {
 
         //return "redirect:/post/main?memberCode="+memberDTO.getMemberCode()+"";
         return "redirect:memberCode=" + memberDTO.getMemberCode() + "";
+    }
+
+    @PostMapping("/upload")
+    public ResponseEntity<String> uploadImagePOST(@RequestParam("uploadFile") MultipartFile[] uploadFile) {
+        String savePath;
+
+        // OS 따라 구분자 분리
+        String os = System.getProperty("os.name").toLowerCase();
+        savePath = os.contains("win") ? System.getProperty("user.dir") + "\\files\\image" : System.getProperty("user.dir") + "/files/image";
+
+        java.io.File uploadPath = new java.io.File(savePath);
+        if (!uploadPath.exists()) {
+            uploadPath.mkdirs();
+        }
+
+        try {
+            for (MultipartFile multipartFile : uploadFile) {
+                String uploadFileName = multipartFile.getOriginalFilename();
+                String uuid = UUID.randomUUID().toString();
+                uploadFileName = uuid + "_" + uploadFileName;
+
+                java.io.File saveFile = new java.io.File(uploadPath, uploadFileName);
+                multipartFile.transferTo(saveFile);
+                return ResponseEntity.ok(saveFile.getAbsolutePath());
+            }
+        } catch (Exception e) {
+            log.error("File upload failed", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("File upload failed");
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No files uploaded");
+    }
+
+    /**
+     * 에디터 내 사진 파일 첨부
+     *
+     * @param fileName
+     * @return
+     */
+    @GetMapping("/display")
+    public ResponseEntity<byte[]> displayImageGET(@RequestParam("fileName") String fileName) {
+        String os = System.getProperty("os.name").toLowerCase();
+        String savePath = os.contains("win") ? System.getProperty("user.dir") + "\\files\\image\\" : System.getProperty("user.dir") + "/files/image/";
+
+        java.io.File file = new java.io.File(savePath + fileName);
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-type", Files.probeContentType(file.toPath()));
+            return new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), headers, HttpStatus.OK);
+        } catch (NoSuchFileException e) {
+            log.error("No Such FileException {}", e.getFile());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (IOException e) {
+            log.error("Error reading file", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @RequestMapping(value = "/uploadBase64", method = RequestMethod.POST)
+    public ResponseEntity<String> handleBase64Upload(@RequestBody String base64Image) {
+        try {
+            int maxLength = 20;
+            String filename = truncateAndAppendTimestamp(base64Image, maxLength) + ".png";
+            String savePath;
+            String filePath;
+
+            String os = System.getProperty("os.name").toLowerCase();
+            savePath = os.contains("win") ? System.getProperty("user.dir") + "\\files\\image" : System.getProperty("user.dir") + "/files/image";
+            filePath = savePath + (os.contains("win") ? "\\" : "/") + filename;
+
+            File uploadPath = new File(savePath);
+            if (!uploadPath.exists()) {
+                uploadPath.mkdirs();
+            }
+
+            File file = new File(filePath);
+            Base64.Decoder decoder = Base64.getMimeDecoder();
+            byte[] decodedBytes = decoder.decode(base64Image.getBytes());
+            try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
+                fileOutputStream.write(decodedBytes);
+            }
+
+            return ResponseEntity.ok(filename);
+        } catch (IOException e) {
+            log.error("File upload failed", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("File upload failed.");
+        }
+    }
+
+    public static String truncateAndAppendTimestamp(String base64Image, int maxLength) {
+        String specialCharactersRegex = "[^a-zA-Z0-9]";
+        String truncatedBase64Image = base64Image.length() > maxLength ? base64Image.substring(base64Image.length() - maxLength) : base64Image;
+        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")).replaceAll(specialCharactersRegex, "");
+        return new StringJoiner("_").add(truncatedBase64Image.replaceAll(specialCharactersRegex, "")).add(timestamp).toString();
     }
 }

@@ -67,3 +67,111 @@ function getUserInput() {
 
 // 예를 들어, 내용을 가져오는 버튼을 클릭할 때 getUserInput 함수를 호출
 document.querySelector('#작성완료버튼').addEventListener('click', getUserInput);
+
+
+quill.getModule('toolbar').addHandler('image', function () {
+    selectLocalImage();
+})
+
+function selectLocalImage() {
+    const fileInput = document.createElement('input');
+    fileInput.setAttribute('type', 'file');
+    fileInput.accept = "image/*";
+    fileInput.click();
+
+    fileInput.addEventListener("change", function () {
+        if (this.files.length > 0) {  // 파일이 선택되었는지 확인
+            const file = this.files[0];
+            const ext = file.name.split(".").pop().toLowerCase();
+
+            // 지원되는 확장자 목록
+            if (!["gif", "jpg", "jpeg", "png", "bmp"].includes(ext)) {
+                alert("jpg, jpeg, png, bmp, gif 파일만 업로드 가능합니다.");
+                return;
+            }
+
+            // 파일 크기 확인
+            const maxSize = 20 * 1024 * 1024; // 20MB
+            if (file.size > maxSize) {
+                alert("업로드 가능한 최대 이미지 용량은 20MB입니다.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('uploadFile', file);
+
+            fetch('/post/upload', {
+                method: 'POST',
+                body: formData
+                // Fetch API를 사용할 때는 processData와 contentType을 설정하지 않아도 됩니다.
+                // FormData 객체를 사용하면 fetch 자체가 적절한 headers를 설정합니다.
+            })
+                .then(response => response.text())  // 서버 응답을 텍스트로 변환
+                .then(data => {
+                    // 성공적으로 파일을 업로드하고 URL을 받았다면, 에디터에 이미지 삽입
+                    const range = quill.getSelection(true);
+                    quill.insertEmbed(range.index, 'image', "/file/display?fileName=" + data);
+                })
+                .catch(error => {
+                    console.error('ERROR!! ::', error);
+                });
+        }
+    });
+}
+
+const imgTags = document.querySelectorAll('img');
+
+const fetchPromises = [];
+
+imgTags.forEach(img => {
+    const currentSrc = img.getAttribute('src');
+
+    // 이미지가 base64로 인코딩된 데이터인지 확인
+    if (currentSrc.startsWith('data:image')) {
+        const splitDataURI = currentSrc.split(',');
+
+        if (splitDataURI[0].includes('base64')) {
+            const base64Data = splitDataURI[1];
+            const formData = new FormData();
+            formData.append('base64Image', base64Data);
+
+            const fetchPromise = fetch('/file/uploadBase64', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.text())
+                .then(data => {
+                    img.setAttribute('src', `/file/display?fileName=${data}`);
+                })
+                .catch(err => {
+                    console.error('ERROR!! ::', err);
+                });
+
+            fetchPromises.push(fetchPromise);
+        }
+    }
+});
+
+Promise.all(fetchPromises).then(() => {
+    // 여기서 폼 제출 로직을 넣거나, 다른 검증을 수행합니다.
+    console.log("모든 이미지가 서버에 저장되었습니다.");
+    // 폼 제출 등의 로직을 실행
+}).catch(error => {
+    console.error("이미지 저장 중 에러 발생:", error);
+    // 에러 처리 로직
+});
+
+document.getElementById('submit-form').addEventListener('submit', function (event) {
+    event.preventDefault(); // 폼의 기본 제출을 막습니다.
+
+    // 위에서 정의한 이미지 처리 로직을 여기에 포함
+    Promise.all(fetchPromises).then(() => {
+        // 이미지 처리가 성공적으로 완료되면, 폼을 제출
+        this.submit();
+    }).catch(error => {
+        console.error("이미지 저장 실패:", error);
+        // 에러가 발생했을 때의 처리 로직
+    });
+});
+
+
