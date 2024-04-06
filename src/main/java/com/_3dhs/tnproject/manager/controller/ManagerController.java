@@ -27,6 +27,7 @@ public class ManagerController {
     private final ReportService reportService;
     private final MemberService memberService;
     private final MessageSourceAccessor messageSourceAccessor;
+    private final ReportDTO reportDTO;
 
 
 

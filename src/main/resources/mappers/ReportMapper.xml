@@ -15,11 +15,13 @@
     <select id="selectReportList" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">
         SELECT r.report_code,
                c.r_category_name,
-               r.report_text,
+              left (r.report_text,10) ,
                r.target_code,
                m.member_code,
                m.member_id,
                r.report_content
+
+
 
         FROM tbl_report r
                  JOIN tbl_member m ON r.target_code = m.member_code
@@ -70,6 +72,9 @@
             report_date,
             processing_text,
             processing_date
+
+
+
         FROM
             tbl_report
 
