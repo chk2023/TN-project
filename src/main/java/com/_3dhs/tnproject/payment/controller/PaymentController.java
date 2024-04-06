@@ -3,7 +3,7 @@ package com._3dhs.tnproject.payment.controller;
 import com._3dhs.tnproject.member.dto.MemberDTO;
 import com._3dhs.tnproject.member.service.AuthService;
 import com._3dhs.tnproject.member.service.MemberService;
-import com._3dhs.tnproject.payment.dto.TissueDTO;
+import com._3dhs.tnproject.payment.dto.PaymentDTO;
 import com._3dhs.tnproject.payment.service.PaymentService;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
@@ -22,10 +22,6 @@ import java.time.LocalDateTime;
 public class PaymentController {
 
     private final IamportClient iamportClient;
-
-    @Autowired
-    private AuthService authService;
-
     private final PaymentService paymentService;
     private final MemberService memberService;
 
@@ -71,7 +67,7 @@ public class PaymentController {
 
 
         //티슈 정보 추가
-        TissueDTO tissueDTO = new TissueDTO(
+        PaymentDTO paymentDTO = new PaymentDTO(
                 imp_uid,
                 merchant_uid,
                 "BUY",
@@ -79,7 +75,7 @@ public class PaymentController {
                 tissuePrice,
                 currentMember.getMemberCode()
         );
-        paymentService.savePaymentList(tissueDTO);
+        paymentService.savePaymentList(paymentDTO);
 
         //사용자 티슈 수 업데이트
         int ntissuePrice = currentMember.getHaveTissue() + tissuePrice;
@@ -89,8 +85,13 @@ public class PaymentController {
     }
 
     @GetMapping("/payment/payment_success")
-    public void gotoPaymentSuccessPage() {
+    public String getPaymentSuccessPage(Model model, Authentication authentication) {
+        MemberDTO member = (MemberDTO) authentication.getPrincipal();
 
+        model.addAttribute("loginUserId", member.getMemberId());
+        model.addAttribute("member", member);
+
+        return "/payment/payment_success";
     }
 
     @GetMapping("/payment/management")

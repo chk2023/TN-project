@@ -4,14 +4,30 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com._3dhs.tnproject.post.dao.LikeMapper">
-<resultMap id="likeListMap" type="com._3dhs.tnproject.post.dto.LikeListDTO">
-    <id property="memberCode" column="l_member_code"/>
-    <result property="postCode" column="post_code"/>
-    <result property="isPrivate" column="is_private"/>
-</resultMap>
+
+    <resultMap id="likeListMap" type="com._3dhs.tnproject.post.dto.LikeListDTO">
+        <id property="postCode" column="post_code"/>
+        <result property="memberCode" column="l_member_code"/>
+        <result property="isPrivate" column="is_private"/>
+    </resultMap>
+
+    <insert id="addLike" parameterType="com._3dhs.tnproject.post.dto.LikeListDTO">
+        INSERT INTO
+        tbl_like_list (post_code, l_member_code, is_private)
+        VALUES
+        (#{postCode}, #{memberCode}, #{isPrivate})
+    </insert>
+
+    <delete id="cancelLike">
+        DELETE FROM
+          tbl_like_list
+        WHERE
+            post_code = #{postCode}
+        AND
+            l_member_code = #{memberCode}
+    </delete>
+
     <select id="getHasLiked" resultType="boolean">
-        <!--        SELECT-->
-        <!--        COUNT(*) > 0-->
         SELECT EXISTS (
         SELECT 1
         FROM
@@ -22,9 +38,8 @@
         l_member_code = #{memberCode}
         )
     </select>
-    <select id="getAllList" resultMap="likeListMap">
-        SELECT *
-        FROM tbl_like_list
-        order by l_member_code
-    </select>
+
+
+
+
 </mapper>

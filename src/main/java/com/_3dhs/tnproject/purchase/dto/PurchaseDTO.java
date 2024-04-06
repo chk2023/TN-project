@@ -1,4 +1,4 @@
-package com._3dhs.tnproject.payment.dto;
+package com._3dhs.tnproject.purchase.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-public class TissueDTO {
+public class PurchaseDTO {
 
     private int tissueCode;
     private String impUid;
@@ -20,12 +20,11 @@ public class TissueDTO {
     private int tMemberCode;
     private Integer postCode;
 
-    public TissueDTO(String impUid, String merchantUid, String orderClass, LocalDateTime orderDate, int tissuePrice, int tMemberCode) {
-        this.impUid = impUid;
-        this.merchantUid = merchantUid;
+    public PurchaseDTO(String orderClass, LocalDateTime orderDate, int tissuePrice, int tMemberCode, Integer postCode) {
         this.orderClass = orderClass;
         this.orderDate = orderDate;
         this.tissuePrice = tissuePrice;
         this.tMemberCode = tMemberCode;
+        this.postCode = postCode;
     }
 }
