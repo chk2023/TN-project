@@ -1,6 +1,6 @@
 package com._3dhs.tnproject.payment.service;
 
-import com._3dhs.tnproject.payment.dto.TissueDTO;
+import com._3dhs.tnproject.payment.dto.PaymentDTO;
 import com._3dhs.tnproject.payment.dao.PaymentMapper;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +14,10 @@ public class PaymentService {
     }
 
 
-    public void savePaymentList(TissueDTO tissueDTO) {
+    public void savePaymentList(PaymentDTO paymentDTO) {
 
-        paymentMapper.insertPayment(tissueDTO);
+        paymentMapper.insertPayment(paymentDTO);
     }
+
 
 }
