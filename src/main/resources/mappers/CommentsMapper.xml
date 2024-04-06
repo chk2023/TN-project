@@ -11,4 +11,12 @@
             tbl_comments
         WHERE post_code = #{postCode}
     </select>
+
+    <select id="selectCommentsList" resultType="com._3dhs.tnproject.comments.dto.CommentsDTO">
+        SELECT
+            *
+        FROM
+            tbl_comments
+        WHERE post_code = #{postCode}
+    </select>
 </mapper>
