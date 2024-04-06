@@ -128,4 +128,7 @@ public class PostService {
         return postMapper.findPostList( tabSearchDTO);
     }
 
+    public List<AttachmentDTO> findAttListByPostCode(int postCode) {
+        return postMapper.findAttListByPostCode(postCode);
+    }
 }
