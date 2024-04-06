@@ -39,7 +39,11 @@
         )
     </select>
 
-
+    <select id="getAllList" resultMap="likeListMap">
+        SELECT *
+        FROM tbl_like_list
+        order by l_member_code
+    </select>
 
 
 </mapper>
