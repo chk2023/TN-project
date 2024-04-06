@@ -27,4 +27,6 @@ public interface MemberMapper {
     int insertProfile(String memberId);
 
     MemberDTO findMainBlogMemberInfo(int memberCode);
+
+    int updateProfile(MemberDTO member);
 }

@@ -2,6 +2,7 @@ package com._3dhs.tnproject.post.dto;
 
 import com._3dhs.tnproject.member.dto.ProfileDTO;
 import com._3dhs.tnproject.post.model.PostState;
+import com._3dhs.tnproject.post.service.PostService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -32,10 +33,11 @@ public class PostDTO {
     private List<TagDTO> tagList;
     private List<AttachmentDTO> attachmentList;
     private boolean isLiked;
+
     //가공하는 자료
     private String thumbnailPath;
+    private PostService postService;
     private int postCount;
-
 
     public String getAttachmentPath(int index) {
         String path = "";
@@ -48,7 +50,5 @@ public class PostDTO {
     public void makeThumbnailPath() {
        thumbnailPath =  getAttachmentPath(0);
     }
-
-
 
 }

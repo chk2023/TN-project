@@ -33,10 +33,38 @@ function update() {
             $blogList.appendChild(fragment);
 
             index = index + range;
+
+            // 화면 랜더링된 이후 like() 동작해야 함
+            like();
         }).catch(error => console.error('Error fetching profile data:', error))
         .finally(function () {
             isLoading = false
         });
+
+
+}
+
+
+//------------------------------------------------------------------------------------format관련코드
+function setTitlePhoto(path) {
+    $img = document.querySelector(".mainProfile img");
+    $img.src = path;
+}
+
+function formatWriDate(postWriDate) {
+    let time = new Date(postWriDate);
+    return time.toLocaleDateString("ko-KR", {
+        month: 'long',
+        day: 'numeric',
+    });
+}
+
+function formatCount(count) {
+    if (count > 1000) {
+        return count = (count / 1000).toFixed(1) + 'k';
+    } else {
+        return count.toString();
+    }
 }
 
 

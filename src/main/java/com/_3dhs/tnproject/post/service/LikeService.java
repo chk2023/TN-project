@@ -3,6 +3,7 @@ package com._3dhs.tnproject.post.service;
 import com._3dhs.tnproject.post.dao.LikeMapper;
 import com._3dhs.tnproject.post.dto.LikeListDTO;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 public class LikeService {
 
     private final LikeMapper likeMapper;
+
 
     public boolean getHasLiked(int postCode, int memberCode) {
         return likeMapper.getHasLiked(postCode, memberCode);
