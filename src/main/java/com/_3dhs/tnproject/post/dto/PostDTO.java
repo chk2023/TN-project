@@ -3,6 +3,7 @@ package com._3dhs.tnproject.post.dto;
 import com._3dhs.tnproject.member.dto.ProfileDTO;
 import com._3dhs.tnproject.post.model.PostState;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -12,12 +13,13 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+@RequiredArgsConstructor
 public class PostDTO {
     private int postCode;
     private String postTitle;
     private String postText;
     private PostState postState;
-    private  int postPrice;
+    private int postPrice;
     private LocalDateTime postWriDate;
     private int postView;
     private int memberCode;
@@ -45,10 +47,10 @@ public class PostDTO {
         } else path = "/images/icon_default_photo.png";
         return path;
     }
-    public void makeThumbnailPath() {
-       thumbnailPath =  getAttachmentPath(0);
-    }
 
+    public void makeThumbnailPath() {
+        thumbnailPath = getAttachmentPath(0);
+    }
 
 
 }

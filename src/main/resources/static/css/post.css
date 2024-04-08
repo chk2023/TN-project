@@ -12,6 +12,8 @@ update : 2024-03-25
 /*------------------------------------------
     1.0     Blog Page Design Common
  ------------------------------------------*/
+
+.hidden,
 .folder li.hidden {
     display: none;
 }
@@ -219,6 +221,36 @@ textarea.post_content {
     width: 100%;
     height: 70px;
     padding: 10px;
+}
+
+.post_setting label:has(input[type=number]) {
+    margin-top: 20px;
+}
+
+.post_setting input[type=number] {
+    display: inline-flex;
+    width: 170px;
+    height: 30px;
+    margin-right: 10px;
+    padding: 0 10px;
+}
+
+#priceInput {
+    display: none;
+}
+
+#priceValue::-webkit-inner-spin-button,
+#priceValue::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#priceValue {
+    -moz-appearance: textfield;
+}
+
+#editorTxtCopy {
+    display: none;
 }
 
 /*------------------------------------------

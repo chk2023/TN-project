@@ -38,3 +38,7 @@ image:
   image-dir: src/main/resources/upload/
 
 
+logging:
+  level:
+    org:
+      thymeleaf=DEBUG:

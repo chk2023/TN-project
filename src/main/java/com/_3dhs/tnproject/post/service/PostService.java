@@ -2,7 +2,6 @@ package com._3dhs.tnproject.post.service;
 
 
 import com._3dhs.tnproject.comments.dao.CommentsMapper;
-import com._3dhs.tnproject.member.dto.ProfileDTO;
 import com._3dhs.tnproject.post.dao.PostMapper;
 import com._3dhs.tnproject.post.dto.AttachmentDTO;
 import com._3dhs.tnproject.post.dto.FolderDTO;
@@ -23,7 +22,7 @@ public class PostService {
     private final CommentsMapper commentsMapper;
 
     @Transactional(readOnly = true)
-    public List<PostDTO> findListByParam(Map<String,Integer> params) {
+    public List<PostDTO> findListByParam(Map<String, Integer> params) {
         return postMapper.findListByParam(params);
     }
 
@@ -67,10 +66,12 @@ public class PostService {
 
     @Transactional
     public List<PostDTO> findPostList(TabSearchDTO tabSearchDTO) {
-        return postMapper.findPostList( tabSearchDTO);
+        return postMapper.findPostList(tabSearchDTO);
     }
 
     public List<AttachmentDTO> findAttListByPostCode(int postCode) {
         return postMapper.findAttListByPostCode(postCode);
     }
+
+
 }

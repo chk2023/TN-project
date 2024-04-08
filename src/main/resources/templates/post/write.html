@@ -88,34 +88,45 @@
             </div>
         </div>
         <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
-
-            <input type="text" class="post_tit" placeholder="제목을 입력해주세요.">
-            <div id="editorTxt"></div>
-            <dl class="post_setting">
-                <dt>폴더 선택</dt>
-                <dd>
-                    <select name="">
-                        <option value="">폴더명 1</option>
-                    </select>
-                </dd>
-                <dt>태그 설정</dt>
-                <dd>
-                    <textarea name="" cols="30" rows="10" placeholder="#태그를 입력해주세요."></textarea>
-                </dd>
-                <dt>
-                    공개 설정
-                </dt>
-                <dd>
-                    <label><input type="radio" name="publicStatus" checked/>공개</label>
-                    <label><input type="radio" name="publicStatus"/>비공개</label>
-                </dd>
-                <dt>유료 설정</dt>
-                <dd>
-                    <label><input type="radio" name="payStatus" checked/>무료글 포스팅</label>
-                    <label><input type="radio" name="payStatus"/>유료글 포스팅</label>
-                </dd>
-            </dl>
-
+            <form id="writeForm" action="/post/write" method="post" enctype="multipart/form-data">
+                <input type="text" class="post_tit" name="postDTO.postTitle" placeholder="제목을 입력해주세요.">
+                <div id="editorTxt"></div>
+                <textarea name="postDTO.postText" id="editorTxtCopy"></textarea>
+                <dl class="post_setting">
+                    <dt>폴더 선택</dt>
+                    <dd>
+                        <select name="postDTO.folderCode">
+                            <option value="0">선택안함</option>
+                            <th:block th:object="${folderList}" th:each="folder, start : ${folderList}">
+                                <option th:classappend="${folder.folderName == 'NoName'} ? 'hidden'"
+                                        th:value="${folder.folderCode}" th:text="${folder.folderName}"></option>
+                            </th:block>
+                        </select>
+                    </dd>
+                    <dt>태그 설정</dt>
+                    <dd>
+                        <textarea id="tagInput" contenteditable="true" name="postTagDTO.tagDTO.tagName"
+                                  placeholder="#태그를 입력해주세요."></textarea>
+                    </dd>
+                    <dt>공개 설정</dt>
+                    <dd>
+                        <label><input type="radio" name="postDTO.postState" value="PUBLIC" checked/>공개</label>
+                        <label><input type="radio" name="postDTO.postState" value="PRIVATE"/>비공개</label>
+                    </dd>
+                    <dt>유료 설정</dt>
+                    <dd>
+                        <label><input type="radio" id="postFree" name="postDTO.postPrice" value="0" checked/>무료글
+                            포스팅</label>
+                        <label><input type="radio" id="postPaid" name="postDTO.postPrice" value="paid"/>유료글 포스팅</label>
+                        <label id="priceInput"><input id="priceValue" type="number" placeholder="티슈를 설정해주세요"/>개</label>
+                    </dd>
+                    <dt>고정 설정</dt>
+                    <dd>
+                        <label><input type="radio" name="postDTO.postIsFixed" value="0" checked/>비고정 포스팅</label>
+                        <label><input type="radio" name="postDTO.postIsFixed" value="1"/>고정 포스팅</label>
+                    </dd>
+                </dl>
+            </form>
         </section>
     </main>
 </div>
