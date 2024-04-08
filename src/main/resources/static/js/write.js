@@ -156,6 +156,7 @@ function selectLocalImage() {
 
             fetch('/post/upload', {
                 method: 'POST',
+                enctype: 'multipart/form-data',
                 body: formData,
                 headers: {
                     'Accept': 'application/json'
@@ -211,6 +212,7 @@ imgTags.forEach(img => {
 
             const fetchPromise = fetch('/post/uploadBase64', {
                 method: 'POST',
+                enctype: 'multipart/form-data',
                 body: formData
             })
                 .then(response => response.text())
