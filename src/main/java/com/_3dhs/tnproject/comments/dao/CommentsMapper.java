@@ -10,4 +10,6 @@ public interface CommentsMapper {
     int findCmtCountByPostCode(int postCode);
 
     List<CommentsDTO> selectCommentsList(CommentsDTO commentsDTO);
+
+    int writeComments(String comments, int memberCode);
 }
