@@ -172,4 +172,8 @@
         </where>
     </update>
 
+    <insert id="blockMemberByMemberCode">
+        INSERT INTO tbl_block(b_member_code, blocked_m_code)
+        VALUES (#{memberCode}, #{targerMemberCode})
+    </insert>
 </mapper>

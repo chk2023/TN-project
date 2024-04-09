@@ -26,4 +26,8 @@ public class CommentsService {
         if (!(result > 0)) throw new CommentsWriteException("댓글 작성에 실패하였습니다.");
 
     }
+
+    public CommentsDTO getCommentByCommentsCode(int cmtCode) {
+        return commentsMapper.getCommentByCommentsCode(cmtCode);
+    }
 }

@@ -1,5 +1,7 @@
 package com._3dhs.tnproject.member.controller;
 
+import com._3dhs.tnproject.comments.dto.CommentsDTO;
+import com._3dhs.tnproject.comments.service.CommentsService;
 import com._3dhs.tnproject.common.exceptionhandler.member.MemberRegistException;
 import com._3dhs.tnproject.common.exceptionhandler.member.MemberRemoveException;
 import com._3dhs.tnproject.common.exceptionhandler.member.MemberUpdateException;
@@ -17,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,6 +38,7 @@ import java.util.UUID;
 public class MemberController {
     private final MemberService memberService;
     private final AuthService authenticationService;
+    private final CommentsService commentsService;
     private final PasswordEncoder passwordEncoder;
     private final MessageSourceAccessor messageSourceAccessor;
     private final String defaultPfPath = "/images/icon_user.png";
@@ -43,11 +47,12 @@ public class MemberController {
     private final String bgUploadDir = ResourceUtils.getFile("classpath:static/userUploadFiles/background").getAbsolutePath();
 
     @Autowired
-    public MemberController(MemberService memberService, AuthService authenticationService, PasswordEncoder passwordEncoder, MessageSourceAccessor messageSourceAccessor) throws FileNotFoundException {
+    public MemberController(MemberService memberService, AuthService authenticationService, PasswordEncoder passwordEncoder, MessageSourceAccessor messageSourceAccessor, CommentsService commentsService) throws FileNotFoundException {
         this.memberService = memberService;
         this.authenticationService = authenticationService;
         this.passwordEncoder = passwordEncoder;
         this.messageSourceAccessor = messageSourceAccessor;
+        this.commentsService = commentsService;
     }
 
 
@@ -223,6 +228,21 @@ public class MemberController {
 
       return "redirect:/";
     }
+
+    @ResponseBody
+    @PostMapping("/blockMember")
+    public String blockMemberByMemberCode(@AuthenticationPrincipal MemberDTO member, int cmtCode) {
+        CommentsDTO dto = commentsService.getCommentByCommentsCode(cmtCode);
+        int targetMemberCode = dto.getMemberCode();
+        int result = memberService.blockMemberByMemberCode(member.getMemberCode(), targetMemberCode);
+
+        if (result > 0) {
+            return messageSourceAccessor.getMessage("member.blockSuccess");
+        } else {
+            return messageSourceAccessor.getMessage("member.blockFailed");
+        }
+    }
+
 
     private String savePfImg(MultipartFile file) throws IOException {
 

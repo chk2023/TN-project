@@ -90,4 +90,8 @@ public class MemberService {
 
         if (!(result > 0)) throw new MemberUpdateException("회원 정보 수정에 실패하였습니다.");
     }
+
+    public int blockMemberByMemberCode(int memberCode, int targetMemberCode) {
+        return memberMapper.blockMemberByMemberCode(memberCode, targetMemberCode);
+    }
 }

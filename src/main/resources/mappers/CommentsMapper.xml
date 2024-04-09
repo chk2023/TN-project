@@ -27,4 +27,10 @@
             (4, #{comments}, now(), #{memberCode}, DEFAULT, null, null, DEFAULT)
 
     </insert>
+<select id="getCommentByCommentsCode">
+    SELECT
+        *
+    FROM tbl_comments
+    WHERE cmt_code = #{cmtCode}
+</select>
 </mapper>

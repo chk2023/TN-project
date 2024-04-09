@@ -29,4 +29,6 @@ public interface MemberMapper {
     MemberDTO findMainBlogMemberInfo(int memberCode);
 
     int updateProfile(MemberDTO member);
+
+    int blockMemberByMemberCode(int memberCode, int targetMemberCode);
 }
