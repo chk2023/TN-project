@@ -22,22 +22,6 @@ window.onload = function () {
                         return res.json();
                     })
                     .then(newComment => {
-                        // 새로운 댓글을 생성하여 HTML로 추가
-                        const $newComment = document.createElement("li");
-                        $newComment.innerHTML = `
-                    <input type="hidden" class="comment-code" value="${escapeHTML(newComment.cmtCode)}" />
-                    <img src="${newComment.profile != null ? escapeHTML(newComment.profile.profileImgPath) : ''}" />
-                    <span>${escapeHTML(newComment.profile != null ? newComment.profile.profileNickname : '')}</span>
-                    <span>${escapeHTML(newComment.cmtWriDate)}</span>
-                    <br>
-                    <span class="cmtContent">${escapeHTML(newComment.cmtText)}</span>
-                    <input type="button" value="답글">
-                    <input ${newComment.memberCode == authentication.principal.memberCode ? '' : 'style="display: none;"'} type="button" class="modifyComments" value="수정">
-                    <input ${newComment.memberCode == authentication.principal.memberCode ? '' : 'style="display: none;"'} type="button" class="deleteComments" value="삭제">
-                    <input ${newComment.memberCode != authentication.principal.memberCode ? '' : 'style="display: none;"'} type="button" value="차단">
-                    <input ${newComment.memberCode != authentication.principal.memberCode ? '' : 'style="display: none;"'} type="button" value="신고">
-                `;
-                        document.getElementById("commentList").appendChild($newComment);
                         console.log("새로운 댓글이 작성되었습니다.", newComment);
                     })
                     .catch(error => {
@@ -47,6 +31,7 @@ window.onload = function () {
             }
         };
     }
+
 
     /* 댓글 수정, 삭제 */
     const modifyCommentsButtons = document.querySelectorAll(".modifyComments");
@@ -111,29 +96,28 @@ window.onload = function () {
 }
 
 
-// function sendComments() {
-//     const $cmt = document.querySelector("#cmt").value;
-//
-//     if ($cmt != null && $cmt.trim() !== "") {
-//         fetch("/comments/write", {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/json"
-//             },
-//             body: JSON.stringify({
-//                 cmt: $cmt
-//             })
-//         })
-//             .then(res => {
-//                 if (!res.ok) {
-//                     throw new Error("댓글 작성에 실패하였습니다.");
-//                 }
-//                 // $commentElement.querySelector('.cmtContent').innerText = $cmtText;
-//                 console.log("댓글이 성공적으로 작성되었습니다.");
-//             })
-//             .catch(error => {
-//                 console.error("오류 발생", error);
-//                 alert("댓글 작성에 실패하였습니다. 다시 시도해주세요.")
-//             })
-//     }
-// }
+function loadReply() {}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
