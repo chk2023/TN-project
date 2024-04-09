@@ -15,14 +15,11 @@
     <select id="selectReportList" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">
         SELECT r.report_code,
                c.r_category_name,
-              left (r.report_text,10) ,
+               substring(r.report_text ,10) report_text,
                r.target_code,
                m.member_code,
                m.member_id,
                r.report_content
-
-
-
         FROM tbl_report r
                  JOIN tbl_member m ON r.target_code = m.member_code
                  JOIN tbl_r_category c ON c.r_category_code = r.r_category_code

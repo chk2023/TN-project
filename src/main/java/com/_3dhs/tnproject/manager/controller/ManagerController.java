@@ -41,13 +41,10 @@ public class ManagerController {
         searchMap.put("searchCondition", searchCondition);
         searchMap.put("searchValue", searchValue);
 
+
         Map<String, Object> boardListAndPaging = reportService.selectReportList(searchMap, page);
         model.addAttribute("paging", boardListAndPaging.get("paging"));
         model.addAttribute("reportList", boardListAndPaging.get("reportList"));
-
-
-
-
 
         return "/manager/report/list";
     }
