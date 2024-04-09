@@ -5,9 +5,9 @@ import com._3dhs.tnproject.member.service.MemberService;
 import com._3dhs.tnproject.post.dto.FolderDTO;
 import com._3dhs.tnproject.post.dto.LikeListDTO;
 import com._3dhs.tnproject.post.dto.PostDTO;
-import com._3dhs.tnproject.post.model.PostState;
 import com._3dhs.tnproject.post.dto.TabSearchDTO;
 import com._3dhs.tnproject.post.service.LikeService;
+import com._3dhs.tnproject.post.model.PostState;
 import com._3dhs.tnproject.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedCaseInsensitiveMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,11 +57,11 @@ public class PostController {
     public void folderEditPage(@AuthenticationPrincipal MemberDTO memberDTO, Model model) {
         List<FolderDTO> folderList = postService.findFolderList(memberDTO.getMemberCode());
 
-        if(folderList.isEmpty()) {
+        if (folderList.isEmpty()) {
             System.out.println("폴더리스트 비어있는디?");// 비어있음 멤버코드로 10개 만들어줘
             List<FolderDTO> addDefaultFolders = new ArrayList<>();
 
-            for(int i = 0; i < 10; i++) {
+            for (int i = 0; i < 10; i++) {
                 FolderDTO folderDTO = new FolderDTO();
                 folderDTO.setFolderName("NoName");
                 folderDTO.setFolderIconPath("/images/icon_folder.png");
@@ -81,15 +80,22 @@ public class PostController {
         model.addAttribute("folderList", folderList);
     }
     @GetMapping("/write")
-    public void blogWritePage() {}
+    public void blogWritePage(@AuthenticationPrincipal MemberDTO memberDTO, Model model) {
+        List<FolderDTO> folderList = postService.findFolderList(memberDTO.getMemberCode());
+        PostDTO postViewLikeCount = postService.findPostLikeCount(memberDTO.getMemberCode());
+
+        model.addAttribute("folderList", folderList);
+        model.addAttribute("postView", postViewLikeCount);
+    }
+
     @GetMapping("/temporary_storage/list")
     public void temporaryStorageListPage() {}
     @GetMapping("/list")
     public void blogListPage(@ModelAttribute TabSearchDTO tabSearchDTO, Model model) {
         List<FolderDTO> folderList = postService.findFolderList(tabSearchDTO.getMemberCode());
         MemberDTO memberDTO = memberService.findMainBlogMemberInfo(tabSearchDTO.getMemberCode());
-        PostDTO postViewLikeCount =  postService.findPostLikeCount(tabSearchDTO.getMemberCode());
-        List<PostDTO> postList =  postService.findPostList(tabSearchDTO); //TODO 수정필
+        PostDTO postViewLikeCount = postService.findPostLikeCount(tabSearchDTO.getMemberCode());
+        List<PostDTO> postList = postService.findPostList(tabSearchDTO); //TODO 수정필
         memberDTO.setMemberCode(tabSearchDTO.getMemberCode());
 
         model.addAttribute("folderList", folderList);
@@ -151,13 +157,13 @@ public class PostController {
     }
 
     @PostMapping("/folder_edit")
-    public @ResponseBody String folderEditList(@AuthenticationPrincipal MemberDTO memberDTO, @RequestBody List<FolderDTO> requestBody){
-        for(FolderDTO folderDTO : requestBody) {
+    public @ResponseBody String folderEditList(@AuthenticationPrincipal MemberDTO memberDTO, @RequestBody List<FolderDTO> requestBody) {
+        for (FolderDTO folderDTO : requestBody) {
             folderDTO.setFMemberCode(memberDTO.getMemberCode());
         }
         postService.updateFolders(requestBody);
 
         //return "redirect:/post/main?memberCode="+memberDTO.getMemberCode()+"";
-        return "redirect:memberCode="+memberDTO.getMemberCode()+"";
+        return "redirect:memberCode=" + memberDTO.getMemberCode() + "";
     }
 }
