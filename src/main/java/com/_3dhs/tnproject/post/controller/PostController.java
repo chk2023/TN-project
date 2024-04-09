@@ -1,11 +1,14 @@
 package com._3dhs.tnproject.post.controller;
 
+import com._3dhs.tnproject.comments.dto.CommentsDTO;
+import com._3dhs.tnproject.comments.service.CommentsService;
 import com._3dhs.tnproject.member.dto.MemberDTO;
 import com._3dhs.tnproject.member.service.MemberService;
 import com._3dhs.tnproject.post.dto.FolderDTO;
 import com._3dhs.tnproject.post.dto.LikeListDTO;
 import com._3dhs.tnproject.post.dto.PostDTO;
 import com._3dhs.tnproject.post.dto.TabSearchDTO;
+import com._3dhs.tnproject.post.model.PostState;
 import com._3dhs.tnproject.post.service.LikeService;
 import com._3dhs.tnproject.post.model.PostState;
 import com._3dhs.tnproject.post.service.PostService;
@@ -35,6 +38,7 @@ public class PostController {
     private final MessageSourceAccessor accessor;
     private final MemberService memberService;
     private final LikeService likeService;
+    private final CommentsService commentsService;
 
     @GetMapping("/main")
     public void blogMainPage(@ModelAttribute TabSearchDTO tabSearchDTO, Authentication authentication, Model model) {
@@ -104,7 +108,7 @@ public class PostController {
         model.addAttribute("postList", postList);
     }
     @GetMapping("/detail")
-    public String blogDetailPage(@AuthenticationPrincipal MemberDTO memberDTO, Integer postCode, Model model) {
+    public String blogDetailPage(@AuthenticationPrincipal MemberDTO memberDTO, Integer postCode, Model model, CommentsDTO commentsDTO) {
         //1. 해당하는 코드의 post정보를 불러오기
         PostDTO targetPost = postService.findPostByPostCode(postCode);
         //2. post 상태가 비공개라면 열람자가 일치하는지 확인
@@ -123,6 +127,11 @@ public class PostController {
         }
         //4. 모든 조건이 성립한다면 view로 전달
         model.addAttribute("postDetail", targetPost);
+
+        /* 댓글 모달에서 댓글 조회 */
+        List<CommentsDTO> comments = commentsService.selectCommentsList(commentsDTO);
+        model.addAttribute("comments", comments);
+
         return "/post/detail";
     }
     @GetMapping("/likelist")

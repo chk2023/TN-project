@@ -63,6 +63,7 @@ public class MemberService {
 
     }
 
+    @Transactional
     public void deleteMember(MemberDTO member) throws MemberRemoveException {
         int result = memberMapper.deleteMember(member);
 
@@ -71,6 +72,7 @@ public class MemberService {
         }
     }
 
+    @Transactional
     public void updatePwd(MemberDTO member) throws MemberUpdateException {
         int result = memberMapper.updatePwd(member);
 
@@ -82,6 +84,7 @@ public class MemberService {
         return memberDTO;
     }
 
+    @Transactional
     public void updateProfile(MemberDTO member) throws MemberUpdateException {
         int result = memberMapper.updateProfile(member);
 

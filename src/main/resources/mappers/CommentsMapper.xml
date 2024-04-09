@@ -11,4 +11,20 @@
             tbl_comments
         WHERE post_code = #{postCode}
     </select>
+
+    <select id="selectCommentsList" resultType="com._3dhs.tnproject.comments.dto.CommentsDTO">
+        SELECT
+            *
+        FROM
+            tbl_comments
+        WHERE post_code = #{postCode}
+    </select>
+
+    <insert id="writeComments">
+        INSERT INTO
+            tbl_comments(post_code, cmt_text, cmt_wri_date, member_code, parents_code, cmt_mod_date, cmt_dele_date, cmt_is_deleted)
+        VALUES
+            (4, #{comments}, now(), #{memberCode}, DEFAULT, null, null, DEFAULT)
+
+    </insert>
 </mapper>
