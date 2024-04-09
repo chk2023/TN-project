@@ -3,11 +3,13 @@ package com._3dhs.tnproject.purchase.controller;
 import com._3dhs.tnproject.member.dto.MemberDTO;
 import com._3dhs.tnproject.member.service.MemberService;
 import com._3dhs.tnproject.payment.service.PaymentService;
+import com._3dhs.tnproject.post.dto.LikeListDTO;
 import com._3dhs.tnproject.post.dto.PostDTO;
 import com._3dhs.tnproject.post.service.PostService;
 import com._3dhs.tnproject.purchase.dao.PurchaseMapper;
 import com._3dhs.tnproject.purchase.dto.PurchaseDTO;
 import com._3dhs.tnproject.purchase.service.PurchaseService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -35,33 +38,30 @@ public class PurchaseController {
 
     @PostMapping("/getPaidPostInfo")
     @ResponseBody
-//    public String getPostInfo(@RequestParam("postCode") Integer postCode, Model model, @AuthenticationPrincipal MemberDTO memberDTO) {
-    public String getPostInfo(@RequestBody Map<String, Integer> requestBody, @AuthenticationPrincipal MemberDTO memberDTO) {
-        int postCode = requestBody.get("postCode");
+    public String getPostInfo(@RequestBody PostDTO postDTO, @AuthenticationPrincipal MemberDTO memberDTO) {
         int memberCode = memberDTO.getMemberCode();
 
 //        PostDTO postDTO = postService.getPostByPostCode(postCode);
 
 //        boolean isPostPurchased = purchaseService.isPostPurchased(currentMember.getMemberCode(), postCode);
-        PurchaseDTO purchased = purchaseService.getPaidPostInfo(memberCode, postCode);
+        PurchaseDTO purchased = purchaseService.getPaidPostInfo(memberCode, postDTO.getPostCode());
 
         if (purchased != null) {
-//            model.addAttribute("postInfo", purchased);
-            return "{\"status\": \"success\", \"message\": \"post_info\"}";
+
         } else {
-            return "{\"status\": \"fail\", \"message\": \"purchase_fail\"}";
+
         }
 
+        return null;
     }
 
+    // 서비스로 이동
     @PostMapping("/purchaseSuccess")
-    public String purchaseSuccess(@RequestParam String buyer_name,
-                                  @RequestParam int tissuePrice,
-                                  @RequestParam int postCode,
-                                  Authentication authentication) {
+    public String purchaseSuccess(@RequestParam int postCode, Authentication authentication) {
 
         MemberDTO currentMember = (MemberDTO) authentication.getPrincipal();
         int memberCode = currentMember.getMemberCode();
+        int tissuePrice = purchaseService.getPostPrice(postCode);
 
         int ntissuePrice = currentMember.getHaveTissue() - tissuePrice;
         memberService.updateHaveTissue(currentMember);

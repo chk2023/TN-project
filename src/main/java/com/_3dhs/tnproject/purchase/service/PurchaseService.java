@@ -27,20 +27,35 @@ public class PurchaseService {
 
     public PurchaseDTO getPaidPostInfo(int memberCode, Integer postCode) {
 
+        // 구매 여부 확인
         boolean isPostPurchased = isPostPurchased(memberCode, postCode);
 
         if (isPostPurchased) {
-            int postPrice = purchaseMapper.getPostPrice(postCode);
-            return new PurchaseDTO("USE", LocalDateTime.now(), postPrice, memberCode, postCode);
-        } else {
-            int purchaseCount = purchaseMapper.purchaseCount(memberCode, postCode);
-            if (purchaseCount > 0) {
-                int postPrice = purchaseMapper.getPostPrice(postCode);
-                return new PurchaseDTO("USE", LocalDateTime.now(), postPrice, memberCode, postCode);
-            }
+            throw new RuntimeException("이미 구매한 글");
+
+
+//            int postPrice = purchaseMapper.getPostPrice(postCode);
+//            return new PurchaseDTO("USE", LocalDateTime.now(), postPrice, memberCode, postCode);
         }
 
+        // 보유 티슈가 충분한지 확인
+        // 충분하지 않으면 exception
+
+        // 구매 처리
+
+//        else {
+//            int purchaseCount = purchaseMapper.purchaseCount(memberCode, postCode);
+//            if (purchaseCount > 0) {
+//                int postPrice = purchaseMapper.getPostPrice(postCode);
+//                return new PurchaseDTO("USE", LocalDateTime.now(), postPrice, memberCode, postCode);
+//            }
+//        }
+
         return null;
+    }
+
+    public int getPostPrice(int postCode) {
+        return purchaseMapper.getPostPrice(postCode);
     }
 
 
@@ -49,4 +64,6 @@ public class PurchaseService {
         purchaseMapper.insertPurchase(purchaseDTO);
 
     }
+
+
 }

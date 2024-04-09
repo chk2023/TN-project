@@ -41,6 +41,7 @@ function purchasePaidPost(postCode) {
         });
 }
 
+// 호출할 필요 없음
 function purchaseSuccess(postCode) {
     fetch("/purchaseSuccess", {
         method: 'POST',
