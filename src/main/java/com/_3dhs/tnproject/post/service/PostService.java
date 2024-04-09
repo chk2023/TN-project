@@ -65,17 +65,6 @@ public class PostService {
         return postDTO;
     }
 
-    public PostDTO getPostByPostCode(Integer postCode) {
-        PostDTO postDTO = postMapper.getPostByPostCode(postCode);
-
-        List<AttachmentDTO> attachmentList = postMapper.findAttListByPostCode(postCode);
-        postDTO.setAttachmentList(attachmentList);
-
-        postDTO.makeThumbnailPath();
-
-        return postDTO;
-    }
-
     @Transactional()
     public void updateFolders(List<FolderDTO> requestBody) {
         System.out.println("폴더리스트" + requestBody);

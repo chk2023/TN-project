@@ -70,21 +70,6 @@
     const $viewBtn = document.querySelector(".viewBtn");
 
 </script>
-<script>
-    function purchasePaidPost(postCode) {
-        $.ajax({
-            url: '/getPaidPostInfo',
-            method: "GET",
-            data: { postCode: postCode },
-            success: function(response) {
-                var postPrice = response.post_price;
-            },
-            error: function(xhr, status, error) {
-                alert("구매에 실패하였습니다. 에러 내용: " + error);
-            }
-        })
-    }
-</script>
 
 <script id="contentsTemplate" type="text/x-handlebars-template">
     {{#each this}}
@@ -116,6 +101,10 @@
                         {{postText}}
                     </p>
                 </div>
+
+                <!-- 구매 테스트용 -->
+                <button class="purchaseBtn">유료글 구매</button>
+
                 <div class="showLikeAndComments">
                     <button class="commentsBtn">
                         <img src="/images/icon_comment.png" alt="댓글 버튼 아이콘">
