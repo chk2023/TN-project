@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/reportdetail.css">
     <script>
         function admUpdate()   {
@@ -39,16 +40,18 @@
         </form> <br><br>
         <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
             <form id="reportDetail">
-                <label>신고 번호 <input name="reportCode" th:value="${detail.reportCode}"></label> <br>
-                <label>신고 구분 코드  <input th:value='${detail.RCategoryName}'></label> <br>
-                <label>신고 내역  <input th:value='${detail.reportText}'></label> <br>
-                <label>처리 상태  <input th:value='${detail.reportStatus}'></label> <br>
-                <label>신고 대상 콘텐츠  <input th:value='${detail.reportContent}'></label> <br>
-                <label>신고 대상 유저  <input th:value='${detail.memberId}'></label> <br>
-                <label>신고 날짜  <input th:value='${detail.reportDate}'></label> <br>
-                <label>신고 대상 포스팅 <input th:value='${detail.postCode}'></label> <br>
-                <label>신고 대상 댓글<input th:value='${detail.cmtCode}'></label> <br>
-                <label>처리 기록  <input type="text" name="processingText"></label> <br>
+
+                    <label>신고 번호  <b><input name="reportCode" th:value="${detail.reportCode}" disabled></b></label> <br>
+                    <label>신고 구분 코드  <b><input th:value='${detail.RCategoryName}'disabled></b></label> <br>
+                    <label>신고 내역 <b><input th:value='${detail.reportText}'disabled></b></label> <br>
+                    <label>처리 상태  <b><input th:value='${detail.reportStatus}'disabled></b></label> <br>
+                    <label>신고 대상 콘텐츠  <b><input th:value='${detail.reportContent}'disabled></b></label> <br>
+                    <label>신고 대상 유저 <b><input th:value='${detail.memberId}'disabled></b></label> <br>
+                    <label>신고 날짜  <b><input th:value='${detail.reportDate}'disabled></b></label> <br>
+                    <label>신고 대상 포스팅<b><input th:value='${detail.postCode}'disabled></b></label> <br>
+                    <label>신고 대상 댓글 <b><input th:value='${detail.cmtCode}'disabled></b></label> <br>
+                    <label>처리 기록 <b><input type="text" name="processingText"></b></label> <br>
+
 
 
 

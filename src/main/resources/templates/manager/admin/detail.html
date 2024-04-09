@@ -41,15 +41,15 @@
         </form> <br><br>
         <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
             <form id="adminDetail">
-                <label>신고 번호 <input name="reportCode" th:value='${admDet.reportCode}'></label> <br>
-                <label>매니저 코드 <input name="managerCode" th:value='${admDet.managerCode}'></label> <br>
-                <label>신고 구분  <input th:value='${admDet.RCategoryName}'></label> <br>
-                <label>신고 내역  <input th:value='${admDet.reportText}'></label> <br>
-                <label>신고 날짜 <input  th:value='${admDet.reportDate}'></label> <br>
-                <label>신고 대상 유저  <input th:value='${admDet.memberId}'></label> <br>
-                <label>신고 상태  <input th:value='${admDet.reportStatus}'></label> <br>
-                <label>처리 날짜  <input th:value='${admDet.processingDate}'></label> <br>
-                <label>처리 기록  <input th:value='${admDet.processingText}'></label> <br>
+                <label>신고 번호 <input name="reportCode" th:value='${admDet.reportCode}' disabled></label> <br>
+                <label>매니저 코드 <input name="managerCode" th:value='${admDet.managerCode}' disabled></label> <br>
+                <label>신고 구분  <input th:value='${admDet.RCategoryName}' disabled></label> <br>
+                <label>신고 내역  <input th:value='${admDet.reportText}' disabled></label> <br>
+                <label>신고 날짜 <input  th:value='${admDet.reportDate}' disabled></label> <br>
+                <label>신고 대상 유저  <input th:value='${admDet.memberId}' disabled></label> <br>
+                <label>신고 상태  <input th:value='${admDet.reportStatus}' disabled></label> <br>
+                <label>처리 날짜  <input th:value='${admDet.processingDate}' disabled></label> <br>
+                <label>처리 기록  <input th:value='${admDet.processingText}' disabled></label> <br>
 
 
                 <br><br>

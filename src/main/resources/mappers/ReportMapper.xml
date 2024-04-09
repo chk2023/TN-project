@@ -70,8 +70,6 @@
             processing_text,
             processing_date
 
-
-
         FROM
             tbl_report
 
