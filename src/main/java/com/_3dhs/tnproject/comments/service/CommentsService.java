@@ -26,4 +26,10 @@ public class CommentsService {
         if (!(result > 0)) throw new CommentsWriteException("댓글 작성에 실패하였습니다.");
 
     }
+
+    public void updateComments(int cmtCode, String cmtText) throws CommentsWriteException {
+        int result = commentsMapper.updateComments(cmtCode, cmtText);
+
+        if (!(result > 0)) throw new CommentsWriteException("댓글 수정에 실패하였습니다.");
+    }
 }
