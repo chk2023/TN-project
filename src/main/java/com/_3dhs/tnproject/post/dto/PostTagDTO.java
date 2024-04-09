@@ -10,6 +10,11 @@ import lombok.ToString;
 @ToString
 @RequiredArgsConstructor
 public class PostTagDTO {
-    private PostDTO postDTO;
-    private TagDTO tagDTO;
+    private int postCode;
+    private int tagCode;
+
+    public PostTagDTO(int postCode, int tagCode) {
+        this.postCode = postCode;
+        this.tagCode = tagCode;
+    }
 }

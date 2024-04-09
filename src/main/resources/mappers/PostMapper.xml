@@ -254,5 +254,6 @@
         AND post_is_fixed = 1
         )
     </select>
+    
 
 </mapper>

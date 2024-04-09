@@ -277,24 +277,50 @@ public class PostController {
         model.addAttribute("postView", postViewLikeCount);
 
         // Optional을 사용하여 null을 안전하게 처리
-        String tags = Optional.ofNullable(writeDTO.getPostTagDTO())
-                .map(PostTagDTO::getTagDTO) // 여기서는 PostTagDTO 인스턴스의 getTagDTO 메소드를 참조
-                .map(TagDTO::getTagName) // 여기서는 TagDTO 인스턴스의 getTagName 메소드를 참조
-                .orElse("");
-        PostDTO postDTO = writeDTO.getPostDTO();
-        List<TagDTO> tagDTOList = writeDTO.getTagDTOList();
-        List<AttachmentDTO> attachmentDTOList = writeDTO.getAttachmentDTOList();
+//        String tags = Optional.ofNullable(writeDTO.getPostTagDTO())
+//                .map(PostTagDTO::getTagDTO) // 여기서는 PostTagDTO 인스턴스의 getTagDTO 메소드를 참조
+//                .map(TagDTO::getTagName) // 여기서는 TagDTO 인스턴스의 getTagName 메소드를 참조
+//                .orElse("");
 
         // 데이터 저장 로직 호출
-        System.out.println("포스트DTO : " + postDTO);
-        System.out.println("태그리스트 : " + tagDTOList);
-        System.out.println("어테치먼트리스트 : " + attachmentDTOList);
-        postService.addWritePost(postDTO);
-        postService.addWriteAttachment(attachmentDTOList);
-        postService.addWritePostTag(tagDTOList);
+//        System.out.println("포스트DTO : " + postDTO);
+//        System.out.println("태그리스트 : " + tagDTOList);
+//        System.out.println("어테치먼트리스트 : " + attachmentDTOList);
+
+//        postService.addWritePostTag(tagDTOList);
 
 
-        return "redirect:/post/list?memberCode=" + memberDTO.getMemberCode() + "";
+//        PostDTO postDTO = writeDTO.getPostDTO();
+//        int postCode = postService.addWritePost(postDTO);  // postCode를 저장하고 반환
+//        postDTO.setPostCode(postCode);  // postDTO에 postCode 설정
+//
+//        List<AttachmentDTO> attachmentDTOList = writeDTO.getAttachmentDTOList();
+//        if (!attachmentDTOList.isEmpty()) {
+//            attachmentDTOList.forEach(attachment -> attachment.setPostCode(postCode));
+//            postService.addWriteAttachment(attachmentDTOList);
+//        }
+//
+//        List<TagDTO> tagDTOList = writeDTO.getTagDTOList();
+//        if (!tagDTOList.isEmpty()) {
+//            tagDTOList.forEach(tag -> {
+//                int tagCode = postService.addWriteTag(tag);  // 각 태그를 저장하고 자동 생성된 tagCode 반환
+//                postService.addWritePostTag(postCode, tagCode);  // PostTag 테이블에 매핑 정보 저장
+//            });
+//        }
+//
+//        return "redirect:/post/list?memberCode=" + memberDTO.getMemberCode() + "";
+        // 서비스 호출로 작업을 위임
+        try {
+            PostDTO postDTO = writeDTO.getPostDTO();
+            List<AttachmentDTO> attachments = writeDTO.getAttachmentDTOList();
+            List<TagDTO> tags = writeDTO.getTagDTOList();
 
+            postService.addWritePostWithAttachmentsAndTags(postDTO, attachments, tags);
+            return "redirect:/post/list?memberCode=" + memberDTO.getMemberCode();
+        } catch (Exception e) {
+            log.error("Error while posting", e);
+            model.addAttribute("error", "Post submission failed.");
+            return "/post/write"; // 오류 시 사용자에게 오류 페이지를 보여줌
+        }
     }
 }

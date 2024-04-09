@@ -1,10 +1,7 @@
 package com._3dhs.tnproject.post.dao;
 
 
-import com._3dhs.tnproject.post.dto.AttachmentDTO;
-import com._3dhs.tnproject.post.dto.FolderDTO;
-import com._3dhs.tnproject.post.dto.PostDTO;
-import com._3dhs.tnproject.post.dto.TabSearchDTO;
+import com._3dhs.tnproject.post.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -36,4 +33,10 @@ public interface PostMapper {
     List<PostDTO> findPostList(TabSearchDTO tabSearchDTO);
 
     boolean isFixedPost(int memberCode);
+
+    void addWritePost(PostDTO postDTO);
+
+    void insertAttachments(List<AttachmentDTO> attachments);
+
+    void insertTags(List<TagDTO> tags);
 }
