@@ -68,6 +68,7 @@
     let isTitlePhotoChanged = false;
     let isLoading = false;
     const $viewBtn = document.querySelector(".viewBtn");
+    let message = `[[${message}]]`;
 </script>
 
 <script id="contentsTemplate" type="text/x-handlebars-template">
@@ -120,7 +121,8 @@
     </li>
     {{/each}}
 </script>
-
+<script src="/js/messageHandler.js"></script>
+<script src="/js/searchEvent.js"></script>
 <script src="/js/like.js"></script>
 <script src="/js/timeline.js"></script>
 <script src="/js/scrollEvent.js"></script>
