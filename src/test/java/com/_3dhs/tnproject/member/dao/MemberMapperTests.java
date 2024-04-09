@@ -10,7 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @SpringBootTest
 public class MemberMapperTests {
@@ -38,5 +40,21 @@ public class MemberMapperTests {
         dto.setMemberBirth(LocalDate.of(2020,12,12));
         memberMapper.insertMember(dto);
         System.out.println();
+    }
+
+    @Test
+    void findMemberByMemberCodes_테스트() {
+        List<Integer> rdIntList = new ArrayList<>();
+        System.out.println("=============================랜덤번호 추출");
+        for (int i = 0; i < 3; i++) {
+            int rdcode = (int)(Math.random()*12) +1;
+            rdIntList.add(rdcode);
+            System.out.println(rdcode);
+        }
+        System.out.println("추출 끝");
+        List<MemberDTO> memberDTOS = memberMapper.findMemberByMemberCodes(rdIntList);
+        memberDTOS.forEach(memberDTO -> {
+            System.out.println(memberDTO.getProfile().getMemberCode());
+        });
     }
 }
