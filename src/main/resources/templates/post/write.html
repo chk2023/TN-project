@@ -5,76 +5,121 @@
     <title>Blog Write Page</title>
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/post.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <style>
+        .ql-toolbar *::before,
+        .ql-toolbar *::after,
+        #toolbar *::before,
+        #toolbar *::after,
+        #editorTxt *:not(.ql-editor.ql-blank)::before,
+        #editorTxt *::after {
+            position: static !important;
+        }
+
+        #toolbar * {
+            float: none !important;
+        }
+
+        #editorTxt {
+            height: 400px;
+        }
+
+        #editorTxt u {
+            text-decoration: underline;
+        }
+
+        #editorTxt s {
+            text-decoration: line-through;
+        }
+
+        .ql-snow .ql-picker.ql-size .ql-picker-label::before,
+        .ql-snow .ql-picker.ql-size .ql-picker-item::before {
+            content: none !important;
+        }
+
+        .ql-toolbar.ql-snow .ql-formats {
+            margint-right: 24px;
+        }
+
+        .ql-toolbar.ql-snow .ql-formats:nth-of-type(6) {
+            margin-right: 0;
+        }
+    </style>
 </head>
 <body>
-    <div class="wrap">
-        <header>
-            <div th:replace="~{common/profile.html}"></div>
-            <nav th:replace="~{common/navigation.html}"></nav>
-        </header>
-        <aside>
-            <div class="folder">
-                <strong class="minTit">폴더</strong>
-                <ul>
-                    <li class="AllList"><a href="#"><img src="/images/icon_folder.png" alt="아이콘">전체목록(<span>56</span>)</a></li>
-                    <th:block th:object="${folderList}" th:each="folder, start : ${folderList}">
-                        <li th:classappend="${folder.folderName == 'NoName'} ? 'hidden'" draggable="true">
-                            <input type="hidden" th:value="${folder.folderCode}"/>
-                            <img th:src="${folder.folderIconPath}" alt="폴더 아이콘">
-                            <span th:text="${folder.folderName}"></span>
-                        </li>
-                    </th:block>
-                </ul>
-                <button class="folderSetBtn" onClick="location.href='/post/folder_edit'"><img src="/images/icon_folder_setting.png" alt="폴더 편집 버튼"></button>
+<div class="wrap">
+    <header>
+        <div th:replace="~{common/profile.html}"></div>
+        <nav th:replace="~{common/navigation.html}"></nav>
+    </header>
+    <aside>
+        <div class="folder">
+            <strong class="minTit">폴더</strong>
+            <ul>
+                <li class="AllList"><a href="#"><img src="/images/icon_folder.png" alt="아이콘">전체목록(<span
+                        th:text="${postView.postCount}">56</span>)</a></li>
+                <th:block th:object="${folderList}" th:each="folder, start : ${folderList}">
+                    <li th:classappend="${folder.folderName == 'NoName'} ? 'hidden'" draggable="true">
+                        <input type="hidden" th:value="${folder.folderCode}"/>
+                        <img th:src="${folder.folderIconPath}" alt="폴더 아이콘">
+                        <span th:text="${folder.folderName}"></span>
+                    </li>
+                </th:block>
+            </ul>
+            <button class="folderSetBtn" onClick="location.href='/post/folder_edit'">
+                <img src="/images/icon_folder_setting.png" alt="폴더 편집 버튼">
+            </button>
+        </div>
+    </aside>
+    <main>
+        <div class="title">
+            <button class="backBtn"><img src="/images/btn_arrow.png" alt="뒤로가기 버튼"></button>
+            <div>
+                <h1>글 작성</h1>
             </div>
-        </aside>
-        <main>
-            <form class="title">
-                <button class="backBtn"><img src="/images/btn_arrow.png" alt="뒤로가기 버튼"></button>
-                <div>
-                    <h1>글 작성</h1>
-                </div>
-                <input class="search_input" type="text" placeholder="검색어를 입력하세요">
-                <button class="searchBtn"><img src="/images/btn_search.png" alt="검색 버튼"></button>
-                <button class="closeBtn"><img src="/images/btn_close.png" alt="닫기 버튼"></button>
-                <div class="btnWrap">
-                    <button class="btn gray">임시저장 | <a href="/post/temporary_storage/list">2</a></button>
-                    <button class="btn">작성완료</button>
-                </div>
-            </form>
-            <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
+            <input class="search_input" type="text" placeholder="검색어를 입력하세요">
+            <button class="searchBtn"><img src="/images/btn_search.png" alt="검색 버튼"></button>
+            <button class="closeBtn"><img src="/images/btn_close.png" alt="닫기 버튼"></button>
+            <div class="btnWrap">
+                <button class="btn gray">임시저장 | <a href="/post/temporary_storage/list">2</a></button>
+                <button id="작성완료버튼" class="btn">작성완료</button>
+            </div>
+        </div>
+        <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
 
-                <form action="">
-                    <input type="text" class="post_tit" placeholder="제목을 입력해주세요.">
-                    <textarea class="post_content" name="" cols="30" rows="10" placeholder="스마트에디터 들어갈 영역."></textarea>
-                    <dl class="post_setting">
-                        <dt>폴더 선택</dt>
-                        <dd>
-                            <select name="">
-                                <option value="">폴더명 1</option>
-                            </select>
-                        </dd>
-                        <dt>태그 설정</dt>
-                        <dd>
-                            <textarea name="" cols="30" rows="10" placeholder="#태그를 입력해주세요."></textarea>
-                        </dd>
-                        <dt>
-                            공개 설정
-                        </dt>
-                        <dd>
-                            <label><input type="radio" name="publicStatus" checked/>공개</label>
-                            <label><input type="radio" name="publicStatus"/>비공개</label>
-                        </dd>
-                        <dt>유료 설정</dt>
-                        <dd>
-                            <label><input type="radio" name="payStatus" checked/>무료글 포스팅</label>
-                            <label><input type="radio" name="payStatus"/>유료글 포스팅</label>
-                        </dd>
-                    </dl>
-                </form>
-            </section>
-        </main>
-    </div>
-    <script src="/js/pathFinder.js"></script>
+            <input type="text" class="post_tit" placeholder="제목을 입력해주세요.">
+            <div id="editorTxt"></div>
+            <dl class="post_setting">
+                <dt>폴더 선택</dt>
+                <dd>
+                    <select name="">
+                        <option value="">폴더명 1</option>
+                    </select>
+                </dd>
+                <dt>태그 설정</dt>
+                <dd>
+                    <textarea name="" cols="30" rows="10" placeholder="#태그를 입력해주세요."></textarea>
+                </dd>
+                <dt>
+                    공개 설정
+                </dt>
+                <dd>
+                    <label><input type="radio" name="publicStatus" checked/>공개</label>
+                    <label><input type="radio" name="publicStatus"/>비공개</label>
+                </dd>
+                <dt>유료 설정</dt>
+                <dd>
+                    <label><input type="radio" name="payStatus" checked/>무료글 포스팅</label>
+                    <label><input type="radio" name="payStatus"/>유료글 포스팅</label>
+                </dd>
+            </dl>
+
+        </section>
+    </main>
+</div>
+<script src="/js/pathFinder.js"></script>
+<script src="/js/write.js"></script>
 </body>
 </html>
