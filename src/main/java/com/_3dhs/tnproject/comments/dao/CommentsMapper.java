@@ -14,4 +14,6 @@ public interface CommentsMapper {
     int writeComments(String comments, int memberCode);
 
     int updateComments(int cmtCode, String cmtText);
+
+    int deleteComments(int cmtCode);
 }
