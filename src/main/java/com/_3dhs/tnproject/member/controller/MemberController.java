@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -243,6 +244,30 @@ public class MemberController {
         }
     }
 
+    @GetMapping("/blockList")
+    public String getBlockListPage(@AuthenticationPrincipal MemberDTO memberDTO, Model model) {
+        List<Integer> blockedMemberCodeList = memberService.findBlockListByMemberCode(memberDTO.getMemberCode());
+        List<MemberDTO> blockedMemberList = memberService.findMemberByMemberCodes(blockedMemberCodeList);
+        model.addAttribute("memberList", blockedMemberList);
+        model.addAttribute("blockMemberCount",blockedMemberList.size());
+        blockedMemberList.forEach(dto -> {
+            System.out.println(dto.getProfile().getProfileNickname());
+        });
+        return "/member/blockList";
+    }
+
+    @GetMapping("/unblockMember")
+    public String unblockMemberByMemberCode(@AuthenticationPrincipal MemberDTO member,int targetMemberCode,RedirectAttributes attributes) {
+        int result = memberService.unblockMemberByMemberCode(member.getMemberCode(), targetMemberCode);
+
+        if (result > 0) {
+            attributes.addFlashAttribute(messageSourceAccessor.getMessage("member.unblockSuccess"));
+        } else {
+
+            attributes.addFlashAttribute(messageSourceAccessor.getMessage("member.unblockFailed"));
+        }
+        return "redirect:/member/blockList";
+    }
 
     private String savePfImg(MultipartFile file) throws IOException {
 

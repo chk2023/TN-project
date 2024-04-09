@@ -31,4 +31,10 @@ public interface MemberMapper {
     int updateProfile(MemberDTO member);
 
     int blockMemberByMemberCode(int memberCode, int targetMemberCode);
+
+    List<Integer> findBlockListByMemberCode(int memberCode);
+
+    List<MemberDTO> findMemberByMemberCodes(List<Integer> blockedMemberCodeList);
+
+    int unblockMemberByMemberCode(int memberCode, int targetMemberCode);
 }
