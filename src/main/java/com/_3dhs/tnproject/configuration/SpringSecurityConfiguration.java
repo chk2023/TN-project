@@ -40,7 +40,7 @@ public class SpringSecurityConfiguration {
                     auth.requestMatchers("/member/findPwd").permitAll();
                     //인가 범위 추가
                     auth.requestMatchers("/timeline").hasAnyAuthority("ADMIN", "COMMON");
-                    auth.requestMatchers("/manager/*/*").hasAuthority("ADMIN");
+                    auth.requestMatchers("/manager/**").hasAuthority("ADMIN");
                     auth.requestMatchers("/post").hasAnyAuthority("ADMIN", "COMMON");
 
 

@@ -5,72 +5,51 @@
 
 <mapper namespace="com._3dhs.tnproject.manager.dao.ReportMapper">
 
-<!--    <select id="viewAllReport" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">-->
-<!--        SELECT-->
-<!--            report_code,-->
-<!--            r_category_code,-->
-<!--            report_text,-->
-<!--            sub_member_code,-->
-<!--            report_date,-->
-<!--            manager_code,-->
-<!--            reporter_code-->
-<!--        FROM-->
-<!--            tbl_report-->
-<!--        ORDER BY-->
-<!--            report_code-->
-<!--    </select>-->
+    <select id="selectTotalCount" resultType="_int" parameterType = "hashMap">
+        SELECT
+            COUNT(*)
+        FROM
+            tbl_report r
+    </select>
 
-
-<!--    <select id="viewAllReport" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">&ndash;&gt;-->
-<!--        SELECT-->
-<!--            tbl_report.report_code,-->
-<!--            tbl_report.r_category_code,-->
-<!--            tbl_report.report_text,-->
-<!--            tbl_report.manager_code,-->
-<!--            tbl_report.report_text,-->
-<!--            tbl_member.member_code,-->
-<!--            tbl_member.report-->
-<!--                tbl_report left join tbl_member on tbl_report.report_code = tbl_member.member_id-->
-<!--            ORDER by tbl_report.report_code asc-->
-<!--    </select>-->
-
-
-    <select id="viewAllReport" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">
+    <select id="selectReportList" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">
         SELECT r.report_code,
                c.r_category_name,
-               r.report_text,
+               substring(r.report_text ,10) report_text,
                r.target_code,
                m.member_code,
                m.member_id,
-               r.report_date
-
+               r.report_content
         FROM tbl_report r
                  JOIN tbl_member m ON r.target_code = m.member_code
                  JOIN tbl_r_category c ON c.r_category_code = r.r_category_code
+        ORDER BY
+            r.report_code DESC
+            LIMIT #{offset}, #{limit}
     </select>
 
 
-
-    <select id="viewOneReport" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">
+    <select id="selectReportDetail" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">
         SELECT
-            report_code,
-            r_category_code,
-            report_text,
-            report_date,
-            report_status,
-            processing_date,
-            processing_text,
-            target_code,
-            manager_code,
-            reporter_code,
-            report_content,
-            post_code,
-            cmt_code
+            r.report_code,
+            c.r_category_name,
+            r.report_text,
+            r.report_status,
+            r.report_content,
+            m.member_id,
+            r.report_date,
+            r.post_code,
+            r.cmt_code
         FROM
-            tbl_report
+            tbl_report r
+                JOIN tbl_member m ON r.target_code = m.member_code
+                JOIN tbl_r_category c ON c.r_category_code = r.r_category_code
         WHERE
             report_code = #{ reportCode }
     </select>
+
+
+
 
     <update id="insertRecord" >
         UPDATE
@@ -82,35 +61,46 @@
     </update>
 
 
-    <select id="viewAllAdmList" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">
+    <select id="selectAdminList" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">
         SELECT
             report_code,
             manager_code,
-            report_text,
+            substring(report_text ,10) report_text,
             report_date,
             processing_text,
             processing_date
+
         FROM
             tbl_report
+
+        ORDER BY
+            report_code DESC
+            LIMIT #{offset}, #{limit}
     </select>
 
-    <select id="viewOneAdmReport" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">
+    <select id="selectAdminDetail" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">
         SELECT
-            report_code,
-            manager_code,
-            report_text,
-            report_date,
-            processing_text,
-            processing_date
+            r.report_code,
+            r.manager_code,
+            c.r_category_name,
+            r.report_text,
+            r.report_date,
+            m.member_id,
+            r.report_status,
+            r.processing_date,
+            r.processing_text
+
         FROM
-            tbl_report
+            tbl_report r
+                JOIN tbl_member m ON r.target_code = m.member_code
+                JOIN  tbl_r_category c ON c.r_category_code = r.r_category_code
 
         WHERE report_code = #{ reportCode }
 
     </select>
 
 
-    <select id="checkAllMember" resultType="com._3dhs.tnproject.member.dto.MemberDTO">
+    <select id="selectMemberList" resultType="com._3dhs.tnproject.member.dto.MemberDTO">
         SELECT
             member_code,
             member_id,
@@ -121,10 +111,14 @@
 
         FROM tbl_member
 
+        ORDER BY
+            member_code ASC
+            LIMIT #{offset}, #{limit}
+
 
     </select>
 
-    <select id="checkOneMember" resultType="com._3dhs.tnproject.member.dto.MemberDTO">
+    <select id="selectOneMember" resultType="com._3dhs.tnproject.member.dto.MemberDTO">
         SELECT
             member_code,
             member_id,
@@ -137,4 +131,6 @@
 
         WHERE member_code = #{ memberCode }
     </select>
+
+
 </mapper>

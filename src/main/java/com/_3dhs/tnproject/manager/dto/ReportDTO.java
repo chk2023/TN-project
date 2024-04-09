@@ -5,6 +5,7 @@ import com._3dhs.tnproject.manager.model.ReportState;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 @Getter
 @Setter
 @ToString
+@Service
 public class ReportDTO {
     private int reportCode;
     private int rCategoryCode;
