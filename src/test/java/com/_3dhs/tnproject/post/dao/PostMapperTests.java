@@ -59,4 +59,5 @@ public class PostMapperTests {
         list.forEach(System.out::println);
         assertNotNull(list);
     }
+
 }

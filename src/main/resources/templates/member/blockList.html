@@ -1,10 +1,50 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <title>차단한 유저</title>
+    <link rel="stylesheet" href="/css/common.css">
 </head>
 <body>
-차단한 유저패이지입니다(TEST)
+<div class="wrap">
+    <header>
+        <div th:replace="~{common/profile.html}"></div>
+        <nav th:replace="~{common/navigation.html}"></nav>
+    </header>
+
+    <main>
+        <form class="title">
+            <button class="backBtn"><img src="/images/btn_arrow.png" alt="뒤로가기 버튼"></button>
+            <div>
+                <h1>차단한 유저 관리</h1>
+            </div>
+            <input class="search_input" type="text" placeholder="검색어를 입력하세요">
+            <button class="closeBtn"><img src="/images/btn_close.png" alt="닫기 버튼"></button>
+        </form>
+        <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
+            <label><h1 th:text="|내가차단한 유저( ${blockMemberCount} )|"></h1></label>
+            <table>
+                <thead>
+                <tr>
+                    <th>사용자 아이디</th>
+                    <th>사용자 닉네임</th>
+                    <th>차단 해제</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="member : ${memberList}">
+                    <td th:text="${member.memberId}"></td>
+                    <td th:text="${member.profile.profileNickname}"></td>
+                    <td><button class="btn" th:onclick="|unblockMemberByCode(${member.memberCode})|">차단해제</button></td>
+
+                </tr>
+                </tbody>
+            </table><br><br>
+        </section>
+    </main>
+</div>
+<script src="/js/pathFinder.js"></script>
+<script src="/js/blockListEvent.js"></script>
 </body>
 </html>

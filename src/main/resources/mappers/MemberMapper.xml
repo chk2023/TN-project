@@ -176,4 +176,47 @@
         INSERT INTO tbl_block(b_member_code, blocked_m_code)
         VALUES (#{memberCode}, #{targerMemberCode})
     </insert>
+<select id="findBlockListByMemberCode">
+    SELECT
+        blocked_m_code
+    FROM tbl_block
+    WHERE b_member_code = #{memberCode}
+</select>
+    <select id="findMemberByMemberCodes" resultMap="memberWithProfileMap">
+        SELECT
+            m.member_code,
+            m.member_id,
+            m.member_pwd,
+            m.member_gender,
+            m.member_age,
+            m.member_birth,
+            m.member_subdate,
+            m.member_status,
+            m.have_tissue,
+            m.member_authority,
+            m.dormant_trans_date,
+            m.suspend_trans_date,
+            m.delete_trans_date,
+            m.is_deleted,
+            p.pr_member_code,
+            p.pr_member_code,
+            p.profile_code,
+            p.profile_nickname,
+            p.profile_statmsg,
+            p.profile_img_path,
+            p.profile_bg_path
+        FROM
+            tbl_member m
+                JOIN tbl_profile p ON m.member_code = p.pr_member_code
+        WHERE m.member_code IN
+        <foreach collection="blockedMemberCodeList" item="memberCode" open="(" separator="," close=")">
+            #{memberCode}
+        </foreach>
+    </select>
+    <delete id="unblockMemberByMemberCode">
+        DELETE FROM tbl_block
+        WHERE
+            b_member_code = #{memberCode}
+        AND blocked_m_code = #{targetMemberCode}
+    </delete>
 </mapper>
