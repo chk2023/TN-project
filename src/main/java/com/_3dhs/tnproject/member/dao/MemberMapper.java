@@ -3,6 +3,7 @@ package com._3dhs.tnproject.member.dao;
 import com._3dhs.tnproject.member.dto.MemberDTO;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 @Mapper
@@ -30,7 +31,7 @@ public interface MemberMapper {
 
     int updateProfile(MemberDTO member);
 
-    int blockMemberByMemberCode(int memberCode, int targetMemberCode);
+    int blockMemberByMemberCode(int memberCode, int targetMemberCode) throws SQLIntegrityConstraintViolationException;
 
     List<Integer> findBlockListByMemberCode(int memberCode);
 

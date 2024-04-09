@@ -33,7 +33,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Controller
@@ -241,8 +243,10 @@ public class MemberController {
     @ResponseBody
     @PostMapping("/blockMember")
     public String blockMemberByMemberCode(@AuthenticationPrincipal MemberDTO member,
-                                          @RequestParam(required = false, defaultValue = "0")int cmtCode,
-                                          @RequestParam(required = false, defaultValue = "0")int postCode) {
+                                          @RequestBody Map<String, Object> jsonData) {
+        int cmtCode = Integer.parseInt(String.valueOf(jsonData.get("cmtCode")));
+        int postCode = Integer.parseInt(String.valueOf(jsonData.get("postCode")));
+
         int targetMemberCode = 0;
         String message = "";
         if (cmtCode > 0) {
@@ -268,7 +272,10 @@ public class MemberController {
     @GetMapping("/blockList")
     public String getBlockListPage(@AuthenticationPrincipal MemberDTO memberDTO, Model model) {
         List<Integer> blockedMemberCodeList = memberService.findBlockListByMemberCode(memberDTO.getMemberCode());
-        List<MemberDTO> blockedMemberList = memberService.findMemberByMemberCodes(blockedMemberCodeList);
+        List<MemberDTO> blockedMemberList = new ArrayList<>();
+        if (blockedMemberCodeList.size() > 0) {
+            blockedMemberList = memberService.findMemberByMemberCodes(blockedMemberCodeList);
+        }
         model.addAttribute("memberList", blockedMemberList);
         model.addAttribute("blockMemberCount",blockedMemberList.size());
         blockedMemberList.forEach(dto -> {

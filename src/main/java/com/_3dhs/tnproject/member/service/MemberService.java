@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 @Service
@@ -91,8 +92,20 @@ public class MemberService {
         if (!(result > 0)) throw new MemberUpdateException("회원 정보 수정에 실패하였습니다.");
     }
 
+    @Transactional
     public int blockMemberByMemberCode(int memberCode, int targetMemberCode) {
-        return memberMapper.blockMemberByMemberCode(memberCode, targetMemberCode);
+        int result = 0;
+        try {
+           result =  memberMapper.blockMemberByMemberCode(memberCode, targetMemberCode);
+        } catch (SQLIntegrityConstraintViolationException e) {
+            e.printStackTrace();
+            result = 999;
+        }
+        return result;
+    }
+    @Transactional
+    public int unblockMemberByMemberCode(int memberCode, int targetMemberCode) {
+        return memberMapper.unblockMemberByMemberCode(memberCode, targetMemberCode);
     }
 
     public List<Integer> findBlockListByMemberCode(int memberCode) {
@@ -103,7 +116,5 @@ public class MemberService {
         return memberMapper.findMemberByMemberCodes(blockedMemberCodeList);
     }
 
-    public int unblockMemberByMemberCode(int memberCode, int targetMemberCode) {
-        return memberMapper.unblockMemberByMemberCode(memberCode, targetMemberCode);
-    }
+
 }

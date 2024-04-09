@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <title>차단한 유저</title>
     <link rel="stylesheet" href="/css/common.css">
+    <style>
+        h3 {
+            padding-left: 30px;
+        }
+    </style>
 </head>
 <body>
 <div class="wrap">
@@ -23,7 +28,7 @@
             <button class="closeBtn"><img src="/images/btn_close.png" alt="닫기 버튼"></button>
         </form>
         <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
-            <label><h1 th:text="|내가차단한 유저( ${blockMemberCount} )|"></h1></label>
+            <label><h3 th:text="|내가차단한 유저( ${blockMemberCount} )|"></h3></label>
             <table>
                 <thead>
                 <tr>
@@ -32,7 +37,12 @@
                     <th>차단 해제</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody th:if="${#lists.isEmpty(memberList)}">
+                <tr>
+                    <td colspan= "3">차단한 유저가 없습니다.</td>
+                </tr>
+                </tbody>
+                <tbody th:if="${not #lists.isEmpty(memberList)}">
                 <tr th:each="member : ${memberList}">
                     <td th:text="${member.memberId}"></td>
                     <td th:text="${member.profile.profileNickname}"></td>
