@@ -60,4 +60,10 @@
         WHERE
             cmt_code = #{ cmtCode }
     </update>
+<select id="getCommentByCommentsCode">
+    SELECT
+        *
+    FROM tbl_comments
+    WHERE cmt_code = #{cmtCode}
+</select>
 </mapper>

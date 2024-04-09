@@ -16,4 +16,6 @@ public interface CommentsMapper {
     int updateComments(int cmtCode, String cmtText);
 
     int deleteComments(int cmtCode);
+
+    CommentsDTO getCommentByCommentsCode(int cmtCode);
 }
