@@ -42,7 +42,7 @@ public class CommentsController {
     public ResponseEntity<String> deleteComments (@RequestBody Map<String, String> request) throws CommentsWriteException {
         int cmtCode = Integer.parseInt(request.get("cmtCode"));
         commentsService.deleteComments(cmtCode);
-        return ResponseEntity.ok("댓글 성공적으로 삭제되었습니다.");
+        return ResponseEntity.ok("댓글 성공적으로 삭제되었습니다");
     }
 
     @GetMapping("/load")
