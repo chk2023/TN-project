@@ -245,6 +245,14 @@
         </if>
         LIMIT #{index}, #{range}
     </select>
-
+    <select id="isFixedPost" resultType="boolean">
+        SELECT
+        EXISTS (
+        SELECT 1
+        FROM post_view
+        WHERE po_member_code = #{memberCode}
+        AND post_is_fixed = 1
+        )
+    </select>
 
 </mapper>

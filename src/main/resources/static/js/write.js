@@ -64,12 +64,6 @@ function removeLabelTextAddNewLabelText() {
     label.insertBefore(document.createTextNode(label.getAttribute("data-value")), label.firstChild);
 }
 
-// 사용자 입력 내용 가져오기 예시
-function getUserInput() {
-    var content = quill.root.innerHTML; // 에디터 내용을 HTML 형태로 가져옴
-    console.log("HTML 내용" + content); // 콘솔에 내용 출력
-}
-
 //태그 설정
 function extractTags(inputString) {
     const regex = /#([\wㄱ-ㅎㅏ-ㅣ가-힣_＆＊＠§※☆★○●◎◇◆□■△▲▽▼→←↑↓↔〓◁◀▷▶♤♠♡♥♧♣⊙◈♨☏☎☜☞↗↙↖↘♭♩♪♬㈜]+)/g;
@@ -102,11 +96,12 @@ document.querySelectorAll('input[name="postDTO.postPrice"]').forEach(input => {
 });
 
 document.querySelector('#작성완료버튼').addEventListener('click', function (e) {
-    //e.preventDefault();
+    e.preventDefault();
     const postTitle = document.querySelector("input[name='postDTO.postTitle']").value;
     const postText = document.querySelector("textarea[name='postDTO.postText']").value;
     const folderCode = document.querySelector("select[name='postDTO.folderCode']").value;
-    const tagInput = document.querySelector("textarea[name='postTagDTO.tagDTO.tagName']").value;
+    const tagInput = document.querySelector("textarea[name='tagDTOList.tagName']").value;
+    const tags = extractTags(tagInput);
     const postState = document.querySelector("input[name='postDTO.postState']:checked").value;
     const postPrice = document.querySelector("input[name='postDTO.postPrice']:checked").value;
     const postIsFixed = document.querySelector("input[name='postDTO.postIsFixed']:checked").value;
@@ -123,131 +118,164 @@ document.querySelector('#작성완료버튼').addEventListener('click', function
         return;
     }
 
-    const tags = extractTags(tagInput);
+    // 폼 데이터 준비
+    const formData = new FormData(document.getElementById('writeForm'));
+    // 기존 폼 데이터 제거 (옵셔널)
+    formData.delete('postDTO.postTitle');
+    formData.delete('postDTO.postText');
+    formData.delete('postDTO.folderCode');
+    formData.delete('postDTO.postState');
+    formData.delete('postDTO.postPrice');
+    formData.delete('postDTO.postIsFixed');
+    formData.getAll('tagDTOList.tagName').forEach(() => formData.delete('tagDTOList.tagName'));
 
-    console.log("타이틀: " + postTitle);
-    console.log("내용: " + postText);
-    console.log("폴더코드 : " + folderCode);
-    console.log("태그 : ", tags);
-    console.log("공개설정 : " + postState);
-    console.log("유료설정 : " + postPrice);
-    console.log("고정설정 : " + postIsFixed);
 
-    getUserInput();
+    formData.append('postDTO.postTitle', postTitle);
+    formData.append('postDTO.postText', postText);
+    formData.append('postDTO.folderCode', folderCode);
+    formData.append('postDTO.postState', postState);
+    formData.append('postDTO.postPrice', postPrice);
+    formData.append('postDTO.postIsFixed', postIsFixed);
 
-    document.getElementById("writeForm").submit();
+    tags.forEach((tag, index) => {
+        formData.append(`tagDTOList[${index}].tagName`, tag);
+    })
+    const imgTags = document.querySelectorAll('img');
+    const fetchPromises = [];
+
+    imgTags.forEach(img => {
+        const currentSrc = img.getAttribute('src');
+
+        // 이미지가 base64로 인코딩된 데이터인지 확인
+        if (currentSrc.startsWith('data:image')) {
+            const splitDataURI = currentSrc.split(',');
+
+            if (splitDataURI[0].includes('base64')) {
+                const base64Data = splitDataURI[1];
+                const formData = new FormData();
+                formData.append('base64Image', base64Data);
+
+                const fetchPromise = fetch('/post/uploadBase64', {
+                    method: 'POST',
+                    enctype: 'multipart/form-data',
+                    body: formData
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        img.setAttribute('src', `/userUploadFiles/post/${data}`);
+                    })
+                    .catch(err => {
+                        console.error('ERROR!! ::', err);
+                    });
+
+                fetchPromises.push(fetchPromise);
+            }
+        }
+    });
+    Promise.all(fetchPromises).then(() => {
+        fetch('/post/write', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                if (!response.ok && !response.redirected) {
+                    throw new Error('Network response was not ok');
+                }
+                if (response.redirected) {
+                    window.location.href = response.url; // 리다이렉트 응답을 받은 경우 새 위치로 이동
+                    return; //추가 처리를 방지
+                }
+                //return response.json(); //JSON 응답을 받은 경우 처리
+            })
+            .then(data => {
+                if (data) { //데이터가 있는 경우만 처리
+                    console.log('Post submission succeeded', data);
+                    window.location.href = '/post/list'; //성공후 페이지 이동
+                }
+            })
+            .catch(error => {
+                console.error('Error during form submission:', error);
+            });
+    }).catch(error => {
+        console.error("이미지 저장 중 에러 발생:", error);
+    });
+    // 기존 파일명과 바뀐 파일명을 폼 데이터에 추가
+    uploadedFileNames.originalNames.forEach((originalName, index) => {
+        formData.append(`attachmentDTOList[${index}].originName`, originalName);
+        formData.append(`attachmentDTOList[${index}].safeName`, uploadedFileNames.newNames[index]);
+    });
+
+    // 폼 데이터와 함께 서버로 제출
+    // fetch('/post/write', {
+    //     method: 'POST',
+    //     body: formData
+    // }).then(response => {
+    //     if (!response.ok) {
+    //         throw new Error('Network response was not ok');
+    //     }
+    //     return response.json();
+    // }).then(data => {
+    //     console.log('Post submission succeeded', data);
+    //     window.location.href = '/post/list'; // or whatever redirect needed
+    // }).catch(error => {
+    //     console.error('Error during form submission:', error);
+    // });
+    //document.getElementById("writeForm").submit();
 });
-
 
 quill.getModule('toolbar').addHandler('image', function () {
-    selectLocalImage();
+    selectImagesAndSend();
 })
 
-function selectLocalImage() {
+function selectImagesAndSend() {
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
+    input.setAttribute('multiple', '');
     input.accept = "image/*";
-    input.click();
     input.onchange = () => {
-        const file = input.files[0];
-        if (file) {
-            const formData = new FormData();
-            formData.append('uploadFile', file); // 서버에 파일 데이터를 'uploadFile'로 전송
+        const files = input.files;
+        const formData = new FormData();
 
-            fetch('/post/upload', {
-                method: 'POST',
-                enctype: 'multipart/form-data',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            }).then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        console.error('Upload failed:', data.error);
-                    } else {
-                        insertToEditor(data.newName, data.originalName);
-                    }
-                }).catch(error => {
+        for (const file of files) {
+            formData.append('uploadFiles', file);
+        }
+
+        fetch('/post/upload', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        }).then(response => response.json())
+            .then(handleUploadResponse)
+            .catch(error => {
                 console.error('Error:', error);
             });
-        }
     };
+    input.click();
 }
 
+// 업로드 응답 처리 및 파일명 저장
+function handleUploadResponse(data) {
+    data.forEach(fileInfo => {
+        insertToEditor(fileInfo.newName, fileInfo.originalName);
+        // 파일명 정보 저장
+        uploadedFileNames.originalNames.push(fileInfo.originalName);
+        uploadedFileNames.newNames.push(fileInfo.newName);
+    });
+}
+
+// 이미지 업로드와 관련된 파일명 정보를 저장할 배열
+let uploadedFileNames = {
+    originalNames: [],
+    newNames: []
+};
+
+// 이미지를 Quill 에디터에 삽입하는 함수
 function insertToEditor(newFileName, originalFileName) {
     const path = `/post/display?fileName=${encodeURIComponent(newFileName)}`;
-    const range = quill.getSelection();
-    quill.insertEmbed(range.index, 'image', path);
-
-    // 새 파일명과 기존 파일명을 hidden input에 저장하여 서버에 전송 준비
-    const newFileNameInput = document.createElement('input');
-    newFileNameInput.setAttribute('type', 'hidden');
-    newFileNameInput.setAttribute('name', 'attachmentDTO.safeName');
-    newFileNameInput.value = newFileName;
-    document.getElementById('writeForm').appendChild(newFileNameInput);
-
-    const originalFileNameInput = document.createElement('input');
-    originalFileNameInput.setAttribute('type', 'hidden');
-    originalFileNameInput.setAttribute('name', 'attachmentDTO.originName');
-    originalFileNameInput.value = originalFileName;
-    document.getElementById('writeForm').appendChild(originalFileNameInput);
+    const range = quill.getSelection(true);
+    quill.insertEmbed(range.index, 'image', path, Quill.sources.USER);
+    quill.setSelection(range.index + 1, Quill.sources.SILENT);
 }
-
-const imgTags = document.querySelectorAll('img');
-
-const fetchPromises = [];
-
-imgTags.forEach(img => {
-    const currentSrc = img.getAttribute('src');
-
-    // 이미지가 base64로 인코딩된 데이터인지 확인
-    if (currentSrc.startsWith('data:image')) {
-        const splitDataURI = currentSrc.split(',');
-
-        if (splitDataURI[0].includes('base64')) {
-            const base64Data = splitDataURI[1];
-            const formData = new FormData();
-            formData.append('base64Image', base64Data);
-
-            const fetchPromise = fetch('/post/uploadBase64', {
-                method: 'POST',
-                enctype: 'multipart/form-data',
-                body: formData
-            })
-                .then(response => response.text())
-                .then(data => {
-                    img.setAttribute('src', `/userUploadFiles/post/${data}`);
-                })
-                .catch(err => {
-                    console.error('ERROR!! ::', err);
-                });
-
-            fetchPromises.push(fetchPromise);
-        }
-    }
-});
-
-Promise.all(fetchPromises).then(() => {
-    // 여기서 폼 제출 로직을 넣거나, 다른 검증을 수행합니다.
-    console.log("모든 이미지가 서버에 저장되었습니다.");
-    // 폼 제출 등의 로직을 실행
-}).catch(error => {
-    console.error("이미지 저장 중 에러 발생:", error);
-    // 에러 처리 로직
-});
-
-document.getElementById('writeForm').addEventListener('submit', function (event) {
-    event.preventDefault(); // 폼의 기본 제출을 막습니다.
-
-    // 위에서 정의한 이미지 처리 로직을 여기에 포함
-    Promise.all(fetchPromises).then(() => {
-        // 이미지 처리가 성공적으로 완료되면, 폼을 제출
-        this.submit();
-    }).catch(error => {
-        console.error("이미지 저장 실패:", error);
-        // 에러가 발생했을 때의 처리 로직
-    });
-});
-
 

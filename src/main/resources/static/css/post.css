@@ -235,6 +235,21 @@ textarea.post_content {
     padding: 0 10px;
 }
 
+.post_setting label:has(input[type="radio"]:disabled) {
+    color: #D9D9D9;
+}
+
+.post_setting input[type="radio"]:disabled {
+    background-color: #D9D9D9;
+    border: none;
+}
+
+.post_setting label:has(input[type="radio"]:disabled)::after {
+    position: static;
+    content: "(고정글은 1개만 설정 가능)";
+    margin-left: 10px;
+}
+
 #priceInput {
     display: none;
 }
@@ -251,6 +266,44 @@ textarea.post_content {
 
 #editorTxtCopy {
     display: none;
+}
+
+.ql-toolbar *::before,
+.ql-toolbar *::after,
+#toolbar *::before,
+#toolbar *::after,
+#editorTxt *:not(.ql-editor.ql-blank)::before,
+#editorTxt *::after {
+    position: static !important;
+}
+
+#toolbar * {
+    float: none !important;
+}
+
+#editorTxt {
+    height: 400px;
+}
+
+#editorTxt u {
+    text-decoration: underline;
+}
+
+#editorTxt s {
+    text-decoration: line-through;
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item::before {
+    content: none !important;
+}
+
+.ql-toolbar.ql-snow .ql-formats {
+    margint-right: 24px;
+}
+
+.ql-toolbar.ql-snow .ql-formats:nth-of-type(6) {
+    margin-right: 0;
 }
 
 /*------------------------------------------

@@ -18,5 +18,5 @@ public class WriteDTO {
 
     private List<AttachmentDTO> attachmentDTOList;
     private List<TagDTO> tagDTOList;
-
+    
 }

@@ -29,7 +29,6 @@ import java.nio.file.NoSuchFileException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 @Slf4j
@@ -93,6 +92,12 @@ public class PostController {
 
         model.addAttribute("folderList", folderList);
         model.addAttribute("postView", postViewLikeCount);
+
+        if (postService.isFixedPost(memberDTO.getMemberCode())) {
+            // 거절 메시지를 모델에 추가하고, 거절 뷰 이름 반환
+            model.addAttribute("message", true);
+        }
+
         return "/post/write";
     }
 
@@ -169,9 +174,11 @@ public class PostController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<Map<String, String>> uploadImagePOST(@RequestParam("uploadFile") MultipartFile uploadFile) {
-        if (uploadFile.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("error", "No file uploaded"));
+    public ResponseEntity<List<Map<String, String>>> uploadImagesPOST(@RequestParam("uploadFiles") MultipartFile[] uploadFiles) {
+        List<Map<String, String>> results = new ArrayList<>();
+
+        if (uploadFiles.length == 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
         String savePath = FileUtil.getFilePath("userUploadFiles" + File.separator + "post");
@@ -181,22 +188,26 @@ public class PostController {
         }
 
         try {
-            String originalFilename = uploadFile.getOriginalFilename();
-            String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
-            String uuid = UUID.randomUUID().toString();
-            String newFileName = uuid + "_" + originalFilename;
+            for (MultipartFile uploadFile : uploadFiles) {
+                if (!uploadFile.isEmpty()) {
+                    String originalFilename = uploadFile.getOriginalFilename();
+                    String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+                    String uuid = UUID.randomUUID().toString();
+                    String newFileName = uuid + "_" + originalFilename;
 
-            File saveFile = new File(uploadPath, newFileName);
-            uploadFile.transferTo(saveFile);
+                    File saveFile = new File(uploadPath, newFileName);
+                    uploadFile.transferTo(saveFile);
 
-            Map<String, String> fileInfo = new HashMap<>();
-            fileInfo.put("originalName", originalFilename);
-            fileInfo.put("newName", newFileName);
-
-            return ResponseEntity.ok(fileInfo);
+                    Map<String, String> fileInfo = new HashMap<>();
+                    fileInfo.put("originalName", originalFilename);
+                    fileInfo.put("newName", newFileName);
+                    results.add(fileInfo);
+                }
+            }
+            return ResponseEntity.ok(results);
         } catch (IOException e) {
             log.error("File upload failed", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonMap("error", "File upload failed"));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 
@@ -251,65 +262,39 @@ public class PostController {
         return new StringJoiner("_").add(truncatedBase64Image.replaceAll(specialCharactersRegex, "")).add(timestamp).toString();
     }
 
+    @Transactional
     @PostMapping("/write")
-    public String postWrite(@AuthenticationPrincipal MemberDTO memberDTO, @ModelAttribute WriteDTO writeDTO, @RequestParam("uploadFile") MultipartFile[] files) {
+    public String postWrite(@AuthenticationPrincipal MemberDTO memberDTO, @ModelAttribute WriteDTO writeDTO, Model model) {
         // 사용자 로그인 상태 검증
         if (memberDTO == null) {
             return "redirect:/member/login"; // 로그인 페이지로 리다이렉트
         }
+
+        List<FolderDTO> folderList = postService.findFolderList(memberDTO.getMemberCode());
+        PostDTO postViewLikeCount = postService.findPostLikeCount(memberDTO.getMemberCode());
+
+        model.addAttribute("folderList", folderList);
+        model.addAttribute("postView", postViewLikeCount);
 
         // Optional을 사용하여 null을 안전하게 처리
         String tags = Optional.ofNullable(writeDTO.getPostTagDTO())
                 .map(PostTagDTO::getTagDTO) // 여기서는 PostTagDTO 인스턴스의 getTagDTO 메소드를 참조
                 .map(TagDTO::getTagName) // 여기서는 TagDTO 인스턴스의 getTagName 메소드를 참조
                 .orElse("");
-
-        // 태그 문자열 분리 및 TagDTO 리스트 생성
-        List<TagDTO> tagDTOList = Arrays.stream(tags.split("\\s+")) // 공백으로 태그를 분리
-                .filter(tag -> !tag.isEmpty())
-                .map(TagDTO::new) // TagDTO 생성자가 태그 이름을 받도록 설정되어야 함
-                .collect(Collectors.toList());
-
-        List<AttachmentDTO> attachments = Arrays.stream(files)
-                .map(file -> {
-                    String originalName = file.getOriginalFilename();
-                    String newName = generateNewFileName(originalName);
-                    storeFile(file, newName);
-                    return new AttachmentDTO(originalName, newName);
-                })
-                .collect(Collectors.toList());
-
-
-        // PostDTO와 TagDTO 리스트를 포함하는 WriteDTO 객체 생성
         PostDTO postDTO = writeDTO.getPostDTO();
-        tagDTOList = writeDTO.getTagDTOList();
-
-
-        //postService.addPostInsert(writeDTO.getPostDTO());
+        List<TagDTO> tagDTOList = writeDTO.getTagDTOList();
+        List<AttachmentDTO> attachmentDTOList = writeDTO.getAttachmentDTOList();
 
         // 데이터 저장 로직 호출
-        System.out.println(writeDTO);
+        System.out.println("포스트DTO : " + postDTO);
+        System.out.println("태그리스트 : " + tagDTOList);
+        System.out.println("어테치먼트리스트 : " + attachmentDTOList);
+        postService.addWritePost(postDTO);
+        postService.addWriteAttachment(attachmentDTOList);
+        postService.addWritePostTag(tagDTOList);
+
 
         return "redirect:/post/list?memberCode=" + memberDTO.getMemberCode() + "";
 
-    }
-
-    private String generateNewFileName(String originalName) {
-        String extension = originalName.substring(originalName.lastIndexOf("."));
-        return UUID.randomUUID().toString() + extension;
-    }
-
-    private void storeFile(MultipartFile file, String newName) {
-        String directoryPath = FileUtil.getFilePath("userUploadFiles" + File.separator + "post");
-        File directory = new File(directoryPath);
-        if (!directory.exists()) {
-            directory.mkdirs();
-        }
-        File newFile = new File(directoryPath + File.separator + newName);
-        try {
-            file.transferTo(newFile);
-        } catch (IOException e) {
-            log.error("Failed to store file " + newName, e);
-        }
     }
 }

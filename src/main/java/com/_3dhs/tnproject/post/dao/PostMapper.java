@@ -35,5 +35,5 @@ public interface PostMapper {
 
     List<PostDTO> findPostList(TabSearchDTO tabSearchDTO);
 
-
+    boolean isFixedPost(int memberCode);
 }
