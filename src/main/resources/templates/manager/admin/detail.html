@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/admindetail.css">
     <script>
         function admUpdate()   {
             document.getElementById(reportDetail).attr('action', '/detail');
@@ -41,15 +42,15 @@
         </form> <br><br>
         <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
             <form id="adminDetail">
-                <label>신고 번호 <input name="reportCode" th:value='${admDet.reportCode}' disabled></label> <br>
-                <label>매니저 코드 <input name="managerCode" th:value='${admDet.managerCode}' disabled></label> <br>
-                <label>신고 구분  <input th:value='${admDet.RCategoryName}' disabled></label> <br>
-                <label>신고 내역  <input th:value='${admDet.reportText}' disabled></label> <br>
-                <label>신고 날짜 <input  th:value='${admDet.reportDate}' disabled></label> <br>
-                <label>신고 대상 유저  <input th:value='${admDet.memberId}' disabled></label> <br>
-                <label>신고 상태  <input th:value='${admDet.reportStatus}' disabled></label> <br>
-                <label>처리 날짜  <input th:value='${admDet.processingDate}' disabled></label> <br>
-                <label>처리 기록  <input th:value='${admDet.processingText}' disabled></label> <br>
+                <label>신고 번호 <b><input name="reportCode" th:value='${admDet.reportCode}' disabled></b></label> <br><br>
+                <label>매니저 코드 <b><input name="managerCode" th:value='${admDet.managerCode}' disabled></b></label> <br><br>
+                <label>신고 구분  <b><input th:value='${admDet.RCategoryName}' disabled></b></label> <br><br>
+                <label>신고 내역 <b> <input th:value='${admDet.reportText}' disabled></b></label> <br><br>
+                <label>신고 날짜<b> <input  th:value='${admDet.reportDate}' disabled></b></label> <br><br>
+                <label>신고 대상 유저  <b><input th:value='${admDet.memberId}' disabled></b></label> <br><br>
+                <label>신고 상태 <b> <input th:value='${admDet.reportStatus}' disabled></b></label> <br><br>
+                <label>처리 날짜 <b> <input th:value='${admDet.processingDate}' disabled></b></label> <br><br>
+                <label>처리 기록 <b> <input th:value='${admDet.processingText}' disabled></b></label> <br><br>
 
 
                 <br><br>

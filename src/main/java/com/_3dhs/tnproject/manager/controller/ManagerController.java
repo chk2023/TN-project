@@ -148,18 +148,6 @@ public class ManagerController {
 //    }
 
 
-//    @Test //신고내역 가짜 데이터 생성
-//    public void testJpa() {
-//        for(int i=1; i<150; i++) {
-//            this.reportService.create(String.format("%d번째 제목입니다", i), String.format("%d번째 내용입니다."), i);
-//
-//        }
-//
-//
-//    }
-
-
-
 
 
 //    @GetMapping("/memberStop")
