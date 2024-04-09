@@ -7,18 +7,22 @@
     <link rel="stylesheet" href="/css/reportdetail.css">
     <script>
         function admUpdate()   {
-        document.getElementById(reportDetail).attr('action', '/detail');
-        document.getElementById(reportDetail).submit();
+            const $form = document.getElementById("reportDetail");
+            $form.action = '/manager/report/admUpdate';
+            $form.submit();
         }
 
         function memStop() {
-        document.getElementById(reportDetail).attr('action', '/memberStop');
-        document.getElementById(reportDetail).submit();
+            const $memberStop =  document.getElementById("reportDetail");
+            $memberStop.action = '/manager/report/memStop';
+            $memberStop.submit();
         }
 
         function memActivate() {
-        document.getElementById(reportDetail).attr('action', '/memActivate');
-        document.getElementById(reportDetail).submit();
+
+            const $memActive = document.getElementById("reportDetail");
+            $memActive.action = '/manager/report/memActive'
+            $memActive.submit();
         }
 
     </script>
@@ -39,9 +43,9 @@
             </div>
         </form> <br><br>
         <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
-            <form id="reportDetail">
+            <form id="reportDetail" method="post">
 
-                    <label>신고 번호  <b><input name="reportCode" th:value="${detail.reportCode}" disabled></b></label> <br><br>
+                    <label>신고 번호  <b th:text="${detail.reportCode}"></b></label> <br><br>
                     <label>신고 구분 코드  <b><input th:value='${detail.RCategoryName}'disabled></b></label> <br><br>
                     <label>신고 내역 <b><input th:value='${detail.reportText}'disabled></b></label> <br><br>
                     <label>처리 상태  <b><input th:value='${detail.reportStatus}'disabled></b></label> <br><br>
@@ -51,7 +55,9 @@
                     <label>신고 대상 포스팅<b><input th:value='${detail.postCode}'disabled></b></label> <br><br>
                     <label>신고 대상 댓글 <b><input th:value='${detail.cmtCode}'disabled></b></label> <br><br>
                     <label>처리 기록 <b><input type="text" name="processingText"></b></label> <br><br>
-
+                    <input type="hidden" name="reportCode" th:value="${detail.reportCode}">
+                    <input type="hidden" name="memberId" th:value="${detail.memberId}">
+<!--                    <input type="hidden" name="memberStatus" th:value="${detail.memberStatus}">-->
 
 
 
@@ -62,10 +68,9 @@
 
 
                 <br><br>
-                <!--            <form class="reportBtn" action="/">-- css 문재 해결 방안 찾아보기 -->
-                <a href="#"><button type="button" onclick="javascript:memActivate();" class="btn skyblue">계정 정지</button></a>
-                <a href="#"><button type='button' onclick="javascript:memStop();" class="btn skyblue">계정 정지 해제</button></a>
-                <a href="#"><button type='button' onclick="javascript:admUpdate();" class="btn skyblue">처리 완료</button></a>
+                <a href="#"><button type="button" onclick="memStop();" class="btn skyblue">계정 정지</button></a>
+                <a href="#"><button type='button' onclick="memActivate();" class="btn skyblue">계정 정지 해제</button></a>
+                <a href="#"><button type="button" onclick="admUpdate();" class="btn skyblue">처리 완료</button></a>
             </form>
 
 

@@ -51,13 +51,22 @@
 
 
 
-    <update id="insertRecord" >
+    <update id="updateReport" >
         UPDATE
             tbl_report
         SET
             processing_text = #{ processingText }
         WHERE
             report_code = #{ reportCode }
+    </update>
+
+    <update id="memberStop">
+        UPDATE
+            tbl_member
+        SET
+            member_status = #{ memberStatus }
+        WHERE
+            member_id = #{ memberId }
     </update>
 
 
