@@ -103,7 +103,9 @@
                 </div>
 
                 <!-- 구매 테스트용 -->
-                <button class="purchaseBtn">유료글 구매</button>
+                {{#if postPrice}}
+                <button class="purchaseBtn" data-postCode="{{postCode}}">유료글 구매</button>
+                {{/if}}
 
                 <div class="showLikeAndComments">
                     <button class="commentsBtn">
@@ -130,5 +132,6 @@
 <script src="/js/timeline.js"></script>
 <script src="/js/scrollEvent.js"></script>
 <script src="/js/pathFinder.js"></script>
+<script src="/js/purchasePost.js"></script>
 </body>
 </html>

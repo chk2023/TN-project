@@ -35,11 +35,11 @@ document.querySelectorAll(".likeBtn").forEach(btn => btn.addEventListener('click
 
             if (likeImg && handleLikeCount) {
                 if (result) {
-                    likeImg.src = "/images/icon_like_active.png";
+                    // likeImg.src = "/images/icon_like_active.png";
                     likeBtn.classList.add("active");
                     handleLikeCount.textContent = parseInt(handleLikeCount.textContent) + 1;
                 } else {
-                    likeImg.src = "/images/icon_like.png";
+                    // likeImg.src = "/images/icon_like.png";
                     likeBtn.classList.remove("active");
                     handleLikeCount.textContent = parseInt(handleLikeCount.textContent) - 1;
                 }

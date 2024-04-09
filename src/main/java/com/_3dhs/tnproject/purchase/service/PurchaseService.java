@@ -25,20 +25,21 @@ public class PurchaseService {
         return purchaseCount > 0;
     }
 
-    public PurchaseDTO getPaidPostInfo(MemberDTO currentMember, Integer postCode) {
-
-        int memberCode = currentMember.getMemberCode();
+    public PurchaseDTO getPaidPostInfo(int memberCode, Integer postCode) {
 
         boolean isPostPurchased = isPostPurchased(memberCode, postCode);
 
-        if (!isPostPurchased) {
+        if (isPostPurchased) {
+            int postPrice = purchaseMapper.getPostPrice(postCode);
+            return new PurchaseDTO("USE", LocalDateTime.now(), postPrice, memberCode, postCode);
+        } else {
             int purchaseCount = purchaseMapper.purchaseCount(memberCode, postCode);
             if (purchaseCount > 0) {
                 int postPrice = purchaseMapper.getPostPrice(postCode);
                 return new PurchaseDTO("USE", LocalDateTime.now(), postPrice, memberCode, postCode);
             }
-
         }
+
         return null;
     }
 
