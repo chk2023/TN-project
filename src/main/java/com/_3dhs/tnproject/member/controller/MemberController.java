@@ -8,6 +8,9 @@ import com._3dhs.tnproject.common.exceptionhandler.member.MemberUpdateException;
 import com._3dhs.tnproject.member.dto.MemberDTO;
 import com._3dhs.tnproject.member.service.AuthService;
 import com._3dhs.tnproject.member.service.MemberService;
+import com._3dhs.tnproject.post.dto.PostDTO;
+import com._3dhs.tnproject.post.service.PostService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -39,6 +42,7 @@ public class MemberController {
     private final MemberService memberService;
     private final AuthService authenticationService;
     private final CommentsService commentsService;
+    private final PostService postService;
     private final PasswordEncoder passwordEncoder;
     private final MessageSourceAccessor messageSourceAccessor;
     private final String defaultPfPath = "/images/icon_user.png";
@@ -46,15 +50,19 @@ public class MemberController {
     private final String pfUploadDir = ResourceUtils.getFile("classpath:static/userUploadFiles/profile").getAbsolutePath();
     private final String bgUploadDir = ResourceUtils.getFile("classpath:static/userUploadFiles/background").getAbsolutePath();
 
-    @Autowired
-    public MemberController(MemberService memberService, AuthService authenticationService, PasswordEncoder passwordEncoder, MessageSourceAccessor messageSourceAccessor, CommentsService commentsService) throws FileNotFoundException {
+    public MemberController(MemberService memberService,
+                            AuthService authenticationService,
+                            CommentsService commentsService,
+                            PostService postService,
+                            PasswordEncoder passwordEncoder,
+                            MessageSourceAccessor messageSourceAccessor) throws FileNotFoundException {
         this.memberService = memberService;
         this.authenticationService = authenticationService;
+        this.commentsService = commentsService;
+        this.postService = postService;
         this.passwordEncoder = passwordEncoder;
         this.messageSourceAccessor = messageSourceAccessor;
-        this.commentsService = commentsService;
     }
-
 
     @GetMapping(value = {"/login"})
     public String loginPage(){
@@ -231,16 +239,29 @@ public class MemberController {
 
     @ResponseBody
     @PostMapping("/blockMember")
-    public String blockMemberByMemberCode(@AuthenticationPrincipal MemberDTO member, int cmtCode) {
-        CommentsDTO dto = commentsService.getCommentByCommentsCode(cmtCode);
-        int targetMemberCode = dto.getMemberCode();
+    public String blockMemberByMemberCode(@AuthenticationPrincipal MemberDTO member,
+                                          @RequestParam(required = false, defaultValue = "0")int cmtCode,
+                                          @RequestParam(required = false, defaultValue = "0")int postCode) {
+        int targetMemberCode = 0;
+        String message = "";
+        if (cmtCode > 0) {
+            CommentsDTO dto = commentsService.getCommentByCommentsCode(cmtCode);
+            targetMemberCode = dto.getMemberCode();
+        } else if (postCode > 0) {
+            PostDTO dto = postService.findPostByPostCode(postCode);
+            targetMemberCode = dto.getMemberCode();
+        } else {
+            return "오류. 댓글코드와 포스트코드중 하나는 전달되어야 합니다.";
+        }
+
         int result = memberService.blockMemberByMemberCode(member.getMemberCode(), targetMemberCode);
 
         if (result > 0) {
-            return messageSourceAccessor.getMessage("member.blockSuccess");
+            message = messageSourceAccessor.getMessage("member.blockSuccess");
         } else {
-            return messageSourceAccessor.getMessage("member.blockFailed");
+            message =  messageSourceAccessor.getMessage("member.blockFailed");
         }
+        return message;
     }
 
 
