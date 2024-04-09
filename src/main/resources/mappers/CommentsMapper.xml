@@ -4,6 +4,19 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com._3dhs.tnproject.comments.dao.CommentsMapper">
+    <resultMap id="commentResultMap" type="com._3dhs.tnproject.comments.dto.CommentsDTO">
+        <id property="cmtCode" column="cmt_code" />
+        <result property="cmtText" column="cmt_text"/>
+        <result property="memberCode" column="member_code"/>
+        <result property="parentsCode" column="parents_code"/>
+        <result property="cmtWriDate" column="cmt_wri_date"/>
+        <result property="cmtModDate" column="cmt_mod_date"/>
+        <result property="cmtDeleDate" column="cmt_dele_date"/>
+        <result property="isDeleted" column="cmt_is_deleted"/>
+        <result property="profile.profileNickname" column="profile_nickname" />
+        <result property="profile.profileImgPath" column="profile_img_path" />
+    </resultMap>
+
     <select id="findCmtCountByPostCode">
         SELECT
             COUNT(*)
@@ -12,12 +25,13 @@
         WHERE post_code = #{postCode}
     </select>
 
-    <select id="selectCommentsList" resultType="com._3dhs.tnproject.comments.dto.CommentsDTO">
+    <select id="selectCommentsList" resultMap="commentResultMap">
         SELECT
-            *
+            c.*, p.profile_nickname, p.profile_img_path
         FROM
-            tbl_comments
-        WHERE post_code = #{postCode}
+            tbl_comments c
+        INNER JOIN tbl_profile p ON c.member_code = p.pr_member_code
+        WHERE c.post_code = #{postCode}
     </select>
 
     <insert id="writeComments">
@@ -27,4 +41,13 @@
             (4, #{comments}, now(), #{memberCode}, DEFAULT, null, null, DEFAULT)
 
     </insert>
+
+    <update id="updateComments">
+        UPDATE
+            tbl_comments
+        SET
+            cmt_text = #{ cmtText }
+        WHERE
+            cmt_code = #{ cmtCode }
+    </update>
 </mapper>

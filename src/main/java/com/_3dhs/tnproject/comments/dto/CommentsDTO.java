@@ -1,5 +1,6 @@
 package com._3dhs.tnproject.comments.dto;
 
+import com._3dhs.tnproject.member.dto.ProfileDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -19,4 +20,5 @@ public class CommentsDTO {
     private LocalDateTime cmtModDate;
     private LocalDateTime cmtDeleDate;
     private boolean isDeleted;
+    private ProfileDTO profile;
 }
