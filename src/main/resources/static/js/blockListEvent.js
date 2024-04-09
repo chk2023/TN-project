@@ -1,3 +1,3 @@
 function unblockMemberByCode(code) {
-    window.location.href = "/member/unblockMember?memberCode=" + code;
+    window.location.href = "/member/unblockMember?targetMemberCode=" + code;
 }
