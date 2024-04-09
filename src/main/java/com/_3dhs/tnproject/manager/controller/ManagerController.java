@@ -115,17 +115,12 @@ public class ManagerController {
 
 
 
-    @PostMapping("/manager/report/detail") //getMapping으로 값을 넘길 이유가 없으니까, 포스트 매핑을 시켜도 될 것 같은데..
+    @PostMapping("/manager/report/admUpdate") //getMapping으로 값을 넘길 이유가 없으니까, 포스트 매핑을 시켜도 될 것 같은데..
     public String updateReport(ReportDTO reportDTO, RedirectAttributes rttr) {
 
-        // 신고 목록 상세에서 내역을 입력해서 완료 버튼을 누르면 해당 내용이 디비에 저장하는 기능
+        // 신고 목록 상세-완료 버튼-서브밋 기능
 
-        Integer updateReportCode = reportDTO.getReportCode();
-        String updateProcessingText = reportDTO.getProcessingText();
-        System.out.println("들어온 recordCode : " + updateReportCode);
-        System.out.println("들어온 incProcessingText : " +updateProcessingText);
-
-        reportService.updateReport(reportDTO.getReportCode(), updateProcessingText);
+        reportService.updateReport(reportDTO);
 
 
         //저장이 잘됐으면 저장 확인 얼럿을 띄워준다

@@ -17,7 +17,7 @@ public interface ReportMapper {
 
     List<ReportDTO> selectAdminList(SelectCriteria selectCriteria);
 
-    ReportDTO updateReport(int reportCode, String processingText);
+    void updateReport(ReportDTO reportDTO);
 
     ReportDTO selectAdminDetail(Integer reportCode);
 

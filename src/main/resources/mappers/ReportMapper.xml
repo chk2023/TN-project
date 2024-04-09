@@ -51,7 +51,7 @@
 
 
 
-    <update id="insertRecord" >
+    <update id="updateReport" >
         UPDATE
             tbl_report
         SET

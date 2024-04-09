@@ -53,8 +53,8 @@ public class ReportService {
     }
 
 
-    public ReportDTO updateReport(int reportCode, String processingText) {
-        return reportMapper.updateReport(reportCode, processingText);
+    public void updateReport(ReportDTO reportDTO) {
+        reportMapper.updateReport(reportDTO);
     }
 
 
