@@ -11,7 +11,7 @@ public interface CommentsMapper {
 
     List<CommentsDTO> selectCommentsList(CommentsDTO commentsDTO);
 
-    int writeComments(String comments, int memberCode);
+    int writeComments(CommentsDTO comments);
 
     int updateComments(int cmtCode, String cmtText);
 

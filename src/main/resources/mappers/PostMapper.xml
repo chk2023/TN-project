@@ -42,7 +42,20 @@
         <result property="profile.profileNickname" column="profile_nickname"/>
         <result property="profile.profileStatmsg" column="profile_statmsg"/>
         <result property="profile.profileImgPath" column="profile_img_path"/>
+<!--        &lt;!&ndash; 댓글 활용을 위한 resultMap &ndash;&gt;-->
+<!--        <association property="comments" resultMap="commentsResultMap"/>-->
     </resultMap>
+
+<!--    &lt;!&ndash; 댓글 활용을 위한 resultMap &ndash;&gt;-->
+<!--    <resultMap id="commentsResultMap" type="com._3dhs.tnproject.comments.dto.CommentsDTO">-->
+<!--        <id property="cmtCode" column="cmt_code"/>-->
+<!--        <result property="cmtWriDate" column="cmt_wri_date"/>-->
+<!--        <result property="cmtText" column="cmt_text"/>-->
+<!--        <association property="profile" javaType="com._3dhs.tnproject.member.dto.ProfileDTO">-->
+<!--            <id property="profileCode" column="profile_code"/>-->
+<!--            <result property="profileNickname" column="profile_nickname"/>-->
+<!--        </association>-->
+<!--    </resultMap>-->
 
     <select id="findAllPostListForDoc" resultMap="postMap">
         SELECT post_code,

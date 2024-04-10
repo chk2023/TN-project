@@ -18,16 +18,26 @@ import java.util.Map;
 public class CommentsController {
     private final CommentsService commentsService;
 
+//    @PostMapping("/write")
+//    public ResponseEntity<String> writeComments (@RequestBody Map<String, String> request,
+//                                 @AuthenticationPrincipal MemberDTO loginMember) throws CommentsWriteException {
+//        int memberCode = loginMember.getMemberCode();
+//        String cmt = request.get("cmt");
+//        commentsService.writeComments(cmt, memberCode);
+//
+//        return ResponseEntity.ok("댓글이 성공적으로 작성되었습니다.");
+//    }
+
+
     @PostMapping("/write")
-    public ResponseEntity<String> writeComments (@RequestBody Map<String, String> request,
-                                 @AuthenticationPrincipal MemberDTO loginMember) throws CommentsWriteException {
-        int memberCode = loginMember.getMemberCode();
-        String cmt = request.get("cmt");
-        commentsService.writeComments(cmt, memberCode);
+    public ResponseEntity<String> writeComments (@RequestBody CommentsDTO comments,
+                                                 @AuthenticationPrincipal MemberDTO member) throws CommentsWriteException {
+        comments.setMemberCode(member.getMemberCode());
+
+        commentsService.writeComments(comments);
 
         return ResponseEntity.ok("댓글이 성공적으로 작성되었습니다.");
     }
-
 
     @PostMapping("/update")
     public ResponseEntity<String> updateComments (@RequestBody Map<String, String> request) throws CommentsWriteException {
