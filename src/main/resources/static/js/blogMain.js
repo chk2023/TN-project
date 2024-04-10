@@ -118,11 +118,11 @@ async function update() {
                                                                 <img src="/images/icon_comment.png" alt="댓글 버튼 아이콘">
                                                                 <span>${escapeHTML(formattedCmtCount)}</span>
                                                             </button>
-                                                            <button class="${escapeHTML(likeBtnStr)}">
+                                                            <button class="${escapeHTML(likeBtnStr)}" data-post-code="${escapeHTML((post.postCode))}">
                                                                 <img src="/images/icon_like.png" alt="좋아요 버튼 아이콘">
-                                                                <span>${escapeHTML(formattedLikeCount)}</span>
+                                                                <span class="likeCount">${escapeHTML(formattedLikeCount)}</span>
                                                             </button>
-                                                        </div>
+                                                        <div>
                                                     </div>
                                                     <div class="thumbnailPhoto">
                                                         <img src="${escapeHTML(post.thumbnailPath ? post.thumbnailPath : '/images/icon_no_image_sm.png')}">                                            
@@ -135,7 +135,7 @@ async function update() {
                 loadedPostIds.push(post.postCode); //로드된 게시물 id 저장
             }
         });
-
+        like();
     } else {
         alert("글이 없습니다.");
     }

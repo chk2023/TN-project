@@ -2,7 +2,14 @@ package com._3dhs.tnproject.post.service;
 
 
 import com._3dhs.tnproject.comments.dao.CommentsMapper;
+import com._3dhs.tnproject.post.dao.LikeMapper;
+import com._3dhs.tnproject.member.dto.ProfileDTO;
 import com._3dhs.tnproject.post.dao.PostMapper;
+import com._3dhs.tnproject.post.dto.AttachmentDTO;
+import com._3dhs.tnproject.post.dto.FolderDTO;
+import com._3dhs.tnproject.post.dto.LikeListDTO;
+import com._3dhs.tnproject.post.dto.PostDTO;
+import com._3dhs.tnproject.post.dto.TabSearchDTO;
 import com._3dhs.tnproject.post.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -10,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -18,17 +26,46 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class PostService {
     private final PostMapper postMapper;
+    private final LikeMapper likeMapper;
     private final CommentsMapper commentsMapper;
     private static final Logger logger = LoggerFactory.getLogger(PostService.class);
 
     @Transactional(readOnly = true)
-    public List<PostDTO> findListByParam(Map<String, Integer> params) {
-        return postMapper.findListByParam(params);
+    public List<PostDTO> findListByParam(Map<String,Integer> params) {
+        List<PostDTO> postList = postMapper.findListByParam(params);
+        for (int i = 0; i < postList.size(); i++) {
+            postList.get(i).setAttachmentList(postMapper.findAttListByPostCode(postList.get(i).getPostCode()));
+            postList.get(i).makeThumbnailPath();
+
+        }
+        return postList;
     }
 
     @Transactional(readOnly = true)
     public List<PostDTO> findLikeListPostByMemberCode(int memberCode) {
-        return postMapper.findLikeListPostByMemberCode(memberCode);
+
+        /* 유료글결제 추가 */
+        Map<String, Integer> params = new HashMap<>();
+        params.put("memberCode", memberCode);
+
+//        List<PostDTO> postList = postMapper.findLikeListPostByMemberCode(memberCode);
+        List<PostDTO> postList = postMapper.findListByParam(params);
+        for (int i = 0; i < postList.size(); i++) {
+            postList.get(i).setAttachmentList(postMapper.findAttListByPostCode(postList.get(i).getPostCode()));
+            postList.get(i).makeThumbnailPath();
+        }
+        return postList;
+    }
+
+    public PostDTO getPostByPostCode(Integer postCode) {
+        PostDTO postDTO = postMapper.findPostByPostCode(postCode);
+
+        List<AttachmentDTO> attachmentList = postMapper.findAttListByPostCode(postCode);
+        postDTO.setAttachmentList(attachmentList);
+
+        postDTO.makeThumbnailPath();
+
+        return postDTO;
     }
 
     @Transactional()
@@ -62,6 +99,29 @@ public class PostService {
 
     public List<PostDTO> findListByPostCodes(Set<Integer> postCodes) {
         return postMapper.findListByPostCodes(postCodes);
+    }
+
+    /* 해당 글에 좋아요를 눌렀는지 확인 */
+    public boolean getHasLiked(int postCode, int memberCode) {
+
+        return likeMapper.getHasLiked(postCode, memberCode);
+    }
+
+    public boolean toggleLike(int postCode, int memberCode) {
+        try {
+            boolean isLiked = likeMapper.getHasLiked(postCode, memberCode);
+            if (isLiked) {
+                likeMapper.cancelLike(postCode, memberCode);
+            } else {
+                LikeListDTO likeListDTO = new LikeListDTO(postCode, memberCode, false);
+                likeMapper.addLike(likeListDTO);
+            }
+            return !isLiked;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 
     @Transactional

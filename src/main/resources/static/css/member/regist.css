@@ -63,6 +63,10 @@ input {
     color: #595959;
 }
 
+.inputs {
+    width: 250px !important;
+}
+
 #mail_input.form-group {
     padding-top: 50px;
 }
@@ -77,6 +81,11 @@ input {
 }
 
 .label {
+    width: 100px; /* 적절한 너비 설정 */
+    margin-right: 10px; /* 라벨과 입력창 사이 간격 설정 */
+}
+
+.labels {
     width: 100px; /* 적절한 너비 설정 */
     margin-right: 10px; /* 라벨과 입력창 사이 간격 설정 */
 }
@@ -142,5 +151,5 @@ input {
     border: none; /* 테두리 제거 */
     border-radius: 20px; /* 둥근 모서리 */
     padding: 10px 20px; /* 내부 여백 */
-    margin-left: 141px;
+    margin-left: 240px;
 }

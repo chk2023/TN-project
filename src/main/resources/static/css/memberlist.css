@@ -1,0 +1,15 @@
+#paging {
+    display : flex;
+    justify-content: center;
+    margin-top : 20px;
+}
+
+#reportList.th1 {
+    width : 60px;
+
+}
+
+th {
+    width : 60px;
+
+}

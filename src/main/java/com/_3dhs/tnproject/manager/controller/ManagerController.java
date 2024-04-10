@@ -1,50 +1,62 @@
 package com._3dhs.tnproject.manager.controller;
 
+import com._3dhs.tnproject.common.paging.Pagenation;
 import com._3dhs.tnproject.manager.dto.ReportDTO;
 import com._3dhs.tnproject.manager.service.ReportService;
 import com._3dhs.tnproject.member.dto.MemberDTO;
 import com._3dhs.tnproject.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
 import org.springframework.context.support.MessageSourceAccessor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
-@Controller
+@Controller @Slf4j
 @RequiredArgsConstructor
 public class ManagerController {
 
     private final ReportService reportService;
     private final MemberService memberService;
     private final MessageSourceAccessor messageSourceAccessor;
+    private final ReportDTO reportDTO;
+
 
 
     @GetMapping("/manager/report/list")
-    public String viewAllReportList(Model model) {
+    public String getReportList(@RequestParam(defaultValue = "1") int page,
+                                @RequestParam(required = false) String searchCondition,
+                                @RequestParam(required = false) String searchValue,
+                                Model model) {
 
-        List<ReportDTO> reportList = reportService.viewAllReport();
-        System.out.println(reportList.size());
-        model.addAttribute("reportList", reportList);
-
-        return "manager/report/list";
+        Map<String, String> searchMap = new HashMap<>();
+        searchMap.put("searchCondition", searchCondition);
+        searchMap.put("searchValue", searchValue);
 
 
+        Map<String, Object> boardListAndPaging = reportService.selectReportList(searchMap, page);
+        model.addAttribute("paging", boardListAndPaging.get("paging"));
+        model.addAttribute("reportList", boardListAndPaging.get("reportList"));
+
+        return "/manager/report/list";
     }
-
 
     @GetMapping("/manager/report/detail")
-    public String viewOneReport(Model model1, Integer reportCode) {
-        ReportDTO report = reportService.viewOneReport(reportCode);
-        model1.addAttribute("detail", report);
-
+    public String getReportDetail(@RequestParam Integer reportCode, Model model) {
+        ReportDTO reportDet = reportService.selectReportDetail(reportCode);
+        model.addAttribute("detail", reportDet) ;
 
         return "manager/report/detail";
-    }
 
+    }
 
     @PostMapping("/manager/report/detail") //getMapping으로 값을 넘길 이유가 없으니까, 포스트 매핑을 시켜도 될 것 같은데..
     public String updateReport(ReportDTO reportDTO, RedirectAttributes rttr) {
@@ -70,40 +82,70 @@ public class ManagerController {
     }
 
 
-    @GetMapping ("/manager/admin/list")
-    public String viewAllAdmList (Model model) {
-        List<ReportDTO> reports = reportService.viewAllAdmList() ;
-        model.addAttribute("reports", reports);
 
+
+    @GetMapping ("/manager/admin/list")
+    public String getAdminList(@RequestParam(defaultValue = "1") int page,
+                                @RequestParam(required = false) String searchCondition,
+                                @RequestParam(required = false) String searchValue,
+                                Model model) {
+
+        Map<String, String> searchMap = new HashMap<>();
+        searchMap.put("searchCondition", searchCondition);
+        searchMap.put("searchValue", searchValue);
+
+        Map<String, Object> boardListAndPaging = reportService.selectAdminList(searchMap, page);
+        model.addAttribute("paging", boardListAndPaging.get("paging"));
+        model.addAttribute("adminList", boardListAndPaging.get("adminList"));
 
         return "/manager/admin/list";
     }
 
 
     @GetMapping("/manager/admin/detail")
-    public String viewOneAdmReport ( Integer reportCode, Model model) {
-        ReportDTO admReport = reportService.findOneReportCord(reportCode);
-        model.addAttribute("report", admReport);
-        return "/manager/admin/detail";
+    public String selectAdminDetail ( Integer reportCode, Model model) {
+        ReportDTO admReport = reportService.selectAdminDetail(reportCode);
+        model.addAttribute("admDet", admReport);
+      log.info(String.valueOf(reportCode));
+      log.info("{}",admReport);
+        return "manager/admin/detail";
     }
 
 
     @GetMapping ("/manager/member/list")
-    public String checkAllMember (Model model) {
-        List<MemberDTO> members = reportService.checkAllMember();
-        model.addAttribute("members", members);
+    public String getMemberList(@RequestParam(defaultValue = "1") int page,
+                               @RequestParam(required = false) String searchCondition,
+                               @RequestParam(required = false) String searchValue,
+                               Model model) {
 
-        return "manager/member/list";
+        Map<String, String> searchMap = new HashMap<>();
+        searchMap.put("searchCondition", searchCondition);
+        searchMap.put("searchValue", searchValue);
+
+        Map<String, Object> boardListAndPaging = reportService.selectMemberList(searchMap, page);
+        model.addAttribute("paging", boardListAndPaging.get("paging"));
+        model.addAttribute("members", boardListAndPaging.get("memberList"));
+
+        return "/manager/member/list";
     }
 
+
     @GetMapping("/manager/member/detail")
-    public String checkOneMember (MemberDTO memberDTO, Model model) {
-        MemberDTO oneMember = reportService.checkOneMember(memberDTO);
+    public String selectOneMember (MemberDTO memberDTO, Model model) {
+        MemberDTO oneMember = reportService.selectOneMember(memberDTO);
         model.addAttribute("oneMember", oneMember);
         return "manager/member/detail";
     }
 
 
+
+
+//    @PostMapping("/report/list")
+//    public ResponseEntity<String> checkDuplication (@RequestBody ReportDTO report) {
+//        log.info("Request Check Id : { } ", report.getReportCode());
+//        String result = ""
+    // 자바단에서 만들어야 알럿을 이걸로 만들 수 있지 않을까..? 생각해보기
+//    }
 
 
 

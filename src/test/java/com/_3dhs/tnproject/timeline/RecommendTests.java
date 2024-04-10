@@ -11,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 @SpringBootTest
 @ContextConfiguration(classes = {TnProjectApplication.class})
@@ -35,7 +36,7 @@ public class RecommendTests {
 
     @Test
     void 유저1번에게_글추천하기() {
-        List<Integer> postCodeList = recommend.recommendPosts(1);
+        Set<Integer> postCodeList = recommend.recommendPosts(1);
         System.out.println("유저 1번에게 추천된 글은...");
         postCodeList.forEach(System.out::println);
 
