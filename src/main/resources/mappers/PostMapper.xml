@@ -254,6 +254,38 @@
         AND post_is_fixed = 1
         )
     </select>
-    
-
+    <insert id="addWritePost">
+        INSERT INTO
+        tbl_post (post_title, post_text, post_status, post_price, post_wri_date, po_member_code, post_is_fixed,
+        folder_code)
+        VALUES
+        (#{postTitle}, #{postText}, #{postState}, #{postPrice}, NOW(), #{memberCode}, #{postIsFixed}, #{folderCode})
+        <selectKey keyProperty="postCode" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+    <insert id="insertAttachments" parameterType="java.util.List">
+        INSERT INTO
+        tbl_attachment (origin_name, safe_name, file_path, post_code)
+        VALUES
+        <foreach collection="list" item="attachmentDTO" separator=",">
+            (#{attachmentDTO.originName}, #{attachmentDTO.safeName}, #{attachmentDTO.filePath},
+            #{attachmentDTO.postCode})
+        </foreach>
+    </insert>
+    <insert id="insertTag">
+        INSERT INTO
+        tbl_tag (tag_name)
+        VALUES
+        (#{tagName})
+        <selectKey keyProperty="tagCode" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+    <insert id="insertPostTag">
+        INSERT INTO
+        tbl_post_tag (post_code, tag_code)
+        VALUES
+        (#{postCode}, #{tagCode})
+    </insert>
 </mapper>

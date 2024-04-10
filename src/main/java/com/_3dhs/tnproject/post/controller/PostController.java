@@ -231,7 +231,7 @@ public class PostController {
     @RequestMapping(value = "/uploadBase64", method = RequestMethod.POST)
     public ResponseEntity<String> handleBase64Upload(@RequestBody String base64Image) {
         try {
-            int maxLength = 20;
+            int maxLength = 10;
             String filename = truncateAndAppendTimestamp(base64Image, maxLength) + ".png";
             String savePath = FileUtil.getFilePath(""); // 빈 문자열 전달 시 기본 경로 사용
             String filePath = savePath + filename;
@@ -276,44 +276,20 @@ public class PostController {
         model.addAttribute("folderList", folderList);
         model.addAttribute("postView", postViewLikeCount);
 
-        // Optional을 사용하여 null을 안전하게 처리
-//        String tags = Optional.ofNullable(writeDTO.getPostTagDTO())
-//                .map(PostTagDTO::getTagDTO) // 여기서는 PostTagDTO 인스턴스의 getTagDTO 메소드를 참조
-//                .map(TagDTO::getTagName) // 여기서는 TagDTO 인스턴스의 getTagName 메소드를 참조
-//                .orElse("");
-
-        // 데이터 저장 로직 호출
-//        System.out.println("포스트DTO : " + postDTO);
-//        System.out.println("태그리스트 : " + tagDTOList);
-//        System.out.println("어테치먼트리스트 : " + attachmentDTOList);
-
-//        postService.addWritePostTag(tagDTOList);
-
-
-//        PostDTO postDTO = writeDTO.getPostDTO();
-//        int postCode = postService.addWritePost(postDTO);  // postCode를 저장하고 반환
-//        postDTO.setPostCode(postCode);  // postDTO에 postCode 설정
-//
-//        List<AttachmentDTO> attachmentDTOList = writeDTO.getAttachmentDTOList();
-//        if (!attachmentDTOList.isEmpty()) {
-//            attachmentDTOList.forEach(attachment -> attachment.setPostCode(postCode));
-//            postService.addWriteAttachment(attachmentDTOList);
-//        }
-//
-//        List<TagDTO> tagDTOList = writeDTO.getTagDTOList();
-//        if (!tagDTOList.isEmpty()) {
-//            tagDTOList.forEach(tag -> {
-//                int tagCode = postService.addWriteTag(tag);  // 각 태그를 저장하고 자동 생성된 tagCode 반환
-//                postService.addWritePostTag(postCode, tagCode);  // PostTag 테이블에 매핑 정보 저장
-//            });
-//        }
-//
-//        return "redirect:/post/list?memberCode=" + memberDTO.getMemberCode() + "";
-        // 서비스 호출로 작업을 위임
         try {
             PostDTO postDTO = writeDTO.getPostDTO();
             List<AttachmentDTO> attachments = writeDTO.getAttachmentDTOList();
             List<TagDTO> tags = writeDTO.getTagDTOList();
+
+            postDTO.setMemberCode(memberDTO.getMemberCode());
+            for (AttachmentDTO attachment : attachments) {
+                attachment.setFilePath("/userUploadFiles/post/");
+            }
+
+            //TODO 에디터에서 선택한 모든 이미지들이 tbl_attachment 에 insert 됨
+            //TODO 1. 버튼 눌렀을때 현재 에디터에 남아있는 이미지들만 insert 되게 해야함.
+            //TODO 2. 위작업 완료하면 서버에 있는 값과 비교해서 실제 쓰이지 않는 서버에 저장된 이미지들 삭제 로직 추가해야함
+            //TODO 3. 이미지 서버에 저장되면서 새로운 이미지파일명이 기존 base64명 + 오리지널 명칭 인데 오리지널 명칭 삭제하는 로직 수정추가 해야함
 
             postService.addWritePostWithAttachmentsAndTags(postDTO, attachments, tags);
             return "redirect:/post/list?memberCode=" + memberDTO.getMemberCode();

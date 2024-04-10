@@ -242,11 +242,13 @@ function selectImagesAndSend() {
 
         fetch('/post/upload', {
             method: 'POST',
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
+            body: formData
+        }).then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok.');
             }
-        }).then(response => response.json())
+            return response.json();
+        })
             .then(handleUploadResponse)
             .catch(error => {
                 console.error('Error:', error);

@@ -39,4 +39,8 @@ public interface PostMapper {
     void insertAttachments(List<AttachmentDTO> attachments);
 
     void insertTags(List<TagDTO> tags);
+
+    void insertTag(TagDTO tag);
+
+    void insertPostTag(PostTagDTO postTag);
 }
