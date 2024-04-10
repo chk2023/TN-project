@@ -122,7 +122,7 @@ async function update() {
                                                                 <img src="/images/icon_like.png" alt="좋아요 버튼 아이콘">
                                                                 <span class="likeCount">${escapeHTML(formattedLikeCount)}</span>
                                                             </button>
-                                                        <div>
+                                                        </div>
                                                     </div>
                                                     <div class="thumbnailPhoto">
                                                         <img src="${escapeHTML(post.thumbnailPath ? post.thumbnailPath : '/images/icon_no_image_sm.png')}">                                            
