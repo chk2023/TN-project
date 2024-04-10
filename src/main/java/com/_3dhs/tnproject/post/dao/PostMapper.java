@@ -52,4 +52,13 @@ public interface PostMapper {
     List<PostDTO> findAllPostList(Map<String, Object> parameters);
 
     List<PostDTO> findPublicPostList(Map<String, Object> parameters);
+
+    List<PostDTO> findAllFolderPostList(Map<String, Object> parameters);
+
+    List<PostDTO> findPublicFolderPostList(Map<String, Object> parameters);
+
+    int selectFolderTotalCount(int folderCode, int memberCode, boolean isOwner);
+
+    int selectPublicFolderTotalCount(int folderCode, int memberCode, boolean isOwner);
+
 }

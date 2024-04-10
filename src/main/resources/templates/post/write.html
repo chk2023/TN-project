@@ -57,7 +57,7 @@
                     <dd>
                         <select name="postDTO.folderCode">
                             <option value="0">선택안함</option>
-                            <th:block th:object="${folderList}" th:each="folder, start : ${folderList}">
+                            <th:block th:each="folder : ${folderList}">
                                 <option th:classappend="${folder.folderName == 'NoName'} ? 'hidden'"
                                         th:value="${folder.folderCode}" th:text="${folder.folderName}"></option>
                             </th:block>

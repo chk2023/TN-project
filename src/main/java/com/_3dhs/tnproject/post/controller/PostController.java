@@ -130,6 +130,30 @@ public class PostController {
         return "/post/list";
     }
 
+    @GetMapping("/folder_list")
+    public String folderListPage(@RequestParam(defaultValue = "1") int page, @ModelAttribute TabSearchDTO tabSearchDTO, @AuthenticationPrincipal MemberDTO member, Model model) {
+        boolean isOwner = member.getMemberCode() == tabSearchDTO.getMemberCode();
+        int totalCount = postService.findTotalCount(tabSearchDTO);
+
+//        Map<String, Object> folderTotalCount = postService.findFolderTotalCount(tabSearchDTO, isOwner);
+
+        MemberDTO memberDTO = memberService.findMainBlogMemberInfo(tabSearchDTO.getMemberCode());
+        List<PostDTO> postList = postService.findPostList(tabSearchDTO); //TODO 수정필
+        memberDTO.setMemberCode(tabSearchDTO.getMemberCode());
+
+
+        Map<String, Object> postFolderAllListAndPaging = postService.findAllFolderPostList(tabSearchDTO, page, isOwner);
+
+        model.addAttribute("member", memberDTO);
+        model.addAttribute("postList", postList);
+        model.addAttribute("paging", postFolderAllListAndPaging.get("paging"));
+        model.addAttribute("postAllList", postFolderAllListAndPaging.get("postAllList"));
+        model.addAttribute("folderCode", tabSearchDTO.getFolderCode());
+//        model.addAttribute("folderCount", folderTotalCount.get("folderCount"));
+
+        return "/post/folder_list";
+    }
+
     @GetMapping("/detail")
     public String blogDetailPage(@AuthenticationPrincipal MemberDTO memberDTO, Integer postCode, Model model, CommentsDTO commentsDTO) {
         //1. 해당하는 코드의 post정보를 불러오기

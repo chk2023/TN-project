@@ -379,9 +379,58 @@
         post_view
         WHERE
         po_member_code = #{memberCode} AND
+        post_status = 'PUBLIC' AND
+        folder_code = #{folderCode}
+        ORDER BY
+        post_wri_date DESC
+        LIMIT #{criteria.offset}, #{criteria.limit}
+    </select>
+
+    <select id="findAllFolderPostList" resultMap="postTblMap">
+        SELECT
+        *
+        FROM
+        post_view
+        WHERE
+        po_member_code = #{memberCode} AND
+        post_status IN ('PUBLIC','PRIVATE') AND
+        folder_code = #{folderCode}
+        ORDER BY
+        post_wri_date DESC
+        LIMIT #{criteria.offset}, #{criteria.limit}
+    </select>
+
+    <select id="findPublicFolderPostList" resultMap="postTblMap">
+        SELECT
+        *
+        FROM
+        post_view
+        WHERE
+        po_member_code = #{memberCode} AND
         post_status = 'PUBLIC'
         ORDER BY
         post_wri_date DESC
         LIMIT #{criteria.offset}, #{criteria.limit}
+    </select>
+
+    <select id="selectFolderTotalCount">
+        SELECT
+        COUNT(*) AS count
+        FROM
+        post_view
+        WHERE
+        po_member_code = #{memberCode} AND
+        post_status IN ('PUBLIC','PRIVATE') AND
+        folder_code = #{folderCode}
+    </select>
+
+    <select id="selectPublicFolderTotalCount">
+        SELECT
+        COUNT(*) AS count
+        FROM
+        post_view
+        WHERE
+        po_member_code = #{memberCode} AND
+        post_status = 'PUBLIC'
     </select>
 </mapper>

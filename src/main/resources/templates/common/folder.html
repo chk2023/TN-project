@@ -16,9 +16,11 @@
         </li>
         <th:block th:each="folder : ${folderList}">
             <li th:classappend="${folder.folderName == 'NoName'} ? 'hidden'" draggable="true">
-                <input type="hidden" th:value="${folder.folderCode}"/>
-                <img th:src="${folder.folderIconPath}" alt="폴더 아이콘">
-                <span th:text="${folder.folderName}"></span>
+                <a th:href="@{'/post/folder_list'(memberCode=${folder.fMemberCode}, folderCode=${folder.folderCode})}">
+                    <input type="hidden" th:value="${folder.folderCode}"/>
+                    <img th:src="${folder.folderIconPath}" alt="폴더 아이콘">
+                    <span th:text="${folder.folderName}"></span>
+                </a>
             </li>
         </th:block>
     </ul>
@@ -27,4 +29,12 @@
         <img src="/images/icon_folder_setting.png" alt="폴더 편집 버튼">
     </button>
 </div>
+<script>
+    function folderAllList() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const memberCode = urlParams.get('memberCode');
+
+        location.href = "/post/list?memberCode=" + memberCode;
+    }
+</script>
 </html>

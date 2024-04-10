@@ -244,4 +244,65 @@ public class PostService {
 
         return postAllListAndPaging;
     }
+
+    @Transactional
+    public Map<String, Object> findAllFolderPostList(TabSearchDTO tabSearchDTO, int page, boolean isOwner) {
+        int totalCount;
+        SelectCriteria criteria;
+        List<PostDTO> postAllList;
+        Map<String, Object> parameters = new HashMap<>();
+        // 페이징 처리와 연관된 값을 계산하여 SelectCriteria 타입의 객체에 담는다
+        int limit = 10;         // 한 페이지에 보여줄 게시물의 수
+        int buttonAmount = 5;   // 한 번에 보여질 페이징 버튼의 수
+
+        parameters.put("memberCode", tabSearchDTO.getMemberCode());
+        parameters.put("folderCode", tabSearchDTO.getFolderCode());
+
+        System.out.println("폴더코드 : " + tabSearchDTO.getFolderCode());
+        System.out.println("멤버코드 : " + tabSearchDTO.getMemberCode());
+        if (isOwner) {
+            // 사용자가 블로그 소유자인 경우, 공개 및 비공개 게시글 모두 조회
+            totalCount = postMapper.selectFolderTotalCount(tabSearchDTO.getFolderCode(), tabSearchDTO.getMemberCode(), isOwner);
+            criteria = Pagenation.getSelectCriteriaWithoutSearch(page, totalCount, limit, buttonAmount);
+            parameters.put("criteria", criteria);
+            postAllList = postMapper.findAllFolderPostList(parameters);
+        } else {
+            // 사용자가 블로그 소유자와 다른경우, 공개 게시글만 조회
+            totalCount = postMapper.selectPublicFolderTotalCount(tabSearchDTO.getFolderCode(), tabSearchDTO.getMemberCode(), isOwner);
+            criteria = Pagenation.getSelectCriteriaWithoutSearch(page, totalCount, limit, buttonAmount);
+            parameters.put("criteria", criteria);
+            postAllList = postMapper.findPublicFolderPostList(parameters);
+        }
+
+
+        Map<String, Object> postFolderAllListAndPaging = new HashMap<>();
+        postFolderAllListAndPaging.put("paging", criteria);
+        postFolderAllListAndPaging.put("postAllList", postAllList);
+        postFolderAllListAndPaging.put("totalCount", totalCount);
+
+        return postFolderAllListAndPaging;
+    }
+
+//    @Transactional
+//    public Map<String, Object> findFolderTotalCount(TabSearchDTO tabSearchDTO, boolean isOwner) {
+//        Map<String, Object> parameters = new HashMap<>();
+//        parameters.put("memberCode", tabSearchDTO.getMemberCode());
+//        parameters.put("folderCode", tabSearchDTO.getFolderCode());
+//        TabSearchDTO postAllList;
+//
+//        if (isOwner) {
+//            // 사용자가 블로그 소유자인 경우, 공개 및 비공개 게시글 모두 조회
+//            postAllList = postMapper.findAllFolderPostListCount(parameters);
+//        } else {
+//            // 사용자가 블로그 소유자와 다른경우, 공개 게시글만 조회
+//            postAllList = postMapper.findPublicFolderPostListCount(parameters);
+//        }
+//
+//
+//        Map<String, Object> postAllFolderListCount = new HashMap<>();
+//        postAllFolderListCount.put("folderCount", postAllList);
+//
+//        return postAllFolderListCount;
+//    }
+
 }
