@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class PurchaseService {
@@ -72,4 +73,7 @@ public class PurchaseService {
 
     }
 
+    public List<PurchaseDTO> getPurchaseList(int memberCode) {
+        return null;
+    }
 }
