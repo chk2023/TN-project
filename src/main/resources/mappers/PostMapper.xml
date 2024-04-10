@@ -168,6 +168,16 @@
 
 
 
+    <select id="getPostByPostCode" resultType="com._3dhs.tnproject.post.dto.PostDTO">
+        SELECT
+            *
+        FROM
+            tbl_post
+        WHERE
+            post_code = #{postCode}
+    </select>
+
+
     <insert id="updateFolders" parameterType="java.util.List">
         INSERT INTO
             tbl_folder (folder_code, folder_name, folder_icon_path, folder_sequence, f_member_code, folder_status)

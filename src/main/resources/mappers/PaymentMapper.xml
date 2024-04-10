@@ -11,9 +11,9 @@
 
     <insert id="insertPayment" parameterType="com._3dhs.tnproject.payment.dto.PaymentDTO">
         INSERT INTO
-            tbl_tissue (imp_uid, merchant_uid, order_class, order_date, tissue_price, t_member_code, post_code)
+            tbl_tissue (imp_uid, merchant_uid, order_class, order_date, tissue_price, t_member_code)
         VALUES
-            ( #{impUid}, #{merchantUid}, #{orderClass}, #{orderDate}, #{tissuePrice}, #{tMemberCode}, #{postCode})
+            ( #{impUid}, #{merchantUid}, #{orderClass}, #{orderDate}, #{tissuePrice}, #{tMemberCode})
     </insert>
 
 

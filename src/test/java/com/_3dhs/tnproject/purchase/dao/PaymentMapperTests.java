@@ -25,7 +25,7 @@ public class PaymentMapperTests {
                 1
         );
 
-        paymentMapper.insertPayment(tissueDTO);
+        paymentMapper.insertPayment(paymentDTO);
 
     }
 }

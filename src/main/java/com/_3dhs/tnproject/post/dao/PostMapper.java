@@ -21,6 +21,8 @@ public interface PostMapper {
 
     List<PostDTO> findLikeListPostByMemberCode(int memberCode);
 
+    PostDTO getPostByPostCode(Integer postCode);
+
     void updateFolders(List<FolderDTO> requestBody);
 
     List<FolderDTO> findFolderList(int memberCode);
