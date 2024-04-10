@@ -9,5 +9,7 @@ public interface PurchaseMapper {
 
     int getPostPrice(Integer postCode);
 
+
+
     void insertPurchase(PurchaseDTO purchaseDTO);
 }

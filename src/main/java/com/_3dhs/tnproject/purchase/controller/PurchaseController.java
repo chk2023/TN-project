@@ -38,45 +38,33 @@ public class PurchaseController {
 
     @PostMapping("/getPaidPostInfo")
     @ResponseBody
-    public String getPostInfo(@RequestBody PostDTO postDTO, @AuthenticationPrincipal MemberDTO memberDTO) {
+    public ResponseEntity<String> getPostInfo(@RequestBody PostDTO postDTO, @AuthenticationPrincipal MemberDTO memberDTO) {
+
         int memberCode = memberDTO.getMemberCode();
 
-//        PostDTO postDTO = postService.getPostByPostCode(postCode);
+        // 결제를 요청하고 구매 정보를 가져옴
+        PurchaseDTO purchaseDTO = purchaseService.getPaidPostInfo(memberDTO, postDTO.getPostCode());
 
-//        boolean isPostPurchased = purchaseService.isPostPurchased(currentMember.getMemberCode(), postCode);
-        PurchaseDTO purchased = purchaseService.getPaidPostInfo(memberCode, postDTO.getPostCode());
 
-        if (purchased != null) {
+        // 구매 정보가 null이 아니고 결제가 성공했을 때 티슈를 업데이트하고 DB에 저장
+        if (purchaseDTO != null) {
 
+            int postPrice = purchaseService.getPostPrice(postDTO.getPostCode());
+            int ntissuePrice = memberDTO.getHaveTissue() - postPrice;
+
+            if (ntissuePrice >= 0) {
+                memberService.updateHaveTissue(memberDTO);
+                return ResponseEntity.ok("결제가 완료되었습니다.");
+            } else {
+                return ResponseEntity.ok("티슈가 부족하여 결제가 취소됩니다.");
+            }
         } else {
-
+            return ResponseEntity.ok("구매 정보를 찾을 수 없습니다.");
         }
 
-        return null;
     }
 
-    // 서비스로 이동
-    @PostMapping("/purchaseSuccess")
-    public String purchaseSuccess(@RequestParam int postCode, Authentication authentication) {
 
-        MemberDTO currentMember = (MemberDTO) authentication.getPrincipal();
-        int memberCode = currentMember.getMemberCode();
-        int tissuePrice = purchaseService.getPostPrice(postCode);
-
-        int ntissuePrice = currentMember.getHaveTissue() - tissuePrice;
-        memberService.updateHaveTissue(currentMember);
-
-        PurchaseDTO purchaseDTO = new PurchaseDTO(
-                "USE",
-                LocalDateTime.now(),
-                tissuePrice,
-                currentMember.getMemberCode(),
-                postCode
-        );
-        purchaseService.savePurchaseList(purchaseDTO);
-
-        return "/purchase_success";
-    }
 
 
 
