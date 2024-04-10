@@ -1,10 +1,8 @@
 package com._3dhs.tnproject.post.dao;
 
 
-import com._3dhs.tnproject.member.dto.ProfileDTO;
 import com._3dhs.tnproject.post.dto.*;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -13,7 +11,7 @@ import java.util.Set;
 @Mapper
 public interface PostMapper {
 
-    List<PostDTO> findListByParam(Map<String ,Integer> params);
+    List<PostDTO> findListByParam(Map<String, Integer> params);
 
     List<LikeListDTO> findLikeListByCode(int postCode);
 
@@ -48,4 +46,10 @@ public interface PostMapper {
     void insertTag(TagDTO tag);
 
     void insertPostTag(PostTagDTO postTag);
+
+    int selectTotalCount(TabSearchDTO tabSearchDTO);
+
+    List<PostDTO> findAllPostList(Map<String, Object> parameters);
+
+    List<PostDTO> findPublicPostList(Map<String, Object> parameters);
 }
