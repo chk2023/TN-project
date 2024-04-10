@@ -9,6 +9,7 @@ import com._3dhs.tnproject.post.service.PostService;
 import com._3dhs.tnproject.post.util.FileUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jsoup.Jsoup;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -152,6 +153,7 @@ public class PostController {
     public @ResponseBody List<PostDTO> findTabMenuPostList(@ModelAttribute TabSearchDTO tabSearchDTO, @AuthenticationPrincipal MemberDTO member) {
         List<PostDTO> postList = postService.findPostList(tabSearchDTO);
         postList.forEach(dto -> {
+            dto.setPostText(Jsoup.parse(dto.getPostText()).text());
             dto.setLiked(likeService.getHasLiked(dto.getPostCode(), member.getMemberCode()));
         });
         return postList;
@@ -169,7 +171,6 @@ public class PostController {
         }
         postService.updateFolders(requestBody);
 
-        //return "redirect:/post/main?memberCode="+memberDTO.getMemberCode()+"";
         return "redirect:memberCode=" + memberDTO.getMemberCode() + "";
     }
 
@@ -283,7 +284,7 @@ public class PostController {
 
             postDTO.setMemberCode(memberDTO.getMemberCode());
             for (AttachmentDTO attachment : attachments) {
-                attachment.setFilePath("/userUploadFiles/post/");
+                attachment.setFilePath("/userUploadFiles/post");
             }
 
             //TODO 에디터에서 선택한 모든 이미지들이 tbl_attachment 에 insert 됨

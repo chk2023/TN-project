@@ -21,7 +21,7 @@ function tabMenuClick(e) {
 
         loadedPostIds = []; //중복 체크 배열 초기화
         $blogList.innerHTML = ''; // 컨테이너 초기화
-        index=0; //로드할 게시물 시작점 초기화
+        index = 0; //로드할 게시물 시작점 초기화
         update(); //비동기 조회 내용 로드
     }
 }
@@ -39,9 +39,9 @@ document.addEventListener('click', function (e) {
         targetOptionBtn.classList.add("active"); //클릭된 .optionBtn에만 active 클래스 추가
     } else if (targetViewTypeBtn) {
         $viewBtn.classList.toggle("active"); //클릭된 .viewBtn 바로 아래 버튼에 토글 active 클래스
-        if(e.target.textContent === "블로그식 보기") {
+        if (e.target.textContent === "블로그식 보기") {
             $blogList.classList.remove("snsList"); //블로그식 보기 클릭시 snsList 클래스 제거
-        } else if(e.target.textContent === "SNS식 보기") {
+        } else if (e.target.textContent === "SNS식 보기") {
             $blogList.classList.add("snsList"); //sns식 보기 클릭시 snsList 클래스 추가
         }
     } else {
@@ -64,7 +64,7 @@ function folderAllList() {
     const urlParams = new URLSearchParams(window.location.search);
     const memberCode = urlParams.get('memberCode');
 
-    location.href = "/post/list?memberCode="+memberCode;
+    location.href = "/post/list?memberCode=" + memberCode;
 }
 
 async function update() {
@@ -73,12 +73,12 @@ async function update() {
 
     const urlParams = new URLSearchParams(window.location.search);
     const memberCode = urlParams.get('memberCode');
-    const response = await fetch('/post/load?memberCode='+memberCode+'&tabMenu='+tabMenu+'&index='+index+'&range='+range);
+    const response = await fetch('/post/load?memberCode=' + memberCode + '&tabMenu=' + tabMenu + '&index=' + index + '&range=' + range);
     const result = await response.json();
 
     if (result.length) {
         result.forEach(post => {
-            if(!loadedPostIds.includes(post.postCode)) { //중복제거 로직 -> 게시물 고유 id가 loadedPostIds 배열에 없다면, 화면에 표시하고 배열에 추가
+            if (!loadedPostIds.includes(post.postCode)) { //중복제거 로직 -> 게시물 고유 id가 loadedPostIds 배열에 없다면, 화면에 표시하고 배열에 추가
                 const $li = document.createElement('li');
                 const $fragment = document.createDocumentFragment();
 
@@ -92,7 +92,7 @@ async function update() {
                 const postElement = `
                                                 <div class="list_head">
                                                     <div class="prof_photo">
-                                                        <img src="${escapeHTML(post.thumbnailPath ? post.thumbnailPath : '/images/icon_user.png')}" alt="프로필 사진">
+                                                        <img src="${escapeHTML(post.profile.profileImgPath ? post.profile.profileImgPath : '/images/icon_user.png')}" alt="프로필 사진">
                                                     </div>
                                                     <div>
                                                         <div>
@@ -108,20 +108,24 @@ async function update() {
                                                     </ul>
                                                 </div>
                                                 <div class="list_body">
-                                                <div>
-                                                    <strong class="contentTit">${escapeHTML(post.postTitle)}</strong>
-                                                    <div class="contentsTxt">
-                                                        <p>${escapeHTML(post.postText)}</p>
+                                                    <div>
+                                                        <strong class="contentTit">${escapeHTML(post.postTitle)}</strong>
+                                                        <div class="contentsTxt">
+                                                            <p>${escapeHTML(post.postText)}</p>
+                                                        </div>
+                                                        <div class="showLikeAndComments">
+                                                            <button class="commentsBtn">
+                                                                <img src="/images/icon_comment.png" alt="댓글 버튼 아이콘">
+                                                                <span>${escapeHTML(formattedCmtCount)}</span>
+                                                            </button>
+                                                            <button class="${escapeHTML(likeBtnStr)}">
+                                                                <img src="/images/icon_like.png" alt="좋아요 버튼 아이콘">
+                                                                <span>${escapeHTML(formattedLikeCount)}</span>
+                                                            </button>
+                                                        </div>
                                                     </div>
-                                                    <div class="showLikeAndComments">
-                                                        <button class="commentsBtn">
-                                                            <img src="/images/icon_comment.png" alt="댓글 버튼 아이콘">
-                                                            <span>${escapeHTML(formattedCmtCount)}</span>
-                                                        </button>
-                                                        <button class="${escapeHTML(likeBtnStr)}">
-                                                            <img src="/images/icon_like.png" alt="좋아요 버튼 아이콘">
-                                                            <span>${escapeHTML(formattedLikeCount)}</span>
-                                                        </button>
+                                                    <div class="thumbnailPhoto">
+                                                        <img src="${escapeHTML(post.thumbnailPath ? post.thumbnailPath : '/images/icon_no_image_sm.png')}">                                            
                                                     </div>
                                                 </div>
                                         `;
@@ -147,7 +151,9 @@ function escapeHTML(text) {
         '"': '&quot;',
         "'": '&#039;'
     };
-    return String(text).replace(/[&<>"']/g, function(m) { return map[m]; });
+    return String(text).replace(/[&<>"']/g, function (m) {
+        return map[m];
+    });
 }
 
 // 초기 로드

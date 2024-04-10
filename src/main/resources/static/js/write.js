@@ -129,7 +129,6 @@ document.querySelector('#작성완료버튼').addEventListener('click', function
     formData.delete('postDTO.postIsFixed');
     formData.getAll('tagDTOList.tagName').forEach(() => formData.delete('tagDTOList.tagName'));
 
-
     formData.append('postDTO.postTitle', postTitle);
     formData.append('postDTO.postText', postText);
     formData.append('postDTO.folderCode', folderCode);
@@ -204,23 +203,6 @@ document.querySelector('#작성완료버튼').addEventListener('click', function
         formData.append(`attachmentDTOList[${index}].originName`, originalName);
         formData.append(`attachmentDTOList[${index}].safeName`, uploadedFileNames.newNames[index]);
     });
-
-    // 폼 데이터와 함께 서버로 제출
-    // fetch('/post/write', {
-    //     method: 'POST',
-    //     body: formData
-    // }).then(response => {
-    //     if (!response.ok) {
-    //         throw new Error('Network response was not ok');
-    //     }
-    //     return response.json();
-    // }).then(data => {
-    //     console.log('Post submission succeeded', data);
-    //     window.location.href = '/post/list'; // or whatever redirect needed
-    // }).catch(error => {
-    //     console.error('Error during form submission:', error);
-    // });
-    //document.getElementById("writeForm").submit();
 });
 
 quill.getModule('toolbar').addHandler('image', function () {

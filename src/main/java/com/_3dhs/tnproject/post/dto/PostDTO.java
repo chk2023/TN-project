@@ -44,7 +44,7 @@ public class PostDTO {
         if (attachmentList.size() > index) {
             path = attachmentList.get(index).getFilePath();
             path += "/" + attachmentList.get(index).getSafeName();
-        } else path = "/images/icon_default_photo.png";
+        } else path = "/images/icon_no_image_sm.png";
         return path;
     }
 
