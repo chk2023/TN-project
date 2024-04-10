@@ -12,4 +12,5 @@ public interface PurchaseMapper {
 
 
     void insertPurchase(PurchaseDTO purchaseDTO);
+
 }

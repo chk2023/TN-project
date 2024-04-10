@@ -38,7 +38,7 @@ public class PurchaseController {
 
     @PostMapping("/getPaidPostInfo")
     @ResponseBody
-    public ResponseEntity<String> getPostInfo(@RequestBody PostDTO postDTO, @AuthenticationPrincipal MemberDTO memberDTO) {
+    public ResponseEntity<PurchaseDTO> getPostInfo(@RequestBody PostDTO postDTO, @AuthenticationPrincipal MemberDTO memberDTO) {
 
         int memberCode = memberDTO.getMemberCode();
 
@@ -53,16 +53,19 @@ public class PurchaseController {
             int ntissuePrice = memberDTO.getHaveTissue() - postPrice;
 
             if (ntissuePrice >= 0) {
+                memberDTO.setHaveTissue(ntissuePrice);
                 memberService.updateHaveTissue(memberDTO);
-                return ResponseEntity.ok("결제가 완료되었습니다.");
+                return ResponseEntity.ok(purchaseDTO);
             } else {
-                return ResponseEntity.ok("티슈가 부족하여 결제가 취소됩니다.");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
             }
         } else {
-            return ResponseEntity.ok("구매 정보를 찾을 수 없습니다.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
     }
+
+
 
 
 

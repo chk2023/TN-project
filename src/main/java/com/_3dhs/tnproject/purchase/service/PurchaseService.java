@@ -5,6 +5,7 @@ import com._3dhs.tnproject.purchase.dao.PurchaseMapper;
 import com._3dhs.tnproject.purchase.dto.PurchaseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -23,6 +24,7 @@ public class PurchaseService {
 
         return purchaseCount > 0;
     }
+
 
     public PurchaseDTO getPaidPostInfo(MemberDTO memberDTO, int postCode) {
 
@@ -69,6 +71,5 @@ public class PurchaseService {
         purchaseMapper.insertPurchase(purchaseDTO);
 
     }
-
 
 }

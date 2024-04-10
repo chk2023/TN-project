@@ -5,6 +5,7 @@ import com._3dhs.tnproject.common.exceptionhandler.member.MemberRemoveException;
 import com._3dhs.tnproject.common.exceptionhandler.member.MemberUpdateException;
 import com._3dhs.tnproject.member.dao.MemberMapper;
 import com._3dhs.tnproject.member.dto.MemberDTO;
+import com._3dhs.tnproject.purchase.dto.PurchaseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -87,4 +88,5 @@ public class MemberService {
 
         if (!(result > 0)) throw new MemberUpdateException("회원 정보 수정에 실패하였습니다.");
     }
+
 }
