@@ -9,6 +9,7 @@
         <id property="orderCode" column="order_code"/>
     </resultMap>
 
+
     <select id="purchaseCount" parameterType="map" resultType="int">
         SELECT
             COUNT(*)
@@ -34,6 +35,14 @@
             tbl_tissue (order_class, order_date, tissue_price, t_member_code, post_code)
         VALUES
             (#{orderClass}, #{orderDate}, #{tissuePrice}, #{tMemberCode}, #{postCode})
+    </insert>
+
+    <insert id="selectPurchaseList" parameterType="com._3dhs.tnproject.purchase.dto.PurchaseDTO">
+
+    </insert>
+
+    <insert id="selectPurchaseList" parameterType="com._3dhs.tnproject.payment.dto.PaymentDTO">
+
     </insert>
 
 </mapper>

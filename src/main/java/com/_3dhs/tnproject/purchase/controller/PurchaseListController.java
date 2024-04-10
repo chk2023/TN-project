@@ -24,7 +24,7 @@ public class PurchaseListController {
     @GetMapping("/purchase/list")
     public String getPurchaseListPage (Model model, @AuthenticationPrincipal MemberDTO memberDTO) {
 
-        List<PurchaseDTO> purchaseList = purchaseService.getPurchaseList(memberDTO.getMemberCode());
+        List<String> purchaseList = purchaseService.getPurchaseList(memberDTO.getMemberCode());
         model.addAttribute("purchaseList", purchaseList);
 
         return "/purchase/list";
