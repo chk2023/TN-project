@@ -1,17 +1,13 @@
 package com._3dhs.tnproject.post.service;
 
-
 import com._3dhs.tnproject.comments.dao.CommentsMapper;
+import com._3dhs.tnproject.common.paging.Pagenation;
+import com._3dhs.tnproject.common.paging.SelectCriteria;
 import com._3dhs.tnproject.post.dao.LikeMapper;
-import com._3dhs.tnproject.member.dto.ProfileDTO;
 import com._3dhs.tnproject.post.dao.PostMapper;
-import com._3dhs.tnproject.post.dto.AttachmentDTO;
-import com._3dhs.tnproject.post.dto.FolderDTO;
-import com._3dhs.tnproject.post.dto.LikeListDTO;
-import com._3dhs.tnproject.post.dto.PostDTO;
-import com._3dhs.tnproject.post.dto.TabSearchDTO;
 import com._3dhs.tnproject.post.dto.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -22,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PostService {
@@ -31,7 +28,7 @@ public class PostService {
     private static final Logger logger = LoggerFactory.getLogger(PostService.class);
 
     @Transactional(readOnly = true)
-    public List<PostDTO> findListByParam(Map<String,Integer> params) {
+    public List<PostDTO> findListByParam(Map<String, Integer> params) {
         List<PostDTO> postList = postMapper.findListByParam(params);
         for (int i = 0; i < postList.size(); i++) {
             postList.get(i).setAttachmentList(postMapper.findAttListByPostCode(postList.get(i).getPostCode()));
@@ -211,5 +208,40 @@ public class PostService {
             logger.error("Failed to write post with attachments and tags", e);
             throw new RuntimeException("Failed to write post with attachments and tags", e);
         }
+    }
+
+    @Transactional
+    public int findTotalCount(TabSearchDTO tabSearchDTO) {
+        return postMapper.selectTotalCount(tabSearchDTO);
+    }
+
+    @Transactional
+    public Map<String, Object> findAllPostList(TabSearchDTO tabSearchDTO, int page, int totalCount, boolean isOwner) {
+
+        /* 2. 페이징 처리와 연관 된 값을 계산하여 SelectCriteria 타입의 객체에 담는다. */
+        int limit = 10;         // 한 페이지에 보여줄 게시물의 수
+        int buttonAmount = 5;   // 한 번에 보여질 페이징 버튼의 수
+        SelectCriteria criteria = Pagenation.getSelectCriteriaWithoutSearch(page, totalCount, limit, buttonAmount);
+
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("criteria", criteria);
+        parameters.put("memberCode", tabSearchDTO.getMemberCode());
+        List<PostDTO> postAllList;
+
+        if (isOwner) {
+            // 사용자가 블로그 소유자인 경우, 공개 및 비공개 게시글 모두 조회
+            postAllList = postMapper.findAllPostList(parameters);
+        } else {
+            // 사용자가 블로그 소유자와 다른경우, 공개 게시글만 조회
+            postAllList = postMapper.findPublicPostList(parameters);
+        }
+
+
+        Map<String, Object> postAllListAndPaging = new HashMap<>();
+        postAllListAndPaging.put("paging", criteria);
+        postAllListAndPaging.put("postAllList", postAllList);
+        postAllListAndPaging.put("totalCount", totalCount);
+
+        return postAllListAndPaging;
     }
 }

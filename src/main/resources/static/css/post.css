@@ -12,6 +12,9 @@ update : 2024-03-25
 /*------------------------------------------
     1.0     Blog Page Design Common
  ------------------------------------------*/
+table .private * {
+    color: #D9D9D9;
+}
 
 .hidden,
 .folder li.hidden {

@@ -5,6 +5,7 @@ import com._3dhs.tnproject.post.dto.PostDTO;
 import com._3dhs.tnproject.post.service.LikeService;
 import com._3dhs.tnproject.post.service.PostService;
 import org.aspectj.lang.annotation.Pointcut;
+import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -45,6 +46,7 @@ public class PostServiceAspect {
                     posts.get(i).setAttachmentList(postService.findAttListByPostCode(posts.get(i).getPostCode()));
                     posts.get(i).makeThumbnailPath();
                     posts.get(i).setLiked(likeService.getHasLiked(posts.get(i).getPostCode(), member.getMemberCode()));
+                    posts.get(i).setPostText(Jsoup.parse(posts.get(i).getPostText()).text());
                 }
             }
         }

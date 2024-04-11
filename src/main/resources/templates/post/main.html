@@ -13,24 +13,7 @@
         <nav th:replace="~{common/navigation.html}"></nav>
     </header>
     <aside>
-        <div class="folder">
-            <strong class="minTit">폴더</strong>
-            <ul>
-                <li class="AllList"><a onclick="folderAllList()"><img src="/images/icon_folder.png" alt="아이콘">전체목록(<span
-                        th:text="${postView.postCount}">56</span>)</a></li>
-                <th:block th:object="${folderList}" th:each="folder, start : ${folderList}">
-                    <li th:classappend="${folder.folderName == 'NoName'} ? 'hidden'" draggable="true">
-                        <input type="hidden" th:value="${folder.folderCode}"/>
-                        <img th:src="${folder.folderIconPath}" alt="폴더 아이콘">
-                        <span th:text="${folder.folderName}"></span>
-                    </li>
-                </th:block>
-            </ul>
-            <button th:if="${#strings.equals(param.memberCode, #strings.toString(#authentication.principal.memberCode))}"
-                    class="folderSetBtn" onClick="location.href='/post/folder_edit'">
-                <img src="/images/icon_folder_setting.png" alt="폴더 편집 버튼">
-            </button>
-        </div>
+        <div th:replace="~{common/folder.html}"></div>
     </aside>
     <main>
         <div class="title">
@@ -38,7 +21,13 @@
                                          alt="뒤로가기 버튼"></button>
             <div>
                 <h1 th:text="${member.profile.profileNickname}">닉네임</h1>
-                <p><span th:text="${postView.postCount}">0000</span> 게시물</p>
+                <p>
+                    <span th:if="${#strings.equals(param.memberCode, #strings.toString(#authentication.principal.memberCode))}"
+                          th:text="${postView.postCount}">56</span>
+                    <span th:if="${!#strings.equals(param.memberCode, #strings.toString(#authentication.principal.memberCode))}"
+                          th:text="${postTotalCount}"></span>
+                    게시물
+                </p>
             </div>
             <input class="search_input" type="text" placeholder="검색어를 입력하세요">
             <button class="searchBtn"><img src="/images/btn_search.png" alt="검색 버튼"></button>
@@ -66,7 +55,10 @@
                             좋아요수 : <span th:text="${postView.likeCount}">1,000</span>
                         </div>
                         <button th:if="${#strings.equals(param.memberCode, #strings.toString(#authentication.principal.memberCode))}"
-                                class="btn" onClick="location.href='/post/write'">글 쓰기
+                                class="btn"
+                                th:onclick="'location.href=\'/post/write?memberCode=' + ${#authentication.principal.memberCode} + '\''">
+                            글
+                            쓰기
                         </button>
                     </div>
                 </div>

@@ -16,7 +16,7 @@ public class PaymentMapperTests {
 
     @Test
     void 입력값_테스트() {
-        PaymentDTO tissueDTO = new PaymentDTO(
+        PaymentDTO paymentDTO = new PaymentDTO(
                 "111111",
                 "123456789",
                 "오더클래스",
@@ -25,7 +25,7 @@ public class PaymentMapperTests {
                 1
         );
 
-        paymentMapper.insertPayment(tissueDTO);
+        paymentMapper.insertPayment(paymentDTO);
 
     }
 }

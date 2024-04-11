@@ -5,10 +5,6 @@ import com._3dhs.tnproject.comments.service.CommentsService;
 import com._3dhs.tnproject.member.dto.MemberDTO;
 import com._3dhs.tnproject.member.service.MemberService;
 import com._3dhs.tnproject.post.dto.*;
-import com._3dhs.tnproject.post.dto.FolderDTO;
-import com._3dhs.tnproject.post.dto.LikeListDTO;
-import com._3dhs.tnproject.post.dto.PostDTO;
-import com._3dhs.tnproject.post.dto.TabSearchDTO;
 import com._3dhs.tnproject.post.model.PostState;
 import com._3dhs.tnproject.post.service.LikeService;
 import com._3dhs.tnproject.post.service.PostService;
@@ -17,10 +13,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.springframework.context.support.MessageSourceAccessor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,19 +46,25 @@ public class PostController {
     private final LikeService likeService;
     private final CommentsService commentsService;
 
-    @GetMapping("/main")
-    public void blogMainPage(@ModelAttribute TabSearchDTO tabSearchDTO, Authentication authentication, Model model) {
+    @ModelAttribute
+    public void addCommonAttributes(@ModelAttribute TabSearchDTO tabSearchDTO, Authentication authentication, Model model) {
+        int totalCount = postService.findTotalCount(tabSearchDTO);
         List<FolderDTO> folderList = postService.findFolderList(tabSearchDTO.getMemberCode());
-        MemberDTO memberDTO = memberService.findMainBlogMemberInfo(tabSearchDTO.getMemberCode());
         PostDTO postViewLikeCount = postService.findPostLikeCount(tabSearchDTO.getMemberCode());
-//        List<PostDTO> postList =  postService.findPostList(tabSearchDTO); //TODO 수정필
-        memberDTO.setMemberCode(tabSearchDTO.getMemberCode());
 
         model.addAttribute("folderList", folderList);
-        model.addAttribute("member", memberDTO);
+        model.addAttribute("postTotalCount", totalCount);
         model.addAttribute("postView", postViewLikeCount);
-//        model.addAttribute("postList", postList);
+    }
 
+    @GetMapping("/main")
+    public void blogMainPage(@ModelAttribute TabSearchDTO tabSearchDTO, Authentication authentication, Model model) {
+        MemberDTO memberDTO = memberService.findMainBlogMemberInfo(tabSearchDTO.getMemberCode());
+//      List<PostDTO> postList =  postService.findPostList(tabSearchDTO); //TODO 수정필
+        memberDTO.setMemberCode(tabSearchDTO.getMemberCode());
+
+        model.addAttribute("member", memberDTO);
+//      model.addAttribute("postList", postList);
         MemberDTO member = (MemberDTO) authentication.getPrincipal();
         model.addAttribute("loginMemberCode", member.getMemberCode());
     }
@@ -70,7 +72,6 @@ public class PostController {
     @Transactional
     @GetMapping("/folder_edit")
     public String folderEditPage(@AuthenticationPrincipal MemberDTO memberDTO, Model model) {
-
         List<FolderDTO> folderList = postService.findFolderList(memberDTO.getMemberCode());
 
         if (folderList.isEmpty()) {
@@ -99,17 +100,10 @@ public class PostController {
 
     @GetMapping("/write")
     public String blogWritePage(@AuthenticationPrincipal MemberDTO memberDTO, Model model) {
-        List<FolderDTO> folderList = postService.findFolderList(memberDTO.getMemberCode());
-        PostDTO postViewLikeCount = postService.findPostLikeCount(memberDTO.getMemberCode());
-
-        model.addAttribute("folderList", folderList);
-        model.addAttribute("postView", postViewLikeCount);
-
         if (postService.isFixedPost(memberDTO.getMemberCode())) {
             // 거절 메시지를 모델에 추가하고, 거절 뷰 이름 반환
             model.addAttribute("message", true);
         }
-
         return "/post/write";
     }
 
@@ -118,17 +112,22 @@ public class PostController {
     }
 
     @GetMapping("/list")
-    public void blogListPage(@ModelAttribute TabSearchDTO tabSearchDTO, Model model) {
-        List<FolderDTO> folderList = postService.findFolderList(tabSearchDTO.getMemberCode());
+    public String blogListPage(@RequestParam(defaultValue = "1") int page, @ModelAttribute TabSearchDTO tabSearchDTO, @AuthenticationPrincipal MemberDTO member, Model model) {
+        boolean isOwner = member.getMemberCode() == tabSearchDTO.getMemberCode();
+        int totalCount = postService.findTotalCount(tabSearchDTO);
         MemberDTO memberDTO = memberService.findMainBlogMemberInfo(tabSearchDTO.getMemberCode());
-        PostDTO postViewLikeCount = postService.findPostLikeCount(tabSearchDTO.getMemberCode());
         List<PostDTO> postList = postService.findPostList(tabSearchDTO); //TODO 수정필
         memberDTO.setMemberCode(tabSearchDTO.getMemberCode());
 
-        model.addAttribute("folderList", folderList);
+
+        Map<String, Object> postAllListAndPaging = postService.findAllPostList(tabSearchDTO, page, totalCount, isOwner);
+
         model.addAttribute("member", memberDTO);
-        model.addAttribute("postView", postViewLikeCount);
         model.addAttribute("postList", postList);
+        model.addAttribute("paging", postAllListAndPaging.get("paging"));
+        model.addAttribute("postAllList", postAllListAndPaging.get("postAllList"));
+
+        return "/post/list";
     }
 
     @GetMapping("/detail")
@@ -136,7 +135,7 @@ public class PostController {
         //1. 해당하는 코드의 post정보를 불러오기
         PostDTO targetPost = postService.findPostByPostCode(postCode);
         //2. post 상태가 비공개라면 열람자가 일치하는지 확인
-        if (targetPost.getPostState() == PostState.PRIVATE) {
+        if (targetPost.getPostStatus().equals("PRIVATE")) {
             if (memberDTO.getMemberCode() != targetPost.getMemberCode()) {
                 //열람자가 일치하지 않으면 에러메세지 첨부
                 model.addAttribute("errorMessage", accessor.getMessage("post.notEqualMember"));
@@ -167,7 +166,7 @@ public class PostController {
 
     @PostMapping("/like")
     @ResponseBody
-    public ResponseEntity<String> likePost(@RequestBody LikeListDTO likeListDTO ,@AuthenticationPrincipal MemberDTO memberDTO, Model model) {
+    public ResponseEntity<String> likePost(@RequestBody LikeListDTO likeListDTO, @AuthenticationPrincipal MemberDTO memberDTO, Model model) {
         int memberCode = memberDTO.getMemberCode();
         try {
             boolean isLiked = postService.toggleLike(likeListDTO.getPostCode(), memberCode);
@@ -182,20 +181,11 @@ public class PostController {
     @GetMapping("/load")
     public @ResponseBody List<PostDTO> findTabMenuPostList(@ModelAttribute TabSearchDTO tabSearchDTO, @AuthenticationPrincipal MemberDTO member) {
         List<PostDTO> postList = postService.findPostList(tabSearchDTO);
-        postList.forEach(dto -> {
-            dto.setPostText(Jsoup.parse(dto.getPostText()).text());
-            dto.setLiked(likeService.getHasLiked(dto.getPostCode(), member.getMemberCode()));
-        });
         return postList;
     }
 
     @PostMapping("/folder_edit")
     public @ResponseBody String folderEditList(@AuthenticationPrincipal MemberDTO memberDTO, @RequestBody List<FolderDTO> requestBody) {
-        // 사용자 로그인 상태 검증
-        if (memberDTO == null) {
-            return "redirect:/member/login"; // 로그인 페이지로 리다이렉트
-        }
-
         for (FolderDTO folderDTO : requestBody) {
             folderDTO.setFMemberCode(memberDTO.getMemberCode());
         }
@@ -222,7 +212,7 @@ public class PostController {
             for (MultipartFile uploadFile : uploadFiles) {
                 if (!uploadFile.isEmpty()) {
                     String originalFilename = uploadFile.getOriginalFilename();
-                    String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+                    String fileExtension = originalFilename.substring(originalFilename.lastIndexOf(".")); //TODO 사용안되는데 확인바람
                     String uuid = UUID.randomUUID().toString();
                     String newFileName = uuid + "_" + originalFilename;
 
@@ -297,22 +287,20 @@ public class PostController {
     @PostMapping("/write")
     public String postWrite(@AuthenticationPrincipal MemberDTO memberDTO, @ModelAttribute WriteDTO writeDTO, Model model) {
         // 사용자 로그인 상태 검증
-        if (memberDTO == null) {
-            return "redirect:/member/login"; // 로그인 페이지로 리다이렉트
-        }
-
-        List<FolderDTO> folderList = postService.findFolderList(memberDTO.getMemberCode());
-        PostDTO postViewLikeCount = postService.findPostLikeCount(memberDTO.getMemberCode());
-
-        model.addAttribute("folderList", folderList);
-        model.addAttribute("postView", postViewLikeCount);
+//        if (memberDTO == null) {
+//            return "redirect:/member/login"; // 로그인 페이지로 리다이렉트
+//        }
 
         try {
             PostDTO postDTO = writeDTO.getPostDTO();
+            log.info("postStatus? : {}",postDTO.getPostStatus());
+            writeDTO.setAttachmentDTOList(new ArrayList<>());   //TODO nullPoint에러로 인해서 추가 개발완료시 지울것
             List<AttachmentDTO> attachments = writeDTO.getAttachmentDTOList();
             List<TagDTO> tags = writeDTO.getTagDTOList();
 
+
             postDTO.setMemberCode(memberDTO.getMemberCode());
+
             for (AttachmentDTO attachment : attachments) {
                 attachment.setFilePath("/userUploadFiles/post");
             }
