@@ -67,10 +67,10 @@ public class PostController {
 
         }
 
-        System.out.println("공통어트리뷰트 writeDTO : " + writeDTO);
-        System.out.println("공통어트리뷰트 tabSearchDTO : " + tabSearchDTO);
-        System.out.println("공통어트리뷰트 memberDTO : " + memberDTO);
-        System.out.println("공통어트리뷰트 로그인 memberDTO : " + loginMemberDTO);
+//        System.out.println("공통어트리뷰트 writeDTO : " + writeDTO);
+//        System.out.println("공통어트리뷰트 tabSearchDTO : " + tabSearchDTO);
+//        System.out.println("공통어트리뷰트 memberDTO : " + memberDTO);
+//        System.out.println("공통어트리뷰트 로그인 memberDTO : " + loginMemberDTO);
         model.addAttribute("member", memberDTO);
         model.addAttribute("folderList", folderList);
         model.addAttribute("paging", postAllListAndPaging.get("paging"));
@@ -80,11 +80,11 @@ public class PostController {
         model.addAttribute("postView", postViewLikeCount);
         model.addAttribute("folderCode", tabSearchDTO.getFolderCode());
         model.addAttribute("memberCode", tabSearchDTO.getMemberCode());
-        System.out.println("공통 뷰반환 paging : " + postAllListAndPaging.get("paging"));
-        System.out.println("공통 뷰반환 totalCount : " + postAllListAndPaging.get("totalCount"));
-        System.out.println("공통 뷰반환 totalAllCount : " + postAllListAndPaging.get("totalAllCount"));
-        System.out.println("공통 뷰반환 postAllList : " + postAllListAndPaging.get("postAllList"));
-        System.out.println("공통 뷰반환 postAllList : " + postAllListAndPaging.get("postAllList"));
+//        System.out.println("공통 뷰반환 paging : " + postAllListAndPaging.get("paging"));
+//        System.out.println("공통 뷰반환 totalCount : " + postAllListAndPaging.get("totalCount"));
+//        System.out.println("공통 뷰반환 totalAllCount : " + postAllListAndPaging.get("totalAllCount"));
+//        System.out.println("공통 뷰반환 postAllList : " + postAllListAndPaging.get("postAllList"));
+//        System.out.println("공통 뷰반환 postAllList : " + postAllListAndPaging.get("postAllList"));
     }
 
     @GetMapping("/main")
@@ -178,12 +178,6 @@ public class PostController {
         return "/post/detail";
     }
 
-//    @GetMapping("/likelist")  TODO 마스터에서 삭제되어 있음 일단 주석처리하고 살려놓음
-//    public void blogLikeListPage(int memberCode, Model model) {
-//        List<PostDTO> likeList = postService.findLikeListPostByMemberCode(memberCode);
-//        model.addAttribute("likeList", likeList);
-//    }
-
     @PostMapping("/like")
     @ResponseBody
     public ResponseEntity<String> likePost(@RequestBody LikeListDTO likeListDTO, @AuthenticationPrincipal MemberDTO memberDTO, Model model) {
@@ -198,34 +192,21 @@ public class PostController {
         }
     }
 
+
     @GetMapping("/load")
-    public @ResponseBody List<PostDTO> findTabMenuPostList(@ModelAttribute TabSearchDTO tabSearchDTO, @AuthenticationPrincipal MemberDTO loginMemberDTO) {
-        List<PostDTO> postList = postService.findPostList(tabSearchDTO);
-        postList.forEach(dto -> {
-            dto.setPostText(Jsoup.parse(dto.getPostText()).text());
-            dto.setLiked(likeService.getHasLiked(dto.getPostCode(), loginMemberDTO.getMemberCode()));
-        });
-        return postList;
-    }
-//    @GetMapping("/load") TODO 마스터 용인데 내꺼랑 다름 일단 주석처리 하고 넣어놓음
-//    public @ResponseBody List<PostDTO> findTabMenuPostList(@ModelAttribute TabSearchDTO tabSearchDTO, @AuthenticationPrincipal MemberDTO member) {
-//        List<PostDTO> postList;
-//        if (tabSearchDTO.getTabMenu().equals("♡")) {
-//            postList = postService.findLikeListPostByMemberCode(tabSearchDTO);
-//
-//        } else {
-//            postList = postService.findPostList(tabSearchDTO);
-//        }
-//
-//        return postList;
-//    }
-    @PostMapping("/folder_edit")
-    public @ResponseBody String folderEditList(@AuthenticationPrincipal MemberDTO loginMemberDTO, @RequestBody List<FolderDTO> requestBody) {
-        // 사용자 로그인 상태 검증 TODO 마스터에서 사라졌음  왜?? 일단 살려놓는걸로
-        if (loginMemberDTO == null) {
-            return "redirect:/member/login"; // 로그인 페이지로 리다이렉트
+    public @ResponseBody List<PostDTO> findTabMenuPostList(@ModelAttribute TabSearchDTO tabSearchDTO, @AuthenticationPrincipal MemberDTO member) {
+        List<PostDTO> postList;
+        if (tabSearchDTO.getTabMenu().equals("♡")) {
+            postList = postService.findLikeListPostByMemberCode(tabSearchDTO);
+
+        } else {
+            postList = postService.findPostList(tabSearchDTO);
         }
 
+        return postList;
+    }
+    @PostMapping("/folder_edit")
+    public @ResponseBody String folderEditList(@AuthenticationPrincipal MemberDTO loginMemberDTO, @RequestBody List<FolderDTO> requestBody) {
         for (FolderDTO folderDTO : requestBody) {
             folderDTO.setFMemberCode(loginMemberDTO.getMemberCode());
         }
@@ -326,10 +307,6 @@ public class PostController {
     @Transactional
     @PostMapping("/write")
     public String postWrite(@AuthenticationPrincipal MemberDTO loginMemberDTO, @ModelAttribute WriteDTO writeDTO, Model model) {
-        // 사용자 로그인 상태 검증 TODO 마스터에서 주석처리해 놓음 . 왜? 일단 살려놓음
-        if (loginMemberDTO == null) {
-            return "redirect:/member/login"; // 로그인 페이지로 리다이렉트
-        }
 
         try {
             PostDTO postDTO = writeDTO.getPostDTO();
