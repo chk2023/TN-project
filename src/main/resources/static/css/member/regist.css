@@ -133,6 +133,7 @@ input {
     display: flex; /* Flexbox 사용 */
     margin-bottom: 10px; /* 버튼과 다음 요소 사이의 여백 추가 */
     justify-content: flex-end;
+
 }
 
 /* 버튼 스타일링 */

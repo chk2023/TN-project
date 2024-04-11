@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/post.css">
     <link rel="stylesheet" href="/css/modal.css">
-    <link rel="stylesheet" href="/css/member/regist.css">
+<!--    <link rel="stylesheet" href="/css/member/regist.css">-->
     <script src="/js/modalEvent.js"></script>
     <script src="/js/commentsEvent.js"></script>
 </head>
@@ -31,9 +31,8 @@
             </button>
             <button class="closeBtn" id="closeBtn" type="button"><img src="/images/btn_close.png" alt="닫기 버튼"></button>
         </form>
-        </form>
-        <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
 
+        <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
             <ul class="blogList snsList detail">
                 <li>
                     <div class="list_head">
@@ -44,7 +43,8 @@
                         <div>
                             <div>
                                 <strong class="blog_user_name" th:text="${postDetail.profile.profileNickname}"></strong>
-                                <span class="blog_user_birth" th:text="${#temporals.format(postDetail.postWriDate, 'MM월 dd일')}"></span>
+                                <span class="blog_user_birth"
+                                      th:text="${#temporals.format(postDetail.postWriDate, 'MM월 dd일')}"></span>
                             </div>
                             <span class="status_msg" th:text="${postDetail.profile.profileStatmsg}"></span>
                         </div>
@@ -79,39 +79,6 @@
                                         <button type="button" id="writeComments" class="blackBtn">확인</button>
                                     </div>
                                     <ul id="commentsList">
-                                        <!--                                                <div class="profile">-->
-                                        <!--                                                    <button class="optionBtn" id="optionBtn" onclick="toggle()"><img src="/images/icon_option.png" alt="프로필 옵션 버튼"></button>-->
-                                        <!--                                                    <ul class="optionBox" id="optionBox">-->
-                                        <!--                                                        <li th:if="${comment.memberCode == #authentication.principal.memberCode}">-->
-                                        <!--                                                            <a>댓글 수정</a></li>-->
-                                        <!--                                                        <li th:if="${comment.memberCode == #authentication.principal.memberCode}">-->
-                                        <!--                                                            <a>댓글 삭제</a></li>-->
-                                        <!--                                                        <li th:if="${comment.memberCode != #authentication.principal.memberCode}"-->
-                                        <!--                                                        ><a>신고</a></li>-->
-                                        <!--                                                        <li th:if="${comment.memberCode != #authentication.principal.memberCode}"-->
-                                        <!--                                                        ><a>차단</a></li>-->
-                                        <!--                                                    </ul>-->
-                                        <!--                                                    <script>-->
-                                        <!--                                                        /* 옵션 버튼 클릭시 옵션 박스 활성화 */-->
-                                        <!--                                                        function toggle() {-->
-                                        <!--                                                            const $optionBtn = document.getElementById("optionBtn");-->
-                                        <!--                                                            const $optionBox = document.getElementById("optionBox");-->
-
-                                        <!--                                                            $optionBtn.classList.toggle("active");-->
-
-                                        <!--                                                            /* 이벤트 전파 방지 */-->
-                                        <!--                                                            event.stopPropagation();-->
-
-                                        <!--                                                            /* 옵션 상자 이외의 영역 클릭 시 옵션 상자 숨김 */-->
-                                        <!--                                                            document.addEventListener("click", function closeOptions(event) {-->
-                                        <!--                                                                if (event.target !== $optionBtn && event.target !== $optionBox) {-->
-                                        <!--                                                                    $optionBtn.classList.remove("active");-->
-                                        <!--                                                                    document.removeEventListener("click", closeOptions);-->
-                                        <!--                                                                }-->
-                                        <!--                                                            });-->
-                                        <!--                                                        }-->
-                                        <!--                                                    </script>-->
-                                        <!--                                                </div>-->
                                         <li th:each="comments : ${comments}">
                                             <input type="hidden" class="comment-code" th:value="${comments.cmtCode}"/>
                                             <div class="content-group">
@@ -146,7 +113,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <button class="likeBtn" th:class="${postDetail.isLiked} ? 'likeBtn active' : 'likeBtn'" th:data-post-code="${postDetail.postCode}">
+                            <button class="likeBtn" th:class="${postDetail.isLiked} ? 'likeBtn active' : 'likeBtn'"
+                                    th:data-post-code="${postDetail.postCode}">
                                 <img src="/images/icon_like.png" alt="좋아요 버튼 아이콘">
                                 <span th:text="${postDetail.likeCount}" class="likeCount"></span>
                             </button>
@@ -154,13 +122,12 @@
                     </div>
                 </li>
             </ul>
-
         </section>
     </main>
-</div>
+
 <script>
     //TODO 폴더기능 추가 안됨 (김다솔)
-    document.addEventListener("DOMContentLoaded", function(event) {
+    document.addEventListener("DOMContentLoaded", function (event) {
         // 화면이 모두 로드되고 파싱된 후에 실행될 스크립트
         like();
     });
