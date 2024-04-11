@@ -244,4 +244,8 @@ public class PostService {
 
         return postAllListAndPaging;
     }
+
+    public List<TagDTO> getTagsByPostCode(int postCode) {
+        return postMapper.getTagsByPostCode(postCode);
+    }
 }
