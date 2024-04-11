@@ -37,12 +37,12 @@
             (#{orderClass}, #{orderDate}, #{tissuePrice}, #{tMemberCode}, #{postCode})
     </insert>
 
-    <insert id="selectPurchaseList" parameterType="com._3dhs.tnproject.purchase.dto.PurchaseDTO">
+<!--    <insert id="selectPurchaseList" parameterType="com._3dhs.tnproject.purchase.dto.PurchaseDTO">-->
 
-    </insert>
+<!--    </insert>-->
 
-    <insert id="selectPurchaseList" parameterType="com._3dhs.tnproject.payment.dto.PaymentDTO">
+<!--    <insert id="selectPurchaseList" parameterType="com._3dhs.tnproject.payment.dto.PaymentDTO">-->
 
-    </insert>
+<!--    </insert>-->
 
 </mapper>

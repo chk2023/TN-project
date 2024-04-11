@@ -77,12 +77,12 @@ public class PurchaseService {
     }
 
 
-    public List<String> getPurchaseList(int memberCode) {
-
-        List<String> purchaseList = purchaseMapper.selectPurchaseList(memberCode);
-        List<String> paymentList = paymentMapper.selectPaymentList(memberCode);
-        List<String> purchaseAndPaymentList = paymentMapper.selectPaymentList(memberCode);
-
-        return purchaseAndPaymentList;
-    }
+//    public List<String> getPurchaseList(int memberCode) {
+//
+//        List<String> purchaseList = purchaseMapper.selectPurchaseList(memberCode);
+//        List<String> paymentList = paymentMapper.selectPaymentList(memberCode);
+//        List<String> purchaseAndPaymentList = paymentMapper.selectPaymentList(memberCode);
+//
+//        return purchaseAndPaymentList;
+//    }
 }
