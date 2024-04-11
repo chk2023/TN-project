@@ -109,8 +109,8 @@ async function update() {
                                                 </div>
                                                 <div class="list_body">
                                                     <div>
-                                                        <strong class="contentTit">${escapeHTML(post.postTitle)}</strong>
-                                                        <div class="contentsTxt">
+                                                        <strong class="contentTit" onclick="location.href='/post/detail?postCode=${escapeHTML(post.postCode)}'">${escapeHTML(post.postTitle)}</strong>
+                                                        <div class="contentsTxt" onclick="location.href='/post/detail?postCode=${escapeHTML(post.postCode)}'">
                                                             <p>${escapeHTML(post.postText)}</p>
                                                         </div>
                                                         <div class="showLikeAndComments">
@@ -125,7 +125,7 @@ async function update() {
                                                         </div>
                                                     </div>
                                                     <div class="thumbnailPhoto">
-                                                        <img src="${escapeHTML(post.thumbnailPath ? post.thumbnailPath : '/images/icon_no_image_sm.png')}">                                            
+                                                        <img src="${escapeHTML(post.thumbnailPath ? post.thumbnailPath : '/images/icon_no_image_sm.png')}" onclick="location.href='/post/detail?postCode=${escapeHTML(post.postCode)}'">                                            
                                                     </div>
                                                 </div>
                                         `;

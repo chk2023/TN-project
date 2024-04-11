@@ -2,7 +2,6 @@ $searchBtn = $(`#searchBtn`);
 $searchInput = $(`#search_input`);
 $closeBtn = $(`#closeBtn`);
 $title = $(`#title`);
-$backBtn = $(`#backBtn`);
 
 // 검색 버튼에 클릭 이벤트 핸들러를 할당
 $searchBtn.on('click', function() {
