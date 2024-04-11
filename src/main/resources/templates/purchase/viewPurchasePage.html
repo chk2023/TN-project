@@ -9,7 +9,7 @@
 <div class="purchasePage">
     <h1>구매 확인 페이지</h1>
     <p>구매를 확인하시겠습니까?</p>
-    <button class="purchaseBtn" onclick="handlePurchaseBtn()">확인</button>
+    <button th:data-post-code="${postCode}" class="purchaseBtn" onclick="handlePurchaseBtn()">확인</button>
 </div>
 
 <script src="/js/purchasePost.js"></script>

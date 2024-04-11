@@ -4,7 +4,7 @@ function handlePurchaseBtn() {
 
             console.log("버튼 동작 중");
 
-            var postCode = parseInt(e.currentTarget.getAttribute('data-postCode'));
+            var postCode = parseInt(e.currentTarget.getAttribute('data-post-code'));
             purchasePaidPost(postCode);
             console.log("postCode:",postCode);
 
@@ -24,6 +24,7 @@ function purchasePaidPost(postCode) {
         }),
     })
         .then(response => {
+            console.log(postCode);
             if (response.ok) {
                 console.log("동작 확인");
                 return response.json();

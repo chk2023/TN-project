@@ -9,6 +9,7 @@ import com._3dhs.tnproject.post.model.PostState;
 import com._3dhs.tnproject.post.service.LikeService;
 import com._3dhs.tnproject.post.service.PostService;
 import com._3dhs.tnproject.post.util.FileUtil;
+import com._3dhs.tnproject.purchase.service.PurchaseService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +47,7 @@ public class PostController {
     private final MemberService memberService;
     private final LikeService likeService;
     private final CommentsService commentsService;
+    private final PurchaseService purchaseService;
 
     @ModelAttribute
     public void addCommonAttributes(@ModelAttribute TabSearchDTO tabSearchDTO, Authentication authentication, Model model) {
@@ -132,6 +134,7 @@ public class PostController {
     }
 
     @GetMapping("/detail")
+    @ResponseBody
     public String blogDetailPage(@AuthenticationPrincipal MemberDTO memberDTO, Integer postCode, Model model, CommentsDTO commentsDTO) {
         //1. 해당하는 코드의 post정보를 불러오기
         PostDTO targetPost = postService.findPostByPostCode(postCode);
@@ -144,19 +147,21 @@ public class PostController {
             }
         }
         //3. post가 유료글인지 판단하기
-        if (targetPost.getPostPrice() > 0) {
-            //유료글이라면 유료글 처리를 하는 곳으로 전달하기
+        if (targetPost.getPostPrice() > 0 && purchaseService.isPostPurchased(memberDTO.getMemberCode(), postCode)) {
+            model.addAttribute("postDetail", targetPost);
+            /* 댓글 모달에서 댓글 조회 */
+            List<CommentsDTO> comments = commentsService.selectCommentsList(commentsDTO);
+            model.addAttribute("comments", comments);
+
+            return "/post/detail?postCode=" + postCode;
+        } else if (targetPost.getPostPrice() > 0 && !purchaseService.isPostPurchased(memberDTO.getMemberCode(), postCode)) {
             model.addAttribute("paidContent", targetPost);
-            return "/purchase/getPaidPostInfo?postCode=" + postCode;  //TODO: getPaidPostInfo에서 "@ModelAttribute PostDTO paidContent"로 값 받아 사용하기
+            return "/purchase/viewPurchasePage";  //TODO: getPaidPostInfo에서 "@ModelAttribute PostDTO paidContent"로 값 받아 사용하기
+        } else {
+            throw new RuntimeException();
         }
-        //4. 모든 조건이 성립한다면 view로 전달
-        model.addAttribute("postDetail", targetPost);
 
-        /* 댓글 모달에서 댓글 조회 */
-        List<CommentsDTO> comments = commentsService.selectCommentsList(commentsDTO);
-        model.addAttribute("comments", comments);
 
-        return "/post/detail";
     }
 
     @GetMapping("/likelist")

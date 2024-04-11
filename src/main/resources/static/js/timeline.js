@@ -37,7 +37,7 @@ function update() {
 
             // 화면 랜더링된 이후 like() 동작해야 함
             like();
-            handlePurchaseBtn();
+            // handlePurchaseBtn();
 
         }).catch(error => console.error('Error fetching profile data:', error))
         .finally(function () {

@@ -28,18 +28,18 @@ document.querySelectorAll(".likeBtn").forEach(btn => btn.addEventListener('click
             // 좋아요 아이콘 변경
             // var likeBtn = document.querySelector('[data-post-code=' + postCode +']');
 
-            //var likeImg = likeBtn.querySelector("img");
+            var likeImg = likeBtn.querySelector("img");
 
             var handleLikeCount = likeBtn.querySelector(".likeCount");
 
 
-            if (/*likeImg &&*/ handleLikeCount) {
+            if (likeImg && handleLikeCount) {
                 if (result) {
-                    //likeImg.src = "/images/icon_like_active.png";
+                    likeImg.src = "/images/icon_like_active.png";
                     likeBtn.classList.add("active");
                     handleLikeCount.textContent = parseInt(handleLikeCount.textContent) + 1;
                 } else {
-                    //likeImg.src = "/images/icon_like.png";
+                    likeImg.src = "/images/icon_like.png";
                     likeBtn.classList.remove("active");
                     handleLikeCount.textContent = parseInt(handleLikeCount.textContent) - 1;
                 }
