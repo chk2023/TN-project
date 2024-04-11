@@ -138,11 +138,11 @@ public class ManagerController {
         // 신고 목록 상세-계정정지-서브밋 기능
 
         reportService.memberStop(memberDTO);
-
+        log.info(memberDTO.getMemberStatus());
 
         rttr.addFlashAttribute("memberStop");
 
-        return "redirect:/manager/report/detail?reportCode="+reportCode;
+        return "redirect:/manager/report/detail?reportCode=" + reportCode;
 
 
 //    @GetMapping("/memberStop")
@@ -163,5 +163,5 @@ public class ManagerController {
 //
 //
 //
-
+    }
 }
