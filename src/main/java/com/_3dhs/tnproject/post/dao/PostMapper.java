@@ -17,7 +17,9 @@ public interface PostMapper {
 
     List<AttachmentDTO> findAttListByPostCode(int postCode);
 
-    List<PostDTO> findLikeListPostByMemberCode(int memberCode);
+    List<PostDTO> findLikeListPostByMemberCode( TabSearchDTO tabSearchDTO);
+
+    PostDTO getPostByPostCode(Integer postCode);
 
     void updateFolders(List<FolderDTO> requestBody);
 
@@ -61,4 +63,7 @@ public interface PostMapper {
 
     TabSearchDTO selectPublicFolderTotalCount(int folderCode, int memberCode, boolean isOwner);
 
+    List<TagDTO> getTagsByPostCode(int postCode);
+
+    PostDTO findLastInsertPost();
 }

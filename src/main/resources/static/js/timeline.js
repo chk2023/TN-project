@@ -26,6 +26,7 @@ function update() {
                     isTitlePhotoChanged = true;
                 }
             });
+
              var element = document.createElement("div");
             element.innerHTML = template(data, {data: {handlebars: Handlebars.create()}});
             fragment.appendChild(element); // DocumentFragment에 요소 추가
@@ -36,6 +37,8 @@ function update() {
 
             // 화면 랜더링된 이후 like() 동작해야 함
             like();
+            handlePurchaseBtn();
+
         }).catch(error => console.error('Error fetching profile data:', error))
         .finally(function () {
             isLoading = false

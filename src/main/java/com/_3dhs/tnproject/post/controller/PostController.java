@@ -16,6 +16,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -145,12 +146,17 @@ public class PostController {
     }
 
     @GetMapping("/detail")
-    public String blogDetailPage(@AuthenticationPrincipal MemberDTO memberDTO, Integer postCode, Model model, CommentsDTO commentsDTO) {
+    public String blogDetailPage(@AuthenticationPrincipal MemberDTO member, Integer postCode, Model model, CommentsDTO commentsDTO) {
         //1. 해당하는 코드의 post정보를 불러오기
         PostDTO targetPost = postService.findPostByPostCode(postCode);
+        targetPost.setAttachmentList(postService.findAttListByPostCode(targetPost.getPostCode()));
+        targetPost.makeThumbnailPath();
+        targetPost.setLiked(likeService.getHasLiked(targetPost.getPostCode(), member.getMemberCode()));
+        targetPost.setTagList(postService.getTagsByPostCode(targetPost.getPostCode()));
+
         //2. post 상태가 비공개라면 열람자가 일치하는지 확인
-        if (targetPost.getPostState() == PostState.PRIVATE) {
-            if (memberDTO.getMemberCode() != targetPost.getMemberCode()) {
+        if (targetPost.getPostStatus().equals("PRIVATE")) {
+            if (member.getMemberCode() != targetPost.getMemberCode()) {
                 //열람자가 일치하지 않으면 에러메세지 첨부
                 model.addAttribute("errorMessage", accessor.getMessage("post.notEqualMember"));
                 return "/post/detail"; //TODO : view에서 errorMessage가 있다면 이전화면으로 돌아가는 로직 작성해주세요
@@ -172,11 +178,11 @@ public class PostController {
         return "/post/detail";
     }
 
-    @GetMapping("/likelist")
-    public void blogLikeListPage(int memberCode, Model model) {
-        List<PostDTO> likeList = postService.findLikeListPostByMemberCode(memberCode);
-        model.addAttribute("likeList", likeList);
-    }
+//    @GetMapping("/likelist")  TODO 마스터에서 삭제되어 있음 일단 주석처리하고 살려놓음
+//    public void blogLikeListPage(int memberCode, Model model) {
+//        List<PostDTO> likeList = postService.findLikeListPostByMemberCode(memberCode);
+//        model.addAttribute("likeList", likeList);
+//    }
 
     @PostMapping("/like")
     @ResponseBody
@@ -201,10 +207,21 @@ public class PostController {
         });
         return postList;
     }
-
+//    @GetMapping("/load") TODO 마스터 용인데 내꺼랑 다름 일단 주석처리 하고 넣어놓음
+//    public @ResponseBody List<PostDTO> findTabMenuPostList(@ModelAttribute TabSearchDTO tabSearchDTO, @AuthenticationPrincipal MemberDTO member) {
+//        List<PostDTO> postList;
+//        if (tabSearchDTO.getTabMenu().equals("♡")) {
+//            postList = postService.findLikeListPostByMemberCode(tabSearchDTO);
+//
+//        } else {
+//            postList = postService.findPostList(tabSearchDTO);
+//        }
+//
+//        return postList;
+//    }
     @PostMapping("/folder_edit")
     public @ResponseBody String folderEditList(@AuthenticationPrincipal MemberDTO loginMemberDTO, @RequestBody List<FolderDTO> requestBody) {
-        // 사용자 로그인 상태 검증
+        // 사용자 로그인 상태 검증 TODO 마스터에서 사라졌음  왜?? 일단 살려놓는걸로
         if (loginMemberDTO == null) {
             return "redirect:/member/login"; // 로그인 페이지로 리다이렉트
         }
@@ -235,7 +252,7 @@ public class PostController {
             for (MultipartFile uploadFile : uploadFiles) {
                 if (!uploadFile.isEmpty()) {
                     String originalFilename = uploadFile.getOriginalFilename();
-                    String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+                    String fileExtension = originalFilename.substring(originalFilename.lastIndexOf(".")); //TODO 사용안되는데 확인바람
                     String uuid = UUID.randomUUID().toString();
                     String newFileName = uuid + "_" + originalFilename;
 
@@ -309,13 +326,15 @@ public class PostController {
     @Transactional
     @PostMapping("/write")
     public String postWrite(@AuthenticationPrincipal MemberDTO loginMemberDTO, @ModelAttribute WriteDTO writeDTO, Model model) {
-        // 사용자 로그인 상태 검증
+        // 사용자 로그인 상태 검증 TODO 마스터에서 주석처리해 놓음 . 왜? 일단 살려놓음
         if (loginMemberDTO == null) {
             return "redirect:/member/login"; // 로그인 페이지로 리다이렉트
         }
 
         try {
             PostDTO postDTO = writeDTO.getPostDTO();
+//            log.info("postStatus? : {}",postDTO.getPostStatus());
+//            writeDTO.setAttachmentDTOList(new ArrayList<>());   //TODO 마스터거 일단 주석처리하고 넣음 nullPoint에러로 인해서 추가 개발완료시 지울것
             List<AttachmentDTO> attachments = writeDTO.getAttachmentDTOList();
             List<TagDTO> tags = writeDTO.getTagDTOList();
 

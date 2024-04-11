@@ -5,6 +5,7 @@ import com._3dhs.tnproject.common.exceptionhandler.member.MemberRemoveException;
 import com._3dhs.tnproject.common.exceptionhandler.member.MemberUpdateException;
 import com._3dhs.tnproject.member.dao.MemberMapper;
 import com._3dhs.tnproject.member.dto.MemberDTO;
+import com._3dhs.tnproject.purchase.dto.PurchaseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

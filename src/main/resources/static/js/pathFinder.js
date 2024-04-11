@@ -7,6 +7,7 @@ const $reportListBtn = document.getElementById("reportListBtn");
 const $memberListBtn = document.getElementById('memberListBtn');
 const $logoutBtn = document.getElementById("logoutBtn");
 const $testHubBtn = document.getElementById("testHubBtn");
+const $backBtn = document.querySelector(".backBtn");
 
 if ($homeBtn) {
     $homeBtn.onclick = function () {
@@ -51,5 +52,10 @@ if ($logoutBtn) {
 if ($testHubBtn) {
     $testHubBtn.onclick = function () {
         location.href = "/common/testhub";
+    };
+}
+if ($backBtn) {
+    $backBtn.onclick = function () {
+        window.history.back();
     };
 }

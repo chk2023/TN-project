@@ -39,18 +39,10 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public List<PostDTO> findLikeListPostByMemberCode(int memberCode) {
+    public List<PostDTO> findLikeListPostByMemberCode(TabSearchDTO tabSearchDTO) {
 
-        /* 유료글결제 추가 */
-        Map<String, Integer> params = new HashMap<>();
-        params.put("memberCode", memberCode);
 
-//        List<PostDTO> postList = postMapper.findLikeListPostByMemberCode(memberCode);
-        List<PostDTO> postList = postMapper.findListByParam(params);
-        for (int i = 0; i < postList.size(); i++) {
-            postList.get(i).setAttachmentList(postMapper.findAttListByPostCode(postList.get(i).getPostCode()));
-            postList.get(i).makeThumbnailPath();
-        }
+        List<PostDTO> postList = postMapper.findLikeListPostByMemberCode(tabSearchDTO);
         return postList;
     }
 
@@ -214,46 +206,6 @@ public class PostService {
         }
     }
 
-//    @Transactional //전체 게시글 조회
-//    public Map<String, Object> findAllPostList(TabSearchDTO tabSearchDTO, int page, boolean isOwner) {
-//        TabSearchDTO totalCount;
-//        SelectCriteria criteria;
-//        List<PostDTO> postAllList;
-//        Map<String, Object> parameters = new HashMap<>();
-//        // 페이징 처리와 연관된 값을 계산하여 SelectCriteria 타입의 객체에 담는다
-//        int limit = 10;         // 한 페이지에 보여줄 게시물의 수
-//        int buttonAmount = 5;   // 한 번에 보여질 페이징 버튼의 수
-//
-//        parameters.put("memberCode", tabSearchDTO.getMemberCode());
-//        parameters.put("folderCode", tabSearchDTO.getFolderCode());
-//
-//        System.out.println("리스트 페이지 폴더코드 : " + tabSearchDTO.getFolderCode());
-//        System.out.println("리스트 페이지 멤버코드 : " + tabSearchDTO.getMemberCode());
-//        if (isOwner) {
-//            // 전체 조회 - 사용자가 블로그 소유자인 경우 (O), 글삭제여부가 false 이고, 글상태가 PUBLIC 및 PRIVATE 인 게시글 모두 조회
-//            totalCount = postMapper.findPostLikeCount(tabSearchDTO.getMemberCode(), isOwner);
-//            criteria = Pagenation.getSelectCriteriaWithoutSearch(page, totalCount.getCount(), limit, buttonAmount);
-//            parameters.put("criteria", criteria);
-//            postAllList = postMapper.findAllPostList(parameters);
-//            System.out.println("전체조회 페이지 사용자 같은경우 totalCount : " + totalCount.getCount());
-//        } else {
-//            // 전체 조회 - 사용자가 블로그 소유자와 다른경우 (X), 글삭제여부가 false 이고, 글상태가 PUBLIC 게시글만 조회
-//            totalCount = postMapper.selectTotalCount(tabSearchDTO.getMemberCode(), isOwner);
-//            criteria = Pagenation.getSelectCriteriaWithoutSearch(page, totalCount.getCount(), limit, buttonAmount);
-//            parameters.put("criteria", criteria);
-//            postAllList = postMapper.findPublicPostList(parameters);
-//            System.out.println("전체조회 페이지 사용자 다른경우 totalCount : " + totalCount.getCount());
-//        }
-//
-//
-//        Map<String, Object> postAllListAndPaging = new HashMap<>();
-//        postAllListAndPaging.put("paging", criteria);
-//        postAllListAndPaging.put("postAllList", postAllList);
-//        postAllListAndPaging.put("totalCount", totalCount);
-//        System.out.println("list 요청 서비스단 list 정보 조회 : " + postAllList);
-//        return postAllListAndPaging;
-//    }
-
     @Transactional
     public Map<String, Object> findAllPostList(TabSearchDTO tabSearchDTO, int page, boolean isOwner) {
         TabSearchDTO totalCount;
@@ -316,4 +268,12 @@ public class PostService {
         return postFolderAllListAndPaging;
     }
 
+
+    public List<TagDTO> getTagsByPostCode(int postCode) {
+        return postMapper.getTagsByPostCode(postCode);
+    }
+
+    public PostDTO findLastInsertPost() {
+        return postMapper.findLastInsertPost();
+    }
 }
