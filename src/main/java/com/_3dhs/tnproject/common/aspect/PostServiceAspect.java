@@ -28,7 +28,7 @@ public class PostServiceAspect {
         this.postService = postService;
     }
 
-    @Pointcut("execution(* com._3dhs.tnproject.post.service.PostService.*(..)) && !execution(* com._3dhs.tnproject.post.service.PostService.findAllPostListForDoc(..))\"")
+    @Pointcut("execution(* com._3dhs.tnproject.post.service.PostService.*(..)) && !execution(* com._3dhs.tnproject.post.service.PostService.findAllPostListForDoc(..))\" && !execution(* com._3dhs.tnproject.post.service.PostService.findPostByPostCode(..))\"")
     public void postServiceMethods() {
     }
 

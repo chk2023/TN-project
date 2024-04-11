@@ -342,6 +342,15 @@
         (#{postCode}, #{tagCode})
     </insert>
 
+    <select id="getTagsByPostCode" resultType="com._3dhs.tnproject.post.dto.TagDTO">
+        SELECT
+            t.tag_code,
+            t.tag_name
+        FROM tbl_post_tag pt
+        JOIN tbl_tag t ON pt.tag_code = t.tag_code
+        WHERE post_code = #{postCode}
+    </select>
+
     <select id="selectTotalCount">
         SELECT
         COUNT(*) AS count

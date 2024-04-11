@@ -54,4 +54,6 @@ public interface PostMapper {
     List<PostDTO> findAllPostList(Map<String, Object> parameters);
 
     List<PostDTO> findPublicPostList(Map<String, Object> parameters);
+
+    List<TagDTO> getTagsByPostCode(int postCode);
 }
