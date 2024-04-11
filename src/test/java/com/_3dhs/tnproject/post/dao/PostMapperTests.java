@@ -22,7 +22,11 @@ public class PostMapperTests {
     @Test
     void findLikeListPostByMemberCode_테스트() {
         int rdCode = (int)(Math.random() * 12) + 1;
-        List<PostDTO> testList = mapper.findLikeListPostByMemberCode(rdCode);
+        TabSearchDTO tabSearchDTO = new TabSearchDTO();
+        tabSearchDTO.setMemberCode(rdCode);
+        tabSearchDTO.setRange(10);
+        tabSearchDTO.setIndex(0);
+        List<PostDTO> testList = mapper.findLikeListPostByMemberCode(tabSearchDTO);
         System.out.println("memberCode : " + rdCode);
         testList.forEach(System.out::println);
         assertNotNull(testList);
