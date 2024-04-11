@@ -37,12 +37,18 @@
             (#{orderClass}, #{orderDate}, #{tissuePrice}, #{tMemberCode}, #{postCode})
     </insert>
 
-<!--    <insert id="selectPurchaseList" parameterType="com._3dhs.tnproject.purchase.dto.PurchaseDTO">-->
-
-<!--    </insert>-->
-
-<!--    <insert id="selectPurchaseList" parameterType="com._3dhs.tnproject.payment.dto.PaymentDTO">-->
-
-<!--    </insert>-->
+    <select id="selectPurchaseList" resultType="java.lang.String">
+        SELECT
+            tissue_code,
+            order_class,
+            order_date,
+            tissue_price
+        FROM
+            tbl_tissue
+        WHERE
+            t_member_code = #{memberCode}
+        AND
+            order_class = 'USE'
+    </select>
 
 </mapper>

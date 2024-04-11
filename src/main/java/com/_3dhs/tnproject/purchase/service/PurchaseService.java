@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -77,12 +78,16 @@ public class PurchaseService {
     }
 
 
-//    public List<String> getPurchaseList(int memberCode) {
-//
-//        List<String> purchaseList = purchaseMapper.selectPurchaseList(memberCode);
-//        List<String> paymentList = paymentMapper.selectPaymentList(memberCode);
-//        List<String> purchaseAndPaymentList = paymentMapper.selectPaymentList(memberCode);
-//
-//        return purchaseAndPaymentList;
-//    }
+    public List<String> getPurchaseAndPaymentList(int memberCode) {
+
+        List<String> alldata = new ArrayList<>();
+
+        List<String> purchaseList = purchaseMapper.selectPurchaseList(memberCode);
+        alldata.addAll(purchaseList);
+
+        List<String> paymentList = paymentMapper.selectPaymentList(memberCode);
+        alldata.addAll(paymentList);
+
+        return alldata;
+    }
 }

@@ -16,7 +16,19 @@
             ( #{impUid}, #{merchantUid}, #{orderClass}, #{orderDate}, #{tissuePrice}, #{tMemberCode})
     </insert>
 
-
+    <select id="selectPaymentList" resultType="java.lang.String">
+        SELECT
+            tissue_code,
+            order_class,
+            order_date,
+            tissue_price
+        FROM
+            tbl_tissue
+        WHERE
+            t_member_code = #{memberCode}
+        AND
+            order_class = 'BUY'
+    </select>
 
 
 </mapper>
