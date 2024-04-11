@@ -64,7 +64,7 @@
         update
            tbl_member
         SET
-            member_status = #{ memberStatus }
+            member_status = 'SUSPENDED'
         WHERE
             member_id = #{ memberId }
     </update>

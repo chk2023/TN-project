@@ -133,11 +133,12 @@ public class ManagerController {
     }
 
     @PostMapping("/manager/report/memStop")
-    public String memberStop(String memberStatus, Integer reportCode,RedirectAttributes rttr) {
+    public String memberStop(String memberId, Integer reportCode,RedirectAttributes rttr) {
+
 
         // 신고 목록 상세-계정정지-서브밋 기능
 
-        reportService.memberStop(memberStatus);
+        reportService.memberStop(memberId);
 
 
         rttr.addFlashAttribute("memberStop");
