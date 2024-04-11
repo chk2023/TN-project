@@ -163,12 +163,6 @@ public class PostController {
         return "/post/detail";
     }
 
-    @GetMapping("/likelist")
-    public void blogLikeListPage(int memberCode, Model model) {
-        List<PostDTO> likeList = postService.findLikeListPostByMemberCode(memberCode);
-        model.addAttribute("likeList", likeList);
-    }
-
     @PostMapping("/like")
     @ResponseBody
     public ResponseEntity<String> likePost(@RequestBody LikeListDTO likeListDTO, @AuthenticationPrincipal MemberDTO memberDTO, Model model) {
@@ -185,7 +179,14 @@ public class PostController {
 
     @GetMapping("/load")
     public @ResponseBody List<PostDTO> findTabMenuPostList(@ModelAttribute TabSearchDTO tabSearchDTO, @AuthenticationPrincipal MemberDTO member) {
-        List<PostDTO> postList = postService.findPostList(tabSearchDTO);
+        List<PostDTO> postList;
+        if (tabSearchDTO.getTabMenu().equals("♡")) {
+            postList = postService.findLikeListPostByMemberCode(tabSearchDTO);
+
+        } else {
+            postList = postService.findPostList(tabSearchDTO);
+        }
+
         return postList;
     }
 
