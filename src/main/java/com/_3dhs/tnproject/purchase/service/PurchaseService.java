@@ -1,6 +1,7 @@
 package com._3dhs.tnproject.purchase.service;
 
 import com._3dhs.tnproject.member.dto.MemberDTO;
+import com._3dhs.tnproject.payment.dao.PaymentMapper;
 import com._3dhs.tnproject.purchase.dao.PurchaseMapper;
 import com._3dhs.tnproject.purchase.dto.PurchaseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,14 +9,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PurchaseService {
 
     private final PurchaseMapper purchaseMapper;
+    private final PaymentMapper paymentMapper;
 
-    public PurchaseService(PurchaseMapper purchaseMapper) {
+    public PurchaseService(PurchaseMapper purchaseMapper, PaymentMapper paymentMapper) {
         this.purchaseMapper = purchaseMapper;
+        this.paymentMapper = paymentMapper;
     }
 
     public boolean isPostPurchased(int memberCode, int postCode) {
@@ -72,4 +77,17 @@ public class PurchaseService {
 
     }
 
+
+    public List<String> getPurchaseAndPaymentList(int memberCode) {
+
+        List<String> alldata = new ArrayList<>();
+
+        List<String> purchaseList = purchaseMapper.selectPurchaseList(memberCode);
+        alldata.addAll(purchaseList);
+
+        List<String> paymentList = paymentMapper.selectPaymentList(memberCode);
+        alldata.addAll(paymentList);
+
+        return alldata;
+    }
 }

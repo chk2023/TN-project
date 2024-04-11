@@ -84,4 +84,5 @@ public class TestController {
         attributes.addFlashAttribute("message", messageSourceAccessor.getMessage("test.makelikelist"));
         return "redirect:/common/testhub";
     }
+
 }
