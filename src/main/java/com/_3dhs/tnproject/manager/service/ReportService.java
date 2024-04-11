@@ -58,9 +58,9 @@ public class ReportService {
     }
 
 
-    public void memberStop(MemberDTO memberDTO) {
+    public void memberStop(String memberStatus) {
 
-        reportMapper.memberStop(memberDTO);
+        reportMapper.memberStop(memberStatus);
     }
 
 

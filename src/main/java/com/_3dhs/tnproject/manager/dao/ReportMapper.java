@@ -29,5 +29,5 @@ public interface ReportMapper {
     int selectTotalCount(Map<String, String> searchMap);
 
 
-    void memberStop(MemberDTO memberDTO);
+    void memberStop(String memberStatus);
 }
