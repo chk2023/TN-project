@@ -29,24 +29,6 @@
         <id property="postCode" column="post_code"/>
         <result property="postTitle" column="post_title"/>
         <result property="postText" column="post_text"/>
-        <result property="postState" column="post_state"/>
-        <result property="postPrice" column="post_price"/>
-        <result property="postWriDate" column="post_wri_date"/>
-        <result property="postView" column="post_view"/>
-        <result property="memberCode" column="po_member_code"/>
-        <result property="postModDate" column="post_mod_date"/>
-        <result property="postDeleDate" column="post_dele_date"/>
-        <result property="isDeleted" column="is_deleted"/>
-        <result property="folderCode" column="folder_code"/>
-        <result property="profile.profileCode" column="profile_code"/>
-        <result property="profile.profileNickname" column="profile_nickname"/>
-        <result property="profile.profileStatmsg" column="profile_statmsg"/>
-        <result property="profile.profileImgPath" column="profile_img_path"/>
-    </resultMap>
-    <resultMap id="postTblMap" type="com._3dhs.tnproject.post.dto.PostDTO">
-        <id property="postCode" column="post_code"/>
-        <result property="postTitle" column="post_title"/>
-        <result property="postText" column="post_text"/>
         <result property="postStatus" column="post_status"/>
         <result property="postPrice" column="post_price"/>
         <result property="postWriDate" column="post_wri_date"/>
@@ -54,7 +36,7 @@
         <result property="memberCode" column="po_member_code"/>
         <result property="postModDate" column="post_mod_date"/>
         <result property="postDeleDate" column="post_dele_date"/>
-        <result property="isDeleted" column="is_deleted"/>
+        <result property="isDeleted" column="post_is_deleted"/>
         <result property="folderCode" column="folder_code"/>
         <result property="profile.profileCode" column="profile_code"/>
         <result property="profile.profileNickname" column="profile_nickname"/>
@@ -271,7 +253,7 @@
         post_status IN ('PUBLIC','PRIVATE')
     </select>
 
-    <select id="findPostList" resultMap="postTblMap">
+    <select id="findPostList" resultMap="postMap">
         SELECT
         post_code,
         post_title,
@@ -371,7 +353,7 @@
         post_status = 'PUBLIC'
     </select>
 
-    <select id="findAllPostList" resultMap="postTblMap">
+    <select id="findAllPostList" resultMap="postMap">
         SELECT
         *
         FROM
@@ -383,8 +365,7 @@
         post_wri_date DESC
         LIMIT #{criteria.offset}, #{criteria.limit}
     </select>
-
-    <select id="findPublicPostList" resultMap="postTblMap">
+    <select id="findPublicPostList" resultMap="postMap">
         SELECT
         *
         FROM

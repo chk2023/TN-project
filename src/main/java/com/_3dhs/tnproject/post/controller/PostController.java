@@ -135,7 +135,7 @@ public class PostController {
         //1. 해당하는 코드의 post정보를 불러오기
         PostDTO targetPost = postService.findPostByPostCode(postCode);
         //2. post 상태가 비공개라면 열람자가 일치하는지 확인
-        if (targetPost.getPostState() == PostState.PRIVATE) {
+        if (targetPost.getPostStatus().equals("PRIVATE")) {
             if (memberDTO.getMemberCode() != targetPost.getMemberCode()) {
                 //열람자가 일치하지 않으면 에러메세지 첨부
                 model.addAttribute("errorMessage", accessor.getMessage("post.notEqualMember"));
@@ -181,20 +181,11 @@ public class PostController {
     @GetMapping("/load")
     public @ResponseBody List<PostDTO> findTabMenuPostList(@ModelAttribute TabSearchDTO tabSearchDTO, @AuthenticationPrincipal MemberDTO member) {
         List<PostDTO> postList = postService.findPostList(tabSearchDTO);
-        postList.forEach(dto -> {
-            dto.setPostText(Jsoup.parse(dto.getPostText()).text());
-            dto.setLiked(likeService.getHasLiked(dto.getPostCode(), member.getMemberCode()));
-        });
         return postList;
     }
 
     @PostMapping("/folder_edit")
     public @ResponseBody String folderEditList(@AuthenticationPrincipal MemberDTO memberDTO, @RequestBody List<FolderDTO> requestBody) {
-        // 사용자 로그인 상태 검증
-        if (memberDTO == null) {
-            return "redirect:/member/login"; // 로그인 페이지로 리다이렉트
-        }
-
         for (FolderDTO folderDTO : requestBody) {
             folderDTO.setFMemberCode(memberDTO.getMemberCode());
         }
@@ -221,7 +212,7 @@ public class PostController {
             for (MultipartFile uploadFile : uploadFiles) {
                 if (!uploadFile.isEmpty()) {
                     String originalFilename = uploadFile.getOriginalFilename();
-                    String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+                    String fileExtension = originalFilename.substring(originalFilename.lastIndexOf(".")); //TODO 사용안되는데 확인바람
                     String uuid = UUID.randomUUID().toString();
                     String newFileName = uuid + "_" + originalFilename;
 
@@ -296,16 +287,20 @@ public class PostController {
     @PostMapping("/write")
     public String postWrite(@AuthenticationPrincipal MemberDTO memberDTO, @ModelAttribute WriteDTO writeDTO, Model model) {
         // 사용자 로그인 상태 검증
-        if (memberDTO == null) {
-            return "redirect:/member/login"; // 로그인 페이지로 리다이렉트
-        }
+//        if (memberDTO == null) {
+//            return "redirect:/member/login"; // 로그인 페이지로 리다이렉트
+//        }
 
         try {
             PostDTO postDTO = writeDTO.getPostDTO();
+            log.info("postStatus? : {}",postDTO.getPostStatus());
+            writeDTO.setAttachmentDTOList(new ArrayList<>());   //TODO nullPoint에러로 인해서 추가 개발완료시 지울것
             List<AttachmentDTO> attachments = writeDTO.getAttachmentDTOList();
             List<TagDTO> tags = writeDTO.getTagDTOList();
 
+
             postDTO.setMemberCode(memberDTO.getMemberCode());
+
             for (AttachmentDTO attachment : attachments) {
                 attachment.setFilePath("/userUploadFiles/post");
             }

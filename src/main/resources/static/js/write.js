@@ -102,7 +102,7 @@ document.querySelector('#작성완료버튼').addEventListener('click', function
     const folderCode = document.querySelector("select[name='postDTO.folderCode']").value;
     const tagInput = document.querySelector("textarea[name='tagDTOList.tagName']").value;
     const tags = extractTags(tagInput);
-    const postState = document.querySelector("input[name='postDTO.postState']:checked").value;
+    const postStatus = document.querySelector("input[name='postDTO.postStatus']:checked").value;
     const postPrice = document.querySelector("input[name='postDTO.postPrice']:checked").value;
     const postIsFixed = document.querySelector("input[name='postDTO.postIsFixed']:checked").value;
 
@@ -132,7 +132,7 @@ document.querySelector('#작성완료버튼').addEventListener('click', function
     formData.append('postDTO.postTitle', postTitle);
     formData.append('postDTO.postText', postText);
     formData.append('postDTO.folderCode', folderCode);
-    formData.append('postDTO.postState', postState);
+    formData.append('postDTO.postState', postStatus);
     formData.append('postDTO.postPrice', postPrice);
     formData.append('postDTO.postIsFixed', postIsFixed);
 
