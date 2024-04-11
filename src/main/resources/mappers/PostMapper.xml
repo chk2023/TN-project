@@ -102,7 +102,7 @@
         WHERE post_code = #{postCode}
     </select>
 
-    <select id="findLikeListPostByMemberCode">
+    <select id="findLikeListPostByMemberCode" resultMap="postMap">
         SELECT
         pv.post_code,
         pv.post_title,
@@ -122,6 +122,7 @@
         tbl_like_list li ON li.post_code = pv.post_code
         WHERE li.l_member_code = #{memberCode}
         ORDER BY li.post_code DESC
+        LIMIT #{index}, #{range}
     </select>
     <select id="findPostByPostCode" resultMap="postMap">
         SELECT post_code,
@@ -355,6 +356,15 @@
         (#{postCode}, #{tagCode})
     </insert>
 
+    <select id="getTagsByPostCode" resultType="com._3dhs.tnproject.post.dto.TagDTO">
+        SELECT
+            t.tag_code,
+            t.tag_name
+        FROM tbl_post_tag pt
+        JOIN tbl_tag t ON pt.tag_code = t.tag_code
+        WHERE post_code = #{postCode}
+    </select>
+
     <select id="selectTotalCount">
         SELECT
         COUNT(*) AS count
@@ -389,5 +399,14 @@
         ORDER BY
         post_wri_date DESC
         LIMIT #{criteria.offset}, #{criteria.limit}
+    </select>
+    <select id="findLastInsertPost" resultMap="postMap">
+        SELECT post_code,
+               post_title,
+               post_text,
+               po_member_code
+        FROM tbl_post
+        ORDER BY post_code DESC
+        LIMIT 1
     </select>
 </mapper>

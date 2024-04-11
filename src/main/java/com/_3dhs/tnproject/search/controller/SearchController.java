@@ -11,6 +11,7 @@ import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
 import org.apache.lucene.index.*;
 import org.apache.lucene.search.*;
+import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Controller;
@@ -36,14 +37,16 @@ public class SearchController {
     private final MessageSourceAccessor accessor;
 
     public static final String INDEX_PATH;
-    public static final IndexWriterConfig config = new IndexWriterConfig(new StandardAnalyzer());
 
+
+    private List<Document> documents = new ArrayList<>();
     static {
         try {
             INDEX_PATH = ResourceUtils.getFile("classpath:static/index").getAbsolutePath();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     public SearchController(PostService postService, MessageSourceAccessor accessor) {
@@ -58,6 +61,7 @@ public class SearchController {
         //필요한 데이터만 가공해서 DOC에 저장후 반환
         return postDTOListToDocList(postList);
     }
+
 
     private List<Document> postDTOListToDocList(List<PostDTO> postList) {
         List<Document> resultList = new ArrayList<>();
@@ -75,6 +79,41 @@ public class SearchController {
         }
 
         return resultList;
+    }
+
+    public void insertDoc() throws IOException {
+        // Lucene 인덱스 생성
+        Directory indexDir = FSDirectory.open(Paths.get(INDEX_PATH));
+        IndexWriterConfig config = new IndexWriterConfig(new StandardAnalyzer()); // 새로운 IndexWriterConfig 인스턴스 생성
+        IndexWriter writer = new IndexWriter(indexDir, config);
+
+        //데이터베이스에서 데이터를 가져와 Lucene 인덱싱
+        documents = getAllDoc();
+
+        log.info("documents의 사이즈 : {}",documents.size());
+        documents.forEach(doc -> {
+            try {
+                log.info("doc 추가됨 : {}",doc.get("postTitle"));
+                writer.addDocument(doc);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        writer.close();
+    }
+    public void insertNewPost(PostDTO dto) throws IOException {
+        // Lucene 인덱스 생성
+        log.info("새로운 인덱스 추가...{}", dto.getPostTitle());
+        Directory indexDir = FSDirectory.open(Paths.get(INDEX_PATH));
+        IndexWriterConfig config = new IndexWriterConfig(new StandardAnalyzer()); // 새로운 IndexWriterConfig 인스턴스 생성
+        IndexWriter writer = new IndexWriter(indexDir, config);
+
+        List<PostDTO> temp = new ArrayList<>();
+        temp.add(dto);
+        List<Document> result = postDTOListToDocList(temp);
+
+        writer.addDocument(result.get(0));
+        writer.close();
     }
 
     @PostMapping("/search/result")

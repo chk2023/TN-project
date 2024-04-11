@@ -39,18 +39,10 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public List<PostDTO> findLikeListPostByMemberCode(int memberCode) {
+    public List<PostDTO> findLikeListPostByMemberCode(TabSearchDTO tabSearchDTO) {
 
-        /* 유료글결제 추가 */
-        Map<String, Integer> params = new HashMap<>();
-        params.put("memberCode", memberCode);
 
-//        List<PostDTO> postList = postMapper.findLikeListPostByMemberCode(memberCode);
-        List<PostDTO> postList = postMapper.findListByParam(params);
-        for (int i = 0; i < postList.size(); i++) {
-            postList.get(i).setAttachmentList(postMapper.findAttListByPostCode(postList.get(i).getPostCode()));
-            postList.get(i).makeThumbnailPath();
-        }
+        List<PostDTO> postList = postMapper.findLikeListPostByMemberCode(tabSearchDTO);
         return postList;
     }
 
@@ -243,5 +235,13 @@ public class PostService {
         postAllListAndPaging.put("totalCount", totalCount);
 
         return postAllListAndPaging;
+    }
+
+    public List<TagDTO> getTagsByPostCode(int postCode) {
+        return postMapper.getTagsByPostCode(postCode);
+    }
+
+    public PostDTO findLastInsertPost() {
+        return postMapper.findLastInsertPost();
     }
 }

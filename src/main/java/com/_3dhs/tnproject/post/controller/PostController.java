@@ -129,12 +129,17 @@ public class PostController {
     }
 
     @GetMapping("/detail")
-    public String blogDetailPage(@AuthenticationPrincipal MemberDTO memberDTO, Integer postCode, Model model, CommentsDTO commentsDTO) {
+    public String blogDetailPage(@AuthenticationPrincipal MemberDTO member, Integer postCode, Model model, CommentsDTO commentsDTO) {
         //1. 해당하는 코드의 post정보를 불러오기
         PostDTO targetPost = postService.findPostByPostCode(postCode);
+        targetPost.setAttachmentList(postService.findAttListByPostCode(targetPost.getPostCode()));
+        targetPost.makeThumbnailPath();
+        targetPost.setLiked(likeService.getHasLiked(targetPost.getPostCode(), member.getMemberCode()));
+        targetPost.setTagList(postService.getTagsByPostCode(targetPost.getPostCode()));
+
         //2. post 상태가 비공개라면 열람자가 일치하는지 확인
         if (targetPost.getPostStatus().equals("PRIVATE")) {
-            if (memberDTO.getMemberCode() != targetPost.getMemberCode()) {
+            if (member.getMemberCode() != targetPost.getMemberCode()) {
                 //열람자가 일치하지 않으면 에러메세지 첨부
                 model.addAttribute("errorMessage", accessor.getMessage("post.notEqualMember"));
                 return "/post/detail"; //TODO : view에서 errorMessage가 있다면 이전화면으로 돌아가는 로직 작성해주세요
@@ -158,12 +163,6 @@ public class PostController {
         return "/post/detail";
     }
 
-    @GetMapping("/likelist")
-    public void blogLikeListPage(int memberCode, Model model) {
-        List<PostDTO> likeList = postService.findLikeListPostByMemberCode(memberCode);
-        model.addAttribute("likeList", likeList);
-    }
-
     @PostMapping("/like")
     @ResponseBody
     public ResponseEntity<String> likePost(@RequestBody LikeListDTO likeListDTO, @AuthenticationPrincipal MemberDTO memberDTO, Model model) {
@@ -180,7 +179,14 @@ public class PostController {
 
     @GetMapping("/load")
     public @ResponseBody List<PostDTO> findTabMenuPostList(@ModelAttribute TabSearchDTO tabSearchDTO, @AuthenticationPrincipal MemberDTO member) {
-        List<PostDTO> postList = postService.findPostList(tabSearchDTO);
+        List<PostDTO> postList;
+        if (tabSearchDTO.getTabMenu().equals("♡")) {
+            postList = postService.findLikeListPostByMemberCode(tabSearchDTO);
+
+        } else {
+            postList = postService.findPostList(tabSearchDTO);
+        }
+
         return postList;
     }
 
