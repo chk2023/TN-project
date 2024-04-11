@@ -158,7 +158,7 @@ public class PostController {
         List<CommentsDTO> comments = commentsService.selectCommentsList(commentsDTO);
         model.addAttribute("comments", comments);
         model.addAttribute("postCode", postCode);
-        model.addAttribute("memberCode", memberDTO.getMemberCode());
+        model.addAttribute("memberCode", member.getMemberCode());
 
         return "/post/detail";
     }
