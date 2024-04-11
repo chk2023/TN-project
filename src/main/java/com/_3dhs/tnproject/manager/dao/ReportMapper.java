@@ -30,4 +30,8 @@ public interface ReportMapper {
 
 
     void memberStop(String memberId);
+
+    void memberActivate(String memberId);
+
+    void admMemberStop(String memberId);
 }

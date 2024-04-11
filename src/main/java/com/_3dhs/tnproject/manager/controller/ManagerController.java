@@ -22,7 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 
-@Controller @Slf4j
+@Controller
+@Slf4j
 @RequiredArgsConstructor
 public class ManagerController {
 
@@ -30,7 +31,6 @@ public class ManagerController {
     private final MemberService memberService;
     private final MessageSourceAccessor messageSourceAccessor;
     private final ReportDTO reportDTO;
-
 
 
     @GetMapping("/manager/report/list")
@@ -60,11 +60,11 @@ public class ManagerController {
 
     }
 
-    @GetMapping ("/manager/admin/list")
+    @GetMapping("/manager/admin/list")
     public String getAdminList(@RequestParam(defaultValue = "1") int page,
-                                @RequestParam(required = false) String searchCondition,
-                                @RequestParam(required = false) String searchValue,
-                                Model model) {
+                               @RequestParam(required = false) String searchCondition,
+                               @RequestParam(required = false) String searchValue,
+                               Model model) {
 
         Map<String, String> searchMap = new HashMap<>();
         searchMap.put("searchCondition", searchCondition);
@@ -82,17 +82,17 @@ public class ManagerController {
     public String selectAdminDetail(Integer reportCode, Model model) {
         ReportDTO admReport = reportService.selectAdminDetail(reportCode);
         model.addAttribute("admDet", admReport);
-      log.info(String.valueOf(reportCode));
-      log.info("{}",admReport);
+        log.info(String.valueOf(reportCode));
+        log.info("{}", admReport);
         return "manager/admin/detail";
     }
 
 
-    @GetMapping ("/manager/member/list")
+    @GetMapping("/manager/member/list")
     public String getMemberList(@RequestParam(defaultValue = "1") int page,
-                               @RequestParam(required = false) String searchCondition,
-                               @RequestParam(required = false) String searchValue,
-                               Model model) {
+                                @RequestParam(required = false) String searchCondition,
+                                @RequestParam(required = false) String searchValue,
+                                Model model) {
 
         Map<String, String> searchMap = new HashMap<>();
         searchMap.put("searchCondition", searchCondition);
@@ -114,7 +114,7 @@ public class ManagerController {
     }
 
 
-    @PostMapping("/manager/report/admUpdate") //getMapping으로 값을 넘길 이유가 없으니까, 포스트 매핑을 시켜도 될 것 같은데..
+    @PostMapping("/manager/report/admUpdate")
     public String updateReport(ReportDTO reportDTO, RedirectAttributes rttr) {
 
         // 신고 목록 상세-완료 버튼-서브밋 기능
@@ -133,8 +133,8 @@ public class ManagerController {
     }
 
     @PostMapping("/manager/report/memStop")
-    public String memberStop(String memberId, Integer reportCode,RedirectAttributes rttr) {
-
+    public String memberStop(String memberId, Integer reportCode, RedirectAttributes rttr) {
+         log.info(memberId, reportCode);
 
         // 신고 목록 상세-계정정지-서브밋 기능
 
@@ -145,24 +145,32 @@ public class ManagerController {
 
         return "redirect:/manager/report/detail?reportCode=" + reportCode;
 
-
-//    @GetMapping("/memberStop")
-//    public String memberStop(ReportDTO reportDTO, RedirectAttributes rttr) {
-//        System.out.println("memberStop 호출함");
-//
-//        reportService.memberStop(reportDTO.getMemberId());
-//        //경고횟수
-//
-//        return "redrirect:/manager/report/list";
-//    }
-//
-//    @GetMapping("/memActivate")
-//    public String memberActivate(ReportDTO reportDTO,RedirectAttributes rttr) {
-//
-//        return "redirect:/manager/report/list";
-//    }
-//
-//
-//
     }
+
+
+    @PostMapping("/manager/report/memActive")
+    public String memberActivate(String memberId, Integer reportCode, RedirectAttributes rttr) {
+        //계정 정지 해제 서브밋 기능
+        reportService.memberActivate(memberId);
+        rttr.addFlashAttribute("memberActivate");
+
+        return "redirect:/manager/report/detail?reportCode=" + reportCode;
+    }
+
+
+    @PostMapping("/manager/admin/memStop")
+    public String admMemberStop(String memberId, Integer reportCode, RedirectAttributes rttr) {
+
+        System.out.println(reportCode + memberId );
+        // 관리기록  상세-계정정지-서브밋 기능
+
+        reportService.admMemberStop(memberId);
+
+        rttr.addFlashAttribute("memberStop");
+
+        return "redirect:/manager/admin/detail?reportCode=" + reportCode;
+
+    }
+
+
 }

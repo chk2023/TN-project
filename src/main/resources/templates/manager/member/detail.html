@@ -6,20 +6,20 @@
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/memberDetail.css">
     <script>
-        function admUpdate()   {
-            document.getElementById(reportDetail).attr('action', '/detail');
-            document.getElementById(reportDetail).submit();
-        }
 
         function memStop() {
-            document.getElementById(reportDetail).attr('action', '/memberStop');
-            document.getElementById(reportDetail).submit();
+            const $memberStop =  document.getElementById("memberDetail");
+            $memberStop.action = '/manager/member/memStop';
+            $memberStop.submit();
         }
 
         function memActivate() {
-            document.getElementById(reportDetail).attr('action', '/memActivate');
-            document.getElementById(reportDetail).submit();
+
+            const $memActive = document.getElementById("memberDetail");
+            $memActive.action = '/manager/member/memActive'
+            $memActive.submit();
         }
+
     </script>
 
 </head>
@@ -41,14 +41,14 @@
             <!--            <button class="closeBtn"><img src="/image/btn_close.png" alt="닫기 버튼"></button>-->
         </form> <br><br>
         <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
-            <form id="memberDetail">
+            <form id="memberDetail" method="post">
                 <label>회원 코드  <b><input name="reportCode" th:value="${oneMember.memberCode}"disabled></b></label> <br><br>
                 <label>회원 아이디 <b> <input type="text" th:value='${oneMember.memberId}'disabled></b></label> <br><br>
                 <label>회원 생년월일<b>  <input type="text" th:value='${oneMember.memberBirth}'disabled></b></label> <br><br>
                 <label>계정 상태<b> <input type="text"  th:value='${oneMember.memberStatus}'disabled></b></label> <br><br>
                 <label>계정 등급 <b> <input type="text"  th:value='${oneMember.memberAuthority}'disabled></b></label> <br><br>
                 <label>계정 삭제 여부 <b> <input type="text"  th:value='${oneMember.isDeleted}'disabled></b></label> <br><br>
-
+                <input type="hidden" name="memberId" th:value="${oneMember.memberId}">
                 <!-- form 마다 서브밋이 있어야 한다 -->
                 <!--            </form>-->
 

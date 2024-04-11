@@ -109,6 +109,14 @@ public class ReportService {
         return reportMapper.selectOneMember(memberDTO);
 
     }
+
+    public void memberActivate(String memberId) {
+         reportMapper.memberActivate(memberId);
+    }
+
+    public void admMemberStop(String memberId) {
+        reportMapper.admMemberStop(memberId);
+    }
 }
 
 

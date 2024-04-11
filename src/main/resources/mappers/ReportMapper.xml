@@ -69,6 +69,23 @@
             member_id = #{ memberId }
     </update>
 
+    <update id="admMemberStop">
+        update
+        tbl_member
+        SET
+        member_status = 'SUSPENDED'
+        WHERE
+        member_id = #{ memberId }
+    </update>
+
+    <update id="memberActivate">
+        update
+        tbl_member
+        SET
+        member_status = 'ACTIVE'
+        WHERE
+        member_id = #{ memberId }
+    </update>
 
     <select id="selectAdminList" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">
         SELECT
