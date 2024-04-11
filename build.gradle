@@ -39,6 +39,9 @@ dependencies {
     //후처리
     implementation 'org.aspectj:aspectjweaver'
 
+    //HTML파싱 라이브러리
+    implementation 'org.jsoup:jsoup:1.14.3'
+
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'

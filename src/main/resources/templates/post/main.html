@@ -117,15 +117,7 @@
                             <div>
                                 <strong th:text="${post.postTitle}"
                                         class="contentTit">글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목</strong>
-                                <div class="contentsTxt">
-                                    <p th:text="${post.postText}">
-                                        본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
-                                        본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
-                                        본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
-                                        본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
-                                        본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
-                                    </p>
-                                </div>
+                                <div class="contentsTxt" th:text="${post.postText}">본문본문본문</div>
                                 <div class="showLikeAndComments">
                                     <button class="commentsBtn">
                                         <img src="/images/icon_comment.png" alt="댓글 버튼 아이콘">
@@ -138,8 +130,7 @@
                                 </div>
                             </div>
                             <div class="thumbnailPhoto">
-                                <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2F20160310_12%2Flee_h_i2_1457596672049c0vMY_JPEG%2Ftumblr_nxt9emqtjP1uh04bco1_540.jpg&type=sc960_832"
-                                     alt="썸네일 이미지">
+                                <img th:src="${post.thumbnailPath}" alt="썸네일 이미지">
                             </div>
                         </div>
                     </li>

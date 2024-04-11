@@ -33,8 +33,19 @@ public interface PostMapper {
 
     List<PostDTO> findListByPostCodes(Set<Integer> postCodes);
 
-
     PostDTO findPostLikeCount(int memberCode);
 
     List<PostDTO> findPostList(TabSearchDTO tabSearchDTO);
+
+    boolean isFixedPost(int memberCode);
+
+    void addWritePost(PostDTO postDTO);
+
+    void insertAttachments(List<AttachmentDTO> attachments);
+
+    void insertTags(List<TagDTO> tags);
+
+    void insertTag(TagDTO tag);
+
+    void insertPostTag(PostTagDTO postTag);
 }

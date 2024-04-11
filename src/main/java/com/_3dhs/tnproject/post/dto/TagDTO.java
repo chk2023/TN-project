@@ -10,4 +10,13 @@ import lombok.ToString;
 public class TagDTO {
     private int tagCode;
     private String tagName;
+
+    public TagDTO() {
+    }
+
+    public TagDTO(String tagName) {
+        this.tagName = tagName;
+    }
+
 }
+
