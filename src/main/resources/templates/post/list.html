@@ -17,7 +17,8 @@
     </aside>
     <main>
         <div class="title">
-            <button class="backBtn"><img src="/images/btn_arrow.png" alt="뒤로가기 버튼"></button>
+            <button class="backBtn" th:onclick="'location.href=\'/post/main?memberCode=' + ${memberCode} + '\''"><img
+                    src="/images/btn_arrow.png" alt="뒤로가기 버튼"></button>
             <div>
                 <h1>전체 목록</h1>
             </div>
@@ -29,9 +30,9 @@
             <h2>
                 전체 작성된 글 수 (
                 <span th:if="${#strings.equals(param.memberCode, #strings.toString(#authentication.principal.memberCode))}"
-                      th:text="${postView.postCount}">56</span>
+                      th:text="${totalCount.count}">56</span>
                 <span th:if="${!#strings.equals(param.memberCode, #strings.toString(#authentication.principal.memberCode))}"
-                      th:text="${postTotalCount}"></span>
+                      th:text="${totalCount.count}"></span>
                 )
             </h2>
             <table class="tbl_list">
@@ -56,12 +57,12 @@
             <div id="paging" class="paging">
                 <!-- 맨 앞으로 이동 -->
                 <button class="pagingFrontBtn arrowBtn"
-                        th:onclick="'location.href=\'/post/list?memberCode='+${member.memberCode}+'&page=1\''">
+                        th:onclick="'location.href=\'/post/list?memberCode='+${memberCode}+'&page=1\''">
                     <img src="/images/icon_paging_arrow_front.png" alt="맨 앞으로 이동 버튼">
                 </button>
                 <!-- 이전 페이지로 이동 -->
                 <button class="pagingFrontBtn arrowBtn"
-                        th:onclick="'location.href=\'/post/list?memberCode='+${member.memberCode}+'&page=' + @{${paging.page - 1}} + '\''"
+                        th:onclick="'location.href=\'/post/list?memberCode='+${memberCode}+'&page=' + @{${paging.page - 1}} + '\''"
                         th:disabled="${ paging.page <= 1 }">
                     <img src="/images/icon_paging_arrow_front.png" alt="이전 목록으로 이동 버튼">
                 </button>
@@ -69,19 +70,19 @@
                 <!-- 숫자 버튼 -->
                 <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
                     <button class="pagingNumBtn"
-                            th:onclick="'location.href=\'/post/list?memberCode='+${member.memberCode}+'&page=' + @{${page}} + '\''"
+                            th:onclick="'location.href=\'/post/list?memberCode='+${memberCode}+'&page=' + @{${page}} + '\''"
                             th:text="${ page }" th:disabled="${ paging.page eq page }"></button>
                 </th:block>
 
                 <!-- 다음 페이지로 이동 -->
                 <button class="pagingBackBtn arrowBtn"
-                        th:onclick="'location.href=\'/post/list?memberCode='+${member.memberCode}+'&page=' + @{${paging.page + 1}} + '\''"
+                        th:onclick="'location.href=\'/post/list?memberCode='+${memberCode}+'&page=' + @{${paging.page + 1}} + '\''"
                         th:disabled="${ paging.page >= paging.maxPage }">
                     <img src="/images/icon_paging_arrow_back.png" alt="다음 목록으로 이동 버튼">
                 </button>
                 <!-- 맨 끝으로 이동 -->
                 <button class="pagingBackBtn arrowBtn"
-                        th:onclick="'location.href=\'/post/list?memberCode='+${member.memberCode}+'&page=' + @{${paging.maxPage}} + '\''">
+                        th:onclick="'location.href=\'/post/list?memberCode='+${memberCode}+'&page=' + @{${paging.maxPage}} + '\''">
                     <img src="/images/icon_paging_arrow_back.png" alt="맨 뒤로 이동 버튼">
                 </button>
             </div>

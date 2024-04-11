@@ -31,7 +31,7 @@ public interface PostMapper {
 
     List<PostDTO> findListByPostCodes(Set<Integer> postCodes);
 
-    PostDTO findPostLikeCount(int memberCode);
+    TabSearchDTO findPostLikeCount(int memberCode, boolean isOwner);
 
     List<PostDTO> findPostList(TabSearchDTO tabSearchDTO);
 
@@ -47,7 +47,7 @@ public interface PostMapper {
 
     void insertPostTag(PostTagDTO postTag);
 
-    int selectTotalCount(TabSearchDTO tabSearchDTO);
+    TabSearchDTO selectTotalCount(int memberCode, boolean isOwner);
 
     List<PostDTO> findAllPostList(Map<String, Object> parameters);
 
@@ -57,8 +57,8 @@ public interface PostMapper {
 
     List<PostDTO> findPublicFolderPostList(Map<String, Object> parameters);
 
-    int selectFolderTotalCount(int folderCode, int memberCode, boolean isOwner);
+    TabSearchDTO selectFolderTotalCount(int folderCode, int memberCode, boolean isOwner);
 
-    int selectPublicFolderTotalCount(int folderCode, int memberCode, boolean isOwner);
+    TabSearchDTO selectPublicFolderTotalCount(int folderCode, int memberCode, boolean isOwner);
 
 }

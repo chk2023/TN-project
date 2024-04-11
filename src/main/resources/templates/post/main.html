@@ -23,9 +23,9 @@
                 <h1 th:text="${member.profile.profileNickname}">닉네임</h1>
                 <p>
                     <span th:if="${#strings.equals(param.memberCode, #strings.toString(#authentication.principal.memberCode))}"
-                          th:text="${postView.postCount}">56</span>
+                          th:text="${totalCount.count}">56</span>
                     <span th:if="${!#strings.equals(param.memberCode, #strings.toString(#authentication.principal.memberCode))}"
-                          th:text="${postTotalCount}"></span>
+                          th:text="${totalCount.count}"></span>
                     게시물
                 </p>
             </div>
@@ -83,7 +83,7 @@
             </ul>
 
             <ul class="blogList">
-                <th:block th:object="${postList}" th:each="post, start : ${postList}">
+                <th:block th:each="post : ${postList}">
                     <li>
                         <div class="list_head">
                             <div class="prof_photo">

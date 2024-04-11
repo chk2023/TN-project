@@ -7,10 +7,18 @@
             <a onclick="folderAllList()">
                 <img src="/images/icon_folder.png" alt="아이콘">
                 전체목록(
-                <span th:if="${#strings.equals(param.memberCode, #strings.toString(#authentication.principal.memberCode))}"
-                      th:text="${postView.postCount}">56</span>
-                <span th:if="${!#strings.equals(param.memberCode, #strings.toString(#authentication.principal.memberCode))}"
-                      th:text="${postTotalCount}"></span>
+                <th:block th:if="${param.folderCode == null}"><!-- 전체목록조회일때 -->
+                    <span th:if="${#strings.equals(param.memberCode, #strings.toString(#authentication.principal.memberCode))}"
+                          th:text="${totalCount.count}">56</span>
+                    <span th:if="${!#strings.equals(param.memberCode, #strings.toString(#authentication.principal.memberCode))}"
+                          th:text="${totalCount.count}"></span>
+                </th:block>
+                <th:block th:if="${param.folderCode != null}"><!-- 폴더조회일때 -->
+                    <span th:if="${#strings.equals(param.memberCode, #strings.toString(#authentication.principal.memberCode))}"
+                          th:text="${totalAllCount.count}">56</span>
+                    <span th:if="${!#strings.equals(param.memberCode, #strings.toString(#authentication.principal.memberCode))}"
+                          th:text="${totalAllCount.count}"></span>
+                </th:block>
                 )
             </a>
         </li>
@@ -25,7 +33,7 @@
         </th:block>
     </ul>
     <button th:if="${#strings.equals(param.memberCode, #strings.toString(#authentication.principal.memberCode))}"
-            class="folderSetBtn" onClick="location.href='/post/folder_edit'">
+            class="folderSetBtn" th:onclick="'location.href=\'/post/folder_edit?memberCode=' + memberCode + '\''">
         <img src="/images/icon_folder_setting.png" alt="폴더 편집 버튼">
     </button>
 </div>
