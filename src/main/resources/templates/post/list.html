@@ -42,7 +42,7 @@
                     <th class="tbl_date">작성일</th>
                 </tr>
                 <tr th:each="postAll : ${postAllList}"
-                    th:onclick="'location.href=\'/post/detail?postCode=' + ${postAll.postCode} + '\''"
+                    th:onclick="'location.href=\'/post/detail?memberCode='+${memberCode}+'&postCode=' + ${postAll.postCode} + '\''"
                     th:classappend="${postAll.postStatus == 'PRIVATE'} ? 'private'">
                     <td class="tbl_user" th:text="${postAll.profile.profileNickname}">user01</td>
                     <td class="tbl_tit" th:text="${postAll.postTitle}">

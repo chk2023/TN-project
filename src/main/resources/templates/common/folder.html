@@ -33,7 +33,7 @@
         </th:block>
     </ul>
     <button th:if="${#strings.equals(param.memberCode, #strings.toString(#authentication.principal.memberCode))}"
-            class="folderSetBtn" th:onclick="'location.href=\'/post/folder_edit?memberCode=' + memberCode + '\''">
+            class="folderSetBtn" th:onclick="'location.href=\'/post/folder_edit?memberCode=' + ${memberCode} + '\''">
         <img src="/images/icon_folder_setting.png" alt="폴더 편집 버튼">
     </button>
 </div>
