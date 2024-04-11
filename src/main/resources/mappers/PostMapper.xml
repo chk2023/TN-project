@@ -451,4 +451,29 @@
         post_is_deleted = false AND
         folder_code = #{folderCode}
     </select>
+
+    <select id="findDraftPostList" resultMap="postMap">
+        SELECT
+        *
+        FROM
+        post_view
+        WHERE
+        po_member_code = #{memberCode} AND
+        post_status = 'DRAFT' AND
+        post_is_deleted = false
+        ORDER BY
+        post_wri_date DESC
+        LIMIT #{criteria.offset}, #{criteria.limit}
+    </select>
+
+    <select id="findDraftPostCount">
+        SELECT
+        COUNT(*) AS count
+        FROM
+        post_view
+        WHERE
+        po_member_code = #{memberCode} AND
+        post_status = 'DRAFT' AND
+        post_is_deleted = false
+    </select>
 </mapper>
