@@ -43,35 +43,53 @@
         <result property="profile.profileStatmsg" column="profile_statmsg"/>
         <result property="profile.profileImgPath" column="profile_img_path"/>
     </resultMap>
+    <resultMap id="postTblMap" type="com._3dhs.tnproject.post.dto.PostDTO">
+        <id property="postCode" column="post_code"/>
+        <result property="postTitle" column="post_title"/>
+        <result property="postText" column="post_text"/>
+        <result property="postStatus" column="post_status"/>
+        <result property="postPrice" column="post_price"/>
+        <result property="postWriDate" column="post_wri_date"/>
+        <result property="postView" column="post_view"/>
+        <result property="memberCode" column="po_member_code"/>
+        <result property="postModDate" column="post_mod_date"/>
+        <result property="postDeleDate" column="post_dele_date"/>
+        <result property="isDeleted" column="is_deleted"/>
+        <result property="folderCode" column="folder_code"/>
+        <result property="profile.profileCode" column="profile_code"/>
+        <result property="profile.profileNickname" column="profile_nickname"/>
+        <result property="profile.profileStatmsg" column="profile_statmsg"/>
+        <result property="profile.profileImgPath" column="profile_img_path"/>
+    </resultMap>
 
     <select id="findAllPostListForDoc" resultMap="postMap">
         SELECT post_code,
-               post_title,
-               post_text,
-               po_member_code
+        post_title,
+        post_text,
+        po_member_code
         FROM post_view
         WHERE post_status = 'PUBLIC'
-          AND post_is_deleted = false
+        AND post_is_deleted = false
         ORDER BY post_code;
     </select>
 
     <select id="findListByParam" resultMap="postMap">
         SELECT post_code,
-               post_title,
-               post_text,
-               post_price,
-               po_member_code,
-               folder_code,
-               post_wri_date,
-               profile_code,
-               profile_nickname,
-               profile_statmsg,
-               profile_img_path,
-               like_count,
-               cmt_count
+        post_title,
+        post_text,
+        post_price,
+        po_member_code,
+        folder_code,
+        post_wri_date,
+        profile_code,
+        profile_nickname,
+        profile_statmsg,
+        profile_img_path,
+        like_count,
+        cmt_count
         FROM post_view
         WHERE post_status = 'PUBLIC'
-          AND post_is_deleted= false
+        AND post_is_deleted= false
         <if test="contentsType != null and contentsType == 1">
             ORDER BY like_count DESC, post_code
         </if>
@@ -82,71 +100,70 @@
     </select>
 
 
-
     <select id="findAttListByPostCode">
         SELECT
-            *
+        *
         FROM tbl_attachment
         WHERE post_code = #{postCode}
     </select>
 
     <select id="findLikeListPostByMemberCode">
         SELECT
-            pv.post_code,
-            pv.post_title,
-            pv. post_text,
-            pv.post_price,
-            pv. po_member_code,
-            pv.folder_code,
-            pv.post_wri_date,
-            pv.profile_code,
-            pv. profile_nickname,
-            pv.profile_statmsg,
-            pv.profile_img_path,
-            pv.like_count,
-            pv.cmt_count
+        pv.post_code,
+        pv.post_title,
+        pv. post_text,
+        pv.post_price,
+        pv. po_member_code,
+        pv.folder_code,
+        pv.post_wri_date,
+        pv.profile_code,
+        pv. profile_nickname,
+        pv.profile_statmsg,
+        pv.profile_img_path,
+        pv.like_count,
+        pv.cmt_count
         FROM post_view pv
         INNER JOIN
-            tbl_like_list li ON li.post_code = pv.post_code
+        tbl_like_list li ON li.post_code = pv.post_code
         WHERE li.l_member_code = #{memberCode}
         ORDER BY li.post_code DESC
     </select>
     <select id="findPostByPostCode" resultMap="postMap">
         SELECT post_code,
-               post_title,
-               post_text,
-               post_price,
-               po_member_code,
-               folder_code,
-               post_wri_date,
-               post_mod_date,
-               post_status,
-               profile_code,
-               profile_nickname,
-               profile_statmsg,
-               profile_img_path,
-               like_count,
-               cmt_count
+        post_title,
+        post_text,
+        post_price,
+        po_member_code,
+        folder_code,
+        post_wri_date,
+        post_mod_date,
+        post_status,
+        profile_code,
+        profile_nickname,
+        profile_statmsg,
+        profile_img_path,
+        like_count,
+        cmt_count
         FROM post_view
         WHERE post_code = #{postCode}
-          AND post_is_deleted = false
+        AND post_is_deleted = false
     </select>
     <select id="findListByPostCodes" resultMap="postMap">
         SELECT post_code,
-               post_title,
-               post_text,
-               post_price,
-               po_member_code,
-               folder_code,
-               post_wri_date,
-               post_mod_date,
-               post_status,
-               profile_code,
-               profile_nickname,
-               profile_statmsg,
-               profile_img_path,
-               like_count,
-               cmt_count
+        post_title,
+        post_text,
+        post_price,
+        po_member_code,
+        folder_code,
+        post_wri_date,
+        post_mod_date,
+        post_status,
+        profile_code,
+        profile_nickname,
+        profile_statmsg,
+        profile_img_path,
+        like_count,
+        cmt_count
         FROM post_view
         WHERE post_code IN
         <foreach collection="postCodes" item="postCode" open="(" separator="," close=")">
@@ -156,11 +173,11 @@
 
     <select id="findLikeListByPostCode" parameterType="int" resultMap="likeListMap">
         SELECT
-            post_code,
-            l_member_code,
-            is_private
+        post_code,
+        l_member_code,
+        is_private
         FROM
-            tbl_like_list
+        tbl_like_list
         WHERE post_code = #{postCode}
     </select>
 
@@ -199,77 +216,81 @@
 
     <insert id="updateFolders" parameterType="java.util.List">
         INSERT INTO
-            tbl_folder (folder_code, folder_name, folder_icon_path, folder_sequence, f_member_code, folder_status)
+        tbl_folder (folder_code, folder_name, folder_icon_path, folder_sequence, f_member_code, folder_status)
         VALUES
         <foreach collection="list" item="folderDTO" separator=",">
-            (#{folderDTO.folderCode}, #{folderDTO.folderName}, #{folderDTO.folderIconPath}, #{folderDTO.folderSequence}, #{folderDTO.fMemberCode}, #{folderDTO.folderStatus})
+            (#{folderDTO.folderCode}, #{folderDTO.folderName}, #{folderDTO.folderIconPath}, #{folderDTO.folderSequence},
+            #{folderDTO.fMemberCode}, #{folderDTO.folderStatus})
         </foreach>
         ON DUPLICATE KEY UPDATE
-            folder_name = VALUES(folder_name),
-            folder_icon_path = VALUES(folder_icon_path),
-            folder_sequence = VALUES(folder_sequence),
-            folder_status = VALUES(folder_status)
+        folder_name = VALUES(folder_name),
+        folder_icon_path = VALUES(folder_icon_path),
+        folder_sequence = VALUES(folder_sequence),
+        folder_status = VALUES(folder_status)
     </insert>
 
     <insert id="insertAddDefaultFolder" parameterType="java.util.List">
         INSERT INTO
-            tbl_folder (folder_code, folder_name, folder_icon_path, folder_sequence, f_member_code, folder_status)
+        tbl_folder (folder_code, folder_name, folder_icon_path, folder_sequence, f_member_code, folder_status)
         VALUES
         <foreach collection="list" item="folderDTO" separator=",">
-            (#{folderDTO.folderCode}, #{folderDTO.folderName}, #{folderDTO.folderIconPath}, #{folderDTO.folderSequence}, #{folderDTO.fMemberCode}, #{folderDTO.folderStatus})
+            (#{folderDTO.folderCode}, #{folderDTO.folderName}, #{folderDTO.folderIconPath}, #{folderDTO.folderSequence},
+            #{folderDTO.fMemberCode}, #{folderDTO.folderStatus})
         </foreach>
         ON DUPLICATE KEY UPDATE
-            folder_name = VALUES(folder_name),
-            folder_icon_path = VALUES(folder_icon_path),
-            folder_sequence = VALUES(folder_sequence),
-            folder_status = VALUES(folder_status)
+        folder_name = VALUES(folder_name),
+        folder_icon_path = VALUES(folder_icon_path),
+        folder_sequence = VALUES(folder_sequence),
+        folder_status = VALUES(folder_status)
     </insert>
 
     <select id="findFolderList">
         SELECT
-            folder_code,
-            folder_name,
-            folder_icon_path,
-            folder_sequence,
-            f_member_code
+        folder_code,
+        folder_name,
+        folder_icon_path,
+        folder_sequence,
+        f_member_code
         FROM
-            tbl_folder
+        tbl_folder
         WHERE
-            f_member_code = #{memberCode}
+        f_member_code = #{memberCode}
         ORDER BY
-            folder_sequence ASC
+        folder_sequence ASC
     </select>
 
     <select id="findPostLikeCount">
         SELECT
-            SUM(like_count) AS like_count,
-            COUNT(*) AS post_count
+        SUM(like_count) AS like_count,
+        COUNT(*) AS post_count
         FROM
-            post_view
+        post_view
         WHERE
-            po_member_code = #{memberCode}
+        po_member_code = #{memberCode} AND
+        post_is_deleted = false AND
+        post_status IN ('PUBLIC','PRIVATE')
     </select>
 
-    <select id="findPostList" resultMap="postMap">
+    <select id="findPostList" resultMap="postTblMap">
         SELECT
-            post_code,
-            post_title,
-            post_text,
-            post_price,
-            po_member_code,
-            folder_code,
-            post_wri_date,
-            post_status,
-            post_is_deleted,
-            post_is_fixed,
-            profile_code,
-            profile_nickname,
-            profile_statmsg,
-            profile_img_path,
-            like_count,
-            cmt_count
+        post_code,
+        post_title,
+        post_text,
+        post_price,
+        po_member_code,
+        folder_code,
+        post_wri_date,
+        post_status,
+        post_is_deleted,
+        post_is_fixed,
+        profile_code,
+        profile_nickname,
+        profile_statmsg,
+        profile_img_path,
+        like_count,
+        cmt_count
         FROM
-            post_view
+        post_view
         <where>
             <if test='tabMenu == "고정글"'>
                 po_member_code = #{memberCode}
@@ -277,33 +298,36 @@
             </if>
             <if test='tabMenu == "최신순"'>
                 po_member_code = #{memberCode}
+                AND post_status = 'PUBLIC'
+                AND post_is_deleted = false
             </if>
             <if test='tabMenu == "♡"'>
                 post_is_deleted = 1 <!-- //지우고 조건 쓰면 됨 -> 조회되지 말라고 의미없이 설정해 놓은거임 ㅠㅠ -->
             </if>
         </where>
-            <if test='tabMenu == "최신순"'>
-                ORDER BY
-                post_wri_date DESC
-            </if>
+        <if test='tabMenu == "최신순"'>
+            ORDER BY
+            post_wri_date DESC
+        </if>
         LIMIT #{index}, #{range}
     </select>
 
     <select id="isFixedPost" resultType="boolean">
         SELECT
-            EXISTS (
-                SELECT 1
-                FROM post_view
-                WHERE po_member_code = #{memberCode}
-                AND post_is_fixed = 1
-            )
+        EXISTS (
+        SELECT 1
+        FROM post_view
+        WHERE po_member_code = #{memberCode}
+        AND post_is_fixed = 1
+        )
     </select>
 
     <insert id="addWritePost">
         INSERT INTO
-            tbl_post (post_title, post_text, post_status, post_price, post_wri_date, po_member_code, post_is_fixed, folder_code)
+        tbl_post (post_title, post_text, post_status, post_price, post_wri_date, po_member_code, post_is_fixed,
+        folder_code)
         VALUES
-            (#{postTitle}, #{postText}, #{postState}, #{postPrice}, NOW(), #{memberCode}, #{postIsFixed}, #{folderCode})
+        (#{postTitle}, #{postText}, #{postStatus}, #{postPrice}, NOW(), #{memberCode}, #{postIsFixed}, #{folderCode})
         <selectKey keyProperty="postCode" resultType="int" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -311,18 +335,19 @@
 
     <insert id="insertAttachments" parameterType="java.util.List">
         INSERT INTO
-            tbl_attachment (origin_name, safe_name, file_path, post_code)
+        tbl_attachment (origin_name, safe_name, file_path, post_code)
         VALUES
         <foreach collection="list" item="attachmentDTO" separator=",">
-            (#{attachmentDTO.originName}, #{attachmentDTO.safeName}, #{attachmentDTO.filePath}, #{attachmentDTO.postCode})
+            (#{attachmentDTO.originName}, #{attachmentDTO.safeName}, #{attachmentDTO.filePath},
+            #{attachmentDTO.postCode})
         </foreach>
     </insert>
 
     <insert id="insertTag">
         INSERT INTO
-            tbl_tag (tag_name)
+        tbl_tag (tag_name)
         VALUES
-            (#{tagName})
+        (#{tagName})
         <selectKey keyProperty="tagCode" resultType="int" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -330,9 +355,45 @@
 
     <insert id="insertPostTag">
         INSERT INTO
-            tbl_post_tag (post_code, tag_code)
+        tbl_post_tag (post_code, tag_code)
         VALUES
-            (#{postCode}, #{tagCode})
+        (#{postCode}, #{tagCode})
     </insert>
 
+    <select id="selectTotalCount">
+        SELECT
+        COUNT(*) AS count
+        FROM
+        post_view
+        WHERE
+        po_member_code = #{memberCode} AND
+        post_is_deleted = false AND
+        post_status = 'PUBLIC'
+    </select>
+
+    <select id="findAllPostList" resultMap="postTblMap">
+        SELECT
+        *
+        FROM
+        post_view
+        WHERE
+        po_member_code = #{memberCode} AND
+        post_status IN ('PUBLIC','PRIVATE')
+        ORDER BY
+        post_wri_date DESC
+        LIMIT #{criteria.offset}, #{criteria.limit}
+    </select>
+
+    <select id="findPublicPostList" resultMap="postTblMap">
+        SELECT
+        *
+        FROM
+        post_view
+        WHERE
+        po_member_code = #{memberCode} AND
+        post_status = 'PUBLIC'
+        ORDER BY
+        post_wri_date DESC
+        LIMIT #{criteria.offset}, #{criteria.limit}
+    </select>
 </mapper>
