@@ -240,4 +240,8 @@ public class PostService {
     public List<TagDTO> getTagsByPostCode(int postCode) {
         return postMapper.getTagsByPostCode(postCode);
     }
+
+    public PostDTO findLastInsertPost() {
+        return postMapper.findLastInsertPost();
+    }
 }

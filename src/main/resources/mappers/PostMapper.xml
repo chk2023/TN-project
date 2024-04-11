@@ -387,4 +387,13 @@
         post_wri_date DESC
         LIMIT #{criteria.offset}, #{criteria.limit}
     </select>
+    <select id="findLastInsertPost" resultMap="postMap">
+        SELECT post_code,
+               post_title,
+               post_text,
+               po_member_code
+        FROM tbl_post
+        ORDER BY post_code DESC
+        LIMIT 1
+    </select>
 </mapper>
