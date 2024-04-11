@@ -95,19 +95,20 @@
         </div>
         <div class="list_body">
             <div>
-                <strong class="contentTit"
-                        onclick="location.href='/post/detail?postCode={{postCode}}'">{{postTitle}}</strong>
+<!--                <strong class="contentTit"-->
+<!--                        onclick="location.href='/post/detail?postCode={{postCode}}'">{{postTitle}}</strong>-->
+                <strong class="clickPost" data-post-code="{{postCode}}">{{postTitle}}</strong>
                 <div class="contentsTxt" onclick="location.href='/post/detail?postCode={{postCode}}'">
                     <p>
                         {{postText}}
                     </p>
                 </div>
 
-                <!-- 구매 테스트용 -->
-                {{#if postPrice}}
-<!--                <button class="purchaseBtn" data-postCode="{{postCode}}">유료글 구매</button>-->
-                <button onclick="location.href='/purchase/viewPurchasePage?postCode={{postCode}}'" class="buyPostBtn">유료글 구매</button>
-                {{/if}}
+<!--                &lt;!&ndash; 구매 테스트용 &ndash;&gt;-->
+<!--                {{#if postPrice}}-->
+<!--&lt;!&ndash;                <button class="purchaseBtn" data-postCode="{{postCode}}">유료글 구매</button>&ndash;&gt;-->
+<!--                <button onclick="location.href='/purchase/viewPurchasePage?postCode={{postCode}}'" class="buyPostBtn">유료글 구매</button>-->
+<!--                {{/if}}-->
 
 
                 <div class="showLikeAndComments">

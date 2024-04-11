@@ -134,17 +134,16 @@ public class PostController {
     }
 
     @GetMapping("/detail")
-    @ResponseBody
     public String blogDetailPage(@AuthenticationPrincipal MemberDTO memberDTO, Integer postCode, Model model, CommentsDTO commentsDTO) {
         //1. 해당하는 코드의 post정보를 불러오기
         PostDTO targetPost = postService.findPostByPostCode(postCode);
         targetPost.setAttachmentList(postService.findAttListByPostCode(targetPost.getPostCode()));
         targetPost.makeThumbnailPath();
-        targetPost.setLiked(likeService.getHasLiked(targetPost.getPostCode(), member.getMemberCode()));
+        targetPost.setLiked(likeService.getHasLiked(targetPost.getPostCode(), memberDTO.getMemberCode()));
         targetPost.setTagList(postService.getTagsByPostCode(targetPost.getPostCode()));
 
         //2. post 상태가 비공개라면 열람자가 일치하는지 확인
-        if (targetPost.getPostState() == PostState.PRIVATE) {
+        if (targetPost.getPostStatus().equals("PRIVATE")) {
             if (memberDTO.getMemberCode() != targetPost.getMemberCode()) {
                 //열람자가 일치하지 않으면 에러메세지 첨부
                 model.addAttribute("errorMessage", accessor.getMessage("post.notEqualMember"));
@@ -158,21 +157,19 @@ public class PostController {
             List<CommentsDTO> comments = commentsService.selectCommentsList(commentsDTO);
             model.addAttribute("comments", comments);
 
-            return "/post/detail?postCode=" + postCode;
+            return "/post/detail";
         } else if (targetPost.getPostPrice() > 0 && !purchaseService.isPostPurchased(memberDTO.getMemberCode(), postCode)) {
             model.addAttribute("paidContent", targetPost);
             return "/purchase/viewPurchasePage";  //TODO: getPaidPostInfo에서 "@ModelAttribute PostDTO paidContent"로 값 받아 사용하기
         } else {
-            throw new RuntimeException();
+            List<CommentsDTO> comments = commentsService.selectCommentsList(commentsDTO);
+            model.addAttribute("comments", comments);
+
+            model.addAttribute("postDetail", targetPost);
+            return "/post/detail";
         }
 
 
-    }
-
-    @GetMapping("/likelist")
-    public void blogLikeListPage(int memberCode, Model model) {
-        List<PostDTO> likeList = postService.findLikeListPostByMemberCode(memberCode);
-        model.addAttribute("likeList", likeList);
     }
 
     @PostMapping("/like")

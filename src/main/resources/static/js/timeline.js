@@ -56,6 +56,7 @@ function setTitlePhoto(path) {
 
 function formatWriDate(postWriDate) {
     let time = new Date(postWriDate);
+    console.log(time);
     return time.toLocaleDateString("ko-KR", {
         month: 'long',
         day: 'numeric',

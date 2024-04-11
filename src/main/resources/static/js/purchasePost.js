@@ -2,7 +2,7 @@ function handlePurchaseBtn() {
     document.querySelectorAll(".purchaseBtn").forEach(btn => {
         btn.addEventListener('click', (e) => {
 
-            console.log("버튼 동작 중");
+            console.log("버튼 동작 중", e.currentTarget.getAttribute('data-post-code'));
 
             var postCode = parseInt(e.currentTarget.getAttribute('data-post-code'));
             purchasePaidPost(postCode);
@@ -12,32 +12,48 @@ function handlePurchaseBtn() {
     });
 }
 
-function buyPostBtn() {
-    document.querySelectorAll(".buyPostBtn").forEach(btn => {
+function handleClickPost() {
+    document.querySelectorAll(".clickPost").forEach(btn => {
         btn.addEventListener('click', (e) => {
-            const postCode = e.currentTarget.getAttribute('data-postCode');
 
-            fetch('/post/detail', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    postCode: postCode
-                })
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('서버 응답이 실패했습니다.');
-                    }
+            // var postCode = parseInt(e.currentTarget.getAttribute('data-post-code'));
+            // console.log("postCode:",postCode);
+            // clickPost(postCode);
 
-                })
-                .catch(error => {
-                    console.error('오류 발생:', error);
-                });
-        });
-    });
+            var postCodeAttr = e.currentTarget.getAttribute('data-post-code');
+            console.log(postCodeAttr);
+            if (!isNaN(postCodeAttr)) {
+                console.log("글 코드 확인 :", postCodeAttr); // postCode 출력을 이동
+                clickPost(postCodeAttr);
+            } else {
+                alert("유효하지 않은 postCode입니다.");
+            }
+        })
+    })
 }
+
+            function clickPost(postCode) {
+            if (postCode) {
+                fetch('/post/detail', { // postCode를 body에 포함하여 요청
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ postCode: postCode })
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('서버 응답이 실패했습니다.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('오류 발생:', error);
+                    });
+            } else {
+                alert("글의 postCode가 없습니다.");
+            }
+        }
+
 
 function purchasePaidPost(postCode) {
 
