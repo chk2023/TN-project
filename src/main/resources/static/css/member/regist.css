@@ -117,7 +117,7 @@ input {
 }
 
 .btnWrapper > div {
-    margin-right: 11px; /* 각 div 사이 간격 조정 */
+    margin-right: 10px; /* 각 div 사이 간격 조정 */
 }
 
 #modifyPwd {
