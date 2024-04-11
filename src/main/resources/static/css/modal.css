@@ -32,3 +32,29 @@
     text-decoration: none;
     cursor: pointer;
 }
+
+#cmtText {
+    width: 100%; /* 부모 요소의 너비를 100% 차지하도록 설정합니다. */
+    max-width: 400px; /* 최대 너비를 지정할 수 있습니다. 필요에 따라 조정하세요. */
+}
+
+.content-group {
+    display: flex; /* 내부 요소를 수평으로 정렬합니다. */
+    align-items: center; /* 내부 요소를 수직 중앙 정렬합니다. */
+}
+
+.content-group img {
+    width: 30px; /* 프로필 사진 크기 조정 */
+    height: 30px;
+    border-radius: 50%; /* 프로필 사진을 원형으로 표시 */
+    margin-right: 10px; /* 각 요소 사이의 간격을 조정합니다. */
+}
+
+.content-group > div {
+    margin-right: 20px; /* 각 요소 사이의 간격을 조정합니다. */
+}
+
+.cmtContent {
+    display: block; /* cmtContent를 블록 요소로 변경합니다. */
+    margin-left: 20px; /* cmtContent와 상단 간격을 조정합니다. */
+}
