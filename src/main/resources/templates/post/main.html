@@ -16,7 +16,8 @@
         <div class="folder">
             <strong class="minTit">폴더</strong>
             <ul>
-                <li class="AllList"><a onclick="folderAllList()"><img src="/images/icon_folder.png" alt="아이콘">전체목록(<span th:text="${postView.postCount}">56</span>)</a></li>
+                <li class="AllList"><a onclick="folderAllList()"><img src="/images/icon_folder.png" alt="아이콘">전체목록(<span
+                        th:text="${postView.postCount}">56</span>)</a></li>
                 <th:block th:object="${folderList}" th:each="folder, start : ${folderList}">
                     <li th:classappend="${folder.folderName == 'NoName'} ? 'hidden'" draggable="true">
                         <input type="hidden" th:value="${folder.folderCode}"/>
@@ -25,14 +26,16 @@
                     </li>
                 </th:block>
             </ul>
-            <button th:if="${#strings.equals(param.memberCode, #strings.toString(#authentication.principal.memberCode))}" class="folderSetBtn" onClick="location.href='/post/folder_edit'">
+            <button th:if="${#strings.equals(param.memberCode, #strings.toString(#authentication.principal.memberCode))}"
+                    class="folderSetBtn" onClick="location.href='/post/folder_edit'">
                 <img src="/images/icon_folder_setting.png" alt="폴더 편집 버튼">
             </button>
         </div>
     </aside>
     <main>
         <div class="title">
-            <button class="backBtn"><img onclick="location.href='/timeline/list'" src="/images/btn_arrow.png" alt="뒤로가기 버튼"></button>
+            <button class="backBtn"><img onclick="location.href='/timeline/list'" src="/images/btn_arrow.png"
+                                         alt="뒤로가기 버튼"></button>
             <div>
                 <h1 th:text="${member.profile.profileNickname}">닉네임</h1>
                 <p><span th:text="${postView.postCount}">0000</span> 게시물</p>
@@ -69,9 +72,15 @@
                 </div>
             </div>
             <ul class="tabMenu">
-                <li class="active"><button>고정글</button></li>
-                <li><button>최신순</button></li>
-                <li><button>♡</button></li>
+                <li class="active">
+                    <button>고정글</button>
+                </li>
+                <li>
+                    <button>최신순</button>
+                </li>
+                <li>
+                    <button>♡</button>
+                </li>
                 <li class="viewBtn">
                     <button><img src="/images/btn_view_type.png" alt="보기타입 선택버튼"></button>
                     <ul class="optionBox">
@@ -91,8 +100,10 @@
                             </div>
                             <div>
                                 <div>
-                                    <strong th:text="${post.profile.profileNickname}" class="blog_user_name">조한결</strong>
-                                    <span th:text="${#temporals.format(post.postWriDate, 'MM월 dd일')}" class="blog_user_birth">2월12일</span>
+                                    <strong th:text="${post.profile.profileNickname}"
+                                            class="blog_user_name">조한결</strong>
+                                    <span th:text="${#temporals.format(post.postWriDate, 'MM월 dd일')}"
+                                          class="blog_user_birth">2월12일</span>
                                 </div>
                                 <span th:text="${post.profile.profileStatmsg}" class="status_msg">오늘도 나는 눈물을 흘린다 또르륵오늘도 나는 눈물을 흘린다 또르륵오늘도 나는 눈물을 흘린다 또르륵</span>
                             </div>
@@ -104,16 +115,9 @@
                         </div>
                         <div class="list_body">
                             <div>
-                                <strong th:text="${post.postTitle}" class="contentTit">글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목</strong>
-                                <div class="contentsTxt">
-                                    <p th:text="${post.postText}">
-                                        본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
-                                        본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
-                                        본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
-                                        본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
-                                        본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글본문글
-                                    </p>
-                                </div>
+                                <strong th:text="${post.postTitle}"
+                                        class="contentTit">글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목</strong>
+                                <div class="contentsTxt" th:text="${post.postText}">본문본문본문</div>
                                 <div class="showLikeAndComments">
                                     <button class="commentsBtn">
                                         <img src="/images/icon_comment.png" alt="댓글 버튼 아이콘">
@@ -126,7 +130,7 @@
                                 </div>
                             </div>
                             <div class="thumbnailPhoto">
-                                <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2F20160310_12%2Flee_h_i2_1457596672049c0vMY_JPEG%2Ftumblr_nxt9emqtjP1uh04bco1_540.jpg&type=sc960_832" alt="썸네일 이미지">
+                                <img th:src="${post.thumbnailPath}" alt="썸네일 이미지">
                             </div>
                         </div>
                     </li>
@@ -136,6 +140,7 @@
             <script src="/js/scrollEvent.js"></script>
             <script src="/js/blogMain.js"></script>
             <script src="/js/pathFinder.js"></script>
+            <script src="/js/like.js"></script>
         </section>
     </main>
 </div>

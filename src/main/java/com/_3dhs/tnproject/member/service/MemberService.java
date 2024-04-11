@@ -64,6 +64,7 @@ public class MemberService {
 
     }
 
+    @Transactional
     public void deleteMember(MemberDTO member) throws MemberRemoveException {
         int result = memberMapper.deleteMember(member);
 
@@ -72,6 +73,7 @@ public class MemberService {
         }
     }
 
+    @Transactional
     public void updatePwd(MemberDTO member) throws MemberUpdateException {
         int result = memberMapper.updatePwd(member);
 
@@ -83,10 +85,26 @@ public class MemberService {
         return memberDTO;
     }
 
+    @Transactional
     public void updateProfile(MemberDTO member) throws MemberUpdateException {
         int result = memberMapper.updateProfile(member);
 
         if (!(result > 0)) throw new MemberUpdateException("회원 정보 수정에 실패하였습니다.");
     }
 
+    public int blockMemberByMemberCode(int memberCode, int targetMemberCode) {
+        return memberMapper.blockMemberByMemberCode(memberCode, targetMemberCode);
+    }
+
+    public List<Integer> findBlockListByMemberCode(int memberCode) {
+        return memberMapper.findBlockListByMemberCode(memberCode);
+    }
+
+    public List<MemberDTO> findMemberByMemberCodes(List<Integer> blockedMemberCodeList) {
+        return memberMapper.findMemberByMemberCodes(blockedMemberCodeList);
+    }
+
+    public int unblockMemberByMemberCode(int memberCode, int targetMemberCode) {
+        return memberMapper.unblockMemberByMemberCode(memberCode, targetMemberCode);
+    }
 }
