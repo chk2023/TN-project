@@ -21,7 +21,7 @@ if ($memberInfoBtn) {
 }
 if ($paymentBtn) {
     $paymentBtn.onclick = function () {
-        location.href = "/payment/management";
+        location.href = "/payment/payment";
     };
 }
 if ($blockListBtn) {
