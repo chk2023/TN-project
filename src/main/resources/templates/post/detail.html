@@ -172,9 +172,9 @@
                                                 <input th:if="${comments.memberCode == #authentication.principal.memberCode}"
                                                        type="button" class="modifyComments" value="수정">
                                                 <input th:if="${comments.memberCode == #authentication.principal.memberCode}"
-                                                       type="button" class="deleteComments" value="삭제">
+                                                       type="button" class="deleteComments" value="삭제" id="blackBtn">
                                                 <input th:if="${comments.memberCode != #authentication.principal.memberCode}"
-                                                       type="button" value="차단">
+                                                       type="button" value="차단" class="blockBtn">
                                                 <!--                                                <input th:if="${comments.memberCode != #authentication.principal.memberCode}"-->
                                                 <!--                                                       type="button" value="신고">-->
                                             </div>

@@ -78,17 +78,38 @@ window.onload = function () {
             $modifyButton.setAttribute("class", "modifyComments");
             $deleteButton.setAttribute("type", "button");
             $deleteButton.setAttribute("value", "삭제");
-            $deleteButton.setAttribute("class", "deleteComments");
+            $deleteButton.classList.add("deleteComments");
+            $deleteButton.setAttribute("id", "blackBtn");
             $blockButton.setAttribute("type", "button");
             $blockButton.setAttribute("value", "차단");
+            $blockButton.classList.add("blockBtn");
             // $reportButton.setAttribute("type", "button");
             // $reportButton.setAttribute("value", "신고");
 
+            const $contentGroupDiv = document.createElement("div");
+            $contentGroupDiv.classList.add("content-group");
+            const $profileDiv = document.createElement("div");
+            $profileDiv.appendChild($img);
+            const $nicknameDiv = document.createElement("div");
+            $nicknameDiv.appendChild($nicknameSpan);
+            $contentGroupDiv.appendChild($profileDiv);
+            $contentGroupDiv.appendChild($nicknameDiv);
+            $contentGroupDiv.appendChild($createdDateSpan);
+
+            const $buttonContainerDiv = document.createElement("div");
+            $buttonContainerDiv.classList.add("button-container");
+
             if (comments.memberCode == $memberCode) {
-                $li.append($hiddenInput, $img, $nicknameSpan, $createdDateSpan, $cmtContentSpan, $modifyButton, $deleteButton);
+                $buttonContainerDiv.appendChild($modifyButton);
+                $buttonContainerDiv.appendChild($deleteButton);
             } else {
-                $li.append($hiddenInput, $img, $nicknameSpan, $createdDateSpan, $cmtContentSpan, $blockButton);
+                $buttonContainerDiv.appendChild($blockButton);
             }
+
+            $li.appendChild($hiddenInput);
+            $li.appendChild($contentGroupDiv);
+            $li.appendChild($cmtContentSpan);
+            $li.appendChild($buttonContainerDiv);
             $list.appendChild($li);
         })
     }
