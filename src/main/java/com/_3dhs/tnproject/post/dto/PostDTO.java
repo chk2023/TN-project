@@ -20,6 +20,7 @@ public class PostDTO {
     private String postTitle;
     private String postText;
     private PostState postState;
+    private String postStatus;
     private int postPrice;
     private LocalDateTime postWriDate;
     private int postView;

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<div class="folder">
+    <strong class="minTit">폴더</strong>
+    <ul>
+        <li class="AllList">
+            <a onclick="folderAllList()">
+                <img src="/images/icon_folder.png" alt="아이콘">
+                전체목록(
+                <span th:if="${#strings.equals(param.memberCode, #strings.toString(#authentication.principal.memberCode))}"
+                      th:text="${postView.postCount}">56</span>
+                <span th:if="${!#strings.equals(param.memberCode, #strings.toString(#authentication.principal.memberCode))}"
+                      th:text="${postTotalCount}"></span>
+                )
+            </a>
+        </li>
+        <th:block th:each="folder : ${folderList}">
+            <li th:classappend="${folder.folderName == 'NoName'} ? 'hidden'" draggable="true">
+                <input type="hidden" th:value="${folder.folderCode}"/>
+                <img th:src="${folder.folderIconPath}" alt="폴더 아이콘">
+                <span th:text="${folder.folderName}"></span>
+            </li>
+        </th:block>
+    </ul>
+    <button th:if="${#strings.equals(param.memberCode, #strings.toString(#authentication.principal.memberCode))}"
+            class="folderSetBtn" onClick="location.href='/post/folder_edit'">
+        <img src="/images/icon_folder_setting.png" alt="폴더 편집 버튼">
+    </button>
+</div>
+</html>
