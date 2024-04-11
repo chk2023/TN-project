@@ -35,6 +35,13 @@ public class PurchaseController {
         this.memberService = memberService;
     }
 
+    @GetMapping("purchase/viewPurchasePage")
+    public String viewPurchasePage (@RequestParam("postCode") Integer postCode, Model model) {
+
+        model.addAttribute("postCode", postCode);
+        return "/purchase/viewPurchasePage";
+    }
+
 
     @PostMapping("/getPaidPostInfo")
     @ResponseBody

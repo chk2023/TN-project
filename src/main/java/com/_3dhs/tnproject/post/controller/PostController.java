@@ -9,6 +9,7 @@ import com._3dhs.tnproject.post.model.PostState;
 import com._3dhs.tnproject.post.service.LikeService;
 import com._3dhs.tnproject.post.service.PostService;
 import com._3dhs.tnproject.post.util.FileUtil;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
@@ -146,7 +147,7 @@ public class PostController {
         if (targetPost.getPostPrice() > 0) {
             //유료글이라면 유료글 처리를 하는 곳으로 전달하기
             model.addAttribute("paidContent", targetPost);
-            return "/getPaidPostInfo";  //TODO: getPaidPostInfo에서 "@ModelAttribute PostDTO paidContent"로 값 받아 사용하기
+            return "/purchase/getPaidPostInfo?postCode=" + postCode;  //TODO: getPaidPostInfo에서 "@ModelAttribute PostDTO paidContent"로 값 받아 사용하기
         }
         //4. 모든 조건이 성립한다면 view로 전달
         model.addAttribute("postDetail", targetPost);

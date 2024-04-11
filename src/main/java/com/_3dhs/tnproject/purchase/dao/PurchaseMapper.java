@@ -9,7 +9,7 @@ import java.util.List;
 public interface PurchaseMapper {
     int purchaseCount(int memberCode, int postCode);
 
-    int getPostPrice(Integer postCode);
+    Integer getPostPrice(Integer postCode);
 
 
 

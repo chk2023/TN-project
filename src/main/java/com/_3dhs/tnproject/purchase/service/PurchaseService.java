@@ -36,26 +36,35 @@ public class PurchaseService {
         // 구매 여부 확인
         boolean isPostPurchased = isPostPurchased(memberDTO.getMemberCode(), postCode);
 
-        int postPrice = purchaseMapper.getPostPrice(postCode);
+        Integer postPrice = purchaseMapper.getPostPrice(postCode);
         int currentTissue = memberDTO.getHaveTissue();
 
-        if (currentTissue - postPrice < 0) {
-            throw new RuntimeException("보유한 티슈가 부족합니다.");
-        } else {
-            if (isPostPurchased) {
-                throw new RuntimeException("이미 구매한 글");
+        if (postPrice != null) {
+            int postPriceIntValue = postPrice.intValue();
+
+            if (currentTissue - postPrice < 0) {
+                throw new RuntimeException("보유한 티슈가 부족합니다.");
             } else {
-                PurchaseDTO purchaseDTO = new PurchaseDTO(
-                        "USE",
-                        LocalDateTime.now(),
-                        postPrice,
-                        memberDTO.getMemberCode(),
-                        postCode
-                );
-                savePurchaseList(purchaseDTO);
-                return purchaseDTO;
+                if (isPostPurchased) {
+                    throw new RuntimeException("이미 구매한 글");
+                } else {
+                    PurchaseDTO purchaseDTO = new PurchaseDTO(
+                            "USE",
+                            LocalDateTime.now(),
+                            postPrice,
+                            memberDTO.getMemberCode(),
+                            postCode
+                    );
+                    savePurchaseList(purchaseDTO);
+                    return purchaseDTO;
+                }
             }
+
+        } else {
+            throw new RuntimeException();
         }
+
+
 
 
 
@@ -66,7 +75,7 @@ public class PurchaseService {
     }
 
 
-    public int getPostPrice(int postCode) {
+    public Integer getPostPrice(int postCode) {
         return purchaseMapper.getPostPrice(postCode);
     }
 

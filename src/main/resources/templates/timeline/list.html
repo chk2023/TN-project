@@ -105,8 +105,10 @@
 
                 <!-- 구매 테스트용 -->
                 {{#if postPrice}}
-                <button class="purchaseBtn" data-postCode="{{postCode}}">유료글 구매</button>
+<!--                <button class="purchaseBtn" data-postCode="{{postCode}}">유료글 구매</button>-->
+                <button onclick="location.href='/purchase/viewPurchasePage?postCode={{postCode}}'" class="purchaseBtn">유료글 구매</button>
                 {{/if}}
+
 
                 <div class="showLikeAndComments">
                     <button class="commentsBtn">
@@ -135,6 +137,6 @@
 <script src="/js/timeline.js"></script>
 <script src="/js/scrollEvent.js"></script>
 <script src="/js/pathFinder.js"></script>
-<script src="/js/purchasePost.js"></script>
+<!--<script src="/js/purchasePost.js"></script>-->
 </body>
 </html>
