@@ -22,8 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 
-@Controller
-@Slf4j
+@Controller @Slf4j
 @RequiredArgsConstructor
 public class ManagerController {
 
@@ -31,6 +30,7 @@ public class ManagerController {
     private final MemberService memberService;
     private final MessageSourceAccessor messageSourceAccessor;
     private final ReportDTO reportDTO;
+
 
 
     @GetMapping("/manager/report/list")
@@ -60,11 +60,11 @@ public class ManagerController {
 
     }
 
-    @GetMapping("/manager/admin/list")
+    @GetMapping ("/manager/admin/list")
     public String getAdminList(@RequestParam(defaultValue = "1") int page,
-                               @RequestParam(required = false) String searchCondition,
-                               @RequestParam(required = false) String searchValue,
-                               Model model) {
+                                @RequestParam(required = false) String searchCondition,
+                                @RequestParam(required = false) String searchValue,
+                                Model model) {
 
         Map<String, String> searchMap = new HashMap<>();
         searchMap.put("searchCondition", searchCondition);
@@ -82,17 +82,17 @@ public class ManagerController {
     public String selectAdminDetail(Integer reportCode, Model model) {
         ReportDTO admReport = reportService.selectAdminDetail(reportCode);
         model.addAttribute("admDet", admReport);
-        log.info(String.valueOf(reportCode));
-        log.info("{}", admReport);
+      log.info(String.valueOf(reportCode));
+      log.info("{}",admReport);
         return "manager/admin/detail";
     }
 
 
-    @GetMapping("/manager/member/list")
+    @GetMapping ("/manager/member/list")
     public String getMemberList(@RequestParam(defaultValue = "1") int page,
-                                @RequestParam(required = false) String searchCondition,
-                                @RequestParam(required = false) String searchValue,
-                                Model model) {
+                               @RequestParam(required = false) String searchCondition,
+                               @RequestParam(required = false) String searchValue,
+                               Model model) {
 
         Map<String, String> searchMap = new HashMap<>();
         searchMap.put("searchCondition", searchCondition);
@@ -129,6 +129,7 @@ public class ManagerController {
         rttr.addFlashAttribute("insertRecord");
         return "redirect:/manager/report/list";
 
+
     }
 
     @PostMapping("/manager/report/memStop")
@@ -144,13 +145,15 @@ public class ManagerController {
         return "redirect:/manager/report/detail?reportCode="+reportCode;
 
 
-//    @PostMapping("/report/complete")
-//    public String compliteReport(RedirectAttributes rttr) {
-//        rttr.addFlashAttribute("message", messageSourceAccessor.getMessage("report.complete"));
-//        return "redirect:/manager/report/detail";
+//    @GetMapping("/memberStop")
+//    public String memberStop(ReportDTO reportDTO, RedirectAttributes rttr) {
+//        System.out.println("memberStop 호출함");
+//
+//        reportService.memberStop(reportDTO.getMemberId());
+//        //경고횟수
+//
+//        return "redrirect:/manager/report/list";
 //    }
-
-
 //
 //    @GetMapping("/memActivate")
 //    public String memberActivate(ReportDTO reportDTO,RedirectAttributes rttr) {
@@ -161,5 +164,4 @@ public class ManagerController {
 //
 //
 
-    }
 }
