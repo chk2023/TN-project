@@ -20,7 +20,7 @@
         <result property="filePath" column="file_path"/>
         <result property="postCode" column="post_code"/>
     </resultMap>
-<resultMap id="likeListMap" type="com._3dhs.tnproject.post.dto.LikeListDTO">
+    <resultMap id="likeListMap" type="com._3dhs.tnproject.post.dto.LikeListDTO">
         <id property="postCode" column="post_code"/>
         <result property="memberCode" column="l_member_code"/>
         <result property="isPrivate" column="is_private"/>
@@ -98,7 +98,7 @@
 
     <select id="findAttListByPostCode">
         SELECT
-        *
+            *
         FROM tbl_attachment
         WHERE post_code = #{postCode}
     </select>
@@ -177,6 +177,25 @@
         WHERE post_code = #{postCode}
     </select>
 
+    <select id="getLikeListByPostCode" resultType="com._3dhs.tnproject.post.dto.LikeListDTO">
+        SELECT
+        *
+        FROM
+        tbl_like_list
+        WHERE
+        post_code = #{postCode}
+    </select>
+
+    <select id="getPrivateLikesByPostCode" resultType="com._3dhs.tnproject.post.dto.LikeListDTO">
+        SELECT
+        *
+        FROM
+        tbl_like_list
+        WHERE
+        post_code = #{postCode}
+        AND
+        is_private = false
+    </select>
 
 
 
@@ -273,23 +292,50 @@
         LIMIT #{index}, #{range}
     </select>
 
-    <select id="getLikeListByPostCode" resultType="com._3dhs.tnproject.post.dto.LikeListDTO">
+    <select id="isFixedPost" resultType="boolean">
         SELECT
-        *
-        FROM
-        tbl_like_list
-        WHERE
-        post_code = #{postCode}
+            EXISTS (
+                SELECT 1
+                FROM post_view
+                WHERE po_member_code = #{memberCode}
+                AND post_is_fixed = 1
+            )
     </select>
 
-    <select id="getPrivateLikesByPostCode" resultType="com._3dhs.tnproject.post.dto.LikeListDTO">
-        SELECT
-        *
-        FROM
-        tbl_like_list
-        WHERE
-        post_code = #{postCode}
-        AND
-        is_private = false
-    </select>
+    <insert id="addWritePost">
+        INSERT INTO
+            tbl_post (post_title, post_text, post_status, post_price, post_wri_date, po_member_code, post_is_fixed, folder_code)
+        VALUES
+            (#{postTitle}, #{postText}, #{postState}, #{postPrice}, NOW(), #{memberCode}, #{postIsFixed}, #{folderCode})
+        <selectKey keyProperty="postCode" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <insert id="insertAttachments" parameterType="java.util.List">
+        INSERT INTO
+            tbl_attachment (origin_name, safe_name, file_path, post_code)
+        VALUES
+        <foreach collection="list" item="attachmentDTO" separator=",">
+            (#{attachmentDTO.originName}, #{attachmentDTO.safeName}, #{attachmentDTO.filePath}, #{attachmentDTO.postCode})
+        </foreach>
+    </insert>
+
+    <insert id="insertTag">
+        INSERT INTO
+            tbl_tag (tag_name)
+        VALUES
+            (#{tagName})
+        <selectKey keyProperty="tagCode" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <insert id="insertPostTag">
+        INSERT INTO
+            tbl_post_tag (post_code, tag_code)
+        VALUES
+            (#{postCode}, #{tagCode})
+    </insert>
+
 </mapper>
