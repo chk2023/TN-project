@@ -12,6 +12,33 @@ function handlePurchaseBtn() {
     });
 }
 
+function buyPostBtn() {
+    document.querySelectorAll(".buyPostBtn").forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const postCode = e.currentTarget.getAttribute('data-postCode');
+
+            fetch('/post/detail', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    postCode: postCode
+                })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('서버 응답이 실패했습니다.');
+                    }
+
+                })
+                .catch(error => {
+                    console.error('오류 발생:', error);
+                });
+        });
+    });
+}
+
 function purchasePaidPost(postCode) {
 
     fetch('/getPaidPostInfo', {
