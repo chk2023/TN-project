@@ -20,4 +20,20 @@
             post_code = #{postCode}
     </select>
 
+    <select id="getPostPrice" resultType="int" parameterType="int">
+        SELECT
+            post_price
+        FROM
+            tbl_post
+        WHERE
+            post_code = #{postCode}
+    </select>
+
+    <insert id="insertPurchase" parameterType="com._3dhs.tnproject.purchase.dto.PurchaseDTO">
+        INSERT INTO
+            tbl_tissue (order_class, order_date, tissue_price, t_member_code, post_code)
+        VALUES
+            (#{orderClass}, #{orderDate}, #{tissuePrice}, #{tMemberCode}, #{postCode})
+    </insert>
+
 </mapper>

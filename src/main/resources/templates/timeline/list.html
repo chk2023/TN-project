@@ -102,6 +102,12 @@
                         {{postText}}
                     </p>
                 </div>
+
+                <!-- 구매 테스트용 -->
+                {{#if postPrice}}
+                <button class="purchaseBtn" data-postCode="{{postCode}}">유료글 구매</button>
+                {{/if}}
+
                 <div class="showLikeAndComments">
                     <button class="commentsBtn">
                         <img src="/images/icon_comment.png" alt="댓글 버튼 아이콘">
@@ -129,5 +135,6 @@
 <script src="/js/timeline.js"></script>
 <script src="/js/scrollEvent.js"></script>
 <script src="/js/pathFinder.js"></script>
+<script src="/js/purchasePost.js"></script>
 </body>
 </html>

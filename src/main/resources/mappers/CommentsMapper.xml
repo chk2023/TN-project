@@ -32,6 +32,7 @@
             tbl_comments c
         INNER JOIN tbl_profile p ON c.member_code = p.pr_member_code
         WHERE c.post_code = #{postCode}
+        AND cmt_is_deleted = 0;
     </select>
 
     <insert id="writeComments">
@@ -47,6 +48,15 @@
             tbl_comments
         SET
             cmt_text = #{ cmtText }
+        WHERE
+            cmt_code = #{ cmtCode }
+    </update>
+
+    <update id="deleteComments">
+        UPDATE
+            tbl_comments
+        SET
+            cmt_is_deleted = 1
         WHERE
             cmt_code = #{ cmtCode }
     </update>

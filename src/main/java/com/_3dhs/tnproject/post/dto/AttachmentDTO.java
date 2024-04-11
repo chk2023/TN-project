@@ -13,4 +13,12 @@ public class AttachmentDTO {
     private String safeName;
     private String filePath;
     private int postCode;
+
+    public AttachmentDTO() {
+    }
+
+    public AttachmentDTO(String originName, String safeName) {
+        this.originName = originName;
+        this.safeName = safeName;
+    }
 }
