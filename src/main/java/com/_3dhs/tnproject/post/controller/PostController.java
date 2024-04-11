@@ -5,13 +5,11 @@ import com._3dhs.tnproject.comments.service.CommentsService;
 import com._3dhs.tnproject.member.dto.MemberDTO;
 import com._3dhs.tnproject.member.service.MemberService;
 import com._3dhs.tnproject.post.dto.*;
-import com._3dhs.tnproject.post.model.PostState;
 import com._3dhs.tnproject.post.service.LikeService;
 import com._3dhs.tnproject.post.service.PostService;
 import com._3dhs.tnproject.post.util.FileUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jsoup.Jsoup;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -154,6 +152,8 @@ public class PostController {
         /* 댓글 모달에서 댓글 조회 */
         List<CommentsDTO> comments = commentsService.selectCommentsList(commentsDTO);
         model.addAttribute("comments", comments);
+        model.addAttribute("postCode", postCode);
+        model.addAttribute("memberCode", memberDTO.getMemberCode());
 
         return "/post/detail";
     }

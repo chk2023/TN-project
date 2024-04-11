@@ -18,4 +18,5 @@ public interface CommentsMapper {
     int deleteComments(int cmtCode);
 
     CommentsDTO getCommentByCommentsCode(int cmtCode);
+
 }

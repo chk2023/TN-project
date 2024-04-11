@@ -43,4 +43,5 @@ public class CommentsService {
     public CommentsDTO getCommentByCommentsCode(int cmtCode) {
         return commentsMapper.getCommentByCommentsCode(cmtCode);
     }
+
 }

@@ -128,62 +128,31 @@
                                         <span class="close" onclick="hideModal()">&times;</span>
                                         <h2>댓글 창</h2>
                                         <div>
-                                                <input type="text" id="cmt" placeholder="댓글 추가">
-                                                <input type="button" id="writeComments" value="확인" onclick="writeComments()">
+                                                <input type="text" id="cmtText" placeholder="댓글 추가">
+                                                <button type="button" id="writeComments">확인</button>
                                         </div>
-                                        <ul>
-<!--                                                <div class="profile">-->
-<!--                                                    <button class="optionBtn" id="optionBtn" onclick="toggle()"><img src="/images/icon_option.png" alt="프로필 옵션 버튼"></button>-->
-<!--                                                    <ul class="optionBox" id="optionBox">-->
-<!--                                                        <li th:if="${comment.memberCode == #authentication.principal.memberCode}">-->
-<!--                                                            <a>댓글 수정</a></li>-->
-<!--                                                        <li th:if="${comment.memberCode == #authentication.principal.memberCode}">-->
-<!--                                                            <a>댓글 삭제</a></li>-->
-<!--                                                        <li th:if="${comment.memberCode != #authentication.principal.memberCode}"-->
-<!--                                                        ><a>신고</a></li>-->
-<!--                                                        <li th:if="${comment.memberCode != #authentication.principal.memberCode}"-->
-<!--                                                        ><a>차단</a></li>-->
-<!--                                                    </ul>-->
-<!--                                                    <script>-->
-<!--                                                        /* 옵션 버튼 클릭시 옵션 박스 활성화 */-->
-<!--                                                        function toggle() {-->
-<!--                                                            const $optionBtn = document.getElementById("optionBtn");-->
-<!--                                                            const $optionBox = document.getElementById("optionBox");-->
-
-<!--                                                            $optionBtn.classList.toggle("active");-->
-
-<!--                                                            /* 이벤트 전파 방지 */-->
-<!--                                                            event.stopPropagation();-->
-
-<!--                                                            /* 옵션 상자 이외의 영역 클릭 시 옵션 상자 숨김 */-->
-<!--                                                            document.addEventListener("click", function closeOptions(event) {-->
-<!--                                                                if (event.target !== $optionBtn && event.target !== $optionBox) {-->
-<!--                                                                    $optionBtn.classList.remove("active");-->
-<!--                                                                    document.removeEventListener("click", closeOptions);-->
-<!--                                                                }-->
-<!--                                                            });-->
-<!--                                                        }-->
-<!--                                                    </script>-->
-<!--                                                </div>-->
-                                            <li id="commentList" th:each="comments : ${comments}">
+                                        <ul id="commentsList" >
+                                            <li th:each="comments : ${comments}">
                                                 <input type="hidden" class="comment-code" th:value="${comments.cmtCode}" />
                                                 <img th:if="${comments.profile != null}" th:src="${comments.profile.profileImgPath}" />
                                                 <span th:text="${comments.profile.profileNickname}"></span>
                                                 <span th:text="${#temporals.format(comments.cmtWriDate, 'MM월 dd일')}"></span>
-                                                <br>
                                                 <span class="cmtContent" th:text="${comments.cmtText}"></span>
-                                                <input type="button" value="답글">
+<!--                                                <input type="button" value="답글">-->
                                                 <input th:if="${comments.memberCode == #authentication.principal.memberCode}"
                                                        type="button" class="modifyComments" value="수정">
                                                 <input th:if="${comments.memberCode == #authentication.principal.memberCode}"
                                                        type="button" class="deleteComments" value="삭제">
                                                 <input th:if="${comments.memberCode != #authentication.principal.memberCode}"
                                                        type="button" value="차단">
-                                                <input th:if="${comments.memberCode != #authentication.principal.memberCode}"
-                                                       type="button" value="신고">
+<!--                                                <input th:if="${comments.memberCode != #authentication.principal.memberCode}"-->
+<!--                                                       type="button" value="신고">-->
                                             </li>
                                         </ul>
-    =
+                                        <div>
+                                            <input type="hidden" class="postCode" th:value="${postCode}" />
+                                            <input type="hidden" id="memberCode" th:value="${memberCode}" />
+                                        </div>
                                     </div>
                                 </div>
                                 <button class="likeBtn active">
@@ -194,7 +163,9 @@
                         </div>
                     </li>
                 </ul>
-
+                <div>
+                </div>
+                <script src="/js/commentsEvent.js"></script>
             </section>
         </main>
     </div>
