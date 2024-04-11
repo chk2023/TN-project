@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -35,15 +36,16 @@ public class PurchaseController {
         this.memberService = memberService;
     }
 
-    @GetMapping("purchase/viewPurchasePage")
+    @GetMapping("/purchase/viewPurchasePage")
     public String viewPurchasePage (@RequestParam("postCode") Integer postCode, Model model) {
 
         model.addAttribute("postCode", postCode);
+
         return "/purchase/viewPurchasePage";
     }
 
 
-    @PostMapping("/getPaidPostInfo")
+    @PostMapping("/purchase/getPaidPostInfo")
     @ResponseBody
     public ResponseEntity<PurchaseDTO> getPostInfo(@RequestBody PostDTO postDTO, @AuthenticationPrincipal MemberDTO memberDTO, @ModelAttribute PostDTO paidcontent) {
 

@@ -134,13 +134,15 @@ public class PostController {
     }
 
     @GetMapping("/detail")
-    public String blogDetailPage(@AuthenticationPrincipal MemberDTO memberDTO, Integer postCode, Model model, CommentsDTO commentsDTO) {
+    public String blogDetailPage(Integer postCode, @AuthenticationPrincipal MemberDTO memberDTO, Model model, CommentsDTO commentsDTO) {
         //1. 해당하는 코드의 post정보를 불러오기
         PostDTO targetPost = postService.findPostByPostCode(postCode);
         targetPost.setAttachmentList(postService.findAttListByPostCode(targetPost.getPostCode()));
         targetPost.makeThumbnailPath();
         targetPost.setLiked(likeService.getHasLiked(targetPost.getPostCode(), memberDTO.getMemberCode()));
         targetPost.setTagList(postService.getTagsByPostCode(targetPost.getPostCode()));
+
+//        model.addAttribute("postCode", postCode);
 
         //2. post 상태가 비공개라면 열람자가 일치하는지 확인
         if (targetPost.getPostStatus().equals("PRIVATE")) {
@@ -160,6 +162,8 @@ public class PostController {
             return "/post/detail";
         } else if (targetPost.getPostPrice() > 0 && !purchaseService.isPostPurchased(memberDTO.getMemberCode(), postCode)) {
             model.addAttribute("paidContent", targetPost);
+            model.addAttribute("postCode", postCode);
+            System.out.println("Controller: postCode = " + postCode);
             return "/purchase/viewPurchasePage";  //TODO: getPaidPostInfo에서 "@ModelAttribute PostDTO paidContent"로 값 받아 사용하기
         } else {
             List<CommentsDTO> comments = commentsService.selectCommentsList(commentsDTO);

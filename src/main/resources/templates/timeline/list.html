@@ -40,8 +40,7 @@
                 <li id="latest">
                     <button onclick="latestBtnClicked()">최신글</button>
                 </li>
-                <li id="recommended">
-                    <button onclick="recomendedBtnClicked()">추천글</button>
+                <li id="recommended"><button onclick="recomendedBtnClicked()">추천글</button>
                 </li>
                 <li class="viewBtn">
                     <button onclick="viewBtnClicked()"><img src="/images/btn_view_type.png" alt="보기타입 선택버튼"></button>
@@ -70,6 +69,7 @@
     let isLoading = false;
     const $viewBtn = document.querySelector(".viewBtn");
     let message = `[[${message}]]`;
+    let postCode = `[[${postCode}]]`;
 </script>
 
 <script id="contentsTemplate" type="text/x-handlebars-template">
@@ -97,7 +97,7 @@
             <div>
 <!--                <strong class="contentTit"-->
 <!--                        onclick="location.href='/post/detail?postCode={{postCode}}'">{{postTitle}}</strong>-->
-                <strong class="clickPost" data-post-code="{{postCode}}">{{postTitle}}</strong>
+                <strong class="clickPost">{{postTitle}}</strong>
                 <div class="contentsTxt" onclick="location.href='/post/detail?postCode={{postCode}}'">
                     <p>
                         {{postText}}
@@ -138,6 +138,5 @@
 <script src="/js/timeline.js"></script>
 <script src="/js/scrollEvent.js"></script>
 <script src="/js/pathFinder.js"></script>
-<!--<script src="/js/purchasePost.js"></script>-->
 </body>
 </html>

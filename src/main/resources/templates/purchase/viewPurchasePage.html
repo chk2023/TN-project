@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <title>PurchasePage</title>
+    <link rel="stylesheet" href="/css/common.css">
 </head>
 <body>
 
@@ -10,7 +12,10 @@
     <h1>구매 확인 페이지</h1>
     <p>구매를 확인하시겠습니까?</p>
     <button th:data-post-code="${postCode}" class="purchaseBtn" onclick="handlePurchaseBtn()">확인</button>
+<!--    <button th:data-post-code="4" class="purchaseBtn" onclick="handlePurchaseBtn()">확인</button>-->
 </div>
+
+<div>Post Code: <span th:text="${postCode}"></span></div>
 
 <script src="/js/purchasePost.js"></script>
 

@@ -26,7 +26,7 @@ public class TimelineController {
     private final Recommend recommend;
 
     @GetMapping("/list")
-    public String findTrendList(Model model, String viewType, Integer contentsType, Authentication authentication) {
+    public String findTrendList(Model model, String viewType,Integer postCode, Integer contentsType, Authentication authentication) {
         Integer index = 0;
         Integer range = 10;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -37,6 +37,8 @@ public class TimelineController {
         model.addAttribute("viewType", viewType);
         model.addAttribute("contentsType", contentsType);
         model.addAttribute("today", today);
+
+        model.addAttribute("postCode", postCode);
 
         return "timeline/list";
     }
