@@ -163,26 +163,23 @@ public class PostController {
                 return "/post/detail"; //TODO : view에서 errorMessage가 있다면 이전화면으로 돌아가는 로직 작성해주세요
             }
         }
+
+
+        //3. post가 유료글인지 판단하기
+        if (targetPost.getPostPrice() > 0 && !purchaseService.isPostPurchased(member.getMemberCode(), postCode)) {
+            model.addAttribute("paidContent", targetPost);
+            model.addAttribute("postCode", postCode);
+            System.out.println("Controller: postCode = " + postCode);
+            return "/purchase/viewPurchasePage";  //TODO: getPaidPostInfo에서 "@ModelAttribute PostDTO paidContent"로 값 받아 사용하기
+        }
         /* 댓글 모달에서 댓글 조회 */
         List<CommentsDTO> comments = commentsService.selectCommentsList(commentsDTO);
         model.addAttribute("comments", comments);
         model.addAttribute("postCode", postCode);
         model.addAttribute("memberCode", member.getMemberCode());
-
-        //3. post가 유료글인지 판단하기
-        if (targetPost.getPostPrice() > 0 && purchaseService.isPostPurchased(member.getMemberCode(), postCode)) {
-            model.addAttribute("postDetail", targetPost);
-
-            return "/post/detail";
-        } else if (targetPost.getPostPrice() > 0 && !purchaseService.isPostPurchased(member.getMemberCode(), postCode)) {
-            model.addAttribute("paidContent", targetPost);
-            model.addAttribute("postCode", postCode);
-            System.out.println("Controller: postCode = " + postCode);
-            return "/purchase/viewPurchasePage";  //TODO: getPaidPostInfo에서 "@ModelAttribute PostDTO paidContent"로 값 받아 사용하기
-        } else {
-
+        model.addAttribute("postDetail", targetPost);
         return "/post/detail";
-    }
+
     }
 
     @PostMapping("/like")
