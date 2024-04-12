@@ -20,8 +20,8 @@ public class CommentsService {
     }
 
     @Transactional
-    public void writeComments(String comments, int memberCode) throws CommentsWriteException {
-        int result = commentsMapper.writeComments(comments, memberCode);
+    public void writeComments(CommentsDTO comments) throws CommentsWriteException {
+        int result = commentsMapper.writeComments(comments);
 
         if (!(result > 0)) throw new CommentsWriteException("댓글 작성에 실패하였습니다.");
 
@@ -43,4 +43,5 @@ public class CommentsService {
     public CommentsDTO getCommentByCommentsCode(int cmtCode) {
         return commentsMapper.getCommentByCommentsCode(cmtCode);
     }
+
 }

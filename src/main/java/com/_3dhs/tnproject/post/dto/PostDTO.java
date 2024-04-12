@@ -1,5 +1,6 @@
 package com._3dhs.tnproject.post.dto;
 
+import com._3dhs.tnproject.comments.dto.CommentsDTO;
 import com._3dhs.tnproject.member.dto.ProfileDTO;
 import com._3dhs.tnproject.post.model.PostState;
 import com._3dhs.tnproject.post.service.PostService;
@@ -40,6 +41,9 @@ public class PostDTO {
     private String thumbnailPath;
     private PostService postService;
     private int postCount;
+
+//    //댓글DTO 활용
+//    private List<CommentsDTO> commentsList;
 
     public String getAttachmentPath(int index) {
         String path = "";

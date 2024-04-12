@@ -1,64 +1,127 @@
 window.onload = function () {
 
-    /* 댓글 작성 */
     if (document.getElementById("writeComments")) {
+        /* 댓글 작성 */
         const $writeComments = document.getElementById("writeComments");
+        const $cmt = document.querySelector("#cmtText");
 
         $writeComments.onclick = function () {
-            const $cmt = document.querySelector("#cmt").value;
-
-            if ($cmt != null && $cmt.trim() !== "") {
-                fetch("/comments/write", {
-                    method: "POST", headers: {
-                        "Content-Type": "application/json"
-                    }, body: JSON.stringify({
-                        cmt: $cmt
-                    })
-                })
-                    .then(res => {
-                        if (!res.ok) {
-                            throw new Error("댓글 작성에 실패하였습니다.");
-                        }
-                        return res.json();
-                    })
-                    .then(newComment => {
-                        // 새로운 댓글을 생성하여 HTML로 추가
-                        const $newComment = document.createElement("li");
-                        $newComment.innerHTML = `
-                    <input type="hidden" class="comment-code" value="${escapeHTML(newComment.cmtCode)}" />
-                    <img src="${newComment.profile != null ? escapeHTML(newComment.profile.profileImgPath) : ''}" />
-                    <span>${escapeHTML(newComment.profile != null ? newComment.profile.profileNickname : '')}</span>
-                    <span>${escapeHTML(newComment.cmtWriDate)}</span>
-                    <br>
-                    <span class="cmtContent">${escapeHTML(newComment.cmtText)}</span>
-                    <input type="button" value="답글">
-                    <input ${newComment.memberCode == authentication.principal.memberCode ? '' : 'style="display: none;"'} type="button" class="modifyComments" value="수정">
-                    <input ${newComment.memberCode == authentication.principal.memberCode ? '' : 'style="display: none;"'} type="button" class="deleteComments" value="삭제">
-                    <input ${newComment.memberCode != authentication.principal.memberCode ? '' : 'style="display: none;"'} type="button" value="차단">
-                    <input ${newComment.memberCode != authentication.principal.memberCode ? '' : 'style="display: none;"'} type="button" value="신고">
-                `;
-                        document.getElementById("commentList").appendChild($newComment);
-                        console.log("새로운 댓글이 작성되었습니다.", newComment);
-                    })
-                    .catch(error => {
-                        console.error("오류 발생", error);
-                        alert("댓글 작성에 실패하였습니다. 다시 시도해주세요.")
-                    })
+            if (!$cmt.value.trim()) {
+                alert('내용을 작성해주세요.')
+                return;
             }
+
+            const postCode = document.querySelector(".postCode").value;
+            const cmtText = $cmt.value;
+
+            console.log(postCode);
+            console.log(cmtText);
+
+            fetch("/comments/write", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json; charset=UTF-8"
+                }, body: JSON.stringify({postCode, cmtText})
+            })
+                .then(res => {
+                    $cmt.value = '';
+                    loadReply(postCode);
+                })
+                .catch(error => console.log(error));
         };
     }
 
-    /* 댓글 수정, 삭제 */
-    const modifyCommentsButtons = document.querySelectorAll(".modifyComments");
-    const deleteCommentsButtons = document.querySelectorAll(".deleteComments");
+    function loadReply(postCode) {
+        fetch('/comments/load?postCode=' + postCode)
+            .then(result => result.json())
+            .then(data => makeCommentsTable(data))
+            .catch(error => console.log(error))
+    }
 
-    modifyCommentsButtons.forEach(function (button) {
-        button.addEventListener("click", function () {
-            // 수정 버튼이 속한 댓글 요소 찾기
+    function makeCommentsTable(commentsList) {
+        const $list = document.querySelector('#commentsList');
+        const $memberCode = document.querySelector('#memberCode').value;
+        $list.innerHTML = '';
+
+        commentsList.forEach(comments => {
+            const $li = document.createElement("li");
+            const $hiddenInput = document.createElement("input");
+            const $img = document.createElement("img");
+            const $nicknameSpan = document.createElement("span");
+            const $createdDateSpan = document.createElement("span");
+            const $cmtContentSpan = document.createElement("span");
+            // const $replyButton = document.createElement("input");
+            const $modifyButton = document.createElement("input");
+            const $deleteButton = document.createElement("input");
+            const $blockButton = document.createElement("input");
+            // const $reportButton = document.createElement("input");
+
+            $hiddenInput.setAttribute("type", "hidden");
+            $hiddenInput.setAttribute("class", "comment-code");
+            $hiddenInput.setAttribute("value", comments.cmtCode);
+
+            if (comments.profile != null) {
+                $img.setAttribute("src", comments.profile.profileImgPath);
+            }
+
+            $nicknameSpan.textContent = comments.profile.profileNickname;
+            const date = new Date(comments.cmtWriDate);
+            const formattedDate = `${date.getMonth() + 1}월 ${date.getDate()}일`;
+            $createdDateSpan.textContent = formattedDate;
+            $cmtContentSpan.setAttribute("class", "cmtContent");
+            $cmtContentSpan.textContent = comments.cmtText;
+
+            // $replyButton.setAttribute("type", "button");
+            // $replyButton.setAttribute("value", "답글");
+            $modifyButton.setAttribute("type", "button");
+            $modifyButton.setAttribute("value", "수정");
+            $modifyButton.setAttribute("class", "modifyComments");
+            $deleteButton.setAttribute("type", "button");
+            $deleteButton.setAttribute("value", "삭제");
+            $deleteButton.classList.add("deleteComments");
+            $deleteButton.setAttribute("id", "blackBtn");
+            $blockButton.setAttribute("type", "button");
+            $blockButton.setAttribute("value", "차단");
+            $blockButton.classList.add("blockBtn");
+            // $reportButton.setAttribute("type", "button");
+            // $reportButton.setAttribute("value", "신고");
+
+            const $contentGroupDiv = document.createElement("div");
+            $contentGroupDiv.classList.add("content-group");
+            const $profileDiv = document.createElement("div");
+            $profileDiv.appendChild($img);
+            const $nicknameDiv = document.createElement("div");
+            $nicknameDiv.appendChild($nicknameSpan);
+            $contentGroupDiv.appendChild($profileDiv);
+            $contentGroupDiv.appendChild($nicknameDiv);
+            $contentGroupDiv.appendChild($createdDateSpan);
+
+            const $buttonContainerDiv = document.createElement("div");
+            $buttonContainerDiv.classList.add("button-container");
+
+            if (comments.memberCode == $memberCode) {
+                $buttonContainerDiv.appendChild($modifyButton);
+                $buttonContainerDiv.appendChild($deleteButton);
+            } else {
+                $buttonContainerDiv.appendChild($blockButton);
+            }
+
+            $li.appendChild($hiddenInput);
+            $li.appendChild($contentGroupDiv);
+            $li.appendChild($cmtContentSpan);
+            $li.appendChild($buttonContainerDiv);
+            $list.appendChild($li);
+        })
+    }
+
+    document.addEventListener('click', e => {
+        const button = e.target;
+
+        if (button.classList.contains('modifyComments')) {
+            /* 댓글 수정 */
             const $commentElement = button.closest('li')
             const $cmtCode = $commentElement.querySelector('.comment-code').value;
             const $cmtText = prompt("댓글을 수정하세요: ", "");
-            console.log($cmtCode);
 
             if ($cmtText != null && $cmtText.trim() !== "") {
                 fetch("/comments/update", {
@@ -80,11 +143,12 @@ window.onload = function () {
                         alert("댓글 수정에 실패하였습니다. 다시 시도해주세요.")
                     })
             }
-        });
-    });
 
-    deleteCommentsButtons.forEach(function (button) {
-        button.addEventListener("click", function () {
+        }
+
+        /* 댓글 삭제 */
+
+        if (button.classList.contains("deleteComments")) {
             const $commentElement = button.closest('li')
             const $cmtCode = $commentElement.querySelector('.comment-code').value;
 
@@ -106,34 +170,13 @@ window.onload = function () {
                     console.error("오류 발생", error);
                     alert("댓글 삭제에 실패하였습니다. 다시 시도해주세요.")
                 })
-        });
+        }
     });
 }
 
 
-// function sendComments() {
-//     const $cmt = document.querySelector("#cmt").value;
-//
-//     if ($cmt != null && $cmt.trim() !== "") {
-//         fetch("/comments/write", {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/json"
-//             },
-//             body: JSON.stringify({
-//                 cmt: $cmt
-//             })
-//         })
-//             .then(res => {
-//                 if (!res.ok) {
-//                     throw new Error("댓글 작성에 실패하였습니다.");
-//                 }
-//                 // $commentElement.querySelector('.cmtContent').innerText = $cmtText;
-//                 console.log("댓글이 성공적으로 작성되었습니다.");
-//             })
-//             .catch(error => {
-//                 console.error("오류 발생", error);
-//                 alert("댓글 작성에 실패하였습니다. 다시 시도해주세요.")
-//             })
-//     }
-// }
+
+
+
+
+
