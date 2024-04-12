@@ -94,8 +94,8 @@ public class PaymentController {
         return "/payment/payment_success";
     }
 
-    @GetMapping("/payment/management")
-    public void gotoManagementPage() {
-
-    }
+//    @GetMapping("/payment/management")
+//    public void gotoManagementPage() {
+//
+//    }
 }
