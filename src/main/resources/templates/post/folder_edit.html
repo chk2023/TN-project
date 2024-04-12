@@ -32,7 +32,13 @@
                 <button class="deleteBtn btn gray">삭제</button>
             </div>
             <ul class="fEditList" id="fEditList">
-                <li class="fixed">전체목록 (<span>56</span>)</li>
+                <li class="fixed">
+                    전체목록 (
+                    <span th:if="${#strings.equals(param.memberCode, #strings.toString(#authentication.principal.memberCode))}"
+                          th:text="${totalCount.count}">56</span>
+                    <span th:if="${!#strings.equals(param.memberCode, #strings.toString(#authentication.principal.memberCode))}"
+                          th:text="${totalCount.count}"></span>)
+                </li>
                 <th:block th:object="${folderList}" th:each="folder, start : ${folderList}">
                     <li th:classappend="${folder.folderName == 'NoName'} ? 'hidden'" draggable="true"><input
                             type="hidden" th:value="${folder.folderCode}"/><img th:src="${folder.folderIconPath}"
