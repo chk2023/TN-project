@@ -5,6 +5,7 @@ import com._3dhs.tnproject.manager.dto.ReportDTO;
 import com._3dhs.tnproject.manager.service.ReportService;
 import com._3dhs.tnproject.member.dto.MemberDTO;
 import com._3dhs.tnproject.member.service.MemberService;
+import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -134,7 +135,7 @@ public class ManagerController {
 
     @PostMapping("/manager/report/memStop")
     public String memberStop(String memberId, Integer reportCode, RedirectAttributes rttr) {
-         log.info(memberId, reportCode);
+        log.info(memberId, reportCode);
 
         // 신고 목록 상세-계정정지-서브밋 기능
 
@@ -151,6 +152,7 @@ public class ManagerController {
     @PostMapping("/manager/report/memActive")
     public String memberActivate(String memberId, Integer reportCode, RedirectAttributes rttr) {
         //계정 정지 해제 서브밋 기능
+        System.out.println("memActive실행");
         reportService.memberActivate(memberId);
         rttr.addFlashAttribute("memberActivate");
 
@@ -160,8 +162,9 @@ public class ManagerController {
 
     @PostMapping("/manager/admin/memStop")
     public String admMemberStop(String memberId, Integer reportCode, RedirectAttributes rttr) {
-
-        System.out.println(reportCode + memberId );
+        System.out.println("memstop 실행");
+        System.out.println("reportCode : " + reportCode);
+        System.out.println("memberId : " + memberId);
         // 관리기록  상세-계정정지-서브밋 기능
 
         reportService.admMemberStop(memberId);
@@ -172,5 +175,43 @@ public class ManagerController {
 
     }
 
+    @PostMapping("/manager/admin/memActive")
+    public String admMemberActivate(String memberId, Integer reportCode, RedirectAttributes rttr) {
+        //계정 정지 해제 서브밋 기능
+        System.out.println("memActive실행");
+        reportService.admMemberActivate(memberId);
+        rttr.addFlashAttribute("memberActivate");
+
+        return "redirect:/manager/admin/detail?reportCode=" + reportCode;
+    }
+
+    @PostMapping("/manager/member/memStop")
+    public String MemMemberStop(String memberId, Integer memberCode, RedirectAttributes rttr) {
+        System.out.println("memstop 실행");
+
+        System.out.println("memberId : " + memberId);
+        // 관리기록  상세-계정정지-서브밋 기능
+
+        reportService.MemMemberStop(memberId);
+
+        rttr.addFlashAttribute("memberStop");
+
+        return "redirect:/manager/member/detail?memberCode=" + memberCode;
+
+    }
+
+    @PostMapping("/manager/member/memActive")
+    public String memMemberActivate(String memberId, Integer memberCode, RedirectAttributes rttr) {
+        //계정 정지 해제 서브밋 기능
+        System.out.println("memActive실행");
+        System.out.println("memberCode : " +memberCode);
+        System.out.println("memberId : " + memberId);
+        reportService.MemMemberActivate(memberId);
+
+        System.out.println("서비스끝나고 1");
+        rttr.addFlashAttribute("memMemberActivate");
+        System.out.println("서비스끝나고 2");
+        return "redirect:/manager/member/detail?memberCode=" + memberCode;
+    }
 
 }

@@ -117,6 +117,18 @@ public class ReportService {
     public void admMemberStop(String memberId) {
         reportMapper.admMemberStop(memberId);
     }
+
+    public void admMemberActivate(String memberId) {
+        reportMapper.admMemberActivate(memberId);
+    }
+
+    public void MemMemberStop(String memberId) {
+        reportMapper.MemMemberStop(memberId);
+    }
+
+    public void MemMemberActivate(String memberId) {
+        reportMapper.MemMemberActivate(memberId);
+    }
 }
 
 

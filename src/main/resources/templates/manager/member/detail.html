@@ -42,13 +42,14 @@
         </form> <br><br>
         <section> <!-- 각자 개인 페이지들을 section 태그 안에 작성하세요. -->
             <form id="memberDetail" method="post">
-                <label>회원 코드  <b><input name="reportCode" th:value="${oneMember.memberCode}"disabled></b></label> <br><br>
-                <label>회원 아이디 <b> <input type="text" th:value='${oneMember.memberId}'disabled></b></label> <br><br>
-                <label>회원 생년월일<b>  <input type="text" th:value='${oneMember.memberBirth}'disabled></b></label> <br><br>
-                <label>계정 상태<b> <input type="text"  th:value='${oneMember.memberStatus}'disabled></b></label> <br><br>
-                <label>계정 등급 <b> <input type="text"  th:value='${oneMember.memberAuthority}'disabled></b></label> <br><br>
-                <label>계정 삭제 여부 <b> <input type="text"  th:value='${oneMember.isDeleted}'disabled></b></label> <br><br>
-                <input type="hidden" name="memberId" th:value="${oneMember.memberId}">
+                <label>회원 코드1  <b><input type="text" name="memberCode" th:value = "${oneMember.memberCode}" readonly /></b></label> <br><br>
+                <label>회원 아이디 <b> <input type="text" name="memberId" th:value ='${oneMember.memberId}' readonly /></b></label> <br><br>
+                <label>회원 생년월일<b>  <input type="text" th:value ='${oneMember.memberBirth}' readonly/></b></label> <br><br>
+                <label>계정 상태<b> <input type="text"  th:value ='${oneMember.memberStatus}' readonly/></b></label> <br><br>
+                <label>계정 등급 <b> <input type="text" th:value ='${oneMember.memberAuthority}' readonly/></b></label> <br><br>
+                <label>계정 삭제 여부 <b> <input type="text"  th:value ='${oneMember.isDeleted}' readonly/></b></label> <br><br>
+
+
                 <!-- form 마다 서브밋이 있어야 한다 -->
                 <!--            </form>-->
 
@@ -59,7 +60,6 @@
                 <a href="#"><button type='button' onclick="memActivate();" class="btn skyblue">계정 정지 해제</button></a>
 
             </form>
-
 
 
 
