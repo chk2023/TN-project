@@ -8,6 +8,8 @@ import com._3dhs.tnproject.post.dto.*;
 import com._3dhs.tnproject.post.service.LikeService;
 import com._3dhs.tnproject.post.service.PostService;
 import com._3dhs.tnproject.post.util.FileUtil;
+import com._3dhs.tnproject.purchase.service.PurchaseService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -43,6 +45,7 @@ public class PostController {
     private final MemberService memberService;
     private final LikeService likeService;
     private final CommentsService commentsService;
+    private final PurchaseService purchaseService;
 
     @ModelAttribute
     public void addCommonAttributes(@RequestParam(defaultValue = "1") int page, @ModelAttribute TabSearchDTO tabSearchDTO, @ModelAttribute WriteDTO writeDTO, @AuthenticationPrincipal MemberDTO loginMemberDTO, @RequestParam(required = false) String action, Model model) {
@@ -160,22 +163,26 @@ public class PostController {
                 return "/post/detail"; //TODO : view에서 errorMessage가 있다면 이전화면으로 돌아가는 로직 작성해주세요
             }
         }
-        //3. post가 유료글인지 판단하기
-        if (targetPost.getPostPrice() > 0) {
-            //유료글이라면 유료글 처리를 하는 곳으로 전달하기
-            model.addAttribute("paidContent", targetPost);
-            return "/getPaidPostInfo";  //TODO: getPaidPostInfo에서 "@ModelAttribute PostDTO paidContent"로 값 받아 사용하기
-        }
-        //4. 모든 조건이 성립한다면 view로 전달
-        model.addAttribute("postDetail", targetPost);
-
         /* 댓글 모달에서 댓글 조회 */
         List<CommentsDTO> comments = commentsService.selectCommentsList(commentsDTO);
         model.addAttribute("comments", comments);
         model.addAttribute("postCode", postCode);
         model.addAttribute("memberCode", member.getMemberCode());
 
+        //3. post가 유료글인지 판단하기
+        if (targetPost.getPostPrice() > 0 && purchaseService.isPostPurchased(member.getMemberCode(), postCode)) {
+            model.addAttribute("postDetail", targetPost);
+
+            return "/post/detail";
+        } else if (targetPost.getPostPrice() > 0 && !purchaseService.isPostPurchased(member.getMemberCode(), postCode)) {
+            model.addAttribute("paidContent", targetPost);
+            model.addAttribute("postCode", postCode);
+            System.out.println("Controller: postCode = " + postCode);
+            return "/purchase/viewPurchasePage";  //TODO: getPaidPostInfo에서 "@ModelAttribute PostDTO paidContent"로 값 받아 사용하기
+        } else {
+
         return "/post/detail";
+    }
     }
 
     @PostMapping("/like")
@@ -191,7 +198,6 @@ public class PostController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("error");
         }
     }
-
 
     @GetMapping("/load")
     public @ResponseBody List<PostDTO> findTabMenuPostList(@ModelAttribute TabSearchDTO tabSearchDTO, @AuthenticationPrincipal MemberDTO member) {

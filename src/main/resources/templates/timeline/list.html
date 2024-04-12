@@ -41,9 +41,7 @@
                 <li id="latest">
                     <button onclick="latestBtnClicked()">최신글</button>
                 </li>
-                <li id="recommended">
-                    <button onclick="recomendedBtnClicked()">추천글</button>
-                    <!--//TODO(조한결) 타임라인 추천글 탭 들어갔다 다른탭 가면 조회 안됨 -->
+                <li id="recommended"><button onclick="recomendedBtnClicked()">추천글</button>
                 </li>
                 <li class="viewBtn">
                     <button onclick="viewBtnClicked()"><img src="/images/btn_view_type.png" alt="보기타입 선택버튼"></button>
@@ -72,6 +70,7 @@
     let isLoading = false;
     const $viewBtn = document.querySelector(".viewBtn");
     let message = `[[${message}]]`;
+    let postCode = `[[${postCode}]]`;
 </script>
 
 <script id="contentsTemplate" type="text/x-handlebars-template">
@@ -106,10 +105,12 @@
                     </p>
                 </div>
 
-                <!-- 구매 테스트용 -->
-                {{#if postPrice}}
-                <button class="purchaseBtn" data-postCode="{{postCode}}">유료글 구매</button>
-                {{/if}}
+<!--                &lt;!&ndash; 구매 테스트용 &ndash;&gt;-->
+<!--                {{#if postPrice}}-->
+<!--&lt;!&ndash;                <button class="purchaseBtn" data-postCode="{{postCode}}">유료글 구매</button>&ndash;&gt;-->
+<!--                <button onclick="location.href='/purchase/viewPurchasePage?postCode={{postCode}}'" class="buyPostBtn">유료글 구매</button>-->
+<!--                {{/if}}-->
+
 
                 <div class="showLikeAndComments">
                     <button class="commentsBtn">
@@ -139,6 +140,5 @@
 <script src="/js/timeline.js"></script>
 <script src="/js/scrollEvent.js"></script>
 <script src="/js/pathFinder.js"></script>
-<script src="/js/purchasePost.js"></script>
 </body>
 </html>

@@ -25,7 +25,7 @@ public class PaymentController {
     private final PaymentService paymentService;
     private final MemberService memberService;
 
-    @GetMapping("payment/payment")
+    @GetMapping("/payment/payment")
     public String getPaymentPage(Model model, Authentication authentication) {
         MemberDTO member = (MemberDTO) authentication.getPrincipal();
 

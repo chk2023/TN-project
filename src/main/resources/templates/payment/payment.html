@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>payment</title>
     <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/payment.css">
     <!-- jQuery -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
     <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
@@ -51,39 +52,11 @@
     }
 
 </script>
-<div class="wrap">
+<form class="wrap">
 
     <header>
-        <div class="profile">
-            <button class="optionBtn"><img src="/images/icon_option.png" alt="프로필 옵션 버튼"></button>
-            <ul class="optionBox">
-                <li><a>프로필 수정</a></li>
-                <li><a>공유</a></li>
-            </ul>
-            <div class="profileStatus">
-                <div class="prof_photo"><img src="/images/icon_no_image_lg.png" alt="프로필 사진"></div>
-                <div class="prof_txt">
-                    <strong>닉네임</strong>
-                    <span>상태메시지</span>
-                </div>
-            </div>
-            <div class="profileInfo">
-                <span class="tissueCount">500</span>
-                <button class="myBlogBtn btn">내 블로그</button>
-            </div>
-        </div>
-        <nav>
-            <ul class="rnb">
-                <li><button>홈</button></li>
-                <li><button>회원 정보</button></li>
-                <li><button>결제 관리</button></li>
-                <li><button>차단 목록</button></li>
-                <li><button>관리기록 조회</button></li>
-                <li><button>신고목록 조회</button></li>
-                <li><button>회원정보 검색</button></li>
-                <li class="logoutBtn"><button>로그아웃</button></li>
-            </ul>
-        </nav>
+        <div th:replace="~{common/profile.html}"></div>
+        <nav th:replace="~{common/navigation.html}"></nav>
     </header>
 
     <main>
@@ -119,7 +92,7 @@
     </main>
 
 
-</div>
+</form>
 
 
 </body>

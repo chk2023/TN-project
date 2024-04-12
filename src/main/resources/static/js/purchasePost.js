@@ -1,20 +1,18 @@
 function handlePurchaseBtn() {
     document.querySelectorAll(".purchaseBtn").forEach(btn => {
         btn.addEventListener('click', (e) => {
-
-            console.log("버튼 동작 중");
-
-            var postCode = parseInt(e.currentTarget.getAttribute('data-postCode'));
+            var postCode = e.currentTarget.getAttribute("data-post-code");
+            console.log("postCode:", postCode);
             purchasePaidPost(postCode);
-            console.log("postCode:",postCode);
-
-        })
+        });
     });
 }
 
+
+
 function purchasePaidPost(postCode) {
 
-    fetch('/getPaidPostInfo', {
+    fetch('/purchase/getPaidPostInfo', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -24,6 +22,7 @@ function purchasePaidPost(postCode) {
         }),
     })
         .then(response => {
+            console.log(postCode);
             if (response.ok) {
                 console.log("동작 확인");
                 return response.json();
@@ -43,12 +42,12 @@ function purchasePaidPost(postCode) {
 }
 
 
-window.onload = function () {
-    handlePurchaseBtn();
-    document.querySelectorAll(".purchaseBtn").forEach(btn => {
-        var postPrice = parseInt(btn.getAttribute('data-postPrice'));
-        if (postPrice <= 0) {
-            btn.style.display = 'none';
-        }
-    });
-};
+// window.onload = function () {
+//     handlePurchaseBtn();
+//     document.querySelectorAll(".purchaseBtn").forEach(btn => {
+//         var postPrice = parseInt(btn.getAttribute('data-postPrice'));
+//         if (postPrice <= 0) {
+//             btn.style.display = 'none';
+//         }
+//     });
+// };

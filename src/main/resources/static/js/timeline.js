@@ -37,7 +37,6 @@ function update() {
 
             // 화면 랜더링된 이후 like() 동작해야 함
             like();
-            handlePurchaseBtn();
 
         }).catch(error => console.error('Error fetching profile data:', error))
         .finally(function () {
@@ -56,6 +55,7 @@ function setTitlePhoto(path) {
 
 function formatWriDate(postWriDate) {
     let time = new Date(postWriDate);
+    console.log(time);
     return time.toLocaleDateString("ko-KR", {
         month: 'long',
         day: 'numeric',

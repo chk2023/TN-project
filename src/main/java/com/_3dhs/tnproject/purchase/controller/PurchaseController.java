@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -35,15 +36,29 @@ public class PurchaseController {
         this.memberService = memberService;
     }
 
+    @GetMapping("/purchase/viewPurchasePage")
+    public String viewPurchasePage (@RequestParam("postCode") Integer postCode, Model model) {
 
-    @PostMapping("/getPaidPostInfo")
+        model.addAttribute("postCode", postCode);
+
+        return "/purchase/viewPurchasePage";
+    }
+
+
+    @PostMapping("/purchase/getPaidPostInfo")
     @ResponseBody
-    public ResponseEntity<PurchaseDTO> getPostInfo(@RequestBody PostDTO postDTO, @AuthenticationPrincipal MemberDTO memberDTO) {
+    public ResponseEntity<PurchaseDTO> getPostInfo(@RequestBody PostDTO postDTO, @AuthenticationPrincipal MemberDTO memberDTO, @ModelAttribute PostDTO paidcontent) {
 
         int memberCode = memberDTO.getMemberCode();
+        Integer postCode = postDTO.getPostCode();
+
+        if (postCode == null) {
+            System.out.println("postCode 없음");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
 
         // 결제를 요청하고 구매 정보를 가져옴
-        PurchaseDTO purchaseDTO = purchaseService.getPaidPostInfo(memberDTO, postDTO.getPostCode());
+        PurchaseDTO purchaseDTO = purchaseService.getPaidPostInfo(memberDTO, postCode);
 
 
         // 구매 정보가 null이 아니고 결제가 성공했을 때 티슈를 업데이트하고 DB에 저장

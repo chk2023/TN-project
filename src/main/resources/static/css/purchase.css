@@ -1,0 +1,17 @@
+/* viewPurchasePage.html */
+
+.purchasePage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 20%;
+}
+
+.purchaseBtn {
+    margin-top: 10px;
+    color: #FFFFFF;
+    background-color: #85BFE2;
+    border-radius: 20px;
+    padding: 5px 15px;
+}
