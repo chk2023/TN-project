@@ -236,7 +236,15 @@ public class PostService {
                 totalCount = postMapper.findPostLikeCount(tabSearchDTO.getMemberCode(), isOwner);
                 criteria = Pagenation.getSelectCriteriaWithoutSearch(page, totalCount.getCount(), limit, buttonAmount);
                 parameters.put("criteria", criteria);
-                postAllList = postMapper.findAllPostList(parameters);
+
+                if ("DRAFT".equals(tabSearchDTO.getPostStatus())) {
+                    totalCount = postMapper.findDraftPostCount(tabSearchDTO.getMemberCode());
+                    criteria = Pagenation.getSelectCriteriaWithoutSearch(page, totalCount.getCount(), limit, buttonAmount);
+                    parameters.put("criteria", criteria);
+                    postAllList = postMapper.findDraftPostList(parameters);
+                } else {
+                    postAllList = postMapper.findAllPostList(parameters);
+                }
             }
         } else {
             if (tabSearchDTO.getFolderCode() != 0) {

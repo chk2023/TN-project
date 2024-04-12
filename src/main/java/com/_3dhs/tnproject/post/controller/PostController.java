@@ -16,7 +16,6 @@ import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,7 +47,7 @@ public class PostController {
     private final PurchaseService purchaseService;
 
     @ModelAttribute
-    public void addCommonAttributes(@RequestParam(defaultValue = "1") int page, @ModelAttribute TabSearchDTO tabSearchDTO, @ModelAttribute WriteDTO writeDTO, @AuthenticationPrincipal MemberDTO loginMemberDTO, @RequestParam(required = false) String action, Model model) {
+    public void addCommonAttributes(@RequestParam(defaultValue = "1") int page, @ModelAttribute TabSearchDTO tabSearchDTO, @ModelAttribute WriteDTO writeDTO, @AuthenticationPrincipal MemberDTO loginMemberDTO, Model model) {
         boolean isOwner = loginMemberDTO.getMemberCode() == tabSearchDTO.getMemberCode();
         System.out.println("공통 컨트롤러 isOwner 값 : " + isOwner);
 
@@ -64,10 +63,16 @@ public class PostController {
         } else {
             System.out.println("공통 memberDTO null 이래!!");
         }
-        Map<String, Object> postAllListAndPaging = postService.findAllPostList(tabSearchDTO, page, isOwner);
 
-        if ("list".equals(action)) {
+        Map<String, Object> postAllListAndPaging = null;
 
+        if (tabSearchDTO.getPostStatus() != null) {
+            if ("DRAFT".equals(tabSearchDTO.getPostStatus())) {
+                tabSearchDTO.setMemberCode(loginMemberDTO.getMemberCode());
+                postAllListAndPaging = postService.findAllPostList(tabSearchDTO, page, true);
+            }
+        } else {
+            postAllListAndPaging = postService.findAllPostList(tabSearchDTO, page, isOwner);
         }
 
 //        System.out.println("공통어트리뷰트 writeDTO : " + writeDTO);
@@ -133,7 +138,8 @@ public class PostController {
     }
 
     @GetMapping("/temporary_storage/list")
-    public void temporaryStorageListPage() {
+    public void temporaryStorageListPage(@AuthenticationPrincipal MemberDTO loginMemberDTO, Model model) {
+
     }
 
     @GetMapping("/list")

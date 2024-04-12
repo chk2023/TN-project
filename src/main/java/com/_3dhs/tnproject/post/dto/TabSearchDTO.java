@@ -15,4 +15,5 @@ public class TabSearchDTO {
     private int count;
     private int index;
     private int range;
+    private String postStatus;
 }
