@@ -60,13 +60,6 @@ function formatCount(count) {
     }
 }
 
-function folderAllList() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const memberCode = urlParams.get('memberCode');
-
-    location.href = "/post/list?memberCode=" + memberCode;
-}
-
 async function update() {
     if (isLoading) return; //중복 로드 방지
     isLoading = true;

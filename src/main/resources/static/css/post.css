@@ -12,6 +12,12 @@ update : 2024-03-25
 /*------------------------------------------
     1.0     Blog Page Design Common
  ------------------------------------------*/
+table td {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
 table .private * {
     color: #D9D9D9;
 }

@@ -74,8 +74,8 @@ public class PostService {
     }
 
     @Transactional
-    public PostDTO findPostLikeCount(int memberCode) {
-        return postMapper.findPostLikeCount(memberCode);
+    public TabSearchDTO findPostLikeCount(int memberCode) {
+        return postMapper.findPostLikeCount(memberCode, true);
     }
 
     public PostDTO findPostByPostCode(Integer postCode) {
@@ -194,8 +194,12 @@ public class PostService {
     public void addWritePostWithAttachmentsAndTags(PostDTO postDTO, List<AttachmentDTO> attachments, List<TagDTO> tags) {
         try {
             int postCode = addWritePost(postDTO); // 포스트를 먼저 저장하고 생성된 postCode를 받아옴
-            addWriteAttachments(attachments, postCode); // 첨부 파일 일괄 삽입
-            addWriteTags(tags, postCode); // 태그 일괄 삽입
+            if (attachments != null && !attachments.isEmpty()) {
+                addWriteAttachments(attachments, postCode); // 첨부 파일 일괄 삽입
+            }
+            if (tags != null && !tags.isEmpty()) {
+                addWriteTags(tags, postCode); // 태그 일괄 삽입
+            }
         } catch (Exception e) {
             logger.error("Failed to write post with attachments and tags", e);
             throw new RuntimeException("Failed to write post with attachments and tags", e);
@@ -203,39 +207,67 @@ public class PostService {
     }
 
     @Transactional
-    public int findTotalCount(TabSearchDTO tabSearchDTO) {
-        return postMapper.selectTotalCount(tabSearchDTO);
-    }
-
-    @Transactional
-    public Map<String, Object> findAllPostList(TabSearchDTO tabSearchDTO, int page, int totalCount, boolean isOwner) {
-
-        /* 2. 페이징 처리와 연관 된 값을 계산하여 SelectCriteria 타입의 객체에 담는다. */
+    public Map<String, Object> findAllPostList(TabSearchDTO tabSearchDTO, int page, boolean isOwner) {
+        TabSearchDTO totalCount;
+        TabSearchDTO totalAllCount = new TabSearchDTO();
+        SelectCriteria criteria;
+        List<PostDTO> postAllList;
+        Map<String, Object> parameters = new HashMap<>();
+        // 페이징 처리와 연관된 값을 계산하여 SelectCriteria 타입의 객체에 담는다
         int limit = 10;         // 한 페이지에 보여줄 게시물의 수
         int buttonAmount = 5;   // 한 번에 보여질 페이징 버튼의 수
-        SelectCriteria criteria = Pagenation.getSelectCriteriaWithoutSearch(page, totalCount, limit, buttonAmount);
 
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("criteria", criteria);
         parameters.put("memberCode", tabSearchDTO.getMemberCode());
-        List<PostDTO> postAllList;
+        parameters.put("folderCode", tabSearchDTO.getFolderCode());
 
+        System.out.println("폴더리스트 페이지 폴더코드 : " + tabSearchDTO.getFolderCode());
+        System.out.println("폴더리스트 페이지 멤버코드 : " + tabSearchDTO.getMemberCode());
         if (isOwner) {
-            // 사용자가 블로그 소유자인 경우, 공개 및 비공개 게시글 모두 조회
-            postAllList = postMapper.findAllPostList(parameters);
+            if (tabSearchDTO.getFolderCode() != 0) {
+                // 폴더 조회 - 사용자가 블로그 소유자인 경우 (O), 글삭제여부가 false 이고, 글상태가 PUBLIC 및 PRIVATE 이고, 폴더코드가 일치하는 게시글 모두 조회
+                totalCount = postMapper.selectFolderTotalCount(tabSearchDTO.getFolderCode(), tabSearchDTO.getMemberCode(), isOwner);
+                totalAllCount = postMapper.findPostLikeCount(tabSearchDTO.getMemberCode(), isOwner);
+                criteria = Pagenation.getSelectCriteriaWithoutSearch(page, totalCount.getCount(), limit, buttonAmount);
+                parameters.put("criteria", criteria);
+                postAllList = postMapper.findAllFolderPostList(parameters);
+                System.out.println("폴더리스트 페이지 사용자 같은경우 totalCount : " + totalCount.getCount());
+            } else {
+                // 전체 조회 - 사용자가 블로그 소유자인 경우 (O), 글삭제여부가 false 이고, 글상태가 PUBLIC 및 PRIVATE 인 게시글 모두 조회
+                totalCount = postMapper.findPostLikeCount(tabSearchDTO.getMemberCode(), isOwner);
+                criteria = Pagenation.getSelectCriteriaWithoutSearch(page, totalCount.getCount(), limit, buttonAmount);
+                parameters.put("criteria", criteria);
+                postAllList = postMapper.findAllPostList(parameters);
+            }
         } else {
-            // 사용자가 블로그 소유자와 다른경우, 공개 게시글만 조회
-            postAllList = postMapper.findPublicPostList(parameters);
+            if (tabSearchDTO.getFolderCode() != 0) {
+                // 폴더 조회 - 사용자가 블로그 소유자와 다른경우 (X), 글삭제여부가 false 이고, 글상태가 PUBLIC 이고, 폴더코드가 일치하는 게시글 모두 조회
+                totalCount = postMapper.selectPublicFolderTotalCount(tabSearchDTO.getFolderCode(), tabSearchDTO.getMemberCode(), isOwner);
+                totalAllCount = postMapper.selectTotalCount(tabSearchDTO.getMemberCode(), isOwner);
+                criteria = Pagenation.getSelectCriteriaWithoutSearch(page, totalCount.getCount(), limit, buttonAmount);
+                parameters.put("criteria", criteria);
+                parameters.put("totalAllCount", totalAllCount);
+                postAllList = postMapper.findPublicFolderPostList(parameters);
+                System.out.println("폴더리스트 페이지 사용자 다른경우 totalCount : " + totalCount.getCount());
+            } else {
+                // 전체 조회 - 사용자가 블로그 소유자와 다른경우 (X), 글삭제여부가 false 이고, 글상태가 PUBLIC 게시글만 조회
+                totalCount = postMapper.selectTotalCount(tabSearchDTO.getMemberCode(), isOwner);
+                criteria = Pagenation.getSelectCriteriaWithoutSearch(page, totalCount.getCount(), limit, buttonAmount);
+                parameters.put("criteria", criteria);
+                postAllList = postMapper.findPublicPostList(parameters);
+                System.out.println("전체조회 페이지 사용자 다른경우 totalCount : " + totalCount.getCount());
+            }
         }
 
 
-        Map<String, Object> postAllListAndPaging = new HashMap<>();
-        postAllListAndPaging.put("paging", criteria);
-        postAllListAndPaging.put("postAllList", postAllList);
-        postAllListAndPaging.put("totalCount", totalCount);
+        Map<String, Object> postFolderAllListAndPaging = new HashMap<>();
+        postFolderAllListAndPaging.put("paging", criteria);
+        postFolderAllListAndPaging.put("postAllList", postAllList);
+        postFolderAllListAndPaging.put("totalCount", totalCount);
+        postFolderAllListAndPaging.put("totalAllCount", totalAllCount);
 
-        return postAllListAndPaging;
+        return postFolderAllListAndPaging;
     }
+
 
     public List<TagDTO> getTagsByPostCode(int postCode) {
         return postMapper.getTagsByPostCode(postCode);

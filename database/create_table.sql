@@ -123,7 +123,7 @@ CREATE TABLE `tbl_post`
 (
     `post_code`       INT                          NOT NULL AUTO_INCREMENT
         COMMENT '글번호',
-    `post_title`      VARCHAR(50)                  NOT NULL COMMENT '글제목',
+    `post_title`      VARCHAR(255)                  NOT NULL COMMENT '글제목',
     `post_text`       TEXT                         NOT NULL COMMENT '글내용',
     `post_status`     VARCHAR(10) DEFAULT 'PUBLIC' NOT NULL COMMENT '글상태',
     `post_price`      INT         DEFAULT 0        NOT NULL COMMENT '글설정티슈',

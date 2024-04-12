@@ -54,6 +54,7 @@ public class PostDTO {
         return path;
     }
 
+    //TODO 파일첨부해서 글 inset후 바로 메인에서 파일 경로가 앞에 "/"슬래시가 빠져서 오류날떄가 있음 ㅠㅠ
     public void makeThumbnailPath() {
         thumbnailPath = getAttachmentPath(0);
     }

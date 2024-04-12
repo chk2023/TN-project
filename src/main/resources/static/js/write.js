@@ -97,6 +97,8 @@ document.querySelectorAll('input[name="postDTO.postPrice"]').forEach(input => {
 
 document.querySelector('#작성완료버튼').addEventListener('click', function (e) {
     e.preventDefault();
+    const urlParams = new URLSearchParams(window.location.search);
+    const memberCode = urlParams.get('memberCode');
     const postTitle = document.querySelector("input[name='postDTO.postTitle']").value;
     const postText = document.querySelector("textarea[name='postDTO.postText']").value;
     const folderCode = document.querySelector("select[name='postDTO.folderCode']").value;
@@ -124,7 +126,7 @@ document.querySelector('#작성완료버튼').addEventListener('click', function
     formData.delete('postDTO.postTitle');
     formData.delete('postDTO.postText');
     formData.delete('postDTO.folderCode');
-    formData.delete('postDTO.postState');
+    formData.delete('postDTO.postStatus');
     formData.delete('postDTO.postPrice');
     formData.delete('postDTO.postIsFixed');
     formData.getAll('tagDTOList.tagName').forEach(() => formData.delete('tagDTOList.tagName'));
@@ -132,7 +134,7 @@ document.querySelector('#작성완료버튼').addEventListener('click', function
     formData.append('postDTO.postTitle', postTitle);
     formData.append('postDTO.postText', postText);
     formData.append('postDTO.folderCode', folderCode);
-    formData.append('postDTO.postState', postStatus);
+    formData.append('postDTO.postStatus', postStatus);
     formData.append('postDTO.postPrice', postPrice);
     formData.append('postDTO.postIsFixed', postIsFixed);
 
@@ -172,7 +174,7 @@ document.querySelector('#작성완료버튼').addEventListener('click', function
         }
     });
     Promise.all(fetchPromises).then(() => {
-        fetch('/post/write', {
+        fetch('/post/write?memberCode=' + memberCode, {
             method: 'POST',
             body: formData
         })
