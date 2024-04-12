@@ -51,14 +51,71 @@
 
 
 
-    <update id="insertRecord" >
+    <update id="updateReport" >
         UPDATE
-            tbl_report
+        tbl_report
         SET
-            processing_text = #{ processingText }
+        processing_text = #{ processingText }
         WHERE
-            report_code = #{ reportCode }
+        report_code = #{ reportCode }
     </update>
+
+    <update id="memberStop">
+        update
+        tbl_member
+        SET
+        member_status = 'SUSPENDED'
+        WHERE
+        member_id = #{ memberId }
+    </update>
+
+    <update id="admMemberStop">
+        update
+        tbl_member
+        SET
+        member_status = 'SUSPENDED'
+        WHERE
+        member_id = #{ memberId }
+    </update>
+
+    <update id="memberActivate">
+        update
+        tbl_member
+        SET
+        member_status = 'ACTIVE'
+        WHERE
+        member_id = #{ memberId }
+    </update>
+
+
+    <update id="admMemberActivate">
+        update
+        tbl_member
+        SET
+        member_status = 'ACTIVE'
+        WHERE
+        member_id = #{ memberId }
+    </update>
+
+    <update id="MemMemberStop">
+        update
+        tbl_member
+        SET
+        member_status = 'SUSPENDED'
+        WHERE
+        member_id = #{ memberId }
+    </update>
+
+    <!--    -->
+    <update id="MemMemberActivate">
+        update
+        tbl_member
+        SET
+        member_status = 'ACTIVE'
+        WHERE
+        member_id = #{ memberId }
+    </update>
+
 
 
     <select id="selectAdminList" resultType="com._3dhs.tnproject.manager.dto.ReportDTO">
