@@ -2,13 +2,12 @@ package com._3dhs.tnproject.common.aspect;
 
 import com._3dhs.tnproject.member.dto.MemberDTO;
 import com._3dhs.tnproject.post.dto.PostDTO;
-import com._3dhs.tnproject.post.service.LikeService;
+import com._3dhs.tnproject.like.service.LikeService;
 import com._3dhs.tnproject.post.service.PostService;
 import com._3dhs.tnproject.search.controller.SearchController;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.annotation.Pointcut;
 import org.jsoup.Jsoup;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;

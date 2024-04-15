@@ -43,29 +43,16 @@
         <result property="profile.profileNickname" column="profile_nickname"/>
         <result property="profile.profileStatmsg" column="profile_statmsg"/>
         <result property="profile.profileImgPath" column="profile_img_path"/>
-<!--        &lt;!&ndash; 댓글 활용을 위한 resultMap &ndash;&gt;-->
-<!--        <association property="comments" resultMap="commentsResultMap"/>-->
     </resultMap>
-
-<!--    &lt;!&ndash; 댓글 활용을 위한 resultMap &ndash;&gt;-->
-<!--    <resultMap id="commentsResultMap" type="com._3dhs.tnproject.comments.dto.CommentsDTO">-->
-<!--        <id property="cmtCode" column="cmt_code"/>-->
-<!--        <result property="cmtWriDate" column="cmt_wri_date"/>-->
-<!--        <result property="cmtText" column="cmt_text"/>-->
-<!--        <association property="profile" javaType="com._3dhs.tnproject.member.dto.ProfileDTO">-->
-<!--            <id property="profileCode" column="profile_code"/>-->
-<!--            <result property="profileNickname" column="profile_nickname"/>-->
-<!--        </association>-->
-<!--    </resultMap>-->
 
     <select id="findAllPostListForDoc" resultMap="postMap">
         SELECT post_code,
-        post_title,
-        post_text,
-        po_member_code
+               post_title,
+               post_text,
+               po_member_code
         FROM post_view
         WHERE post_status = 'PUBLIC'
-        AND post_is_deleted = false
+          AND post_is_deleted = false
         ORDER BY post_code;
     </select>
 
@@ -97,53 +84,51 @@
 
 
     <select id="findAttListByPostCode">
-        SELECT
-        *
+        SELECT *
         FROM tbl_attachment
         WHERE post_code = #{postCode}
     </select>
 
     <select id="findLikeListPostByMemberCode" resultMap="postMap">
-        SELECT
-        pv.post_code,
-        pv.post_title,
-        pv. post_text,
-        pv.post_price,
-        pv. po_member_code,
-        pv.folder_code,
-        pv.post_wri_date,
-        pv.profile_code,
-        pv. profile_nickname,
-        pv.profile_statmsg,
-        pv.profile_img_path,
-        pv.like_count,
-        pv.cmt_count
+        SELECT pv.post_code,
+               pv.post_title,
+               pv.post_text,
+               pv.post_price,
+               pv.po_member_code,
+               pv.folder_code,
+               pv.post_wri_date,
+               pv.profile_code,
+               pv.profile_nickname,
+               pv.profile_statmsg,
+               pv.profile_img_path,
+               pv.like_count,
+               pv.cmt_count
         FROM post_view pv
-        INNER JOIN
-        tbl_like_list li ON li.post_code = pv.post_code
+                 INNER JOIN
+             tbl_like_list li ON li.post_code = pv.post_code
         WHERE li.l_member_code = #{memberCode}
         ORDER BY li.post_code DESC
         LIMIT #{index}, #{range}
     </select>
     <select id="findPostByPostCode" resultMap="postMap">
         SELECT post_code,
-        post_title,
-        post_text,
-        post_price,
-        po_member_code,
-        folder_code,
-        post_wri_date,
-        post_mod_date,
-        post_status,
-        profile_code,
-        profile_nickname,
-        profile_statmsg,
-        profile_img_path,
-        like_count,
-        cmt_count
+               post_title,
+               post_text,
+               post_price,
+               po_member_code,
+               folder_code,
+               post_wri_date,
+               post_mod_date,
+               post_status,
+               profile_code,
+               profile_nickname,
+               profile_statmsg,
+               profile_img_path,
+               like_count,
+               cmt_count
         FROM post_view
         WHERE post_code = #{postCode}
-        AND post_is_deleted = false
+          AND post_is_deleted = false
     </select>
     <select id="findListByPostCodes" resultMap="postMap">
         SELECT post_code,
@@ -169,43 +154,31 @@
     </select>
 
     <select id="findLikeListByPostCode" parameterType="int" resultMap="likeListMap">
-        SELECT
-        post_code,
-        l_member_code,
-        is_private
-        FROM
-        tbl_like_list
+        SELECT post_code,
+               l_member_code,
+               is_private
+        FROM tbl_like_list
         WHERE post_code = #{postCode}
     </select>
 
     <select id="getLikeListByPostCode" resultType="com._3dhs.tnproject.post.dto.LikeListDTO">
-        SELECT
-        *
-        FROM
-        tbl_like_list
-        WHERE
-        post_code = #{postCode}
+        SELECT *
+        FROM tbl_like_list
+        WHERE post_code = #{postCode}
     </select>
 
     <select id="getPrivateLikesByPostCode" resultType="com._3dhs.tnproject.post.dto.LikeListDTO">
-        SELECT
-        *
-        FROM
-        tbl_like_list
-        WHERE
-        post_code = #{postCode}
-        AND
-        is_private = false
+        SELECT *
+        FROM tbl_like_list
+        WHERE post_code = #{postCode}
+          AND is_private = false
     </select>
 
 
     <select id="getPostByPostCode" resultType="com._3dhs.tnproject.post.dto.PostDTO">
-        SELECT
-        *
-        FROM
-        tbl_post
-        WHERE
-        post_code = #{postCode}
+        SELECT *
+        FROM tbl_post
+        WHERE post_code = #{postCode}
     </select>
 
 
@@ -240,30 +213,23 @@
     </insert>
 
     <select id="findFolderList">
-        SELECT
-        folder_code,
-        folder_name,
-        folder_icon_path,
-        folder_sequence,
-        f_member_code
-        FROM
-        tbl_folder
-        WHERE
-        f_member_code = #{memberCode}
-        ORDER BY
-        folder_sequence ASC
+        SELECT folder_code,
+               folder_name,
+               folder_icon_path,
+               folder_sequence,
+               f_member_code
+        FROM tbl_folder
+        WHERE f_member_code = #{memberCode}
+        ORDER BY folder_sequence ASC
     </select>
 
     <select id="findPostLikeCount">
-        SELECT
-        SUM(like_count) AS like_count,
-        COUNT(*) AS count
-        FROM
-        post_view
-        WHERE
-        po_member_code = #{memberCode} AND
-        post_is_deleted = false AND
-        post_status IN ('PUBLIC','PRIVATE')
+        SELECT SUM(like_count) AS like_count,
+               COUNT(*)        AS count
+        FROM post_view
+        WHERE po_member_code = #{memberCode}
+          AND post_is_deleted = false
+          AND post_status IN ('PUBLIC', 'PRIVATE')
     </select>
 
     <select id="findPostList" resultMap="postMap">
@@ -308,13 +274,10 @@
     </select>
 
     <select id="isFixedPost" resultType="boolean">
-        SELECT
-        EXISTS (
-        SELECT 1
-        FROM post_view
-        WHERE po_member_code = #{memberCode}
-        AND post_is_fixed = 1
-        )
+        SELECT EXISTS (SELECT 1
+                       FROM post_view
+                       WHERE po_member_code = #{memberCode}
+                         AND post_is_fixed = 1)
     </select>
 
     <insert id="addWritePost">
@@ -349,144 +312,109 @@
     </insert>
 
     <insert id="insertPostTag">
-        INSERT INTO
-        tbl_post_tag (post_code, tag_code)
-        VALUES
-        (#{postCode}, #{tagCode})
+        INSERT INTO tbl_post_tag (post_code, tag_code)
+        VALUES (#{postCode}, #{tagCode})
     </insert>
 
     <select id="getTagsByPostCode" resultType="com._3dhs.tnproject.post.dto.TagDTO">
-        SELECT
-        t.tag_code,
-        t.tag_name
+        SELECT t.tag_code,
+               t.tag_name
         FROM tbl_post_tag pt
-        JOIN tbl_tag t ON pt.tag_code = t.tag_code
+                 JOIN tbl_tag t ON pt.tag_code = t.tag_code
         WHERE post_code = #{postCode}
     </select>
 
     <select id="selectTotalCount">
-        SELECT
-        COUNT(*) AS count
-        FROM
-        post_view
-        WHERE
-        po_member_code = #{memberCode} AND
-        post_is_deleted = false AND
-        post_status = 'PUBLIC'
+        SELECT COUNT(*) AS count
+        FROM post_view
+        WHERE po_member_code = #{memberCode}
+          AND post_is_deleted = false
+          AND post_status = 'PUBLIC'
     </select>
 
     <select id="findAllPostList" resultMap="postMap">
-        SELECT
-        *
-        FROM
-        post_view
-        WHERE
-        po_member_code = #{memberCode} AND
-        post_status IN ('PUBLIC','PRIVATE') AND
-        post_is_deleted = false
-        ORDER BY
-        post_wri_date DESC
+        SELECT *
+        FROM post_view
+        WHERE po_member_code = #{memberCode}
+          AND post_status IN ('PUBLIC', 'PRIVATE')
+          AND post_is_deleted = false
+        ORDER BY post_wri_date DESC
         LIMIT #{criteria.offset}, #{criteria.limit}
     </select>
     <select id="findPublicPostList" resultMap="postMap">
-        SELECT
-        *
-        FROM
-        post_view
-        WHERE
-        po_member_code = #{memberCode} AND
-        post_status = 'PUBLIC' AND
-        post_is_deleted = false
-        ORDER BY
-        post_wri_date DESC
+        SELECT *
+        FROM post_view
+        WHERE po_member_code = #{memberCode}
+          AND post_status = 'PUBLIC'
+          AND post_is_deleted = false
+        ORDER BY post_wri_date DESC
         LIMIT #{criteria.offset}, #{criteria.limit}
     </select>
 
     <select id="findAllFolderPostList" resultMap="postMap">
-        SELECT
-        *
-        FROM
-        post_view
-        WHERE
-        po_member_code = #{memberCode} AND
-        post_status IN ('PUBLIC','PRIVATE') AND
-        post_is_deleted = false AND
-        folder_code = #{folderCode}
-        ORDER BY
-        post_wri_date DESC
+        SELECT *
+        FROM post_view
+        WHERE po_member_code = #{memberCode}
+          AND post_status IN ('PUBLIC', 'PRIVATE')
+          AND post_is_deleted = false
+          AND folder_code = #{folderCode}
+        ORDER BY post_wri_date DESC
         LIMIT #{criteria.offset}, #{criteria.limit}
     </select>
 
     <select id="findPublicFolderPostList" resultMap="postMap">
-        SELECT
-        *
-        FROM
-        post_view
-        WHERE
-        po_member_code = #{memberCode} AND
-        post_status = 'PUBLIC' AND
-        post_is_deleted = false AND
-        folder_code = #{folderCode}
-        ORDER BY
-        post_wri_date DESC
+        SELECT *
+        FROM post_view
+        WHERE po_member_code = #{memberCode}
+          AND post_status = 'PUBLIC'
+          AND post_is_deleted = false
+          AND folder_code = #{folderCode}
+        ORDER BY post_wri_date DESC
         LIMIT #{criteria.offset}, #{criteria.limit}
     </select>
     <select id="findLastInsertPost" resultMap="postMap">
         SELECT post_code,
-        post_title,
-        post_text,
-        po_member_code
+               post_title,
+               post_text,
+               po_member_code
         FROM tbl_post
         ORDER BY post_code DESC
         LIMIT 1
     </select>
 
     <select id="selectFolderTotalCount">
-        SELECT
-        COUNT(*) AS count
-        FROM
-        post_view
-        WHERE
-        po_member_code = #{memberCode} AND
-        post_status IN ('PUBLIC','PRIVATE') AND
-        post_is_deleted = false AND
-        folder_code = #{folderCode}
+        SELECT COUNT(*) AS count
+        FROM post_view
+        WHERE po_member_code = #{memberCode}
+          AND post_status IN ('PUBLIC', 'PRIVATE')
+          AND post_is_deleted = false
+          AND folder_code = #{folderCode}
     </select>
 
     <select id="selectPublicFolderTotalCount">
-        SELECT
-        COUNT(*) AS count
-        FROM
-        post_view
-        WHERE
-        po_member_code = #{memberCode} AND
-        post_status = 'PUBLIC' AND
-        post_is_deleted = false AND
-        folder_code = #{folderCode}
+        SELECT COUNT(*) AS count
+        FROM post_view
+        WHERE po_member_code = #{memberCode}
+          AND post_status = 'PUBLIC'
+          AND post_is_deleted = false
+          AND folder_code = #{folderCode}
     </select>
 
     <select id="findDraftPostList" resultMap="postMap">
-        SELECT
-        *
-        FROM
-        post_view
-        WHERE
-        po_member_code = #{memberCode} AND
-        post_status = 'DRAFT' AND
-        post_is_deleted = false
-        ORDER BY
-        post_wri_date DESC
+        SELECT *
+        FROM post_view
+        WHERE po_member_code = #{memberCode}
+          AND post_status = 'DRAFT'
+          AND post_is_deleted = false
+        ORDER BY post_wri_date DESC
         LIMIT #{criteria.offset}, #{criteria.limit}
     </select>
 
     <select id="findDraftPostCount">
-        SELECT
-        COUNT(*) AS count
-        FROM
-        post_view
-        WHERE
-        po_member_code = #{memberCode} AND
-        post_status = 'DRAFT' AND
-        post_is_deleted = false
+        SELECT COUNT(*) AS count
+        FROM post_view
+        WHERE po_member_code = #{memberCode}
+          AND post_status = 'DRAFT'
+          AND post_is_deleted = false
     </select>
 </mapper>

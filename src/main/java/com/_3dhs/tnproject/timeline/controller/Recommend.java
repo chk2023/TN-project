@@ -1,8 +1,7 @@
 package com._3dhs.tnproject.timeline.controller;
 
 import com._3dhs.tnproject.post.dto.LikeListDTO;
-import com._3dhs.tnproject.post.service.LikeService;
-import com._3dhs.tnproject.post.service.PostService;
+import com._3dhs.tnproject.like.service.LikeService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

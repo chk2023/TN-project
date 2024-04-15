@@ -5,7 +5,7 @@ console.log('likeBtns', document.querySelectorAll(".likeBtn"));
 document.querySelectorAll(".likeBtn").forEach(btn => btn.addEventListener('click', (e) => {
 
     var likeBtn = e.currentTarget;
-    fetch('/post/like', {
+    fetch('/like', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

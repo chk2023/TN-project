@@ -5,11 +5,10 @@ import com._3dhs.tnproject.comments.service.CommentsService;
 import com._3dhs.tnproject.member.dto.MemberDTO;
 import com._3dhs.tnproject.member.service.MemberService;
 import com._3dhs.tnproject.post.dto.*;
-import com._3dhs.tnproject.post.service.LikeService;
+import com._3dhs.tnproject.like.service.LikeService;
 import com._3dhs.tnproject.post.service.PostService;
 import com._3dhs.tnproject.post.util.FileUtil;
 import com._3dhs.tnproject.purchase.service.PurchaseService;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -47,7 +46,11 @@ public class PostController {
     private final PurchaseService purchaseService;
 
     @ModelAttribute
-    public void addCommonAttributes(@RequestParam(defaultValue = "1") int page, @ModelAttribute TabSearchDTO tabSearchDTO, @ModelAttribute WriteDTO writeDTO, @AuthenticationPrincipal MemberDTO loginMemberDTO, Model model) {
+    public void addCommonAttributes(@RequestParam(defaultValue = "1") int page,
+                                    @ModelAttribute TabSearchDTO tabSearchDTO,
+                                    @ModelAttribute WriteDTO writeDTO,
+                                    @AuthenticationPrincipal MemberDTO loginMemberDTO,
+                                    Model model) {
         boolean isOwner = loginMemberDTO.getMemberCode() == tabSearchDTO.getMemberCode();
         System.out.println("공통 컨트롤러 isOwner 값 : " + isOwner);
 
@@ -75,10 +78,7 @@ public class PostController {
             postAllListAndPaging = postService.findAllPostList(tabSearchDTO, page, isOwner);
         }
 
-//        System.out.println("공통어트리뷰트 writeDTO : " + writeDTO);
-//        System.out.println("공통어트리뷰트 tabSearchDTO : " + tabSearchDTO);
-//        System.out.println("공통어트리뷰트 memberDTO : " + memberDTO);
-//        System.out.println("공통어트리뷰트 로그인 memberDTO : " + loginMemberDTO);
+
         model.addAttribute("member", memberDTO);
         model.addAttribute("folderList", folderList);
         model.addAttribute("paging", postAllListAndPaging.get("paging"));
@@ -88,11 +88,6 @@ public class PostController {
         model.addAttribute("postView", postViewLikeCount);
         model.addAttribute("folderCode", tabSearchDTO.getFolderCode());
         model.addAttribute("memberCode", tabSearchDTO.getMemberCode());
-//        System.out.println("공통 뷰반환 paging : " + postAllListAndPaging.get("paging"));
-//        System.out.println("공통 뷰반환 totalCount : " + postAllListAndPaging.get("totalCount"));
-//        System.out.println("공통 뷰반환 totalAllCount : " + postAllListAndPaging.get("totalAllCount"));
-//        System.out.println("공통 뷰반환 postAllList : " + postAllListAndPaging.get("postAllList"));
-//        System.out.println("공통 뷰반환 postAllList : " + postAllListAndPaging.get("postAllList"));
     }
 
     @GetMapping("/main")
@@ -166,7 +161,7 @@ public class PostController {
             if (member.getMemberCode() != targetPost.getMemberCode()) {
                 //열람자가 일치하지 않으면 에러메세지 첨부
                 model.addAttribute("errorMessage", accessor.getMessage("post.notEqualMember"));
-                return "/post/detail"; //TODO : view에서 errorMessage가 있다면 이전화면으로 돌아가는 로직 작성해주세요
+                return "/post/detail";
             }
         }
 
@@ -176,7 +171,7 @@ public class PostController {
             model.addAttribute("paidContent", targetPost);
             model.addAttribute("postCode", postCode);
             System.out.println("Controller: postCode = " + postCode);
-            return "/purchase/viewPurchasePage";  //TODO: getPaidPostInfo에서 "@ModelAttribute PostDTO paidContent"로 값 받아 사용하기
+            return "/purchase/viewPurchasePage";
         }
         /* 댓글 모달에서 댓글 조회 */
         List<CommentsDTO> comments = commentsService.selectCommentsList(commentsDTO);
@@ -188,19 +183,7 @@ public class PostController {
 
     }
 
-    @PostMapping("/like")
-    @ResponseBody
-    public ResponseEntity<String> likePost(@RequestBody LikeListDTO likeListDTO, @AuthenticationPrincipal MemberDTO memberDTO, Model model) {
-        int memberCode = memberDTO.getMemberCode();
-        try {
-            boolean isLiked = postService.toggleLike(likeListDTO.getPostCode(), memberCode);
-            String result = isLiked ? "true" : "false";
-            return ResponseEntity.ok(result);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("error");
-        }
-    }
+
 
     @GetMapping("/load")
     public @ResponseBody List<PostDTO> findTabMenuPostList(@ModelAttribute TabSearchDTO tabSearchDTO, @AuthenticationPrincipal MemberDTO member) {

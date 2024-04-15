@@ -71,6 +71,8 @@
     const $viewBtn = document.querySelector(".viewBtn");
     let message = `[[${message}]]`;
     let postCode = `[[${postCode}]]`;
+    let baseURL = "/timeline/updateList";
+    const memberCode = 0;
 </script>
 
 <script id="contentsTemplate" type="text/x-handlebars-template">
@@ -104,14 +106,6 @@
                         {{postText}}
                     </p>
                 </div>
-
-<!--                &lt;!&ndash; 구매 테스트용 &ndash;&gt;-->
-<!--                {{#if postPrice}}-->
-<!--&lt;!&ndash;                <button class="purchaseBtn" data-postCode="{{postCode}}">유료글 구매</button>&ndash;&gt;-->
-<!--                <button onclick="location.href='/purchase/viewPurchasePage?postCode={{postCode}}'" class="buyPostBtn">유료글 구매</button>-->
-<!--                {{/if}}-->
-
-
                 <div class="showLikeAndComments">
                     <button class="commentsBtn">
                         <img src="/images/icon_comment.png" alt="댓글 버튼 아이콘">
@@ -140,5 +134,6 @@
 <script src="/js/timeline.js"></script>
 <script src="/js/scrollEvent.js"></script>
 <script src="/js/pathFinder.js"></script>
+<script src="/js/responseMaker.js"></script>
 </body>
 </html>

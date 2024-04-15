@@ -1,4 +1,4 @@
-package com._3dhs.tnproject.post.service;
+package com._3dhs.tnproject.like.service;
 
 import com._3dhs.tnproject.post.dao.LikeMapper;
 import com._3dhs.tnproject.post.dto.LikeListDTO;

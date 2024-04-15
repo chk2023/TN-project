@@ -4,7 +4,8 @@ const $main = document.querySelector("main");
 // update(); //최초 1회 실행
 viewTypeChange();
 function update() {
-    fetch(`/timeline/updateList?index=${index}&range=${range}&contentsType=${contentsType}`)
+    let responseURL = MakeResponse();
+    fetch(responseURL)
         .then(res => res.json())
         .then(data => {
             if (!data.length) {
@@ -27,9 +28,13 @@ function update() {
                 }
             });
 
-             var element = document.createElement("div");
-            element.innerHTML = template(data, {data: {handlebars: Handlebars.create()}});
-            fragment.appendChild(element); // DocumentFragment에 요소 추가
+            var div = document.createElement('div');
+            div.innerHTML = template(data, {data: {handlebars: Handlebars.create()}});
+            var fragment = document.createDocumentFragment();
+            // div의 자식 요소들을 fragment에 추가
+            while (div.firstChild) {
+                fragment.appendChild(div.firstChild);
+            }
             // DocumentFragment를 한 번에 추가하여 DOM 조작 효율성 향상
             $blogList.appendChild(fragment);
 
@@ -55,7 +60,6 @@ function setTitlePhoto(path) {
 
 function formatWriDate(postWriDate) {
     let time = new Date(postWriDate);
-    console.log(time);
     return time.toLocaleDateString("ko-KR", {
         month: 'long',
         day: 'numeric',

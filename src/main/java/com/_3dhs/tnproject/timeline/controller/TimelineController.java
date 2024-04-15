@@ -2,7 +2,6 @@ package com._3dhs.tnproject.timeline.controller;
 
 import com._3dhs.tnproject.member.dto.MemberDTO;
 import com._3dhs.tnproject.post.dto.PostDTO;
-import com._3dhs.tnproject.post.service.LikeService;
 import com._3dhs.tnproject.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
