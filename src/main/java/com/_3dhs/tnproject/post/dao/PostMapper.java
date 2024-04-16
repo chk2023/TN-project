@@ -18,11 +18,11 @@ public interface PostMapper {
 
     List<PostDTO> findLikeListPostByMemberCode(PostUpdateModel postUpdateModel);
 
-    void updateFolders(List<FolderDTO> requestBody);
 
-    List<FolderDTO> findFolderList(int memberCode);
 
-    void insertAddDefaultFolder(List<FolderDTO> addDefaultFolders);
+
+
+
 
     PostDTO findPostByPostCode(int postCode);
 

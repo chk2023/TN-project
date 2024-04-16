@@ -19,13 +19,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-@Slf4j
+
 @Service
 @RequiredArgsConstructor
 public class PostService {
     private final PostMapper postMapper;
     private final LikeMapper likeMapper;
-    private final CommentsMapper commentsMapper;
     private static final Logger logger = LoggerFactory.getLogger(PostService.class);
 
     @Transactional(readOnly = true)
@@ -41,21 +40,8 @@ public class PostService {
         List<PostDTO> postList = postMapper.findLikeListPostByMemberCode(postUpdateModel);
         return postList;
     }
-    @Transactional()
-    public void updateFolders(List<FolderDTO> requestBody) {
-        System.out.println("폴더리스트" + requestBody);
-        postMapper.updateFolders(requestBody);
-    }
 
-    @Transactional
-    public List<FolderDTO> findFolderList(int memberCode) {
-        return postMapper.findFolderList(memberCode);
-    }
 
-    @Transactional
-    public void addDefaultFolder(List<FolderDTO> addDefaultFolders) {
-        postMapper.insertAddDefaultFolder(addDefaultFolders);
-    }
 
     @Transactional
     public TabSearchDTO findPostLikeCount(int memberCode) {

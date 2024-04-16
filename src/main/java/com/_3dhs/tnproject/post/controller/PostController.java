@@ -4,9 +4,11 @@ import com._3dhs.tnproject.comments.dto.CommentsDTO;
 import com._3dhs.tnproject.comments.service.CommentsService;
 import com._3dhs.tnproject.member.dto.MemberDTO;
 import com._3dhs.tnproject.member.service.MemberService;
+import com._3dhs.tnproject.post.dao.FolderMapper;
 import com._3dhs.tnproject.post.dto.*;
 import com._3dhs.tnproject.like.service.LikeService;
 import com._3dhs.tnproject.post.model.PostUpdateModel;
+import com._3dhs.tnproject.post.service.FolderService;
 import com._3dhs.tnproject.post.service.PostService;
 import com._3dhs.tnproject.post.util.FileUtil;
 import com._3dhs.tnproject.purchase.service.PurchaseService;
@@ -46,6 +48,7 @@ public class PostController {
     private final LikeService likeService;
     private final CommentsService commentsService;
     private final PurchaseService purchaseService;
+    private final FolderService folderMapper;
 
     @ModelAttribute
     public void addCommonAttributes(@RequestParam(defaultValue = "1") int page,
@@ -56,7 +59,7 @@ public class PostController {
         boolean isOwner = loginMemberDTO.getMemberCode() == tabSearchDTO.getMemberCode();
         System.out.println("공통 컨트롤러 isOwner 값 : " + isOwner);
 
-        List<FolderDTO> folderList = postService.findFolderList(tabSearchDTO.getMemberCode());
+        List<FolderDTO> folderList = folderMapper.findFolderList(tabSearchDTO.getMemberCode());
         TabSearchDTO postViewLikeCount = postService.findPostLikeCount(tabSearchDTO.getMemberCode());
         MemberDTO memberDTO = memberService.findMainBlogMemberInfo(tabSearchDTO.getMemberCode());
 
@@ -96,41 +99,6 @@ public class PostController {
     public void blogMainPage(@ModelAttribute TabSearchDTO tabSearchDTO) {
     }
 
-    @Transactional
-    @GetMapping("/folder_edit")
-    public String folderEditPage(@AuthenticationPrincipal MemberDTO loginMemberDTO, Model model) {
-        List<FolderDTO> folderList = postService.findFolderList(loginMemberDTO.getMemberCode());
-
-        if (folderList.isEmpty()) {
-            System.out.println("폴더리스트 비어있는디?");// 비어있음 멤버코드로 10개 만들어줘
-            List<FolderDTO> addDefaultFolders = getFolderDTOS(loginMemberDTO);
-            System.out.println("컨트롤러단의 addDefaultFolders : " + addDefaultFolders);
-            postService.addDefaultFolder(addDefaultFolders);
-            folderList = postService.findFolderList(loginMemberDTO.getMemberCode());
-
-        } else {
-            System.out.println("폴더리스트에 정보 있는디!!!!?");
-        }
-        model.addAttribute("folderList", folderList);
-        return "/post/folder_edit";
-    }
-
-    @NotNull
-    private List<FolderDTO> getFolderDTOS(MemberDTO loginMemberDTO) {
-        List<FolderDTO> addDefaultFolders = new ArrayList<>();
-
-        for (int i = 0; i < 10; i++) {
-            FolderDTO folderDTO = new FolderDTO();
-            folderDTO.setFolderName("NoName");
-            folderDTO.setFolderIconPath("/images/icon_folder.png");
-            folderDTO.setFolderSequence(10);
-            folderDTO.setFMemberCode(loginMemberDTO.getMemberCode());
-            folderDTO.setFolderStatus("N");
-            addDefaultFolders.add(folderDTO);
-        }
-        return addDefaultFolders;
-    }
-
     @GetMapping("/write")
     public String blogWritePage(@AuthenticationPrincipal MemberDTO loginMemberDTO, Model model) {
         if (postService.isFixedPost(loginMemberDTO.getMemberCode())) {
@@ -149,9 +117,7 @@ public class PostController {
     public void blogListPage(@ModelAttribute TabSearchDTO tabSearchDTO) {
     }
 
-    @GetMapping("/folder_list")
-    public void folderListPage() {
-    }
+
 
     @GetMapping("/detail")
     public String blogDetailPage(@AuthenticationPrincipal MemberDTO member, Integer postCode, Model model, CommentsDTO commentsDTO) {
@@ -197,15 +163,6 @@ public class PostController {
             case 3 -> postService.findLikeListPostByMemberCode(postUpdateModel);
             default -> postService.findPostList(postUpdateModel);
         };
-    }
-    @PostMapping("/folder_edit")
-    public @ResponseBody String folderEditList(@AuthenticationPrincipal MemberDTO loginMemberDTO, @RequestBody List<FolderDTO> requestBody) {
-        for (FolderDTO folderDTO : requestBody) {
-            folderDTO.setFMemberCode(loginMemberDTO.getMemberCode());
-        }
-        postService.updateFolders(requestBody);
-
-        return "redirect:memberCode=" + loginMemberDTO.getMemberCode();
     }
 
     @PostMapping("/upload")
