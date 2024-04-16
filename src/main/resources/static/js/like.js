@@ -1,6 +1,6 @@
 function like() {
 
-console.log('likeBtns', document.querySelectorAll(".likeBtn"));
+// console.log('likeBtns', document.querySelectorAll(".likeBtn"));
 
 document.querySelectorAll(".likeBtn").forEach(btn => btn.addEventListener('click', (e) => {
 

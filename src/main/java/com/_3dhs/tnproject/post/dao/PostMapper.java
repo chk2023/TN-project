@@ -2,6 +2,7 @@ package com._3dhs.tnproject.post.dao;
 
 
 import com._3dhs.tnproject.post.dto.*;
+import com._3dhs.tnproject.post.model.PostUpdateModel;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -11,13 +12,13 @@ import java.util.Set;
 @Mapper
 public interface PostMapper {
 
-    List<PostDTO> findListByParam(Map<String, Integer> params);
+    List<PostDTO> findListByParam(PostUpdateModel postUpdateModel);
 
     List<LikeListDTO> findLikeListByCode(int postCode);
 
     List<AttachmentDTO> findAttListByPostCode(int postCode);
 
-    List<PostDTO> findLikeListPostByMemberCode(TabSearchDTO tabSearchDTO);
+    List<PostDTO> findLikeListPostByMemberCode(PostUpdateModel postUpdateModel);
 
     PostDTO getPostByPostCode(Integer postCode);
 
@@ -35,7 +36,7 @@ public interface PostMapper {
 
     TabSearchDTO findPostLikeCount(int memberCode, boolean isOwner);
 
-    List<PostDTO> findPostList(TabSearchDTO tabSearchDTO);
+    List<PostDTO> findPostList(PostUpdateModel postUpdateModel);
 
     boolean isFixedPost(int memberCode);
 

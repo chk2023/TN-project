@@ -6,6 +6,7 @@ import com._3dhs.tnproject.member.dto.MemberDTO;
 import com._3dhs.tnproject.member.service.MemberService;
 import com._3dhs.tnproject.post.dto.*;
 import com._3dhs.tnproject.like.service.LikeService;
+import com._3dhs.tnproject.post.model.PostUpdateModel;
 import com._3dhs.tnproject.post.service.PostService;
 import com._3dhs.tnproject.post.util.FileUtil;
 import com._3dhs.tnproject.purchase.service.PurchaseService;
@@ -186,15 +187,16 @@ public class PostController {
 
 
     @GetMapping("/load")
-    public @ResponseBody List<PostDTO> findTabMenuPostList(@ModelAttribute TabSearchDTO tabSearchDTO, @AuthenticationPrincipal MemberDTO member) {
-        List<PostDTO> postList;
-        if (tabSearchDTO.getTabMenu().equals("♡")) {
-            postList = postService.findLikeListPostByMemberCode(tabSearchDTO);
-
-        } else {
-            postList = postService.findPostList(tabSearchDTO);
+    public @ResponseBody List<PostDTO> findTabMenuPostList(PostUpdateModel postUpdateModel, @AuthenticationPrincipal MemberDTO member) {
+        List<PostDTO> postList = new ArrayList<>();
+        switch (postUpdateModel.getContentsType()) {
+            case 3:
+                postList = postService.findLikeListPostByMemberCode(postUpdateModel);
+                break;
+            default:
+                postList = postService.findPostList(postUpdateModel);
+                break;
         }
-
         return postList;
     }
     @PostMapping("/folder_edit")

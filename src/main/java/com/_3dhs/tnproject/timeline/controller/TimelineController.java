@@ -2,6 +2,7 @@ package com._3dhs.tnproject.timeline.controller;
 
 import com._3dhs.tnproject.member.dto.MemberDTO;
 import com._3dhs.tnproject.post.dto.PostDTO;
+import com._3dhs.tnproject.post.model.PostUpdateModel;
 import com._3dhs.tnproject.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,15 +45,11 @@ public class TimelineController {
 
     @ResponseBody
     @GetMapping("/updateList")
-    public List<PostDTO> findListByParam(Integer index, Integer range, Integer contentsType, @AuthenticationPrincipal MemberDTO member) {
+    public List<PostDTO> findListByParam(PostUpdateModel postUpdateModel, @AuthenticationPrincipal MemberDTO member) {
         List<PostDTO> list = new ArrayList<>();
-        Map<String, Integer> params = new HashMap<>();
-        params.put("index", index);
-        params.put("range", range);
-        params.put("contentsType", contentsType);
-        switch (contentsType) {
+        switch (postUpdateModel.getContentsType()) {
             case 3:
-                if (index < 10) {
+                if (postUpdateModel.getIndex() < 10) {
                     Set<Integer> postCodeList = recommend.recommendPosts(member.getMemberCode());
                     if (postCodeList.size() < 0) {
                         break;
@@ -63,7 +60,7 @@ public class TimelineController {
                 }
                 break;
             default:
-                list = postService.findListByParam(params);
+                list = postService.findListByParam(postUpdateModel);
                 break;
         }
         return list;

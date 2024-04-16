@@ -6,6 +6,7 @@ import com._3dhs.tnproject.common.paging.SelectCriteria;
 import com._3dhs.tnproject.post.dao.LikeMapper;
 import com._3dhs.tnproject.post.dao.PostMapper;
 import com._3dhs.tnproject.post.dto.*;
+import com._3dhs.tnproject.post.model.PostUpdateModel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -28,8 +29,8 @@ public class PostService {
     private static final Logger logger = LoggerFactory.getLogger(PostService.class);
 
     @Transactional(readOnly = true)
-    public List<PostDTO> findListByParam(Map<String, Integer> params) {
-        List<PostDTO> postList = postMapper.findListByParam(params);
+    public List<PostDTO> findListByParam(PostUpdateModel postUpdateModel) {
+        List<PostDTO> postList = postMapper.findListByParam(postUpdateModel);
         for (int i = 0; i < postList.size(); i++) {
             postList.get(i).setAttachmentList(postMapper.findAttListByPostCode(postList.get(i).getPostCode()));
             postList.get(i).makeThumbnailPath();
@@ -39,10 +40,10 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public List<PostDTO> findLikeListPostByMemberCode(TabSearchDTO tabSearchDTO) {
+    public List<PostDTO> findLikeListPostByMemberCode(PostUpdateModel postUpdateModel) {
 
 
-        List<PostDTO> postList = postMapper.findLikeListPostByMemberCode(tabSearchDTO);
+        List<PostDTO> postList = postMapper.findLikeListPostByMemberCode(postUpdateModel);
         return postList;
     }
 
@@ -114,8 +115,8 @@ public class PostService {
     }
 
     @Transactional
-    public List<PostDTO> findPostList(TabSearchDTO tabSearchDTO) {
-        return postMapper.findPostList(tabSearchDTO);
+    public List<PostDTO> findPostList(PostUpdateModel postUpdateModel) {
+        return postMapper.findPostList(postUpdateModel);
     }
 
     public List<AttachmentDTO> findAttListByPostCode(int postCode) {

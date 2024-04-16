@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Blog Main Page</title>
     <link rel="stylesheet" href="/css/common.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
     <link rel="stylesheet" href="/css/post.css">
 </head>
 <body>
@@ -64,14 +65,13 @@
                 </div>
             </div>
             <ul class="tabMenu">
-                <li class="active">
-                    <button>고정글</button>
+                <li id="contentsType1" class="active">
+                    <button onclick="contentsType1Clicked()">고정글</button>
                 </li>
-                <li>
-                    <button>최신순</button>
+                <li id="contentsType2">
+                    <button onclick="contentsType2Clicked()">최신순</button>
                 </li>
-                <li>
-                    <button>♡</button>
+                <li id="contentsType3"><button onclick="contentsType3Clicked()">♡</button>
                 </li>
                 <li class="viewBtn">
                     <button><img src="/images/btn_view_type.png" alt="보기타입 선택버튼"></button>
@@ -81,65 +81,87 @@
                     </ul>
                 </li>
             </ul>
-
             <ul class="blogList">
-                <th:block th:each="post : ${postList}">
-                    <li>
-                        <div class="list_head">
-                            <div class="prof_photo">
-                                <!--                    <img src="/images/icon_default_profile.png" alt="프로필 사진">-->
-                                <img th:src="${post.profile.profileImgPath}" alt="프로필 사진">
-                            </div>
-                            <div>
-                                <div>
-                                    <strong th:text="${post.profile.profileNickname}"
-                                            class="blog_user_name">조한결</strong>
-                                    <span th:text="${#temporals.format(post.postWriDate, 'MM월 dd일')}"
-                                          class="blog_user_birth">2월12일</span>
-                                </div>
-                                <span th:text="${post.profile.profileStatmsg}" class="status_msg">오늘도 나는 눈물을 흘린다 또르륵오늘도 나는 눈물을 흘린다 또르륵오늘도 나는 눈물을 흘린다 또르륵</span>
-                            </div>
-                            <button class="optionBtn"><img src="/images/icon_option.png" alt="글 옵션 버튼"></button>
-                            <ul class="optionBox">
-                                <li><a>글 신고하기</a></li>
-                                <li><a>글 관심없음</a></li>
-                            </ul>
-                        </div>
-                        <div class="list_body">
-                            <div>
-                                <strong th:text="${post.postTitle}"
-                                        class="contentTit">글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목글제목</strong>
-                                <div class="contentsTxt" th:text="${post.postText}">본문본문본문</div>
-                                <div class="showLikeAndComments">
-                                    <button class="commentsBtn">
-                                        <img src="/images/icon_comment.png" alt="댓글 버튼 아이콘">
-                                        <span th:text="${post.likeCount}">300</span>+
-                                    </button>
-                                    <button class="likeBtn active">
-                                        <img src="/images/icon_like.png" alt="좋아요 버튼 아이콘">
-                                        <span th:text="${post.cmtCount}">200</span>k
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="thumbnailPhoto">
-                                <img th:src="${post.thumbnailPath}" alt="썸네일 이미지">
-                            </div>
-                        </div>
-                    </li>
-                </th:block>
             </ul>
-
+            <div id="listEnd"></div>
         </section>
     </main>
 </div>
-<div id="listEnd"></div>
-<script>
 
+<script>
+    //post 로드 관련 변수
+    let baseURL = "/post/load";
+    let index = parseInt(`[[${index}]]`) ? parseInt(`[[${index}]]`) : 0;
+    const range = parseInt(`[[${range}]]`) ? parseInt(`[[${range}]]`) : 10;
+    let contentsType = parseInt(`[[${contentsType}]]`) ? parseInt(`[[${contentsType}]]`) : 1;
+    const memberCode = `[[${memberCode}]]`;
+    let isLoading = false;
+
+    //view 관련 변수
+    let isTitlePhotoChanged = false;
+
+    //기타
+    let message = `[[${message}]]`;
 </script>
-<script src="/js/scrollEvent.js"></script>
-<script src="/js/blogMain.js"></script>
+<script id="contentsTemplate" type="text/x-handlebars-template">
+    {{#each this}}
+    <li>
+        <div class="list_head">
+            <div class="prof_photo">
+
+                <img src="{{profile.profileImgPath}}" alt="프로필 사진">
+            </div>
+            <div>
+                <div>
+                    <strong class="blog_user_name"><a href="/post/main?memberCode={{memberCode}}">{{profile.profileNickname}}</a></strong>
+                    <span class="blog_user_birth">{{postWriDate}}</span>
+                </div>
+                <span class="status_msg">{{profile.profileStatmsg}}</span>
+            </div>
+            <button class="optionBtn"><img src="/images/icon_option.png" alt="글 옵션 버튼"></button>
+            <ul class="optionBox">
+                <li><a>글 신고하기</a></li>
+                <li><a>글 관심없음</a></li>
+            </ul>
+        </div>
+        <div class="list_body">
+            <div>
+                <strong class="contentTit"
+                        onclick="location.href='/post/detail?memberCode={{memberCode}}&postCode={{postCode}}'">{{postTitle}}</strong>
+                <div class="contentsTxt"
+                     onclick="location.href='/post/detail?memberCode={{memberCode}}&postCode={{postCode}}'">
+                    <p>
+                        {{postText}}
+                    </p>
+                </div>
+                <div class="showLikeAndComments">
+                    <button class="commentsBtn">
+                        <img src="/images/icon_comment.png" alt="댓글 버튼 아이콘">
+                        <span>{{cmtCount}}</span>
+                    </button>
+                    <button class="{{#if liked}}likeBtn active{{else}}likeBtn{{/if}}"
+                            data-post-code="{{postCode}}">
+                        <img src="/images/icon_like.png" alt="좋아요 버튼 아이콘">
+                        <span class="likeCount">{{likeCount}}</span>
+                    </button>
+
+                </div>
+            </div>
+            <div class="thumbnailPhoto"
+                 onclick="location.href='/post/detail?memberCode={{memberCode}}&postCode={{postCode}}'">
+                <img src="{{thumbnailPath}}" alt="썸네일 이미지">
+            </div>
+        </div>
+    </li>
+    {{/each}}
+</script>
+<!--<script src="/js/blogMain.js"></script>-->
 <script src="/js/pathFinder.js"></script>
 <script src="/js/like.js"></script>
 <script src="/js/optionBtnEvent.js"></script>
+<script src="/js/tabMenuEvent.js"></script>
+<script src="/js/responseMaker.js"></script>
+<script src="/js/postUpdateEvent.js"></script>
+<script src="/js/scrollEvent.js"></script>
 </body>
 </html>

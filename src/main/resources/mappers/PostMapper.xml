@@ -253,20 +253,17 @@
         FROM
         post_view
         <where>
-            <if test='tabMenu == "고정글"'>
+            <if test='contentsType != null and contentsType == 1'>
                 po_member_code = #{memberCode}
                 AND post_is_fixed = 1
             </if>
-            <if test='tabMenu == "최신순"'>
+            <if test='contentsType != null and contentsType == 2'>
                 po_member_code = #{memberCode}
                 AND post_status = 'PUBLIC'
                 AND post_is_deleted = false
             </if>
-            <if test='tabMenu == "♡"'>
-                post_is_deleted = 1 <!-- //지우고 조건 쓰면 됨 -> 조회되지 말라고 의미없이 설정해 놓은거임 ㅠㅠ -->
-            </if>
         </where>
-        <if test='tabMenu == "최신순"'>
+        <if test='contentsType != null and contentsType == 2'>
             ORDER BY
             post_wri_date DESC
         </if>

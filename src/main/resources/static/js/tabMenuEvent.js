@@ -1,15 +1,16 @@
 //------------------------------------------------------------------------------------tabMenu관련코드
-function trendBtnClicked() {
+const $tabMenu = document.querySelector(`.tabMenu`);
+function contentsType1Clicked() {
     contentsType = 1;
     btnProcess();
 }
 
-function latestBtnClicked() {
+function contentsType2Clicked() {
     contentsType = 2;
     btnProcess();
 }
 
-function recomendedBtnClicked() {
+function contentsType3Clicked() {
     contentsType = 3;
     btnProcess();
 }
@@ -17,6 +18,7 @@ function btnProcess() {
     $blogList.innerHTML = "";
     index = 0;
     isTitlePhotoChanged = false;
+    update();
     childList = $tabMenu.querySelectorAll("*");
     console.log(childList);
     childList.forEach(element => element.classList.remove("active"));

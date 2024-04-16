@@ -35,12 +35,12 @@
             </div>
             <ul class="tabMenu">
                 <li id="contentsType1" class="active">
-                    <button onclick="trendBtnClicked()">인기글</button>
+                    <button onclick="contentsType1Clicked()">인기글</button>
                 </li>
                 <li id="contentsType2">
-                    <button onclick="latestBtnClicked()">최신글</button>
+                    <button onclick="contentsType2Clicked()">최신글</button>
                 </li>
-                <li id="contentsType3"><button onclick="recomendedBtnClicked()">추천글</button>
+                <li id="contentsType3"><button onclick="contentsType3Clicked()">추천글</button>
                 </li>
                 <li class="viewBtn">
                     <button><img src="/images/btn_view_type.png" alt="보기타입 선택버튼"></button>
@@ -69,7 +69,6 @@
     let isLoading = false;
 
     //view 관련 변수
-    const $tabMenu = document.querySelector(`.tabMenu`);
     let isTitlePhotoChanged = false;
 
     //기타
@@ -132,10 +131,10 @@
 <script src="/js/searchEvent.js"></script>
 <script src="/js/optionBtnEvent.js"></script>
 <script src="/js/like.js"></script>
-<script src="/js/timeline.js"></script>
-<script src="/js/scrollEvent.js"></script>
 <script src="/js/pathFinder.js"></script>
 <script src="/js/responseMaker.js"></script>
 <script src="/js/tabMenuEvent.js"></script>
+<script src="/js/postUpdateEvent.js"></script>
+<script src="/js/scrollEvent.js"></script>
 </body>
 </html>
