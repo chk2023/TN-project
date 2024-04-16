@@ -14,13 +14,9 @@ public interface PostMapper {
 
     List<PostDTO> findListByParam(PostUpdateModel postUpdateModel);
 
-    List<LikeListDTO> findLikeListByCode(int postCode);
-
     List<AttachmentDTO> findAttListByPostCode(int postCode);
 
     List<PostDTO> findLikeListPostByMemberCode(PostUpdateModel postUpdateModel);
-
-    PostDTO getPostByPostCode(Integer postCode);
 
     void updateFolders(List<FolderDTO> requestBody);
 
@@ -43,8 +39,6 @@ public interface PostMapper {
     void addWritePost(PostDTO postDTO);
 
     void insertAttachments(List<AttachmentDTO> attachments);
-
-    void insertTags(List<TagDTO> tags);
 
     void insertTag(TagDTO tag);
 

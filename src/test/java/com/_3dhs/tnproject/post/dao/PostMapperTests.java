@@ -24,8 +24,8 @@ public class PostMapperTests {
         int rdCode = (int)(Math.random() * 12) + 1;
         TabSearchDTO tabSearchDTO = new TabSearchDTO();
         tabSearchDTO.setMemberCode(rdCode);
-        tabSearchDTO.setRange(10);
-        tabSearchDTO.setIndex(0);
+//        tabSearchDTO.setRange(10);
+//        tabSearchDTO.setIndex(0);
 //        List<PostDTO> testList = mapper.findLikeListPostByMemberCode(tabSearchDTO);
 //        System.out.println("memberCode : " + rdCode);
 //        testList.forEach(System.out::println);
@@ -53,10 +53,10 @@ public class PostMapperTests {
     @Test
     void 메인비동기테스트() {
         TabSearchDTO dto = new TabSearchDTO();
-        dto.setIndex(0);
-        dto.setRange(10);
+//        dto.setIndex(0);
+//        dto.setRange(10);
         dto.setMemberCode(1);
-        dto.setTabMenu("최신순");
+//        dto.setTabMenu("최신순");
         //코드리펙토링중 에러 발견으로 비활성화처리
 //       List<PostDTO> list = mapper.findPostList(dto);
 

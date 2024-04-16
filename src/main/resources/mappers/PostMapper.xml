@@ -153,14 +153,6 @@
         </foreach>
     </select>
 
-    <select id="findLikeListByPostCode" parameterType="int" resultMap="likeListMap">
-        SELECT post_code,
-               l_member_code,
-               is_private
-        FROM tbl_like_list
-        WHERE post_code = #{postCode}
-    </select>
-
     <select id="getLikeListByPostCode" resultType="com._3dhs.tnproject.post.dto.LikeListDTO">
         SELECT *
         FROM tbl_like_list
@@ -173,14 +165,6 @@
         WHERE post_code = #{postCode}
           AND is_private = false
     </select>
-
-
-    <select id="getPostByPostCode" resultType="com._3dhs.tnproject.post.dto.PostDTO">
-        SELECT *
-        FROM tbl_post
-        WHERE post_code = #{postCode}
-    </select>
-
 
     <insert id="updateFolders" parameterType="java.util.List">
         INSERT INTO

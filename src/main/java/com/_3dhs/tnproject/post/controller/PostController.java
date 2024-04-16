@@ -12,6 +12,7 @@ import com._3dhs.tnproject.post.util.FileUtil;
 import com._3dhs.tnproject.purchase.service.PurchaseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -92,7 +93,7 @@ public class PostController {
     }
 
     @GetMapping("/main")
-    public void blogMainPage(@ModelAttribute TabSearchDTO tabSearchDTO, @AuthenticationPrincipal MemberDTO loginMemberDTO, Model model) {
+    public void blogMainPage(@ModelAttribute TabSearchDTO tabSearchDTO) {
     }
 
     @Transactional
@@ -102,17 +103,7 @@ public class PostController {
 
         if (folderList.isEmpty()) {
             System.out.println("폴더리스트 비어있는디?");// 비어있음 멤버코드로 10개 만들어줘
-            List<FolderDTO> addDefaultFolders = new ArrayList<>();
-
-            for (int i = 0; i < 10; i++) {
-                FolderDTO folderDTO = new FolderDTO();
-                folderDTO.setFolderName("NoName");
-                folderDTO.setFolderIconPath("/images/icon_folder.png");
-                folderDTO.setFolderSequence(10);
-                folderDTO.setFMemberCode(loginMemberDTO.getMemberCode());
-                folderDTO.setFolderStatus("N");
-                addDefaultFolders.add(folderDTO);
-            }
+            List<FolderDTO> addDefaultFolders = getFolderDTOS(loginMemberDTO);
             System.out.println("컨트롤러단의 addDefaultFolders : " + addDefaultFolders);
             postService.addDefaultFolder(addDefaultFolders);
             folderList = postService.findFolderList(loginMemberDTO.getMemberCode());
@@ -122,6 +113,22 @@ public class PostController {
         }
         model.addAttribute("folderList", folderList);
         return "/post/folder_edit";
+    }
+
+    @NotNull
+    private List<FolderDTO> getFolderDTOS(MemberDTO loginMemberDTO) {
+        List<FolderDTO> addDefaultFolders = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+            FolderDTO folderDTO = new FolderDTO();
+            folderDTO.setFolderName("NoName");
+            folderDTO.setFolderIconPath("/images/icon_folder.png");
+            folderDTO.setFolderSequence(10);
+            folderDTO.setFMemberCode(loginMemberDTO.getMemberCode());
+            folderDTO.setFolderStatus("N");
+            addDefaultFolders.add(folderDTO);
+        }
+        return addDefaultFolders;
     }
 
     @GetMapping("/write")
@@ -134,23 +141,21 @@ public class PostController {
     }
 
     @GetMapping("/temporary_storage/list")
-    public void temporaryStorageListPage(@AuthenticationPrincipal MemberDTO loginMemberDTO, Model model) {
+    public void temporaryStorageListPage() {
 
     }
 
     @GetMapping("/list")
-    public String blogListPage(@RequestParam(defaultValue = "1") int page, @ModelAttribute TabSearchDTO tabSearchDTO, @AuthenticationPrincipal MemberDTO loginMemberDTO, Model model) {
-        return "/post/list";
+    public void blogListPage(@ModelAttribute TabSearchDTO tabSearchDTO) {
     }
 
     @GetMapping("/folder_list")
-    public String folderListPage(@RequestParam(defaultValue = "1") int page, @ModelAttribute TabSearchDTO tabSearchDTO, @AuthenticationPrincipal MemberDTO loginMemberDTO, Model model) {
-        return "/post/folder_list";
+    public void folderListPage() {
     }
 
     @GetMapping("/detail")
     public String blogDetailPage(@AuthenticationPrincipal MemberDTO member, Integer postCode, Model model, CommentsDTO commentsDTO) {
-        //1. 해당하는 코드의 post정보를 불러오기
+        //1. 해당하는 코드의 post 정보를 불러오기
         PostDTO targetPost = postService.findPostByPostCode(postCode);
         targetPost.setAttachmentList(postService.findAttListByPostCode(targetPost.getPostCode()));
         targetPost.makeThumbnailPath();
@@ -166,14 +171,14 @@ public class PostController {
             }
         }
 
-
-        //3. post가 유료글인지 판단하기
+        //3. post 가 유료글인지 판단하기
         if (targetPost.getPostPrice() > 0 && !purchaseService.isPostPurchased(member.getMemberCode(), postCode)) {
             model.addAttribute("paidContent", targetPost);
             model.addAttribute("postCode", postCode);
             System.out.println("Controller: postCode = " + postCode);
             return "/purchase/viewPurchasePage";
         }
+
         /* 댓글 모달에서 댓글 조회 */
         List<CommentsDTO> comments = commentsService.selectCommentsList(commentsDTO);
         model.addAttribute("comments", comments);
@@ -187,17 +192,11 @@ public class PostController {
 
 
     @GetMapping("/load")
-    public @ResponseBody List<PostDTO> findTabMenuPostList(PostUpdateModel postUpdateModel, @AuthenticationPrincipal MemberDTO member) {
-        List<PostDTO> postList = new ArrayList<>();
-        switch (postUpdateModel.getContentsType()) {
-            case 3:
-                postList = postService.findLikeListPostByMemberCode(postUpdateModel);
-                break;
-            default:
-                postList = postService.findPostList(postUpdateModel);
-                break;
-        }
-        return postList;
+    public @ResponseBody List<PostDTO> findTabMenuPostList(PostUpdateModel postUpdateModel) {
+        return switch (postUpdateModel.getContentsType()) {
+            case 3 -> postService.findLikeListPostByMemberCode(postUpdateModel);
+            default -> postService.findPostList(postUpdateModel);
+        };
     }
     @PostMapping("/folder_edit")
     public @ResponseBody String folderEditList(@AuthenticationPrincipal MemberDTO loginMemberDTO, @RequestBody List<FolderDTO> requestBody) {
@@ -206,7 +205,7 @@ public class PostController {
         }
         postService.updateFolders(requestBody);
 
-        return "redirect:memberCode=" + loginMemberDTO.getMemberCode() + "";
+        return "redirect:memberCode=" + loginMemberDTO.getMemberCode();
     }
 
     @PostMapping("/upload")
@@ -227,7 +226,6 @@ public class PostController {
             for (MultipartFile uploadFile : uploadFiles) {
                 if (!uploadFile.isEmpty()) {
                     String originalFilename = uploadFile.getOriginalFilename();
-                    String fileExtension = originalFilename.substring(originalFilename.lastIndexOf(".")); //TODO 사용안되는데 확인바람
                     String uuid = UUID.randomUUID().toString();
                     String newFileName = uuid + "_" + originalFilename;
 
@@ -304,8 +302,6 @@ public class PostController {
 
         try {
             PostDTO postDTO = writeDTO.getPostDTO();
-//            log.info("postStatus? : {}",postDTO.getPostStatus());
-//            writeDTO.setAttachmentDTOList(new ArrayList<>());   //TODO 마스터거 일단 주석처리하고 넣음 nullPoint에러로 인해서 추가 개발완료시 지울것
             List<AttachmentDTO> attachments = writeDTO.getAttachmentDTOList();
             List<TagDTO> tags = writeDTO.getTagDTOList();
 

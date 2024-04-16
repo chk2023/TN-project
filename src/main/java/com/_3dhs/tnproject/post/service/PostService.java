@@ -31,11 +31,6 @@ public class PostService {
     @Transactional(readOnly = true)
     public List<PostDTO> findListByParam(PostUpdateModel postUpdateModel) {
         List<PostDTO> postList = postMapper.findListByParam(postUpdateModel);
-        for (int i = 0; i < postList.size(); i++) {
-            postList.get(i).setAttachmentList(postMapper.findAttListByPostCode(postList.get(i).getPostCode()));
-            postList.get(i).makeThumbnailPath();
-
-        }
         return postList;
     }
 
@@ -46,18 +41,6 @@ public class PostService {
         List<PostDTO> postList = postMapper.findLikeListPostByMemberCode(postUpdateModel);
         return postList;
     }
-
-    public PostDTO getPostByPostCode(Integer postCode) {
-        PostDTO postDTO = postMapper.findPostByPostCode(postCode);
-
-        List<AttachmentDTO> attachmentList = postMapper.findAttListByPostCode(postCode);
-        postDTO.setAttachmentList(attachmentList);
-
-        postDTO.makeThumbnailPath();
-
-        return postDTO;
-    }
-
     @Transactional()
     public void updateFolders(List<FolderDTO> requestBody) {
         System.out.println("폴더리스트" + requestBody);
@@ -89,12 +72,6 @@ public class PostService {
 
     public List<PostDTO> findListByPostCodes(Set<Integer> postCodes) {
         return postMapper.findListByPostCodes(postCodes);
-    }
-
-    /* 해당 글에 좋아요를 눌렀는지 확인 */
-    public boolean getHasLiked(int postCode, int memberCode) {
-
-        return likeMapper.getHasLiked(postCode, memberCode);
     }
 
     public boolean toggleLike(int postCode, int memberCode) {

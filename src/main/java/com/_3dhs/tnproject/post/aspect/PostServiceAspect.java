@@ -1,4 +1,4 @@
-package com._3dhs.tnproject.common.aspect;
+package com._3dhs.tnproject.post.aspect;
 
 import com._3dhs.tnproject.member.dto.MemberDTO;
 import com._3dhs.tnproject.post.dto.PostDTO;
@@ -28,7 +28,9 @@ public class PostServiceAspect {
 
 
 
-    @Pointcut("execution(* com._3dhs.tnproject.post.service.PostService.*(..)) && !execution(* com._3dhs.tnproject.post.service.PostService.findAllPostListForDoc(..))\" && !execution(* com._3dhs.tnproject.post.service.PostService.findPostByPostCode(..))\"")
+    @Pointcut("execution(* com._3dhs.tnproject.post.service.PostService.*(..)) " +
+            "&& !execution(* com._3dhs.tnproject.post.service.PostService.findAllPostListForDoc(..))\" " +
+            "&& !execution(* com._3dhs.tnproject.post.service.PostService.findPostByPostCode(..))\"")
     public void postServiceMethods() {
     }
 
