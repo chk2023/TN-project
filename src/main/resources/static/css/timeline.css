@@ -16,10 +16,21 @@ main {
     min-height: 1000px;
 }
 
-.viewBtn.active .optionBox {
+.viewBtn > .active + .optionBox {
     display: flex;
 }
 
-.optionBox.optionBoxColor li * {
-    color: #595959;
+.viewBtn > .active + .optionBox li {
+    height: auto;
+    flex-grow: 0;
+    justify-content: flex-end;
+    cursor: pointer;
+}
+
+.viewBtn > .active + .optionBox li:hover {
+    color: #779289;
+}
+
+.viewBtn > .active + .optionBox li:hover:after {
+    width: 0;
 }

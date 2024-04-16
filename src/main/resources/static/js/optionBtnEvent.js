@@ -4,6 +4,11 @@ document.addEventListener('click', function (e) {
     const targetViewTypeBtn = e.target.closest(".viewBtn"); //클릭된 요소 또는 그 조상 중 .viewBtn을 찾음
     const $viewBtn = document.querySelector('.viewBtn > button'); //.viewBtn 눌렀을때 active 걸릴 버튼
 
+    console.log($optionBtn)
+    console.log(targetOptionBtn)
+    console.log(targetViewTypeBtn)
+    console.log($viewBtn)
+
     if (targetOptionBtn) {
         $optionBtn.forEach((option) => {
             option.classList.remove("active"); //먼저 모든 .optionBtn에서 active 클래스 제거
